@@ -17,9 +17,10 @@ describe("App", () => {
     vi.spyOn(api, "checkSystem").mockResolvedValue({
       online: true,
       categories: [
-        { id: 1, name: "Hardware" },
-        { id: 2, name: "Software" },
-        { id: 3, name: "Network" },
+        { id: 1, name: "Account and Access" },
+        { id: 2, name: "Hardware" },
+        { id: 3, name: "Software" },
+        { id: 4, name: "Network" },
       ],
     });
 
@@ -31,6 +32,7 @@ describe("App", () => {
 
     expect(await screen.findByText(/Online/i)).toBeInTheDocument();
 
+    expect(screen.getByText("Account and Access")).toBeInTheDocument();
     expect(screen.getByText("Hardware")).toBeInTheDocument();
     expect(screen.getByText("Software")).toBeInTheDocument();
     expect(screen.getByText("Network")).toBeInTheDocument();
