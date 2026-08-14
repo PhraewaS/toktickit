@@ -19,27 +19,38 @@ TokTickIT is an IT service desk application developed for CPE 334 Lab 1.
 
 Run the following commands:
 
-`cd client`
-
-`npm install`
-
-`npm run dev`
+```bash
+cd client
+npm install
+npm run dev
+```
 
 ## Backend Setup
 
-Copy `server/.env.example` to `server/.env` and update `DATABASE_URL`.
+Copy `server/.env.example` to `server/.env` and update `DATABASE_URL` with your PostgreSQL connection string.
 
-Run:
+Then run:
 
-`cd server`
+```bash
+cd server
+npm install
+npm run prisma:migrate
+npm run prisma:seed
+npm run dev
+```
 
-`npm install`
+The Prisma commands will:
 
-`npm run dev`
+- `npm run prisma:migrate` — apply the database migrations and create/update the required database tables.
+- `npm run prisma:seed` — populate the database with the initial seed data.
 
 ## Testing
 
-Run `npm test` inside the `client` and `server` directories.
+Run the tests inside both the `client` and `server` directories:
+
+```bash
+npm test
+```
 
 ## Security
 
