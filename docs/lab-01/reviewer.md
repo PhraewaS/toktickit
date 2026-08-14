@@ -6,12 +6,13 @@
 **Peer reviewer:** <นายสิริกร ฝันนิมิตร> — <67070507215> — GitHub: @<chaproi>
 
 ## Pull Requests I authored (reviewed by my partner)
+
 | PR | Branch | Reviewer verdict |
-|----|--------|------------------|
-| #5  | feature/1-project-foundation |  |
-| #6  | feature/2-health-check |  |
-| #7  | feature/3-category-seed |  |
-| #8  | feature/4-category-list |  |
+|---|---|---|
+| [PR #5](https://github.com/PhraewaS/toktickit/pull/5) | `feature/1-project-foundation` | Approved |
+| [PR #6](https://github.com/PhraewaS/toktickit/pull/6) | `feature/2-health-check` | Changes requested, then approved |
+| [PR #7](https://github.com/PhraewaS/toktickit/pull/7) | `feature/3-category-seed` | Approved |
+| [PR #8](https://github.com/PhraewaS/toktickit/pull/8) | `feature/4-category-list` | Changes requested, then approved |
 
 Reviewer comment I received: <โดยรวม PR นี้ตรงกับ Issue 1 และ target branch เป็น lab1-staging ถูกต้อง README มีข้อมูล technology stack, วิธี setup และ testing ค่อนข้างครบ>
 
