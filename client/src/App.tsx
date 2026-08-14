@@ -14,6 +14,14 @@ export default function App() {
     //   - success: store categories and show Online + the list, or
     //   - error: show Offline + a useful message.
     setState("loading");
+    try {
+      const systemStatus = await checkSystem();
+      setCategories(systemStatus.categories);
+      setState("success");
+    } catch (error) {
+      console.error("Error checking system:", error);
+      setState("error");
+    }
   }
 
   return (
@@ -27,6 +35,24 @@ export default function App() {
       </button>
 
       {/* TODO(Issue 4): render loading / success (Online + categories) / error (Offline) states. */}
+      {state === "loading" && <p className="mt-3">Loading…</p>}
+      {state === "success" && (
+        <div className="mt-3">
+          <p className="text-success">System Status: Online</p>
+          <p>Supported Request Categories:</p>
+          <ul>
+            {categories.map((category) => (
+              <li key={category.id}>{category.name}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {state === "error" && (
+        <div className="mt-3">
+          <p className="text-danger">System Status: Offline</p>
+          <p>Failed to fetch system status or categories.</p>
+        </div>
+      )}
     </div>
   );
 }

@@ -21,6 +21,12 @@ export async function checkSystem(): Promise<SystemStatus> {
   if (!healthResponse.ok) {
     throw new Error("System is offline");
   }
-  
-  return { online: true, categories: [] }; // TODO(Issue 4): replace with actual categories from the second fetch call.
+
+  const categoriesResponse = await fetch(`${API_URL}/api/categories`);
+  if (!categoriesResponse.ok) {
+    throw new Error("Failed to fetch categories");
+  }
+  const categories = await categoriesResponse.json();
+
+  return { online: true, categories  };
 }
