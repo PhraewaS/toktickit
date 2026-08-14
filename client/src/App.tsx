@@ -38,7 +38,8 @@ export default function App() {
       {state === "loading" && <p className="mt-3">Loading…</p>}
       {state === "success" && (
         <div className="mt-3">
-          <p className="text-success">Online</p>
+          <p className="text-success">System Status: Online</p>
+          <p>Supported Request Categories:</p>
           <ul>
             {categories.map((category) => (
               <li key={category.id}>{category.name}</li>
@@ -48,7 +49,7 @@ export default function App() {
       )}
       {state === "error" && (
         <div className="mt-3">
-          <p className="text-danger">Offline</p>
+          <p className="text-danger">System Status: Offline</p>
           <p>Failed to fetch system status or categories.</p>
         </div>
       )}
