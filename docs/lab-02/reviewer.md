@@ -1,0 +1,75 @@
+# Lab 2 — Peer Review Record
+
+แบบบันทึก Peer Review สำหรับ Feature Pull Requests และ Release Pull Request ของ Lab 2
+
+**Author:** นางสาวแพรวา สภานนท์ — 67070507213 — GitHub: [@PhraewaS](https://github.com/PhraewaS)
+
+**Peer reviewers จาก Lab 1:**
+
+- นางสาวธนภรณ์ บุณฑริกมาศ — 67070507204 — GitHub: [@thanapornboont-star](https://github.com/thanapornboont-star)
+- นางสาวณัฐวดี ภูเขม่า — 67070507201 — GitHub: [@guluJa](https://github.com/guluJa)
+- นายสิริกร ฝันนิมิตร — 67070507215 — GitHub: [@chaproi](https://github.com/chaproi)
+
+> หมายเหตุ: ต้องยืนยัน Reviewer ของ Lab 2 อีกครั้งก่อนใส่ใน Final PDF ตารางด้านล่างต้องบันทึกข้อมูลที่เกิดขึ้นจริงเท่านั้น ห้ามใส่ Approved ก่อน Reviewer อนุมัติ PR จริง
+
+---
+
+## Pull Requests I authored (reviewed by my partner)
+
+| Issue / Scope | Branch | Pull Request | Reviewer | Reviewer Verdict | Merge Commit |
+|---|---|---|---|---|---|
+| Engineering Contract and Test Plan | `feature/lab2-spec-contract` | Pending | Pending | Pending | Pending |
+| Database, Seed and Development Requester Context | Pending | Pending | Pending | Pending | Pending |
+| Ticket Creation API and UI | Pending | Pending | Pending | Pending | Pending |
+| My Tickets API and UI | Pending | Pending | Pending | Pending | Pending |
+| Ticket Detail and Attachment Lifecycle | Pending | Pending | Pending | Pending | Pending |
+| Responsive, E2E and Visual Evidence | Pending | Pending | Pending | Pending | Pending |
+| Release Integration | `lab2-staging` → `main` | Pending | Pending | Pending | Pending |
+
+---
+
+## Reviewer Comments I Received
+
+### PR / Issue: Pending
+
+**Reviewer comment:**
+
+> Pending — วางข้อความ Review ที่ได้รับจริง พร้อม Link ไปยัง Comment
+
+**How I responded:**
+
+> Pending — อธิบายว่าตรวจสอบหรือแก้ไขอะไร พร้อม Link ไปยัง Commit/Response
+
+**Final reviewer response:**
+
+> Pending — Approved หรือ Changes requested ตามที่เกิดขึ้นจริง
+
+เพิ่ม Section รูปแบบเดียวกันสำหรับทุก PR ที่มี Comment สำคัญ โดยเฉพาะข้อเสนอเรื่อง Specification, Ownership, Validation, Migration, Attachment Safety, Tests และ Responsive UI
+
+---
+
+## Pull Requests I reviewed for my partner
+
+### Partner PR: Pending
+
+**My comment:**
+
+> Pending — บันทึก Comment ที่ตรวจ Acceptance Criteria, Files changed, Tests และ Branch Target จริง
+
+**Partner's response:**
+
+> Pending — บันทึก Response หรือ Commit ที่ Partner แก้ไข
+
+---
+
+## Review Completion Checklist
+
+- [ ] ทุก Feature PR Target ไป `lab2-staging`
+- [ ] ทุก Feature PR มี Human Peer Review
+- [ ] Reviewer ตรวจเฉพาะ Diff เทียบ Base Branch และ Acceptance Criteria ของ Issue
+- [ ] Requested Changes และ Author Responses ปรากฏใน PR จริง
+- [ ] Approval เกิดก่อน Merge
+- [ ] `reviewer.md` มี Reviewer Identity, PR Links, Comments, Responses และ Approvals ครบ
+- [ ] Integration/Test Results แนบใน Release PR
+- [ ] Release PR Target `main` จาก `lab2-staging`
+- [ ] Final PDF ใช้หลักฐานจริงและ Link เปิดได้
