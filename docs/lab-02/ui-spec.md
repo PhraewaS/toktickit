@@ -92,11 +92,11 @@ Required Elements/States:
 
 ### Field Groups
 
-1. Read-only Context: Ticket Number (`Generated after submission`), Ticket Date (`Assigned on submission`), Requester และ Current Status (`New`)
+1. Read-only Context: Ticket Number (`Generated after submission`), Ticket Date (`Assigned on submission`), Requester และ Current Status (`New`) โดย Ticket Date อ่านจาก API `ticketDate` ซึ่งเป็น Alias ของ Database `Ticket.createdAt` และไม่มี Field `ticketDate` แยก
 2. Classification: Category, Related System และ Requested Priority
 3. Content: Summary และ Description โดยให้พื้นที่เพียงพอ
 4. Attachments: Selected Files, Per-file Validation และ Active-count Guidance
-5. Actions: Submit Ticket เป็น Primary ส่วน Reset/Cancel ใช้ได้เมื่อ Behavior ถูกระบุใน Contract
+5. Actions: Submit Ticket เป็น Primary Action; Reset และ Cancel ไม่อยู่ใน Scope ของ Lab 2
 
 ### Required States
 
@@ -140,8 +140,8 @@ Required Elements/States:
 ### Required States
 
 - Loading: Skeleton หรือ Status
-- Empty: Requester ไม่มี Ticket พร้อม Create Ticket Action
-- No-results: Search/Filter ไม่พบ พร้อม Clear Filters
+- Empty: Response มี `totalOwnedItems = 0`; แสดงว่า Requester ยังไม่มี Ticket พร้อม Create Ticket Action
+- No-results: Response มี `totalOwnedItems > 0`, `totalItems = 0` และมี Search/Filter; แสดงว่าไม่พบผลลัพธ์พร้อม Clear Filters โดยไม่ยิง Unfiltered Request เพิ่ม
 - Failure: Safe Message และ Retry
 
 ---

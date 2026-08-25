@@ -138,6 +138,8 @@ Protected Endpoint ต้องตอบ:
 
 ถ้า Requester เดิมส่ง `submissionKey` เดิมซ้ำ ให้คืน `200`, Ticket เดิม และ `replayed: true` โดยไม่สร้าง Duplicate
 
+`ticketDate` เป็น Public Response Alias ของ `Ticket.createdAt` ไม่ใช่ Database Field แยก หาก Response มีทั้ง `ticketDate` และ `createdAt` ค่าทั้งสองต้องเป็น Timestamp เดียวกันเสมอ
+
 Error Cases:
 
 - `400 VALIDATION_ERROR` สำหรับ Field ที่ไม่ถูกต้อง
@@ -183,12 +185,23 @@ Stable Secondary Sort คือ Ticket ID Descending
     "page": 1,
     "pageSize": 10,
     "totalItems": 1,
+    "totalOwnedItems": 1,
     "totalPages": 1
   }
 }
 ```
 
-Invalid Query ตอบ `400 INVALID_QUERY` Empty และ No-results คืน `200` กับ `data: []` โดย UI เป็นผู้แยก State จาก Search/Filter ปัจจุบันและ Unfiltered Count/Request
+Pagination Metadata Contract:
+
+- `totalOwnedItems` นับ Ticket ทั้งหมดของ Selected Requester โดยไม่ใช้ `search`, Category, Related System, Priority หรือ Status Filters
+- `totalItems` นับ Ticket ของ Requester ที่ Match Search/Filter ปัจจุบันก่อน Pagination
+- `totalPages` คำนวณจาก `totalItems` และเป็น `0` เมื่อ `totalItems = 0`
+- Empty State: `data: []`, `totalOwnedItems: 0`, `totalItems: 0`; UI แสดง Create Ticket Action
+- No-results State: มี Search/Filter อย่างน้อยหนึ่งค่า, `data: []`, `totalOwnedItems > 0`, `totalItems: 0`; UI แสดง Clear Filters
+- UI ต้องใช้ Metadata จาก Response เดียวนี้และห้ามส่ง Unfiltered Request เพิ่มเพื่อแยก Empty กับ No-results
+- Request ที่ `page` เกิน `totalPages` ขณะที่ `totalItems > 0` ตอบ `400 PAGE_OUT_OF_RANGE` พร้อม Safe Field Detail เพื่อไม่ให้ Empty Page ถูกตีความเป็น Empty/No-results
+
+Invalid Query อื่นตอบ `400 INVALID_QUERY` ส่วน Empty และ No-results ตอบ `200` ตาม Contract ข้างต้น
 
 ### GET `/api/tickets/:ticketId`
 

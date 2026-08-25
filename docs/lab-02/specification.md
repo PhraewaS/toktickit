@@ -52,6 +52,7 @@ Lab 2 จะเปลี่ยนระบบจากหน้า Connectivity 
 - Administrator จัดการ Users, Requesters, Roles, Categories หรือ Related Systems
 - การแก้ไข Ticket Fields หลัง Submit
 - Inline File Preview โดย Lab 2 จะให้ Download เฉพาะ Active Attachment เท่านั้น
+- Reset/Cancel Actions บน Create Ticket Form; Lab 2 มีเฉพาะ Submit Ticket และคงค่า Form เมื่อ Submit ล้มเหลว
 
 ---
 
@@ -91,7 +92,7 @@ Lab 2 จะเปลี่ยนระบบจากหน้า Connectivity 
 - BR-07: Backend Database Query ต้องตรวจ Ticket/Attachment Ownership ทุกครั้ง การซ่อนข้อมูลใน Frontend ไม่ถือเป็น Ownership Control
 - BR-08: การขอ Ticket หรือ Attachment ของ Requester คนอื่นต้องตอบ Safe `404` แบบเดียวกับ Resource ที่ไม่มีอยู่
 - BR-09: Ticket Number ใช้รูปแบบ `TKT-YYYYMMDD-XXXXXXXX` วันที่เป็น UTC และแปดตัวท้ายเป็น Uppercase Hexadecimal ที่ Backend สร้าง โดย Database Unique Constraint เป็นตัวตัดสินสุดท้าย
-- BR-10: Ticket Date คือ Backend Creation Timestamp ใน UTC และเป็น Read-only
+- BR-10: Ticket Date คือ Public API/UI Alias ของ `Ticket.createdAt` ซึ่งเป็น Backend Creation Timestamp ใน UTC และเป็น Read-only ห้ามสร้าง `ticketDate` เป็น Database Field แยก
 - BR-11: Requester, Ticket Number, Ticket Date และ Current Status เป็น Read-only ใน Requester Screens
 - BR-12: Category, Related System, Summary, Requested Priority และ Description เป็น Required Fields
 - BR-13: Summary ต้อง Trim และยาว 5-150 ตัวอักษร
@@ -107,7 +108,7 @@ Lab 2 จะเปลี่ยนระบบจากหน้า Connectivity 
 - BR-23: Sort ได้ด้วย Ticket Number, Summary, Created Date และ Last Updated ค่า Default คือ Created Date Descending และใช้ Ticket ID Descending เป็น Stable Secondary Sort
 - BR-24: Page เริ่มที่ 1 รองรับ Page Size 10, 20 และ 50 โดย Default คือ 10
 - BR-25: Invalid Query Parameter ต้องตอบ `400` พร้อม Safe Field Details และห้าม Silent Fallback
-- BR-26: Empty State หมายถึง Requester ไม่มี Ticket ส่วน No-results หมายถึงมี Ticket แต่ Search/Filter ปัจจุบันไม่พบ
+- BR-26: `GET /api/tickets` ต้องคืน `totalOwnedItems` ซึ่งนับ Ticket ทั้งหมดของ Current Requester โดยไม่ใช้ Search/Filter และ `totalItems` ซึ่งนับผลหลังใช้ Search/Filter; Empty State คือ `totalOwnedItems = 0` ส่วน No-results State คือ `totalOwnedItems > 0`, มี Search/Filter อย่างน้อยหนึ่งค่า และ `totalItems = 0` โดย UI ห้ามยิง Unfiltered Request เพิ่มเพื่อแยกสอง State นี้
 - BR-27: Attachment รองรับ JPG/JPEG, PNG, WEBP และ PDF โดย Filename Extension และ MIME Type ต้องตรงกับรายการที่อนุญาต
 - BR-28: Attachment แต่ละไฟล์มีขนาดสูงสุด 5 MiB หรือ `5 * 1024 * 1024` Bytes
 - BR-29: Ticket หนึ่งใบมี Active Attachments ได้สูงสุด 5 ไฟล์ โดย Removed Attachment ไม่นับรวม
@@ -133,23 +134,108 @@ Lab 2 จะเปลี่ยนระบบจากหน้า Connectivity 
 
 ## 7. Data Changes
 
-Prisma Schema จะเพิ่ม `RequesterUser`, `RelatedSystem`, `Ticket` และ `Attachment` เพิ่ม Active/Updated Metadata ให้ `Category` และเพิ่ม Enums `RequestedPriority` กับ `TicketStatus`
+Prisma Schema จะเพิ่ม `RequesterUser`, `RelatedSystem`, `Ticket` และ `Attachment` เพิ่ม Active/Updated Metadata ให้ `Category` และเพิ่ม Enums `RequestedPriority` กับ `TicketStatus` ตารางต่อไปนี้เป็น Source of Truth สำหรับ Prisma Schema และ Migration ของ Lab 2 โดย `DateTime` ใหม่ทุก Field เก็บเป็น PostgreSQL `timestamptz(3)` และ API Serialize เป็น ISO 8601 UTC
+
+### Enums
+
+| Enum | Values | Database Decision |
+|---|---|---|
+| `RequestedPriority` | `LOW`, `MEDIUM`, `HIGH` | PostgreSQL Enum, Required ที่ `Ticket.requestedPriority` |
+| `TicketStatus` | `NEW` | PostgreSQL Enum, Required ที่ `Ticket.currentStatus`, Default `NEW`; Status อื่นอยู่นอก Lab 2 |
+
+### Model: `RequesterUser` → `requester_users`
+
+| Field | Prisma / PostgreSQL Type | Null | Key / Constraint | Default / Meaning |
+|---|---|---|---|---|
+| `id` | `Int` / `integer` | No | Primary Key | Autoincrement |
+| `name` | `String` / `varchar(150)` | No | — | Trimmed Display Name |
+| `email` | `String` / `varchar(254)` | No | Unique | Seeded Test Identity, stored Lowercase |
+| `isActive` | `Boolean` / `boolean` | No | Indexed with `name` | `true` |
+| `createdAt` | `DateTime` / `timestamptz(3)` | No | — | `now()` |
+| `updatedAt` | `DateTime` / `timestamptz(3)` | No | — | `@updatedAt` |
+
+Indexes: Unique `email`; composite index `(isActive, name, id)` สำหรับ Active Requester List ที่เรียงแบบ Deterministic
+
+### Model: `Category` → `categories`
+
+| Field | Prisma / PostgreSQL Type | Null | Key / Constraint | Default / Meaning |
+|---|---|---|---|---|
+| `id` | `Int` / `integer` | No | Primary Key | Existing Autoincrement จาก Lab 1 |
+| `name` | `String` / Existing PostgreSQL `text` | No | Existing Unique | Preserve Existing Category Data และ Name Contract |
+| `isActive` | `Boolean` / `boolean` | No | Indexed with `name` | เพิ่มด้วย Default `true` |
+| `createdAt` | `DateTime` / Existing `timestamp(3)` | No | — | Preserve Existing Column/Data |
+| `updatedAt` | `DateTime` / `timestamptz(3)` | No | — | Backfill ด้วย Migration Time แล้วใช้ `@updatedAt` |
+
+Indexes: Existing Unique `name`; composite index `(isActive, name, id)` สำหรับ Active Category List
+
+### Model: `RelatedSystem` → `related_systems`
+
+| Field | Prisma / PostgreSQL Type | Null | Key / Constraint | Default / Meaning |
+|---|---|---|---|---|
+| `id` | `Int` / `integer` | No | Primary Key | Autoincrement |
+| `name` | `String` / `varchar(150)` | No | Unique | Trimmed Display Name |
+| `isActive` | `Boolean` / `boolean` | No | Indexed with `name` | `true` |
+| `createdAt` | `DateTime` / `timestamptz(3)` | No | — | `now()` |
+| `updatedAt` | `DateTime` / `timestamptz(3)` | No | — | `@updatedAt` |
+
+Indexes: Unique `name`; composite index `(isActive, name, id)` สำหรับ Active Related-system List
+
+### Model: `Ticket` → `tickets`
+
+| Field | Prisma / PostgreSQL Type | Null | Key / Constraint | Default / Meaning |
+|---|---|---|---|---|
+| `id` | `Int` / `integer` | No | Primary Key | Autoincrement |
+| `ticketNumber` | `String` / `varchar(21)` | No | Unique | Backend-generated `TKT-YYYYMMDD-XXXXXXXX` |
+| `requesterId` | `Int` / `integer` | No | FK → `RequesterUser.id` | Owner from Development Requester Context |
+| `categoryId` | `Int` / `integer` | No | FK → `Category.id` | Active Reference at Create Time |
+| `relatedSystemId` | `Int` / `integer` | No | FK → `RelatedSystem.id` | Active Reference at Create Time |
+| `summary` | `String` / `varchar(150)` | No | — | Trimmed, 5–150 Characters |
+| `requestedPriority` | `RequestedPriority` / Enum | No | — | Client-selected Allowed Value |
+| `description` | `String` / `text` | No | — | Trimmed, 10–5000 Characters |
+| `currentStatus` | `TicketStatus` / Enum | No | — | Default `NEW` |
+| `submissionKey` | `String` / `uuid` | No | Compound Unique with `requesterId` | Client-generated Idempotency Key |
+| `createdAt` | `DateTime` / `timestamptz(3)` | No | — | `now()`; Source Field ของ API/UI `ticketDate` Alias |
+| `updatedAt` | `DateTime` / `timestamptz(3)` | No | — | `@updatedAt` |
+
+Constraints/Indexes: Unique `ticketNumber`; compound Unique `(requesterId, submissionKey)`; indexes `(requesterId, createdAt, id)`, `(requesterId, updatedAt, id)`, `(requesterId, ticketNumber, id)`, `(requesterId, categoryId)`, `(requesterId, relatedSystemId)`, `(requesterId, requestedPriority)` และ `(requesterId, currentStatus)` Prisma Migration ต้องเปิด PostgreSQL `pg_trgm` และเพิ่ม GIN Trigram Index บน `lower(ticketNumber)` กับ `lower(summary)` ด้วย Custom SQL เพื่อรองรับ Case-insensitive Contains Search
+
+### Model: `Attachment` → `attachments`
+
+| Field | Prisma / PostgreSQL Type | Null | Key / Constraint | Default / Meaning |
+|---|---|---|---|---|
+| `id` | `Int` / `integer` | No | Primary Key | Autoincrement |
+| `ticketId` | `Int` / `integer` | No | FK → `Ticket.id` | Owned ผ่าน Ticket Relationship |
+| `originalFilename` | `String` / `varchar(255)` | No | — | Basename-sanitized User Filename |
+| `storedFilename` | `String` / `uuid` | No | Unique | Backend-generated UUID; ไม่ส่งผ่าน Public API |
+| `mimeType` | `String` / `varchar(100)` | No | — | Allowed MIME Type ที่ตรวจคู่กับ Extension |
+| `sizeBytes` | `Int` / `integer` | No | Check `1..5242880` | File Size in Bytes |
+| `uploadedAt` | `DateTime` / `timestamptz(3)` | No | — | `now()` |
+| `removedAt` | `DateTime?` / `timestamptz(3)` | Yes | Indexed with `ticketId` | `null` หมายถึง Active |
+| `removalReason` | `String?` / `varchar(500)` | Yes | Conditional Check | `null` เมื่อ Active; Trimmed 3–500 เมื่อ Removed |
+
+Constraints/Indexes: Unique `storedFilename`; index `(ticketId, removedAt, uploadedAt, id)` Migration เพิ่ม Check Constraints ให้ Size อยู่ใน Boundary และบังคับคู่ State `(removedAt IS NULL AND removalReason IS NULL) OR (removedAt IS NOT NULL AND char_length(btrim(removalReason)) BETWEEN 3 AND 500)` จำนวน Active Attachments สูงสุด 5 ต้องบังคับใน Backend Transaction เพราะ Row-count Constraint นี้ไม่ควรทำด้วย Prisma Field Constraint
 
 ### Relationships
 
-- RequesterUser หนึ่งคนมี Ticket ได้หลายใบ และ Ticket หนึ่งใบเป็นของ RequesterUser คนเดียว
-- Category หนึ่งรายการและ RelatedSystem หนึ่งรายการถูกใช้กับ Ticket ได้หลายใบ
-- Ticket หนึ่งใบมี Attachment ได้หลายรายการ และ Attachment หนึ่งรายการเป็นของ Ticket เดียว
+- `RequesterUser` 1 — many `Ticket` ผ่าน `Ticket.requesterId`
+- `Category` 1 — many `Ticket` ผ่าน `Ticket.categoryId`
+- `RelatedSystem` 1 — many `Ticket` ผ่าน `Ticket.relatedSystemId`
+- `Ticket` 1 — many `Attachment` ผ่าน `Attachment.ticketId`
+- Foreign Keys ทั้งหมดใช้ `onDelete: Restrict` และ `onUpdate: Cascade`; การลบ Requester, Reference Data หรือ Ticket ไม่อยู่ใน Lab 2 และห้ามทำให้ Audit/Attachment Metadata สูญหาย
 
-### Database Decisions
+### Migration Decisions
 
-- ใช้ Integer Surrogate Primary Keys สำหรับ Prisma Relations และใช้ `ticketNumber` เป็น Unique Display Identity
-- สร้าง Index ที่ `Ticket(requesterId, createdAt, id)` เพราะ My Tickets จะ Filter ตาม Owner และ Sort ใหม่สุดก่อนบ่อยที่สุด
-- `submissionKey` ใช้ Compound Unique Constraint ร่วมกับ `requesterId` เพื่อป้องกัน Duplicate โดยไม่ให้ Requester หนึ่ง Replay Key ของอีกคน
-- Soft Removal ใช้ Nullable `removedAt` และ `removalReason` โดย Active Query ใช้ `removedAt: null`
-- Ownership เก็บด้วย Ticket Foreign Key ถาวร ทำให้ Lab 3 เปลี่ยนเฉพาะ Identity Source ได้
+- สร้าง Migration ใหม่ต่อจาก Lab 1 ห้ามแก้หรือลบ Existing Lab 1 Migration
+- Preserve `categories.id`, `categories.name`, `categories.createdAt` และ Seed Rows เดิม เพิ่ม `isActive` ด้วย Non-null Default `true` และ Backfill `updatedAt` ก่อนบังคับ Non-null
+- สร้าง PostgreSQL Enums ก่อนสร้าง `tickets`; สร้าง Parent Tables และ Seed Reference Data ก่อนสร้าง Ticket Rows
+- Migration SQL ต้องรวม `pg_trgm`, Functional GIN Indexes และ Check Constraints ที่ Prisma Schema แสดงไม่ได้ พร้อมตรวจ SQL Diff ก่อน Apply
+- Seed ต้องเป็น Deterministic/Idempotent Upsert สำหรับ Categories ที่กำหนด 4 รายการ, Related Systems อย่างน้อย 6 รายการ, Active Requesters อย่างน้อย 4 คน และ Inactive Requester อย่างน้อย 1 คน โดยไม่ลบ Lab 1 Data
+- `ticketDate` ไม่ใช่ Database Column; API/UI อ่าน Alias นี้จาก `Ticket.createdAt` ค่าเดียวกันเสมอ
+- `submissionKey` Persist ใน `tickets` และ Unique ต่อ Requester; Idempotent Replay ต้องทำใน Transaction และคืน Row เดิมเมื่อชน Compound Unique
+- Soft Removal Update เฉพาะ `removedAt` และ `removalReason`; ห้ามลบ Attachment Row และห้าม Serve Removed File
+- Migration Rollback/Reset ใช้เฉพาะ Local Development Database ตาม README ห้ามใช้กับ Shared หรือ Evidence Database
 
-Seed ต้อง Idempotent และประกอบด้วย Categories ที่กำหนด 4 รายการ, Related Systems อย่างน้อย 6 รายการ, Active Requesters อย่างน้อย 4 คน และ Inactive Requester อย่างน้อย 1 คน
+Ownership เก็บด้วย Ticket Foreign Key ถาวร ทำให้ Lab 3 เปลี่ยนเฉพาะ Identity Source ได้โดยไม่เปลี่ยน Data Relationships
 
 ---
 
@@ -173,10 +259,10 @@ Seed ต้อง Idempotent และประกอบด้วย Categories 
 - AC-10: Given เลือกไฟล์ Valid หนึ่งไฟล์และ Invalid หนึ่งไฟล์, when Validate, then Invalid File แสดง Specific Error และ Upload ได้เฉพาะ Permitted File
 - AC-11: Given Permitted File ไม่เกิน 5 MiB และ Active Count น้อยกว่า 5, when Owner Upload, then บันทึก Safe Metadata และแสดง State Active
 - AC-12: Given Ticket Creation สำเร็จแต่ Attachment Upload ล้มเหลว, when แสดงผล, then Ticket ยังคงอยู่ แสดง Ticket Number ระบุ Failed File และ Retry ได้จาก Ticket Detail
-- AC-13: Given Requester A มี Tickets, when My Tickets โหลดเป็น A, then คืนเฉพาะ Tickets ของ A และ Pagination Metadata ถูกต้อง
+- AC-13: Given Requester A มี Tickets, when My Tickets โหลดเป็น A, then คืนเฉพาะ Tickets ของ A และ Pagination Metadata มี `totalOwnedItems`, Filtered `totalItems`, `page`, `pageSize` และ `totalPages` ถูกต้อง
 - AC-14: Given มี Ticket Data ของ A, when Search, Filter, Sort หรือเปลี่ยน Page, then ใช้ Query Behavior และ Stable Ordering ตาม Contract
-- AC-15: Given A ไม่มี Ticket, when My Tickets โหลดโดยไม่มี Search/Filter, then แสดง Empty State และ Create Ticket Action
-- AC-16: Given A มี Ticket แต่ไม่ตรง Search/Filter, when Response ว่าง, then แสดง No-results และ Clear Filters
+- AC-15: Given A ไม่มี Ticket, when My Tickets โหลด, then API คืน `totalOwnedItems = 0` และ UI แสดง Empty State พร้อม Create Ticket Action
+- AC-16: Given A มี Ticket แต่ไม่ตรง Search/Filter, when Response ว่าง, then API คืน `totalOwnedItems > 0` และ `totalItems = 0` โดย UI แสดง No-results พร้อม Clear Filters โดยไม่ยิง Unfiltered Request เพิ่ม
 - AC-17: Given เลือก Requester B, when ขอ Ticket ของ A โดยตรง, then ไม่คืน Ticket Data และตอบ Safe `404`
 - AC-18: Given A เป็นเจ้าของ Ticket, when เปิด Detail, then Ticket Information เป็น Read-only และ Attachment Actions แยกจากข้อมูล Ticket
 - AC-19: Given A เป็นเจ้าของ Active Attachment, when Download, then คืน Original Filename และ File Bytes ผ่าน Controlled API

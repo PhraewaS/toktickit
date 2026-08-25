@@ -18,6 +18,7 @@ Test Levels:
 - **UI Style:** Required Classes/Tokens, Field States, Labels, Messages, Badges และ Button States
 - **Responsive/Visual:** Playwright Viewport Assertions และ Screenshots
 - **E2E:** Multi-requester Flow ตั้งแต่ Create, List, Detail จนถึง Attachment Lifecycle
+- **Final Verification:** รัน Full Required Tests และ Client/Server Builds จาก Final `main` พร้อมเก็บ Command Output เป็น Evidence
 
 ห้าม Skip, Disable, Comment out หรือยอมรับ Required Test ที่ Flaky Final Status ต้องบันทึกจาก Final `main` เท่านั้น
 
@@ -25,7 +26,7 @@ Test Levels:
 
 ## 2. Planned Tests
 
-| Test ID | Type | Requirement / AC | What It Tests | Expected Result | Automated Test File | Final |
+| Test ID | Type | Requirement / AC | What It Tests | Expected Result | Test File / Evidence Path | Final |
 |---|---|---|---|---|---|---|
 | UNIT-01 | Unit | BR-09, AC-05 | Ticket Number Format และ Uniqueness Inputs | ได้ UTC Format ตาม Spec และค่าต่างกัน | `server/tests/lab-02/ticket-number.unit.test.ts` | Pending |
 | UNIT-02 | Unit | BR-13-17, AC-07 | Create Validation, Trimming และ Boundaries | Valid ผ่าน Invalid ได้ Field Details | `server/tests/lab-02/ticket-validation.unit.test.ts` | Pending |
@@ -37,8 +38,8 @@ Test Levels:
 | API-04 | API | BR-19, AC-06 | Repeated Submission Key | `200`, Replay Flag และไม่มี Duplicate | `server/tests/lab-02/create-ticket.api.test.ts` | Pending |
 | API-05 | API | BR-12-17, AC-07 | Invalid Create Values/Reference Data | `400`, Safe Field Errors และไม่สร้าง Ticket | `server/tests/lab-02/create-ticket.api.test.ts` | Pending |
 | API-06 | API | BR-38, AC-08 | Unexpected Create Persistence Failure | Safe `500` ไม่มี Internal Detail | `server/tests/lab-02/create-ticket.api.test.ts` | Pending |
-| API-07 | API | FR-10-11, AC-13-16 | Owned List, Search, Filter, Sort, Page และ Empty Results | มีเฉพาะ Owner Data, Metadata/Order ถูกต้อง | `server/tests/lab-02/my-tickets.api.test.ts` | Pending |
-| API-08 | API | BR-25, AC-14 | Invalid List Parameters | `400 INVALID_QUERY` | `server/tests/lab-02/my-tickets.api.test.ts` | Pending |
+| API-07 | API | FR-10-11, BR-26, AC-13-16 | Owned List, Search, Filter, Sort, Page, Empty และ No-results Metadata | มีเฉพาะ Owner Data; `totalOwnedItems` ไม่ใช้ Search/Filter; `totalItems` ใช้ Search/Filter; Metadata/Order ถูกต้อง | `server/tests/lab-02/my-tickets.api.test.ts` | Pending |
+| API-08 | API | BR-25, AC-14 | Invalid List Parameters และ Out-of-range Page | `400 INVALID_QUERY` หรือ `400 PAGE_OUT_OF_RANGE` พร้อม Safe Field Detail | `server/tests/lab-02/my-tickets.api.test.ts` | Pending |
 | API-09 | API | FR-12-13, AC-17-18 | Owned Detail และ Cross-owner Access | Owner ได้ Detail คนอื่นได้ Safe `404` | `server/tests/lab-02/ticket-detail.api.test.ts` | Pending |
 | API-10 | API | FR-09, BR-27-32, AC-10-12 | Valid/Mixed/Invalid Upload และ Compensation | Allowed Metadata ถูกเก็บ Invalid/Failed File รายงานอย่างปลอดภัย | `server/tests/lab-02/attachments.api.test.ts` | Pending |
 | API-11 | API | BR-28-29, AC-23 | 5 MiB และ Five-active Boundaries | Boundary ผ่าน Excess ถูก Reject Removed File คืน Slot | `server/tests/lab-02/attachments.api.test.ts` | Pending |
@@ -49,16 +50,19 @@ Test Levels:
 | UI-03 | UI | AC-07 | Create Field-level Validation | Message อยู่ใต้ Field และไม่เรียก API | `client/tests/lab-02/CreateTicket.test.tsx` | Pending |
 | UI-04 | UI | BR-18-20, AC-06, AC-08 | Busy, Duplicate Blocking และ Failure Retention | ส่งหนึ่ง Request, Values อยู่, Error ปลอดภัย | `client/tests/lab-02/CreateTicket.test.tsx` | Pending |
 | UI-05 | UI | AC-10-12 | Valid/Invalid Files และ Partial Upload Result | แสดง Per-file State และ Ticket Success ยังคงอยู่ | `client/tests/lab-02/AttachmentSection.test.tsx` | Pending |
-| UI-06 | UI | FR-10-11, AC-13-16 | My Tickets Controls/List/Empty/No-results/Failure | Request, State และ Actions ถูกต้อง | `client/tests/lab-02/MyTickets.test.tsx` | Pending |
+| UI-06 | UI | FR-10-11, BR-26, AC-13-16 | My Tickets Controls/List/Empty/No-results/Failure | แยก Empty/No-results จาก `totalOwnedItems` และ `totalItems` ของ Response เดียว; State/Actions ถูกต้อง | `client/tests/lab-02/MyTickets.test.tsx` | Pending |
 | UI-07 | UI | AC-04, AC-13 | Requester Switch Clear Stale List | ข้อมูล A หายก่อนโหลด B | `client/tests/lab-02/MyTickets.test.tsx` | Pending |
 | UI-08 | UI | FR-12-13, AC-17-18 | Read-only Detail และ Error State | Owned Data แสดง Unavailable State ปลอดภัย | `client/tests/lab-02/RequesterTicketDetail.test.tsx` | Pending |
 | UI-09 | UI | FR-14-16, AC-19-23 | Download, Removal Confirmation/Reason และ Removed State | Active/Removed Actions ถูกต้อง | `client/tests/lab-02/AttachmentSection.test.tsx` | Pending |
 | STYLE-01 | UI Style | AC-25-26 | Tokens, Labels, Read-only/Invalid/Focus/Button/Badge | Required Semantics/Styles ครบ | `client/tests/lab-02/ZenGreenStyles.test.tsx` | Pending |
+| A11Y-01 | Accessibility | FR-19, AC-26 | Required Screens ใช้ Keyboard-only, Accessible Names, Error Associations, Status Announcements และ Non-color-only States | Focus มองเห็นและไปตามลำดับ; Controls/Errors/Status มี Accessible Semantics; State ไม่สื่อด้วยสีอย่างเดียว | `client/tests/lab-02/Accessibility.test.tsx` | Pending |
 | RESP-01 | Responsive | AC-25 | Required Screens บน Desktop/Tablet/Mobile | ไม่มี Page Overflow/Clipping และ Controls ใช้ได้ | `e2e/lab-02/responsive-visual.spec.ts` | Pending |
 | E2E-01 | E2E | AC-02-05, AC-09, AC-13, AC-18 | Select A, Create, Find และ Open Ticket | Official Number ถูก Persist และแสดงใน Owned Flow | `e2e/lab-02/requester-ticket-flow.spec.ts` | Pending |
 | E2E-02 | E2E | AC-10-12, AC-19, AC-21-23 | Upload, Download, Soft-remove และ Block Removed Download | Attachment Lifecycle ผ่านครบ | `e2e/lab-02/requester-ticket-flow.spec.ts` | Pending |
 | E2E-03 | E2E | AC-04, AC-17, AC-20 | Switch A เป็น B และ Direct Cross-owner Access | Data A หายและ Direct Access ถูก Reject | `e2e/lab-02/requester-ticket-flow.spec.ts` | Pending |
-| E2E-04 | E2E | AC-07-08, AC-15-16, AC-24 | Validation, API Failure, Empty และ No-results | Required Failure/Empty Feedback ถูกต้อง | `e2e/lab-02/requester-ticket-flow.spec.ts` | Pending |
+| E2E-04 | E2E | AC-07-08, AC-15-16, AC-24 | Validation, API Failure, Empty และ No-results | Empty ใช้ `totalOwnedItems = 0`; No-results ใช้ `totalOwnedItems > 0` และ `totalItems = 0`; Required Feedback ถูกต้องโดยไม่มี Unfiltered Request เพิ่ม | `e2e/lab-02/requester-ticket-flow.spec.ts` | Pending |
+| VERIFY-01 | Final Test Verification | FR-20, AC-27 | รัน Server, Client และ Playwright Required Test Commands บน Final `main` | ทุก Command Exit `0`; Required Tests ผ่านทั้งหมดและไม่มี Skip/Disable/Comment-out | `artifacts/lab-02/test-results/final-tests.txt` | Pending |
+| VERIFY-02 | Final Build Verification | FR-20, AC-27 | รัน Server และ Client Build Commands บน Final `main` | ทั้งสอง Build Exit `0` และไม่มี Compile/Bundle Error | `artifacts/lab-02/test-results/final-builds.txt` | Pending |
 
 ---
 
@@ -91,8 +95,8 @@ Test Levels:
 | AC-23 | UNIT-04, API-11, UI-09, E2E-02 |
 | AC-24 | API-01, API-02, UI-01, E2E-04 |
 | AC-25 | STYLE-01, RESP-01 |
-| AC-26 | UI-01 ถึง UI-09, STYLE-01, RESP-01 |
-| AC-27 | Required Tests ทั้งหมดและ Final Build Commands |
+| AC-26 | A11Y-01, STYLE-01, RESP-01 |
+| AC-27 | VERIFY-01, VERIFY-02 |
 
 ---
 
@@ -114,13 +118,28 @@ Test Levels:
 
 รันจาก Repository Root โดย Project แยก Client และ Server Packages:
 
+### VERIFY-01 — Full Required Tests on Final `main`
+
 ```text
 npm --prefix server test
 npm --prefix client test
-npm --prefix server run build
-npm --prefix client run build
 npm --prefix client exec playwright test -- --config ../e2e/playwright.config.ts
 ```
+
+Expected Result: ทุก Command Exit `0`, Required Tests ผ่านทั้งหมด และไม่มี Test ที่ Skip, Disable หรือ Comment out
+
+Evidence: เก็บ Complete Console Output พร้อม Final Commit SHA และเวลาที่รันไว้ที่ `artifacts/lab-02/test-results/final-tests.txt` และอ้าง Link ใน Release PR/Final PDF
+
+### VERIFY-02 — Client and Server Builds on Final `main`
+
+```text
+npm --prefix server run build
+npm --prefix client run build
+```
+
+Expected Result: ทั้งสอง Command Exit `0` โดยไม่มี TypeScript Compile Error หรือ Vite Bundle Error
+
+Evidence: เก็บ Complete Console Output พร้อม Final Commit SHA และเวลาที่รันไว้ที่ `artifacts/lab-02/test-results/final-builds.txt` และอ้าง Link ใน Release PR/Final PDF
 
 Database Integration/E2E Setup และ Teardown Commands ต้องเพิ่มใน README ก่อนประกาศว่า Implementation เสร็จ
 
@@ -130,7 +149,7 @@ Database Integration/E2E Setup และ Teardown Commands ต้องเพิ
 
 **Pending Implementation**
 
-เมื่อเสร็จแล้วต้องวาง Complete Unit, API และ UI Passing Output จาก Final `main` ในส่วนนี้ พร้อมระบุ Playwright Viewports และ Screenshot Paths ตามรูปแบบเดียวกับ `docs/lab-01/tests.md`
+เมื่อเสร็จแล้วต้องสรุปผล `VERIFY-01` และ `VERIFY-02` จาก Final `main` ในส่วนนี้ พร้อม Link ไป Evidence Files, Final Commit SHA, วันที่/เวลา, Playwright Viewports และ Screenshot Paths ตามรูปแบบเดียวกับ `docs/lab-01/tests.md`
 
 ---
 
