@@ -25,6 +25,8 @@
 | 6 | ตรวจ Repository Path และห้ามแก้ผิด Project Folder | ใช้ตรวจพบว่า Local Repository Ref เก่า จากนั้น Fetch Remote แบบ Read-only เก็บ Existing Untracked Work ใน Safety Stash และสร้าง `lab2-staging` จาก Completed Lab 1 `origin/main` |
 | 7 | Rewrite Lab 2 documents in Thai using the writing style from Lab 1 while keeping all comprehensive requirements. | ใช้ปรับเอกสารทั้ง 6 ไฟล์เป็นภาษาไทยผสม Technical Terms ตามรูปแบบ Lab 1 โดยคง FR/BR/AC และ Traceability |
 | 8 | Audit the approved contract against every AC and planned test; report missing evidence and do not claim completion early. | จะใช้ตรวจ Final Integration, Missing Tests, Skipped Tests, Ownership Gaps และ UI-spec Deviations ก่อน Release PR |
+| 9 | Okay, the changes are now merged into lab2 staging branch, pull that new change, then make a new feature branch out of that and continue doing the next feature work. | ใช้ Pull `lab2-staging`, สร้าง Issue/Feature Branch สำหรับ Database, Seed และ Development Requester Context แล้ว Implement ตามลำดับ Test DD/TDD |
+| 10 | I recently installed GitHub CLI through winget and authenticated, please figure out if you can now use it. | ใช้ตรวจ GitHub CLI/Auth แบบไม่เปิดเผย Token จากนั้นสร้าง Issue #12 พร้อม Scope, Dependencies, Branch และ Acceptance Criteria ตาม Workflow |
 
 ---
 
