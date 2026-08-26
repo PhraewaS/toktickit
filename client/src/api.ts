@@ -14,6 +14,37 @@ export interface DevelopmentRequester {
   email: string;
 }
 
+export type RequestedPriority = "LOW" | "MEDIUM" | "HIGH";
+
+export interface CreateTicketPayload {
+  submissionKey: string;
+  categoryId: number;
+  relatedSystemId: number;
+  summary: string;
+  requestedPriority: RequestedPriority;
+  description: string;
+}
+
+export interface Ticket {
+  id: number;
+  ticketNumber: string;
+  ticketDate: string;
+  requester: ReferenceDataItem;
+  category: ReferenceDataItem;
+  relatedSystem: ReferenceDataItem;
+  summary: string;
+  requestedPriority: RequestedPriority;
+  description: string;
+  currentStatus: "NEW";
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateTicketResult {
+  data: Ticket;
+  replayed: boolean;
+}
+
 export interface SystemStatus {
   online: boolean;
   categories: Category[];
@@ -21,6 +52,14 @@ export interface SystemStatus {
 
 interface DataResponse<T> {
   data: T;
+}
+
+interface ErrorResponse {
+  error?: {
+    code?: string;
+    message?: string;
+    fields?: Record<string, string>;
+  };
 }
 
 async function fetchData<T>(path: string): Promise<T> {
@@ -47,6 +86,39 @@ export function fetchCategories(): Promise<Category[]> {
 
 export function fetchRelatedSystems(): Promise<RelatedSystem[]> {
   return fetchData<RelatedSystem[]>("/api/related-systems");
+}
+
+export async function createTicket(
+  requesterId: number,
+  payload: CreateTicketPayload,
+): Promise<CreateTicketResult> {
+  const safeMessage = "TokTickIT could not complete the request. Please try again.";
+  let response: Response;
+  try {
+    response = await fetch(`${API_URL}/api/tickets`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...developmentRequesterHeaders(requesterId),
+      },
+      body: JSON.stringify(payload),
+    });
+  } catch {
+    throw new Error(safeMessage);
+  }
+
+  let body: CreateTicketResult & ErrorResponse;
+  try {
+    body = (await response.json()) as CreateTicketResult & ErrorResponse;
+  } catch {
+    throw new Error(safeMessage);
+  }
+
+  if (!response.ok) {
+    throw new Error(body.error?.message ?? safeMessage);
+  }
+
+  return body;
 }
 
 export async function checkSystem(): Promise<SystemStatus> {
