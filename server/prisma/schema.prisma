@@ -10,14 +10,94 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ---------------------------------------------------------------------------
-// Issue 3 — Create and seed IT request categories
-// ---------------------------------------------------------------------------
+enum RequestedPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum TicketStatus {
+  NEW
+}
+
+model RequesterUser {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(150)
+  email     String   @unique @db.VarChar(254)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+  tickets   Ticket[]
+
+  @@index([isActive, name, id], map: "requester_users_active_name_idx")
+  @@map("requester_users")
+}
 
 model Category {
   id        Int      @id @default(autoincrement())
   name      String   @unique
+  isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+  tickets   Ticket[]
 
+  @@index([isActive, name, id], map: "categories_active_name_idx")
   @@map("categories")
+}
+
+model RelatedSystem {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique @db.VarChar(150)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+  tickets   Ticket[]
+
+  @@index([isActive, name, id], map: "related_systems_active_name_idx")
+  @@map("related_systems")
+}
+
+model Ticket {
+  id                Int               @id @default(autoincrement())
+  ticketNumber      String            @unique @db.VarChar(21)
+  requesterId       Int
+  categoryId        Int
+  relatedSystemId   Int
+  summary           String            @db.VarChar(150)
+  requestedPriority RequestedPriority
+  description       String
+  currentStatus     TicketStatus      @default(NEW)
+  submissionKey     String            @db.Uuid
+  createdAt         DateTime          @default(now()) @db.Timestamptz(3)
+  updatedAt         DateTime          @updatedAt @db.Timestamptz(3)
+  requester         RequesterUser     @relation(fields: [requesterId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  category          Category          @relation(fields: [categoryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  relatedSystem     RelatedSystem     @relation(fields: [relatedSystemId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  attachments       Attachment[]
+
+  @@unique([requesterId, submissionKey], map: "tickets_requester_submission_key")
+  @@index([requesterId, createdAt, id], map: "tickets_requester_created_idx")
+  @@index([requesterId, updatedAt, id], map: "tickets_requester_updated_idx")
+  @@index([requesterId, ticketNumber, id], map: "tickets_requester_number_idx")
+  @@index([requesterId, categoryId], map: "tickets_requester_category_idx")
+  @@index([requesterId, relatedSystemId], map: "tickets_requester_system_idx")
+  @@index([requesterId, requestedPriority], map: "tickets_requester_priority_idx")
+  @@index([requesterId, currentStatus], map: "tickets_requester_status_idx")
+  @@map("tickets")
+}
+
+model Attachment {
+  id               Int       @id @default(autoincrement())
+  ticketId         Int
+  originalFilename String    @db.VarChar(255)
+  storedFilename   String    @unique @db.Uuid
+  mimeType         String    @db.VarChar(100)
+  sizeBytes        Int
+  uploadedAt       DateTime  @default(now()) @db.Timestamptz(3)
+  removedAt        DateTime? @db.Timestamptz(3)
+  removalReason    String?   @db.VarChar(500)
+  ticket           Ticket    @relation(fields: [ticketId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@index([ticketId, removedAt, uploadedAt, id], map: "attachments_ticket_state_idx")
+  @@map("attachments")
 }
