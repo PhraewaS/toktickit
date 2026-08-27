@@ -62,6 +62,22 @@ Active reference data is available from:
 - `GET /api/categories`
 - `GET /api/related-systems`
 
+## Lab 2 Ticket Creation
+
+After selecting a Development Requester, the client opens the responsive Create Ticket screen and loads active Categories and Related Systems from the API. Editable fields are Category, Related System, Requested Priority, Ticket Summary, and Description. Ticket Number, Ticket Date, Requester, and Current Status are read-only.
+
+Create a Ticket with:
+
+```text
+POST /api/tickets
+X-Development-Requester-Id: <positive integer>
+Content-Type: application/json
+```
+
+The JSON body requires `submissionKey` (UUID), `categoryId`, `relatedSystemId`, `summary` (5–150 trimmed characters), `requestedPriority` (`LOW`, `MEDIUM`, or `HIGH`), and `description` (10–5000 trimmed characters). The backend owns `requesterId`, generates `TKT-YYYYMMDD-XXXXXXXX`, forces status `NEW`, and returns `ticketDate` as an alias of `createdAt`.
+
+The same requester and `submissionKey` replay the original Ticket with HTTP `200` instead of creating a duplicate. First creation returns HTTP `201`. Attachment upload is intentionally deferred to the dedicated Attachment Lifecycle feature.
+
 ## Testing
 
 Run tests and builds from the repository root:

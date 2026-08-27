@@ -19,8 +19,8 @@
 | Issue / Scope | Branch | Pull Request | Reviewer | Reviewer Verdict | Merge Commit |
 |---|---|---|---|---|---|
 | [Engineering Contract and Test Plan](https://github.com/PhraewaS/toktickit/issues/10) | `feature/lab2-spec-contract` | [#11](https://github.com/PhraewaS/toktickit/pull/11) | Pending | Pending | `c80c9dd` |
-| [Database, Seed and Development Requester Context](https://github.com/PhraewaS/toktickit/issues/12) | `feature/lab2-data-requester-context` | Pending | Pending | Pending | Pending |
-| Ticket Creation API and UI | Pending | Pending | Pending | Pending | Pending |
+| [Database, Seed and Development Requester Context](https://github.com/PhraewaS/toktickit/issues/12) | `feature/lab2-data-requester-context` | [#13](https://github.com/PhraewaS/toktickit/pull/13) | [@guluJa](https://github.com/guluJa) | Approved | `6532a90` |
+| [Ticket Creation API and UI](https://github.com/PhraewaS/toktickit/issues/14) | `feature/lab2-ticket-creation` | [#15](https://github.com/PhraewaS/toktickit/pull/15) | Pending | Pending | Pending |
 | My Tickets API and UI | Pending | Pending | Pending | Pending | Pending |
 | Ticket Detail and Attachment Lifecycle | Pending | Pending | Pending | Pending | Pending |
 | Responsive, E2E and Visual Evidence | Pending | Pending | Pending | Pending | Pending |

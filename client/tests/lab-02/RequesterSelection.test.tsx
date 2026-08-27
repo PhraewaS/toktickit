@@ -5,6 +5,9 @@ import * as api from "../../src/api.js";
 
 vi.mock("../../src/api.js", () => ({
   fetchDevelopmentRequesters: vi.fn(),
+  fetchCategories: vi.fn(),
+  fetchRelatedSystems: vi.fn(),
+  createTicket: vi.fn(),
 }));
 
 const requesters = [
@@ -16,6 +19,12 @@ describe("Development Requester selection", () => {
   beforeEach(() => {
     sessionStorage.clear();
     vi.mocked(api.fetchDevelopmentRequesters).mockResolvedValue(requesters);
+    vi.mocked(api.fetchCategories).mockResolvedValue([
+      { id: 2, name: "Hardware" },
+    ]);
+    vi.mocked(api.fetchRelatedSystems).mockResolvedValue([
+      { id: 7, name: "Corporate Laptop" },
+    ]);
   });
 
   afterEach(() => {
@@ -59,7 +68,9 @@ describe("Development Requester selection", () => {
     render(<App />);
 
     expect(await screen.findByText("Narin Chai")).toBeInTheDocument();
-    expect(screen.queryByRole("combobox")).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("combobox", { name: /development requester/i }),
+    ).not.toBeInTheDocument();
   });
 
   it("clears the requester context when Change requester is selected", async () => {

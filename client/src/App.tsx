@@ -3,6 +3,7 @@ import {
   DevelopmentRequester,
   fetchDevelopmentRequesters,
 } from "./api.js";
+import CreateTicket from "./CreateTicket.js";
 
 type LoadState = "loading" | "ready" | "empty" | "error";
 
@@ -82,17 +83,27 @@ export default function App() {
           </a>
 
           {currentRequester && (
-            <div className="requester-context" aria-label="Current Development Requester">
-              <span>
-                Requester <strong>{currentRequester.name}</strong>
-              </span>
-              <button
-                className="button button--secondary"
-                type="button"
-                onClick={handleChangeRequester}
-              >
-                Change requester
-              </button>
+            <div className="app-shell-actions">
+              <nav className="app-nav" aria-label="Primary navigation">
+                <span className="app-nav__link" aria-disabled="true">
+                  My Tickets
+                </span>
+                <a className="app-nav__link app-nav__link--active" href="#create-ticket" aria-current="page">
+                  Create Ticket
+                </a>
+              </nav>
+              <div className="requester-context" aria-label="Current Development Requester">
+                <span>
+                  Requester <strong>{currentRequester.name}</strong>
+                </span>
+                <button
+                  className="button button--secondary"
+                  type="button"
+                  onClick={handleChangeRequester}
+                >
+                  Change requester
+                </button>
+              </div>
             </div>
           )}
         </div>
@@ -100,16 +111,7 @@ export default function App() {
 
       <main className="page-content">
         {currentRequester ? (
-          <section className="workspace-card" aria-labelledby="workspace-heading">
-            <span className="eyebrow">Development requester selected</span>
-            <h1 id="workspace-heading">Welcome, {currentRequester.name}</h1>
-            <p className="lead-copy">
-              Your requester context is ready for the Lab 2 ticket workflow.
-            </p>
-            <div className="development-notice" role="note">
-              This Development Requester selection is for testing only and is not authentication.
-            </div>
-          </section>
+          <CreateTicket requester={currentRequester} />
         ) : (
           <section className="selection-card" aria-labelledby="selection-heading">
             <span className="eyebrow">Lab 2 requester workspace</span>
