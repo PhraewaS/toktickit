@@ -7,6 +7,7 @@ import {
   CreateTicketInput,
   validateCreateTicketInput,
 } from "./ticket-validation.js";
+import { parseTicketListQuery } from "./ticket-query.js";
 
 const publicTicketRelations = {
   requester: { select: { id: true, name: true } },
@@ -38,6 +39,20 @@ function serializeTicket(ticket: PublicTicketRecord) {
     description: ticket.description,
     currentStatus: ticket.currentStatus,
     createdAt,
+    updatedAt: ticket.updatedAt.toISOString(),
+  };
+}
+
+function serializeTicketListItem(ticket: PublicTicketRecord) {
+  return {
+    id: ticket.id,
+    ticketNumber: ticket.ticketNumber,
+    summary: ticket.summary,
+    category: ticket.category,
+    relatedSystem: ticket.relatedSystem,
+    requestedPriority: ticket.requestedPriority,
+    currentStatus: ticket.currentStatus,
+    createdAt: ticket.createdAt.toISOString(),
     updatedAt: ticket.updatedAt.toISOString(),
   };
 }
@@ -177,6 +192,88 @@ export const createTicket: RequestHandler = async (
       error: {
         code: "INTERNAL_ERROR",
         message: "TokTickIT could not complete the request. Please try again.",
+      },
+    });
+  }
+};
+
+export const listTickets: RequestHandler = async (
+  req: Request,
+  res: Response,
+) => {
+  const queryResult = parseTicketListQuery(req.query);
+  if (!queryResult.success) {
+    res.status(400).json({
+      error: {
+        code: "INVALID_QUERY",
+        message: "Review the Ticket list filters and try again.",
+        fields: queryResult.fields,
+      },
+    });
+    return;
+  }
+
+  const requester = (req as DevelopmentRequesterRequest).developmentRequester;
+  const query = queryResult.data;
+  const requesterWhere: Prisma.TicketWhereInput = { requesterId: requester.id };
+  const filters: Prisma.TicketWhereInput[] = [{ requesterId: requester.id }];
+
+  if (query.search) {
+    filters.push({
+      OR: [
+        { ticketNumber: { contains: query.search, mode: "insensitive" } },
+        { summary: { contains: query.search, mode: "insensitive" } },
+      ],
+    });
+  }
+  if (query.categoryId !== undefined) filters.push({ categoryId: query.categoryId });
+  if (query.relatedSystemId !== undefined) filters.push({ relatedSystemId: query.relatedSystemId });
+  if (query.requestedPriority) filters.push({ requestedPriority: query.requestedPriority });
+  if (query.currentStatus) filters.push({ currentStatus: query.currentStatus });
+
+  const where: Prisma.TicketWhereInput = { AND: filters };
+  const prisma = getPrisma();
+  try {
+    const [totalOwnedItems, totalItems] = await Promise.all([
+      prisma.ticket.count({ where: requesterWhere }),
+      prisma.ticket.count({ where }),
+    ]);
+    const totalPages = totalItems === 0 ? 0 : Math.ceil(totalItems / query.pageSize);
+    if (totalItems > 0 && query.page > totalPages) {
+      res.status(400).json({
+        error: {
+          code: "PAGE_OUT_OF_RANGE",
+          message: "The requested page is not available.",
+          fields: { page: `Page must be between 1 and ${totalPages}.` },
+        },
+      });
+      return;
+    }
+
+    const tickets = await prisma.ticket.findMany({
+      where,
+      include: publicTicketRelations,
+      orderBy: [{ [query.sortBy]: query.sortOrder }, { id: "desc" }],
+      skip: (query.page - 1) * query.pageSize,
+      take: query.pageSize,
+    });
+
+    res.status(200).json({
+      data: tickets.map(serializeTicketListItem),
+      pagination: {
+        page: query.page,
+        pageSize: query.pageSize,
+        totalItems,
+        totalOwnedItems,
+        totalPages,
+      },
+    });
+  } catch (error) {
+    console.error("Unable to list Tickets:", error);
+    res.status(500).json({
+      error: {
+        code: "INTERNAL_ERROR",
+        message: "TokTickIT could not load Tickets. Please try again.",
       },
     });
   }

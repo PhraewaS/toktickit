@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import { getPrisma } from "./prisma.js";
 import { requireDevelopmentRequester } from "./requester-context.js";
-import { createTicket } from "./tickets.js";
+import { createTicket, listTickets } from "./tickets.js";
 
 export const app = express();
 
@@ -63,6 +63,7 @@ app.get("/api/related-systems", async (_req: Request, res: Response) => {
 });
 
 app.post("/api/tickets", requireDevelopmentRequester, createTicket);
+app.get("/api/tickets", requireDevelopmentRequester, listTickets);
 
 function sendReferenceDataUnavailable(res: Response, error: unknown) {
   console.error("Unable to load reference data:", error);

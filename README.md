@@ -78,6 +78,17 @@ The JSON body requires `submissionKey` (UUID), `categoryId`, `relatedSystemId`, 
 
 The same requester and `submissionKey` replay the original Ticket with HTTP `200` instead of creating a duplicate. First creation returns HTTP `201`. Attachment upload is intentionally deferred to the dedicated Attachment Lifecycle feature.
 
+## Lab 2 My Tickets
+
+After selecting a Development Requester, the `My Tickets` screen loads only tickets owned by that requester through:
+
+```text
+GET /api/tickets
+X-Development-Requester-Id: <positive integer>
+```
+
+The endpoint supports case-insensitive `search` in Ticket Number/Summary, Category and Related System filters, Requested Priority and Current Status filters, stable sorting, and page sizes 10, 20, or 50. Responses include `totalOwnedItems`, `totalItems`, `page`, `pageSize`, and `totalPages` so the client can distinguish an empty requester from a filtered no-results state without a second unfiltered request.
+
 ## Testing
 
 Run tests and builds from the repository root:

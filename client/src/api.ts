@@ -40,6 +40,33 @@ export interface Ticket {
   updatedAt: string;
 }
 
+export type TicketListItem = Omit<Ticket, "ticketDate" | "requester" | "description">;
+
+export interface TicketPagination {
+  page: number;
+  pageSize: 10 | 20 | 50;
+  totalItems: number;
+  totalOwnedItems: number;
+  totalPages: number;
+}
+
+export interface TicketListResult {
+  data: TicketListItem[];
+  pagination: TicketPagination;
+}
+
+export interface TicketListQuery {
+  search?: string;
+  categoryId?: number;
+  relatedSystemId?: number;
+  requestedPriority?: RequestedPriority;
+  currentStatus?: "NEW";
+  sortBy?: "ticketNumber" | "summary" | "createdAt" | "updatedAt";
+  sortOrder?: "asc" | "desc";
+  page?: number;
+  pageSize?: 10 | 20 | 50;
+}
+
 export interface CreateTicketResult {
   data: Ticket;
   replayed: boolean;
@@ -118,6 +145,35 @@ export async function createTicket(
     throw new Error(body.error?.message ?? safeMessage);
   }
 
+  return body;
+}
+
+export async function fetchMyTickets(
+  requesterId: number,
+  query: TicketListQuery = {},
+): Promise<TicketListResult> {
+  const params = new URLSearchParams();
+  for (const [key, value] of Object.entries(query)) {
+    if (value !== undefined && value !== "") params.set(key, String(value));
+  }
+  const suffix = params.toString() ? `?${params.toString()}` : "";
+  const safeMessage = "TokTickIT could not load Tickets. Please try again.";
+  let response: Response;
+  try {
+    response = await fetch(`${API_URL}/api/tickets${suffix}`, {
+      headers: developmentRequesterHeaders(requesterId),
+    });
+  } catch {
+    throw new Error(safeMessage);
+  }
+
+  let body: TicketListResult & ErrorResponse;
+  try {
+    body = (await response.json()) as TicketListResult & ErrorResponse;
+  } catch {
+    throw new Error(safeMessage);
+  }
+  if (!response.ok) throw new Error(body.error?.message ?? safeMessage);
   return body;
 }
 
