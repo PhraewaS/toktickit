@@ -101,7 +101,12 @@ export default function MyTickets({
     setRequestedPriority("");
     setCurrentStatus("");
     setPage(1);
-    setAppliedQuery({ sortBy: "createdAt", sortOrder: "desc", page: 1, pageSize });
+    setAppliedQuery({
+      sortBy,
+      sortOrder,
+      page: 1,
+      pageSize,
+    });
   }
 
   function changePage(nextPage: number) {

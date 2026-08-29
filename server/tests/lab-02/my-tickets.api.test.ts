@@ -134,5 +134,20 @@ describe("GET /api/tickets", () => {
     expect(response.body.error.code).toBe("INVALID_QUERY");
     expect(prismaMocks.ticketCount).not.toHaveBeenCalled();
   });
-});
 
+  it("returns a safe internal error when the database fails unexpectedly", async () => {
+    const internalDetail = "SQL password and filesystem path must never be exposed";
+    prismaMocks.ticketCount.mockReset().mockRejectedValue(new Error(internalDetail));
+
+    const response = await request(app)
+      .get("/api/tickets")
+      .set("X-Development-Requester-Id", "1");
+
+    expect(response.status).toBe(500);
+    expect(response.body.error).toEqual({
+      code: "INTERNAL_ERROR",
+      message: "TokTickIT could not load Tickets. Please try again.",
+    });
+    expect(JSON.stringify(response.body)).not.toContain(internalDetail);
+  });
+});
