@@ -45,6 +45,7 @@ textarea {
 }
 
 .app-header {
+  margin-top: 1rem;
   background: rgba(255, 255, 255, 0.94);
   border-bottom: 1px solid var(--border);
   backdrop-filter: blur(12px);
