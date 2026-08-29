@@ -57,6 +57,7 @@ export default function MyTickets({
 
   const load = useCallback(async (query: TicketListQuery) => {
     setState("loading");
+    setResult(null);
     try {
       const [tickets, loadedCategories, loadedSystems] = await Promise.all([
         fetchMyTickets(requester.id, query),
