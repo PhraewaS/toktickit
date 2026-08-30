@@ -21,7 +21,7 @@
 | [Engineering Contract and Test Plan](https://github.com/PhraewaS/toktickit/issues/10) | `feature/lab2-spec-contract` | [#11](https://github.com/PhraewaS/toktickit/pull/11) | Pending | Pending | `c80c9dd` |
 | [Database, Seed and Development Requester Context](https://github.com/PhraewaS/toktickit/issues/12) | `feature/lab2-data-requester-context` | [#13](https://github.com/PhraewaS/toktickit/pull/13) | [@guluJa](https://github.com/guluJa) | Approved | `6532a90` |
 | [Ticket Creation API and UI](https://github.com/PhraewaS/toktickit/issues/14) | `feature/lab2-ticket-creation` | [#15](https://github.com/PhraewaS/toktickit/pull/15) | Pending | Pending | Pending |
-| My Tickets API and UI | Pending | Pending | Pending | Pending | Pending |
+| [My Tickets API และ UI](https://github.com/PhraewaS/toktickit/issues/16) | `feature/lab2-my-tickets` | [#17](https://github.com/PhraewaS/toktickit/pull/17) | Pending | Pending | Pending |
 | Ticket Detail and Attachment Lifecycle | Pending | Pending | Pending | Pending | Pending |
 | Responsive, E2E and Visual Evidence | Pending | Pending | Pending | Pending | Pending |
 | Release Integration | `lab2-staging` → `main` | Pending | Pending | Pending | Pending |
@@ -29,6 +29,20 @@
 ---
 
 ## Reviewer Comments I Received
+
+### PR / Issue: My Tickets API และ UI (#17)
+
+**Reviewer comment:**
+
+> เสนอให้แก้ `clearFilters()` ให้ค่า Sort บน UI ตรงกับ Query, เพิ่ม Test สำหรับ Requester A → B, ขยาย UI-06 ให้ครอบคลุม Controls/States และเพิ่ม API Test สำหรับ Unexpected Database Failure
+
+**How I responded:**
+
+> แก้ไขใน commit [`3539fba`](https://github.com/PhraewaS/toktickit/commit/3539fba846e4bad3a41548bd4156a35ad25bea30) และ [`eae80d4`](https://github.com/PhraewaS/toktickit/commit/eae80d43f946673dd1ba2540705f3fa6bba955e6) พร้อมแนบผลการตรวจสอบใน [PR #17](https://github.com/PhraewaS/toktickit/pull/17#issuecomment-5464671067)
+
+**Final reviewer response:**
+
+> Pending — รอการตรวจซ้ำและ Approval บน PR #17
 
 ### PR / Issue: Pending
 

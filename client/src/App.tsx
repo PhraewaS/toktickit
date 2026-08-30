@@ -4,6 +4,7 @@ import {
   fetchDevelopmentRequesters,
 } from "./api.js";
 import CreateTicket from "./CreateTicket.js";
+import MyTickets from "./MyTickets.js";
 
 type LoadState = "loading" | "ready" | "empty" | "error";
 
@@ -15,6 +16,7 @@ export default function App() {
   const [selectedRequesterId, setSelectedRequesterId] = useState("");
   const [currentRequester, setCurrentRequester] =
     useState<DevelopmentRequester | null>(null);
+  const [activeView, setActiveView] = useState<"create" | "my-tickets">("create");
 
   const loadRequesters = useCallback(async () => {
     setLoadState("loading");
@@ -62,12 +64,14 @@ export default function App() {
 
     sessionStorage.setItem(REQUESTER_SESSION_KEY, String(requester.id));
     setCurrentRequester(requester);
+    setActiveView("create");
   }
 
   function handleChangeRequester() {
     sessionStorage.removeItem(REQUESTER_SESSION_KEY);
     setCurrentRequester(null);
     setSelectedRequesterId("");
+    setActiveView("create");
   }
 
   return (
@@ -85,10 +89,26 @@ export default function App() {
           {currentRequester && (
             <div className="app-shell-actions">
               <nav className="app-nav" aria-label="Primary navigation">
-                <span className="app-nav__link" aria-disabled="true">
+                <a
+                  className={`app-nav__link ${activeView === "my-tickets" ? "app-nav__link--active" : ""}`}
+                  href="#my-tickets"
+                  aria-current={activeView === "my-tickets" ? "page" : undefined}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setActiveView("my-tickets");
+                  }}
+                >
                   My Tickets
-                </span>
-                <a className="app-nav__link app-nav__link--active" href="#create-ticket" aria-current="page">
+                </a>
+                <a
+                  className={`app-nav__link ${activeView === "create" ? "app-nav__link--active" : ""}`}
+                  href="#create-ticket"
+                  aria-current={activeView === "create" ? "page" : undefined}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    setActiveView("create");
+                  }}
+                >
                   Create Ticket
                 </a>
               </nav>
@@ -111,7 +131,11 @@ export default function App() {
 
       <main className="page-content">
         {currentRequester ? (
-          <CreateTicket requester={currentRequester} />
+          activeView === "my-tickets" ? (
+            <MyTickets requester={currentRequester} onCreateTicket={() => setActiveView("create")} />
+          ) : (
+            <CreateTicket requester={currentRequester} />
+          )
         ) : (
           <section className="selection-card" aria-labelledby="selection-heading">
             <span className="eyebrow">Lab 2 requester workspace</span>
