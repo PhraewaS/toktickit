@@ -2,7 +2,7 @@
 
 แผน Test DD, TDD และ Acceptance-Criterion Traceability สำหรับ TokTickIT Lab 2
 
-**สถานะ:** วางแผนก่อน Implementation แล้ว ส่วน Final Results ยังเป็น Pending
+**สถานะ:** Planned Tests ถูก Implement และตรวจสอบผ่านบน `lab2-staging` แล้ว ส่วนคอลัมน์ `Final` และ Final Results ยังคง `Pending` จนกว่าจะรันยืนยันบน Final `main` ตาม Labsheet
 
 ---
 
@@ -66,7 +66,24 @@ Test Levels:
 
 ---
 
-## 3. Acceptance-Criterion Traceability
+## 3. Current Implementation Verification (`lab2-staging`)
+
+ตรวจสอบชุดโค้ดที่ถูกรวมใน `lab2-staging` แล้ว โดย Feature ล่าสุดมาจาก commit [`f2f50a2`](https://github.com/PhraewaS/toktickit/commit/f2f50a2ebf192b2d1e31f1e0753e61d5d28549ef) และถูกรวมด้วย merge commit [`6b42926`](https://github.com/PhraewaS/toktickit/commit/6b429266b5b9f125ddebeed538cc569f5a398dc7)
+
+| Verification | Result |
+|---|---|
+| Server tests | 46 passed |
+| Client tests | 31 passed |
+| Playwright E2E/Responsive | 15 passed across desktop/tablet/mobile |
+| Server build | Passed |
+| Client build | Passed |
+| Screenshot evidence | `artifacts/lab-02/screenshots/{create-ticket,my-tickets,ticket-detail}/{desktop,tablet,mobile}.png` |
+
+ผลชุดนี้ยืนยัน Implementation บน `lab2-staging` เท่านั้น ยังไม่ใช่ Final Verification ตาม AC-27 เพราะ `origin/main` ยังไม่ได้รวม `lab2-staging` ขณะบันทึกเอกสารนี้
+
+---
+
+## 4. Acceptance-Criterion Traceability
 
 | AC | Planned Tests |
 |---|---|
@@ -100,21 +117,21 @@ Test Levels:
 
 ---
 
-## 4. Responsive and Visual Checklist
+## 5. Responsive and Visual Checklist
 
 ตรวจ Selection, Create Ticket, My Tickets และ Ticket Detail ที่ Desktop (`>=992px`), Tablet (`768-991px`) และ Mobile (`<768px`)
 
-- [ ] Zen Green Tokens และ Button Hierarchy ตรง `ui-spec.md`
-- [ ] Editable, Read-only, Invalid, Disabled, Busy และ Focused Controls แยกชัดเจน
-- [ ] Required Marker และ Validation Message อยู่ตำแหน่งถูกต้อง
-- [ ] ไม่มี Clipped Labels, Overlap, Hidden Action, Unreadable Filename หรือ Horizontal Page Overflow
-- [ ] Desktop Table/Mobile Cards, Filters, Sort, Pagination และ Attachment Controls ใช้งานได้
-- [ ] Loading, Empty, No-results, Success, Removed และ Failure States เข้าใจได้โดยไม่ใช้สีอย่างเดียว
-- [ ] Screenshot Paths ชี้ไป `artifacts/lab-02/screenshots/{create-ticket,my-tickets,ticket-detail}/{desktop,tablet,mobile}.png` และภาพอ่านได้
+- [x] Zen Green Tokens และ Button Hierarchy ตรง `ui-spec.md` (ตรวจบน `lab2-staging`)
+- [x] Editable, Read-only, Invalid, Disabled, Busy และ Focused Controls แยกชัดเจน (ตรวจบน `lab2-staging`)
+- [x] Required Marker และ Validation Message อยู่ตำแหน่งถูกต้อง (ตรวจบน `lab2-staging`)
+- [x] ไม่มี Clipped Labels, Overlap, Hidden Action, Unreadable Filename หรือ Horizontal Page Overflow (ตรวจบน `lab2-staging`)
+- [x] Desktop Table/Mobile Cards, Filters, Sort, Pagination และ Attachment Controls ใช้งานได้ (ตรวจบน `lab2-staging`)
+- [x] Loading, Empty, No-results, Success, Removed และ Failure States เข้าใจได้โดยไม่ใช้สีอย่างเดียว (ตรวจบน `lab2-staging`)
+- [x] Screenshot Paths ชี้ไป `artifacts/lab-02/screenshots/{create-ticket,my-tickets,ticket-detail}/{desktop,tablet,mobile}.png` และภาพอ่านได้ (ตรวจบน `lab2-staging`)
 
 ---
 
-## 5. Test Commands
+## 6. Test Commands
 
 รันจาก Repository Root โดย Project แยก Client และ Server Packages:
 
@@ -145,7 +162,7 @@ Database Integration/E2E Setup และ Teardown Commands ต้องเพิ
 
 ---
 
-## 6. Final Results
+## 7. Final Results
 
 **Pending Implementation**
 
@@ -153,7 +170,7 @@ Database Integration/E2E Setup และ Teardown Commands ต้องเพิ
 
 ---
 
-## 7. Known Limitations or Deferred Tests
+## 8. Known Limitations or Deferred Tests
 
 - ตอนวางแผนยังไม่มี Approved Limitation หรือ Deferred Required Test
 - Authentication จริง, IT Staff Workflow, Comments/Notes/Actions Taken, Status Changes และ Administration เป็น Excluded Lab 2 Scope ไม่ใช่ Deferred Required Test
