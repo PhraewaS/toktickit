@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { mkdir, unlink, writeFile } from "node:fs/promises";
+import { mkdir, readFile, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 import multer from "multer";
 import { Prisma } from "@prisma/client";
@@ -281,17 +281,13 @@ export const downloadAttachment: RequestHandler = async (req, res) => {
       attachmentNotFound(res);
       return;
     }
+    const file = await readFile(path.join(storageDirectory, attachment.storedFilename));
     res.type(attachment.mimeType);
     res.setHeader("Content-Disposition", `attachment; filename="${sanitizeOriginalFilename(attachment.originalFilename).replaceAll('"', "")}"`);
-    res.sendFile(path.join(storageDirectory, attachment.storedFilename), (error) => {
-      if (error && !res.headersSent) {
-        console.error("Unable to download Attachment:", error);
-        attachmentNotFound(res);
-      }
-    });
+    res.send(file);
   } catch (error) {
-    console.error("Unable to find Attachment:", error);
-    attachmentNotFound(res);
+    console.error("Unable to download Attachment:", error);
+    sendUploadError(res, 500, "INTERNAL_ERROR", "TokTickIT could not download the Attachment. Please try again.");
   }
 };
 

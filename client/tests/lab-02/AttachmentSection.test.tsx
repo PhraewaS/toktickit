@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import AttachmentSection from "../../src/AttachmentSection.js";
 
 const apiMocks = vi.hoisted(() => ({
@@ -32,6 +32,11 @@ describe("AttachmentSection", () => {
     apiMocks.removeAttachment.mockResolvedValue({ ...active, removedAt: "2026-08-25T08:30:00.000Z", removalReason: "Wrong file", state: "REMOVED" });
   });
 
+  afterEach(() => {
+    vi.restoreAllMocks();
+    vi.unstubAllGlobals();
+  });
+
   it("keeps removed metadata visible without active-file actions", () => {
     render(<AttachmentSection requesterId={1} ticketId={42} attachments={[{ ...active, removedAt: "2026-08-25T08:30:00.000Z", removalReason: "Wrong file", state: "REMOVED" }]} onChanged={vi.fn()} />);
     expect(screen.getByText("Removed")).toBeInTheDocument();
@@ -39,14 +44,29 @@ describe("AttachmentSection", () => {
     expect(screen.queryByRole("button", { name: "Remove" })).not.toBeInTheDocument();
   });
 
-  it("shows specific validation and retains valid selection behavior", async () => {
+  it("reports invalid files while retaining valid files for upload", async () => {
     const user = userEvent.setup();
-    render(<AttachmentSection requesterId={1} ticketId={42} attachments={[]} onChanged={vi.fn()} />);
-    const invalid = new File(["x"], "bad.pdf", { type: "image/png" });
-    await user.upload(screen.getByLabelText("Add attachments"), invalid);
-    expect(screen.getByRole("alert")).toHaveTextContent(/Only JPG, JPEG, PNG, WEBP, and PDF/i);
     const valid = new File(["pdf"], "report.pdf", { type: "application/pdf" });
-    await user.upload(screen.getByLabelText("Add attachments"), valid);
+    const invalid = new File(["x"], "bad.pdf", { type: "image/png" });
+    render(<AttachmentSection requesterId={1} ticketId={42} attachments={[]} onChanged={vi.fn()} />);
+    await user.upload(screen.getByLabelText("Add attachments"), [valid, invalid]);
+    expect(screen.getByRole("alert")).toHaveTextContent(/Invalid file.*bad\.pdf/i);
     expect(screen.getByText(/report\.pdf/)).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Confirm add attachments" }));
+    expect(apiMocks.uploadTicketAttachments).toHaveBeenCalledWith(1, 42, [valid]);
+  });
+
+  it("downloads an attachment with the active requester and attachment id", async () => {
+    const user = userEvent.setup();
+    const createObjectURL = vi.fn(() => "blob:test");
+    const revokeObjectURL = vi.fn();
+    vi.stubGlobal("URL", { createObjectURL, revokeObjectURL });
+    vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => undefined);
+    apiMocks.downloadAttachment.mockResolvedValue({ blob: new Blob(["bytes"], { type: "image/png" }), filename: "report.png" });
+    render(<AttachmentSection requesterId={7} ticketId={42} attachments={[active]} onChanged={vi.fn()} />);
+    await user.click(screen.getByRole("button", { name: "Download" }));
+    expect(apiMocks.downloadAttachment).toHaveBeenCalledWith(7, 8);
+    expect(createObjectURL).toHaveBeenCalled();
+    expect(revokeObjectURL).toHaveBeenCalledWith("blob:test");
   });
 });

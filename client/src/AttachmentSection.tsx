@@ -59,20 +59,22 @@ export default function AttachmentSection({
 
   function selectFiles(event: ChangeEvent<HTMLInputElement>) {
     const files = Array.from(event.target.files ?? []);
-    const invalid = files.map(validateFile).find(Boolean);
-    if (invalid) {
-      setValidation(invalid);
-      setSelected([]);
-      return;
-    }
-    if (files.length > 5 || active.length + files.length > 5) {
+    const valid: File[] = [];
+    const invalid: string[] = [];
+    files.forEach((file) => {
+      const message = validateFile(file);
+      if (message) invalid.push(`${file.name}: ${message}`);
+      else valid.push(file);
+    });
+
+    if (valid.length > 5 || active.length + valid.length > 5) {
       setValidation("A Ticket can have at most five active Attachments.");
       setSelected([]);
       return;
     }
-    setValidation("");
+    setValidation(invalid.length > 0 ? `Invalid file(s): ${invalid.join(" ")}` : "");
     setFailure("");
-    setSelected(files);
+    setSelected(valid);
   }
 
   async function upload() {

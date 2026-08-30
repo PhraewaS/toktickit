@@ -7,9 +7,11 @@ const mocks = vi.hoisted(() => ({
   attachmentCount: vi.fn(),
   attachmentCreate: vi.fn(),
   attachmentFindFirst: vi.fn(),
+  attachmentFindMany: vi.fn(),
   attachmentUpdate: vi.fn(),
   transaction: vi.fn(),
   mkdir: vi.fn(),
+  readFile: vi.fn(),
   writeFile: vi.fn(),
   unlink: vi.fn(),
 }));
@@ -22,6 +24,7 @@ vi.mock("../../src/prisma.js", () => ({
       count: mocks.attachmentCount,
       create: mocks.attachmentCreate,
       findFirst: mocks.attachmentFindFirst,
+      findMany: mocks.attachmentFindMany,
       update: mocks.attachmentUpdate,
     },
     $transaction: mocks.transaction,
@@ -30,6 +33,7 @@ vi.mock("../../src/prisma.js", () => ({
 
 vi.mock("node:fs/promises", () => ({
   mkdir: mocks.mkdir,
+  readFile: mocks.readFile,
   writeFile: mocks.writeFile,
   unlink: mocks.unlink,
 }));
@@ -55,13 +59,14 @@ describe("Attachment lifecycle APIs", () => {
     mocks.attachmentCount.mockResolvedValue(0);
     mocks.attachmentCreate.mockResolvedValue(attachment);
     mocks.mkdir.mockResolvedValue(undefined);
+    mocks.readFile.mockResolvedValue(Buffer.from("PNG bytes"));
     mocks.writeFile.mockResolvedValue(undefined);
     mocks.unlink.mockResolvedValue(undefined);
     mocks.transaction.mockImplementation((callback) => callback({
       ticket: { findFirst: mocks.ticketFindFirst },
       attachment: { count: mocks.attachmentCount, create: mocks.attachmentCreate },
     }));
-    mocks.attachmentFindFirst.mockResolvedValue({ id: 8 });
+    mocks.attachmentFindFirst.mockResolvedValue({ ...attachment, storedFilename: "stored-uuid" });
     mocks.attachmentUpdate.mockResolvedValue({ ...attachment, removedAt: new Date("2026-08-25T08:30:00.000Z"), removalReason: "Wrong file" });
   });
 
@@ -86,6 +91,40 @@ describe("Attachment lifecycle APIs", () => {
     expect(limited.body.error.code).toBe("ATTACHMENT_LIMIT");
   });
 
+  it("allows a replacement upload after soft-removing one of five active attachments", async () => {
+    mocks.attachmentCount.mockResolvedValue(5);
+    const full = await request(app)
+      .post("/api/tickets/42/attachments")
+      .set("X-Development-Requester-Id", "1")
+      .attach("files", Buffer.from("x"), { filename: "new.png", contentType: "image/png" });
+    expect(full.status).toBe(409);
+
+    const removal = await request(app)
+      .delete("/api/attachments/8")
+      .set("X-Development-Requester-Id", "1")
+      .send({ reason: "Replace file" });
+    expect(removal.status).toBe(200);
+
+    mocks.attachmentCount.mockResolvedValue(4);
+    const replacement = await request(app)
+      .post("/api/tickets/42/attachments")
+      .set("X-Development-Requester-Id", "1")
+      .attach("files", Buffer.from("x"), { filename: "new.png", contentType: "image/png" });
+    expect(replacement.status).toBe(201);
+  });
+
+  it("downloads owned active attachments with bytes and controlled metadata", async () => {
+    const fileBytes = Buffer.from("PNG bytes");
+    mocks.readFile.mockResolvedValue(fileBytes);
+    const response = await request(app)
+      .get("/api/attachments/8/download")
+      .set("X-Development-Requester-Id", "1");
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(fileBytes);
+    expect(response.headers["content-type"]).toMatch(/^image\/png/);
+    expect(response.headers["content-disposition"]).toBe('attachment; filename="report.png"');
+  });
+
   it("soft-removes an owned active attachment and validates the reason", async () => {
     const invalid = await request(app).delete("/api/attachments/8").set("X-Development-Requester-Id", "1").send({ reason: "no" });
     expect(invalid.status).toBe(400);
@@ -103,6 +142,32 @@ describe("Attachment lifecycle APIs", () => {
     expect(response.body).toEqual({ error: { code: "ATTACHMENT_NOT_FOUND", message: "Attachment was not found." } });
     const removal = await request(app).delete("/api/attachments/8").set("X-Development-Requester-Id", "2").send({ reason: "Wrong file" });
     expect(removal.status).toBe(404);
+  });
+
+  it("hides ticket attachments from another requester with safe 404", async () => {
+    mocks.requesterFindFirst.mockResolvedValue({ id: 2, name: "Other Requester", email: "other@example.test" });
+    mocks.ticketFindFirst.mockResolvedValue(null);
+    const response = await request(app)
+      .get("/api/tickets/42/attachments")
+      .set("X-Development-Requester-Id", "2");
+    expect(response.status).toBe(404);
+    expect(response.body).toEqual({ error: { code: "TICKET_NOT_FOUND", message: "Ticket was not found." } });
+    expect(mocks.ticketFindFirst).toHaveBeenLastCalledWith({
+      where: { id: 42, requesterId: 2 },
+      select: { id: true },
+    });
+  });
+
+  it("returns safe 500 for an unexpected database failure during download", async () => {
+    const internalDetail = "SQL password /var/private/attachments";
+    mocks.attachmentFindFirst.mockRejectedValue(new Error(internalDetail));
+    vi.spyOn(console, "error").mockImplementation(() => undefined);
+    const response = await request(app)
+      .get("/api/attachments/8/download")
+      .set("X-Development-Requester-Id", "1");
+    expect(response.status).toBe(500);
+    expect(response.body.error.code).toBe("INTERNAL_ERROR");
+    expect(JSON.stringify(response.body)).not.toContain(internalDetail);
   });
 
   it("compensates stored files when metadata persistence fails", async () => {
