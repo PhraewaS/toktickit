@@ -14,6 +14,7 @@ TokTickIT is an IT service desk application developed for CPE 334. Lab 2 adds th
 - Node.js
 - npm
 - PostgreSQL
+- Playwright Chromium (for Responsive/E2E tests)
 
 ## Frontend Setup
 
@@ -111,6 +112,16 @@ npm --prefix client test
 npm --prefix server run build
 npm --prefix client run build
 ```
+
+Run the Lab 2 Responsive, Accessibility, E2E, and Visual Evidence suite after the local PostgreSQL service is available:
+
+```bash
+npm --prefix e2e ci
+npm --prefix e2e exec playwright install chromium
+npm --prefix e2e exec playwright test -- --config e2e/playwright.config.ts
+```
+
+The Playwright configuration starts the server and client dev processes, applies the committed migrations, and runs the idempotent seed during global setup. It writes HTML reports to `artifacts/lab-02/playwright-report/` and viewport screenshots to `artifacts/lab-02/screenshots/{create-ticket,my-tickets,ticket-detail}/{desktop,tablet,mobile}.png`.
 
 ## Security
 
