@@ -3,6 +3,15 @@ import cors from "cors";
 import { getPrisma } from "./prisma.js";
 import { requireDevelopmentRequester } from "./requester-context.js";
 import { createTicket, listTickets } from "./tickets.js";
+import {
+  attachmentUpload,
+  downloadAttachment,
+  getTicketDetail,
+  handleMulterError,
+  listTicketAttachments,
+  removeAttachment,
+  uploadTicketAttachments,
+} from "./attachments.js";
 
 export const app = express();
 
@@ -64,6 +73,25 @@ app.get("/api/related-systems", async (_req: Request, res: Response) => {
 
 app.post("/api/tickets", requireDevelopmentRequester, createTicket);
 app.get("/api/tickets", requireDevelopmentRequester, listTickets);
+app.get("/api/tickets/:ticketId", requireDevelopmentRequester, getTicketDetail);
+app.get("/api/tickets/:ticketId/attachments", requireDevelopmentRequester, listTicketAttachments);
+app.post(
+  "/api/tickets/:ticketId/attachments",
+  requireDevelopmentRequester,
+  (req, res, next) => {
+    attachmentUpload.array("files", 5)(req, res, (error) => {
+      if (error) {
+        if (handleMulterError(error, res)) return;
+        next(error);
+        return;
+      }
+      next();
+    });
+  },
+  uploadTicketAttachments,
+);
+app.get("/api/attachments/:attachmentId/download", requireDevelopmentRequester, downloadAttachment);
+app.delete("/api/attachments/:attachmentId", requireDevelopmentRequester, removeAttachment);
 
 function sendReferenceDataUnavailable(res: Response, error: unknown) {
   console.error("Unable to load reference data:", error);

@@ -27,6 +27,7 @@
 | 8 | Audit the approved contract against every AC and planned test; report missing evidence and do not claim completion early. | จะใช้ตรวจ Final Integration, Missing Tests, Skipped Tests, Ownership Gaps และ UI-spec Deviations ก่อน Release PR |
 | 9 | Okay, the changes are now merged into lab2 staging branch, pull that new change, then make a new feature branch out of that and continue doing the next feature work. | ใช้ Pull `lab2-staging`, สร้าง Issue/Feature Branch สำหรับ Database, Seed และ Development Requester Context แล้ว Implement ตามลำดับ Test DD/TDD |
 | 10 | I recently installed GitHub CLI through winget and authenticated, please figure out if you can now use it. | ใช้ตรวจ GitHub CLI/Auth แบบไม่เปิดเผย Token จากนั้นสร้าง Issue #12 พร้อม Scope, Dependencies, Branch และ Acceptance Criteria ตาม Workflow |
+| 11 | continue working on the next issue based on the PDF requirements | ใช้ตรวจว่า PR #17 ถูก Merge เข้า lab2-staging แล้ว สร้าง Issue #18/Feature Branch และพัฒนา Ticket Detail กับ Attachment Lifecycle ตาม API/UI Contract พร้อม Automated Tests |
 
 ---
 
