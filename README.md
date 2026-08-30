@@ -121,7 +121,7 @@ npm --prefix e2e exec playwright install chromium
 npm --prefix e2e exec playwright test -- --config e2e/playwright.config.ts
 ```
 
-The Playwright configuration starts the server and client dev processes, applies the committed migrations, and runs the idempotent seed during global setup. It writes HTML reports to `artifacts/lab-02/playwright-report/` and viewport screenshots to `artifacts/lab-02/screenshots/`.
+The Playwright configuration starts the server and client dev processes, applies the committed migrations, and runs the idempotent seed during global setup. It writes HTML reports to `artifacts/lab-02/playwright-report/` and viewport screenshots to `artifacts/lab-02/screenshots/{create-ticket,my-tickets,ticket-detail}/{desktop,tablet,mobile}.png`.
 
 ## Security
 

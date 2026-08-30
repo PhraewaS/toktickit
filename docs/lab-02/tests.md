@@ -56,7 +56,7 @@ Test Levels:
 | UI-09 | UI | FR-14-16, AC-19-23 | Download, Removal Confirmation/Reason และ Removed State | Active/Removed Actions ถูกต้อง | `client/tests/lab-02/AttachmentSection.test.tsx` | Pending |
 | STYLE-01 | UI Style | AC-25-26 | Tokens, Labels, Read-only/Invalid/Focus/Button/Badge | Required Semantics/Styles ครบ | `client/tests/lab-02/ZenGreenStyles.test.tsx` | Pending |
 | A11Y-01 | Accessibility | FR-19, AC-26 | Required Screens ใช้ Keyboard-only, Accessible Names, Error Associations, Status Announcements และ Non-color-only States | Focus มองเห็นและไปตามลำดับ; Controls/Errors/Status มี Accessible Semantics; State ไม่สื่อด้วยสีอย่างเดียว | `client/tests/lab-02/Accessibility.test.tsx` | Pending |
-| RESP-01 | Responsive | AC-25 | Required Screens บน Desktop/Tablet/Mobile | ไม่มี Page Overflow/Clipping และ Controls ใช้ได้ | `e2e/lab-02/responsive-visual.spec.ts` | Pending |
+| RESP-01 | Responsive | AC-25 | Required Screens บน Desktop/Tablet/Mobile | ไม่มี Page Overflow/Clipping และ Controls ใช้ได้ | `e2e/lab-02/requester-ticket-flow.spec.ts` | Pending |
 | E2E-01 | E2E | AC-02-05, AC-09, AC-13, AC-18 | Select A, Create, Find และ Open Ticket | Official Number ถูก Persist และแสดงใน Owned Flow | `e2e/lab-02/requester-ticket-flow.spec.ts` | Pending |
 | E2E-02 | E2E | AC-10-12, AC-19, AC-21-23 | Upload, Download, Soft-remove และ Block Removed Download | Attachment Lifecycle ผ่านครบ | `e2e/lab-02/requester-ticket-flow.spec.ts` | Pending |
 | E2E-03 | E2E | AC-04, AC-17, AC-20 | Switch A เป็น B และ Direct Cross-owner Access | Data A หายและ Direct Access ถูก Reject | `e2e/lab-02/requester-ticket-flow.spec.ts` | Pending |
@@ -110,7 +110,7 @@ Test Levels:
 - [ ] ไม่มี Clipped Labels, Overlap, Hidden Action, Unreadable Filename หรือ Horizontal Page Overflow
 - [ ] Desktop Table/Mobile Cards, Filters, Sort, Pagination และ Attachment Controls ใช้งานได้
 - [ ] Loading, Empty, No-results, Success, Removed และ Failure States เข้าใจได้โดยไม่ใช้สีอย่างเดียว
-- [ ] Screenshot Paths ชี้ไป `artifacts/lab-02/screenshots/...` และภาพอ่านได้
+- [ ] Screenshot Paths ชี้ไป `artifacts/lab-02/screenshots/{create-ticket,my-tickets,ticket-detail}/{desktop,tablet,mobile}.png` และภาพอ่านได้
 
 ---
 

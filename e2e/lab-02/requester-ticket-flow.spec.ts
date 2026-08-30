@@ -146,19 +146,27 @@ test.describe("Lab 2 requester E2E flows", () => {
 test.describe("RESP-01 responsive visual evidence", () => {
   test("required screens fit the viewport and produce evidence screenshots", async ({ page, request }, testInfo) => {
     const ticket = await createTicketViaApi(request);
+    await page.goto("/");
+    await expect(page.getByRole("heading", { name: "Select Development Requester" })).toBeVisible();
+    await expect(page.locator("#development-requester")).toBeVisible();
+    await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
     await chooseRequester(page);
     const screenshotRoot = path.resolve("artifacts/lab-02/screenshots");
-    await mkdir(path.join(screenshotRoot, testInfo.project.name), { recursive: true });
-    await page.screenshot({ path: path.join(screenshotRoot, testInfo.project.name, "create-ticket.png"), fullPage: true });
+    const screenshotPath = (screen: string) => path.join(screenshotRoot, screen, `${testInfo.project.name}.png`);
+    await mkdir(screenshotRoot, { recursive: true });
+    await expect(page.getByRole("heading", { name: "Create Ticket" })).toBeVisible();
+    await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+    await page.screenshot({ path: screenshotPath("create-ticket"), fullPage: true });
     await page.getByRole("link", { name: "My Tickets" }).click();
     await expect(page.getByRole("heading", { name: "My Tickets" })).toBeVisible();
+    await expect(page.getByText(ticket.summary)).toBeVisible();
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-    await page.screenshot({ path: path.join(screenshotRoot, testInfo.project.name, "my-tickets.png"), fullPage: true });
+    await page.screenshot({ path: screenshotPath("my-tickets"), fullPage: true });
     await page.getByLabel("Search").fill(ticket.summary);
     await page.getByRole("button", { name: "Apply filters" }).click();
     await page.getByRole("button", { name: "View details" }).click();
     await expect(page.getByRole("heading", { name: ticket.ticketNumber })).toBeVisible();
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-    await page.screenshot({ path: path.join(screenshotRoot, testInfo.project.name, "ticket-detail.png"), fullPage: true });
+    await page.screenshot({ path: screenshotPath("ticket-detail"), fullPage: true });
   });
 });

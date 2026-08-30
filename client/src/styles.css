@@ -792,6 +792,64 @@ fieldset:disabled textarea {
   .ticket-search-field {
     grid-column: 1 / -1;
   }
+
+  .ticket-table-wrap {
+    overflow: visible;
+    border: 0;
+  }
+
+  .ticket-table,
+  .ticket-table tbody,
+  .ticket-table tr,
+  .ticket-table td {
+    display: block;
+    min-width: 0;
+  }
+
+  .ticket-table {
+    background: transparent;
+  }
+
+  .ticket-table thead {
+    display: none;
+  }
+
+  .ticket-table tr {
+    margin-bottom: 0.85rem;
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+  }
+
+  .ticket-table td {
+    display: grid;
+    grid-template-columns: 10rem minmax(0, 1fr);
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e2e9e4;
+  }
+
+  .ticket-table td::before {
+    content: attr(data-label);
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 750;
+  }
+
+  .ticket-table td:last-child {
+    border-bottom: 0;
+  }
+
+  .ticket-table td[data-label="Actions"] .button {
+    width: 100%;
+  }
+
+  .ticket-table .ticket-number {
+    min-width: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
 }
 
 @keyframes spin {
