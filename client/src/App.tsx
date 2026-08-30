@@ -5,6 +5,7 @@ import {
 } from "./api.js";
 import CreateTicket from "./CreateTicket.js";
 import MyTickets from "./MyTickets.js";
+import RequesterTicketDetail from "./RequesterTicketDetail.js";
 
 type LoadState = "loading" | "ready" | "empty" | "error";
 
@@ -16,7 +17,8 @@ export default function App() {
   const [selectedRequesterId, setSelectedRequesterId] = useState("");
   const [currentRequester, setCurrentRequester] =
     useState<DevelopmentRequester | null>(null);
-  const [activeView, setActiveView] = useState<"create" | "my-tickets">("create");
+  const [activeView, setActiveView] = useState<"create" | "my-tickets" | "ticket-detail">("create");
+  const [selectedTicketId, setSelectedTicketId] = useState<number | null>(null);
 
   const loadRequesters = useCallback(async () => {
     setLoadState("loading");
@@ -71,6 +73,7 @@ export default function App() {
     sessionStorage.removeItem(REQUESTER_SESSION_KEY);
     setCurrentRequester(null);
     setSelectedRequesterId("");
+    setSelectedTicketId(null);
     setActiveView("create");
   }
 
@@ -132,7 +135,9 @@ export default function App() {
       <main className="page-content">
         {currentRequester ? (
           activeView === "my-tickets" ? (
-            <MyTickets requester={currentRequester} onCreateTicket={() => setActiveView("create")} />
+            <MyTickets requester={currentRequester} onCreateTicket={() => setActiveView("create")} onOpenTicket={(ticketId) => { setSelectedTicketId(ticketId); setActiveView("ticket-detail"); }} />
+          ) : activeView === "ticket-detail" && selectedTicketId !== null ? (
+            <RequesterTicketDetail requester={currentRequester} ticketId={selectedTicketId} onBack={() => setActiveView("my-tickets")} />
           ) : (
             <CreateTicket requester={currentRequester} />
           )

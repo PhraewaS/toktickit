@@ -38,6 +38,20 @@ export interface Ticket {
   currentStatus: "NEW";
   createdAt: string;
   updatedAt: string;
+  attachments?: Attachment[];
+}
+
+export type AttachmentState = "ACTIVE" | "REMOVED";
+
+export interface Attachment {
+  id: number;
+  originalFilename: string;
+  mimeType: string;
+  sizeBytes: number;
+  uploadedAt: string;
+  removedAt: string | null;
+  removalReason: string | null;
+  state: AttachmentState;
 }
 
 export type TicketListItem = Omit<Ticket, "ticketDate" | "requester" | "description">;
@@ -148,6 +162,11 @@ export async function createTicket(
   return body;
 }
 
+export interface AttachmentDownload {
+  blob: Blob;
+  filename: string;
+}
+
 export async function fetchMyTickets(
   requesterId: number,
   query: TicketListQuery = {},
@@ -175,6 +194,111 @@ export async function fetchMyTickets(
   }
   if (!response.ok) throw new Error(body.error?.message ?? safeMessage);
   return body;
+}
+
+export async function fetchTicketDetail(
+  requesterId: number,
+  ticketId: number,
+): Promise<Ticket> {
+  const safeMessage = "TokTickIT could not load the Ticket. Please try again.";
+  let response: Response;
+  try {
+    response = await fetch(API_URL + "/api/tickets/" + ticketId, {
+      headers: developmentRequesterHeaders(requesterId),
+    });
+  } catch {
+    throw new Error(safeMessage);
+  }
+  let body: { data?: Ticket; error?: { message?: string } };
+  try {
+    body = await response.json();
+  } catch {
+    throw new Error(safeMessage);
+  }
+  if (!response.ok || !body.data) throw new Error(body.error?.message ?? safeMessage);
+  return body.data;
+}
+
+export async function uploadTicketAttachments(
+  requesterId: number,
+  ticketId: number,
+  files: File[],
+): Promise<Attachment[]> {
+  const formData = new FormData();
+  files.forEach((file) => formData.append("files", file));
+  const safeMessage = "TokTickIT could not save Attachments. Please try again.";
+  let response: Response;
+  try {
+    response = await fetch(API_URL + "/api/tickets/" + ticketId + "/attachments", {
+      method: "POST",
+      headers: developmentRequesterHeaders(requesterId),
+      body: formData,
+    });
+  } catch {
+    throw new Error(safeMessage);
+  }
+  let body: { data?: Attachment[]; error?: { message?: string } };
+  try {
+    body = await response.json();
+  } catch {
+    throw new Error(safeMessage);
+  }
+  if (!response.ok || !body.data) throw new Error(body.error?.message ?? safeMessage);
+  return body.data;
+}
+
+export async function removeAttachment(
+  requesterId: number,
+  attachmentId: number,
+  reason: string,
+): Promise<Attachment> {
+  const safeMessage = "TokTickIT could not remove the Attachment. Please try again.";
+  let response: Response;
+  try {
+    response = await fetch(API_URL + "/api/attachments/" + attachmentId, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json", ...developmentRequesterHeaders(requesterId) },
+      body: JSON.stringify({ reason }),
+    });
+  } catch {
+    throw new Error(safeMessage);
+  }
+  let body: { data?: Attachment; error?: { message?: string } };
+  try {
+    body = await response.json();
+  } catch {
+    throw new Error(safeMessage);
+  }
+  if (!response.ok || !body.data) throw new Error(body.error?.message ?? safeMessage);
+  return body.data;
+}
+
+export async function downloadAttachment(
+  requesterId: number,
+  attachmentId: number,
+): Promise<AttachmentDownload> {
+  const safeMessage = "TokTickIT could not download the Attachment. Please try again.";
+  let response: Response;
+  try {
+    response = await fetch(API_URL + "/api/attachments/" + attachmentId + "/download", {
+      headers: developmentRequesterHeaders(requesterId),
+    });
+  } catch {
+    throw new Error(safeMessage);
+  }
+  if (!response.ok) {
+    let message = safeMessage;
+    try {
+      const body = (await response.json()) as { error?: { message?: string } };
+      message = body.error?.message ?? message;
+    } catch {
+      // Keep the safe fallback when the response is not JSON.
+    }
+    throw new Error(message);
+  }
+  const disposition = response.headers.get("Content-Disposition") ?? "";
+  const filename = disposition.match(/filename="?([^";]+)"?/i)?.[1] ?? "attachment";
+  return { blob: await response.blob(), filename };
 }
 
 export async function checkSystem(): Promise<SystemStatus> {

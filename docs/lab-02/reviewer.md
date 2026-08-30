@@ -22,7 +22,7 @@
 | [Database, Seed and Development Requester Context](https://github.com/PhraewaS/toktickit/issues/12) | `feature/lab2-data-requester-context` | [#13](https://github.com/PhraewaS/toktickit/pull/13) | [@guluJa](https://github.com/guluJa) | Approved | `6532a90` |
 | [Ticket Creation API and UI](https://github.com/PhraewaS/toktickit/issues/14) | `feature/lab2-ticket-creation` | [#15](https://github.com/PhraewaS/toktickit/pull/15) | Pending | Pending | Pending |
 | [My Tickets API และ UI](https://github.com/PhraewaS/toktickit/issues/16) | `feature/lab2-my-tickets` | [#17](https://github.com/PhraewaS/toktickit/pull/17) | Pending | Pending | Pending |
-| Ticket Detail and Attachment Lifecycle | Pending | Pending | Pending | Pending | Pending |
+| [Requester Ticket Detail and Attachment Lifecycle](https://github.com/PhraewaS/toktickit/issues/18) | feature/lab2-ticket-detail-attachments | Pending | Pending | Pending | Pending |
 | Responsive, E2E and Visual Evidence | Pending | Pending | Pending | Pending | Pending |
 | Release Integration | `lab2-staging` → `main` | Pending | Pending | Pending | Pending |
 

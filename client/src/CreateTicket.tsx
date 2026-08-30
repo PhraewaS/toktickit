@@ -9,6 +9,7 @@ import {
   RequestedPriority,
   Ticket,
 } from "./api.js";
+import AttachmentSection from "./AttachmentSection.js";
 
 type ReferenceState = "loading" | "ready" | "error";
 type FieldName =
@@ -148,7 +149,7 @@ export default function CreateTicket({
         requestedPriority: values.requestedPriority as RequestedPriority,
         description: values.description.trim(),
       });
-      setCreatedTicket(result.data);
+      setCreatedTicket({ ...result.data, attachments: [] });
     } catch (error) {
       setFailure(
         error instanceof Error
@@ -416,6 +417,15 @@ export default function CreateTicket({
           </button>
         </div>
       </form>
+
+      {createdTicket && (
+        <AttachmentSection
+          requesterId={requester.id}
+          ticketId={createdTicket.id}
+          attachments={createdTicket.attachments ?? []}
+          onChanged={(attachments) => setCreatedTicket((current) => current ? { ...current, attachments } : current)}
+        />
+      )}
     </section>
   );
 }

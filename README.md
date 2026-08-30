@@ -89,6 +89,18 @@ X-Development-Requester-Id: <positive integer>
 
 The endpoint supports case-insensitive `search` in Ticket Number/Summary, Category and Related System filters, Requested Priority and Current Status filters, stable sorting, and page sizes 10, 20, or 50. Responses include `totalOwnedItems`, `totalItems`, `page`, `pageSize`, and `totalPages` so the client can distinguish an empty requester from a filtered no-results state without a second unfiltered request.
 
+## Lab 2 Ticket Detail and Attachments
+
+The read-only detail view and attachment lifecycle are ownership checked with the same requester header:
+
+- GET /api/tickets/:ticketId
+- GET /api/tickets/:ticketId/attachments
+- POST /api/tickets/:ticketId/attachments (multipart field: files)
+- GET /api/attachments/:attachmentId/download
+- DELETE /api/attachments/:attachmentId (JSON body with a reason)
+
+Uploads accept JPG/JPEG, PNG, WEBP, and PDF files up to 5 MiB each, with at most five active attachments per Ticket. Original basenames are stored as metadata while backend UUID filenames are kept in the local server/storage/attachments directory, which is ignored by Git. Removed attachments keep their metadata and removal reason but cannot be downloaded.
+
 ## Testing
 
 Run tests and builds from the repository root:
