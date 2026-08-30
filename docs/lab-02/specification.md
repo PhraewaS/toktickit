@@ -1,18 +1,18 @@
-# Lab 2 — Sprint Engineering Specification
+# Lab 2 — ข้อกำหนดทางวิศวกรรมของ Sprint
 
 เอกสารข้อกำหนดทางวิศวกรรมสำหรับพัฒนา **TokTickIT Requester Ticketing MVP with UI Foundation**
 
-**สถานะ:** รอผู้จัดทำและ Peer Reviewer ตรวจสอบและอนุมัติก่อนเริ่ม Implementation
+**สถานะ:** Implementation หลักเสร็จและถูกรวมใน `lab2-staging` แล้ว; รอ Release Integration และการตรวจยืนยันผลสุดท้ายบน `main`
 
 ---
 
-## 1. Sprint Goal
+## 1. เป้าหมายของ Sprint
 
 พัฒนา TokTickIT ฝั่ง Requester ให้สามารถเลือก Development Requester สำหรับจำลองผู้ใช้ สร้าง Ticket และรับ Ticket Number ที่สร้างจาก Backend ค้นหาและเปิดดูเฉพาะ Ticket ของตนเอง รวมถึงเพิ่ม ดาวน์โหลด และ Soft-remove Attachment ที่อนุญาตได้ พร้อมวางพื้นฐาน Zen Green UI ที่นำกลับมาใช้ซ้ำได้ มี Automated Tests ที่ Trace กลับไปยัง Acceptance Criteria และมี GitHub Workflow ที่ตรวจสอบย้อนหลังได้
 
 ---
 
-## 2. Stakeholder Request Interpretation
+## 2. การตีความคำขอของผู้มีส่วนเกี่ยวข้อง
 
 Lab 2 จะเปลี่ยนระบบจากหน้า Connectivity Demonstration ของ Lab 1 ให้เป็น Requester Ticketing MVP แบบ Full Stack เนื่องจาก Authentication จริงจะทำใน Lab 3 ระบบจึงใช้ Development Requester ที่ Seed ไว้เป็น Testing Context โดยผู้ใช้ต้องเลือก Requester ก่อนเข้า Application จากนั้น Requester ที่เลือกจะถูกใช้กับ Create Ticket, My Tickets, Ticket Detail และ Attachment ทุกครั้ง
 
@@ -22,7 +22,7 @@ Lab 2 จะเปลี่ยนระบบจากหน้า Connectivity 
 
 ## 3. Scope
 
-### Included
+### ขอบเขตที่รวม
 
 - Development Requester Selection โดยโหลดเฉพาะ Active Requesters จาก PostgreSQL
 - แสดง Current Requester, เก็บ Selection เฉพาะ Browser Tab Session และมี Change Requester
@@ -42,7 +42,7 @@ Lab 2 จะเปลี่ยนระบบจากหน้า Connectivity 
 - Unit, API/Integration, UI Component, UI Style, Responsive, Visual และ E2E Tests
 - GitHub Issues, Feature Branches, Peer-reviewed PRs, `lab2-staging` และ Release PR ไป `main`
 
-### Excluded
+### ขอบเขตที่ไม่รวม
 
 - Login/Logout จริง, Password, Password Hashing, Session, Token, Authenticated Identity และ Role-based Authorization จริง
 - IT Staff Dashboard/Queue, Claim Ticket, Reassign Ticket และการเปลี่ยน IT Priority
@@ -56,7 +56,7 @@ Lab 2 จะเปลี่ยนระบบจากหน้า Connectivity 
 
 ---
 
-## 4. Functional Requirements
+## 4. ข้อกำหนดด้านฟังก์ชัน
 
 - FR-01: ระบบต้องบังคับให้เลือก Active Development Requester ก่อนใช้หน้าที่มี Requester-specific Data
 - FR-02: Development Requester Selector ต้องโหลดข้อมูลจาก PostgreSQL และไม่แสดง Inactive Requester
@@ -81,7 +81,7 @@ Lab 2 จะเปลี่ยนระบบจากหน้า Connectivity 
 
 ---
 
-## 5. Business Rules
+## 5. กฎทางธุรกิจ
 
 - BR-01: Official Ticket Number ต้องสร้างโดย Backend และต้องไม่ซ้ำ
 - BR-02: Ticket ใหม่ต้องเริ่มด้วย Current Status `NEW`
@@ -126,17 +126,17 @@ Lab 2 จะเปลี่ยนระบบจากหน้า Connectivity 
 
 ---
 
-## 6. UI Specification Summary
+## 6. สรุปข้อกำหนด UI
 
 รายละเอียดอยู่ใน `docs/lab-02/ui-spec.md` ระบบใช้ Zen Green Palette, Responsive Application Shell, Reusable Form/Feedback Components, Desktop Table และ Mobile Cards มี Field-level Validation แยก Read-only Fields ชัดเจน มี Button Hierarchy และ Priority/Status Badges ที่ไม่ใช้สีอย่างเดียว หน้าหลักประกอบด้วย Development Requester Selection, Create Ticket, My Tickets และ Requester Ticket Detail พร้อม Attachment Lifecycle
 
 ---
 
-## 7. Data Changes
+## 7. การเปลี่ยนแปลงข้อมูล
 
 Prisma Schema จะเพิ่ม `RequesterUser`, `RelatedSystem`, `Ticket` และ `Attachment` เพิ่ม Active/Updated Metadata ให้ `Category` และเพิ่ม Enums `RequestedPriority` กับ `TicketStatus` ตารางต่อไปนี้เป็น Source of Truth สำหรับ Prisma Schema และ Migration ของ Lab 2 โดย `DateTime` ใหม่ทุก Field เก็บเป็น PostgreSQL `timestamptz(3)` และ API Serialize เป็น ISO 8601 UTC
 
-### Enums
+### Enum
 
 | Enum | Values | Database Decision |
 |---|---|---|
@@ -215,7 +215,7 @@ Constraints/Indexes: Unique `ticketNumber`; compound Unique `(requesterId, submi
 
 Constraints/Indexes: Unique `storedFilename`; index `(ticketId, removedAt, uploadedAt, id)` Migration เพิ่ม Check Constraints ให้ Size อยู่ใน Boundary และบังคับคู่ State `(removedAt IS NULL AND removalReason IS NULL) OR (removedAt IS NOT NULL AND char_length(btrim(removalReason)) BETWEEN 3 AND 500)` จำนวน Active Attachments สูงสุด 5 ต้องบังคับใน Backend Transaction เพราะ Row-count Constraint นี้ไม่ควรทำด้วย Prisma Field Constraint
 
-### Relationships
+### ความสัมพันธ์ของข้อมูล
 
 - `RequesterUser` 1 — many `Ticket` ผ่าน `Ticket.requesterId`
 - `Category` 1 — many `Ticket` ผ่าน `Ticket.categoryId`
@@ -223,7 +223,7 @@ Constraints/Indexes: Unique `storedFilename`; index `(ticketId, removedAt, uploa
 - `Ticket` 1 — many `Attachment` ผ่าน `Attachment.ticketId`
 - Foreign Keys ทั้งหมดใช้ `onDelete: Restrict` และ `onUpdate: Cascade`; การลบ Requester, Reference Data หรือ Ticket ไม่อยู่ใน Lab 2 และห้ามทำให้ Audit/Attachment Metadata สูญหาย
 
-### Migration Decisions
+### การตัดสินใจด้าน Migration
 
 - สร้าง Migration ใหม่ต่อจาก Lab 1 ห้ามแก้หรือลบ Existing Lab 1 Migration
 - Preserve `categories.id`, `categories.name`, `categories.createdAt` และ Seed Rows เดิม เพิ่ม `isActive` ด้วย Non-null Default `true` และ Backfill `updatedAt` ก่อนบังคับ Non-null
@@ -245,7 +245,7 @@ Ownership เก็บด้วย Ticket Foreign Key ถาวร ทำให�
 
 ---
 
-## 9. Acceptance Criteria
+## 9. เกณฑ์การยอมรับ
 
 - AC-01: Given ยังไม่ได้เลือก Development Requester, when เปิด Requester-specific Route, then ระบบแสดง Selection Screen แทน
 - AC-02: Given Seed มี Active และ Inactive Requesters, when Selection Screen โหลด, then แสดงเฉพาะ Active Requesters ตามลำดับที่กำหนด
@@ -277,9 +277,9 @@ Ownership เก็บด้วย Ticket Foreign Key ถาวร ทำให�
 
 ---
 
-## 10. Definition of Done
+## 10. เกณฑ์งานเสร็จสมบูรณ์
 
-### Product Completion
+### ความสมบูรณ์ของผลิตภัณฑ์
 
 - [ ] Implement FR, BR และ AC ที่อนุมัติครบโดยไม่เพิ่ม Excluded Scope
 - [ ] Prisma Schema, Migration, Seed, API, UI และ Tests ตรงกับ Contract
@@ -292,7 +292,7 @@ Ownership เก็บด้วย Ticket Foreign Key ถาวร ทำให�
 - [ ] README มี Setup, Migration, Seed, Run, Test, Build และ Upload Storage Instructions ที่เป็นปัจจุบัน
 - [ ] ตรวจ Changed Files, Migration SQL, Dependencies, Commands และ Test Evidence ครบ
 
-### Course Delivery
+### การส่งงานรายวิชา
 
 - [ ] ใช้ GitHub Issues และสถานะ Backlog, Specified, Started, PR Review, Fixing และ Done
 - [ ] สร้าง `lab2-staging` จาก Lab 1 `main` ที่เสร็จแล้ว
@@ -305,7 +305,7 @@ Ownership เก็บด้วย Ticket Foreign Key ถาวร ทำให�
 
 ---
 
-## 11. Assumptions and Decisions
+## 11. สมมติฐานและการตัดสินใจ
 
 - ใช้ Stack เดิมจาก Lab 1 ได้แก่ React/Vite/Bootstrap, Express, Prisma, PostgreSQL และ Vitest
 - อนุญาตให้เพิ่ม React Router และ Playwright สำหรับ Multi-route, Responsive และ E2E Evidence

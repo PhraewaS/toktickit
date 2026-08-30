@@ -4,7 +4,7 @@
 
 ---
 
-## AI Model and Agent Environment
+## โมเดล AI และสภาพแวดล้อมของ Agent
 
 - **LLM / Model:** GPT-5-based model
 - **AI Agent:** OpenAI Codex
@@ -13,9 +13,9 @@
 
 ---
 
-## Selected Key Prompts (6–10)
+## Prompt สำคัญที่เลือกใช้ (6–10)
 
-| # | Actual Prompt Text | What I did with the result |
+| # | ข้อความ Prompt จริง | การนำผลลัพธ์ไปใช้ |
 |---|---|---|
 | 1 | ช่วยอ่าน Lab 2 ทั้งหมดและอธิบายสิ่งที่ต้องทำตั้งแต่ Specification, Implementation, Tests, GitHub Workflow จนถึง Final PDF โดยห้ามลงมือทำ | ใช้แยก Scope, Required Screens, API, Database, Tests, Branch Flow, คะแนน และสิ่งที่อยู่นอก Scope ก่อนเริ่มงาน |
 | 2 | ช่วยแบ่งงานเป็นขั้นตอนอย่างละเอียดว่าควรเริ่มเขียน Code จากตรงไหน | ใช้เรียง Dependency ให้เริ่มจาก Engineering Contract, Database/Seed, Development Requester Context แล้วจึงทำ Ticket Features |

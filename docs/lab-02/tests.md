@@ -1,4 +1,4 @@
-# Lab 2 — Test Plan and Evidence
+# Lab 2 — แผนการทดสอบและหลักฐาน
 
 แผน Test DD, TDD และ Acceptance-Criterion Traceability สำหรับ TokTickIT Lab 2
 
@@ -6,11 +6,11 @@
 
 ---
 
-## 1. Test Strategy
+## 1. กลยุทธ์การทดสอบ
 
 Lab 2 ใช้ Test DD และ TDD โดย Acceptance Criterion ทุกข้อใน `specification.md` ต้อง Map ไปยัง Planned Test อย่างน้อยหนึ่งรายการ ในแต่ละ Issue ให้เขียน Test ที่เกี่ยวข้องก่อน ยืนยันว่า Test Fail เพราะ Behavior ยังไม่มี จากนั้น Implement Behavior ขั้นต่ำและ Refactor โดย Tests ยังผ่าน
 
-Test Levels:
+ระดับการทดสอบ:
 
 - **Unit:** Validation, Ticket Number, Query Parsing และ File Policy ที่เป็น Pure Logic
 - **API/Integration:** Route Contract, Persistence Calls, Validation, Ownership, Failure และ Attachment Lifecycle
@@ -24,9 +24,9 @@ Test Levels:
 
 ---
 
-## 2. Planned Tests
+## 2. การทดสอบตามแผน
 
-| Test ID | Type | Requirement / AC | What It Tests | Expected Result | Test File / Evidence Path | Final |
+| รหัสการทดสอบ | ประเภท | ข้อกำหนด / AC | สิ่งที่ทดสอบ | ผลลัพธ์ที่คาดหวัง | ไฟล์ทดสอบ / เส้นทางหลักฐาน | ผลบน Final |
 |---|---|---|---|---|---|---|
 | UNIT-01 | Unit | BR-09, AC-05 | Ticket Number Format และ Uniqueness Inputs | ได้ UTC Format ตาม Spec และค่าต่างกัน | `server/tests/lab-02/ticket-number.unit.test.ts` | Pending |
 | UNIT-02 | Unit | BR-13-17, AC-07 | Create Validation, Trimming และ Boundaries | Valid ผ่าน Invalid ได้ Field Details | `server/tests/lab-02/ticket-validation.unit.test.ts` | Pending |
@@ -66,24 +66,24 @@ Test Levels:
 
 ---
 
-## 3. Current Implementation Verification (`lab2-staging`)
+## 3. การตรวจสอบ Implementation ปัจจุบัน (`lab2-staging`)
 
 ตรวจสอบชุดโค้ดที่ถูกรวมใน `lab2-staging` แล้ว โดย Feature ล่าสุดมาจาก commit [`f2f50a2`](https://github.com/PhraewaS/toktickit/commit/f2f50a2ebf192b2d1e31f1e0753e61d5d28549ef) และถูกรวมด้วย merge commit [`6b42926`](https://github.com/PhraewaS/toktickit/commit/6b429266b5b9f125ddebeed538cc569f5a398dc7)
 
-| Verification | Result |
+| รายการตรวจสอบ | ผลลัพธ์ |
 |---|---|
-| Server tests | 46 passed |
-| Client tests | 31 passed |
-| Playwright E2E/Responsive | 15 passed across desktop/tablet/mobile |
-| Server build | Passed |
-| Client build | Passed |
-| Screenshot evidence | `artifacts/lab-02/screenshots/{create-ticket,my-tickets,ticket-detail}/{desktop,tablet,mobile}.png` |
+| Server tests | ผ่าน 46 รายการ |
+| Client tests | ผ่าน 31 รายการ |
+| Playwright E2E/Responsive | ผ่าน 15 รายการ ครบ desktop/tablet/mobile |
+| Server build | ผ่าน |
+| Client build | ผ่าน |
+| หลักฐานภาพหน้าจอ | `artifacts/lab-02/screenshots/{create-ticket,my-tickets,ticket-detail}/{desktop,tablet,mobile}.png` |
 
 ผลชุดนี้ยืนยัน Implementation บน `lab2-staging` เท่านั้น ยังไม่ใช่ Final Verification ตาม AC-27 เพราะ `origin/main` ยังไม่ได้รวม `lab2-staging` ขณะบันทึกเอกสารนี้
 
 ---
 
-## 4. Acceptance-Criterion Traceability
+## 4. การเชื่อมโยง Acceptance Criteria กับการทดสอบ
 
 | AC | Planned Tests |
 |---|---|
@@ -117,7 +117,7 @@ Test Levels:
 
 ---
 
-## 5. Responsive and Visual Checklist
+## 5. รายการตรวจ Responsive และภาพหน้าจอ
 
 ตรวจ Selection, Create Ticket, My Tickets และ Ticket Detail ที่ Desktop (`>=992px`), Tablet (`768-991px`) และ Mobile (`<768px`)
 
@@ -131,11 +131,11 @@ Test Levels:
 
 ---
 
-## 6. Test Commands
+## 6. คำสั่งทดสอบ
 
 รันจาก Repository Root โดย Project แยก Client และ Server Packages:
 
-### VERIFY-01 — Full Required Tests on Final `main`
+### VERIFY-01 — การทดสอบที่จำเป็นทั้งหมดบน Final `main`
 
 ```text
 npm --prefix server test
@@ -143,34 +143,34 @@ npm --prefix client test
 npm --prefix e2e exec playwright test -- --config e2e/playwright.config.ts
 ```
 
-Expected Result: ทุก Command Exit `0`, Required Tests ผ่านทั้งหมด และไม่มี Test ที่ Skip, Disable หรือ Comment out
+ผลลัพธ์ที่คาดหวัง: ทุก Command Exit `0`, Required Tests ผ่านทั้งหมด และไม่มี Test ที่ Skip, Disable หรือ Comment out
 
-Evidence: เก็บ Complete Console Output พร้อม Final Commit SHA และเวลาที่รันไว้ที่ `artifacts/lab-02/test-results/final-tests.txt` และอ้าง Link ใน Release PR/Final PDF
+หลักฐาน: เก็บ Complete Console Output พร้อม Final Commit SHA และเวลาที่รันไว้ที่ `artifacts/lab-02/test-results/final-tests.txt` และอ้าง Link ใน Release PR/Final PDF
 
-### VERIFY-02 — Client and Server Builds on Final `main`
+### VERIFY-02 — การ Build Client และ Server บน Final `main`
 
 ```text
 npm --prefix server run build
 npm --prefix client run build
 ```
 
-Expected Result: ทั้งสอง Command Exit `0` โดยไม่มี TypeScript Compile Error หรือ Vite Bundle Error
+ผลลัพธ์ที่คาดหวัง: ทั้งสอง Command Exit `0` โดยไม่มี TypeScript Compile Error หรือ Vite Bundle Error
 
-Evidence: เก็บ Complete Console Output พร้อม Final Commit SHA และเวลาที่รันไว้ที่ `artifacts/lab-02/test-results/final-builds.txt` และอ้าง Link ใน Release PR/Final PDF
+หลักฐาน: เก็บ Complete Console Output พร้อม Final Commit SHA และเวลาที่รันไว้ที่ `artifacts/lab-02/test-results/final-builds.txt` และอ้าง Link ใน Release PR/Final PDF
 
 Database Integration/E2E Setup และ Teardown Commands ต้องเพิ่มใน README ก่อนประกาศว่า Implementation เสร็จ
 
 ---
 
-## 7. Final Results
+## 7. ผลลัพธ์สุดท้าย
 
-**Pending Implementation**
+**รอการตรวจสอบบน Final `main`**
 
 เมื่อเสร็จแล้วต้องสรุปผล `VERIFY-01` และ `VERIFY-02` จาก Final `main` ในส่วนนี้ พร้อม Link ไป Evidence Files, Final Commit SHA, วันที่/เวลา, Playwright Viewports และ Screenshot Paths ตามรูปแบบเดียวกับ `docs/lab-01/tests.md`
 
 ---
 
-## 8. Known Limitations or Deferred Tests
+## 8. ข้อจำกัดที่ทราบหรือการทดสอบที่เลื่อนไป
 
 - ตอนวางแผนยังไม่มี Approved Limitation หรือ Deferred Required Test
 - Authentication จริง, IT Staff Workflow, Comments/Notes/Actions Taken, Status Changes และ Administration เป็น Excluded Lab 2 Scope ไม่ใช่ Deferred Required Test

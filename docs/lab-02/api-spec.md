@@ -1,12 +1,12 @@
-# Lab 2 — REST API Specification
+# Lab 2 — ข้อกำหนด REST API
 
 เอกสาร API Contract สำหรับ Requester Ticketing MVP
 
-**สถานะ:** รออนุมัติก่อนเริ่ม Implementation
+**สถานะ:** API Implementation เสร็จและถูกรวมใน `lab2-staging` แล้ว; รอ Release Integration และการตรวจยืนยันผลสุดท้ายบน `main`
 
 ---
 
-## 1. General Conventions
+## 1. ข้อตกลงทั่วไป
 
 - Base Path คือ `/api`
 - Request/Response ใช้ JSON ยกเว้น Multipart Attachment Upload และ Binary Download
@@ -21,7 +21,7 @@
 
 ---
 
-## 2. HTTP Status Codes
+## 2. รหัสสถานะ HTTP
 
 | Status | ใช้เมื่อ |
 |---|---|
@@ -37,7 +37,7 @@
 
 ---
 
-## 3. Development Requester และ Reference Data
+## 3. Development Requester และข้อมูลอ้างอิง
 
 ### GET `/api/development-requesters`
 
@@ -77,7 +77,7 @@
 
 ---
 
-## 4. Development Requester Context Errors
+## 4. ข้อผิดพลาดของบริบท Development Requester
 
 Protected Endpoint ต้องตอบ:
 
@@ -95,7 +95,7 @@ Protected Endpoint ต้องตอบ:
 
 ---
 
-## 5. Ticket APIs
+## 5. API สำหรับ Ticket
 
 ### POST `/api/tickets`
 
@@ -231,7 +231,7 @@ Attachment Shape:
 
 ---
 
-## 6. Attachment APIs
+## 6. API สำหรับ Attachment
 
 ### POST `/api/tickets/:ticketId/attachments`
 
@@ -287,7 +287,7 @@ Reason ต้อง Trim และยาว 3-500 ตัวอักษร
 
 ---
 
-## 7. Safe Unexpected Error
+## 7. การจัดการ Unexpected Error อย่างปลอดภัย
 
 ```json
 {
