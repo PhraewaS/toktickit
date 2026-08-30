@@ -14,3 +14,8 @@ server/prisma/*.db
 .DS_Store
 # local attachment bytes
 server/storage/
+
+# Lab 2 generated Playwright reports and transient test output
+artifacts/lab-02/playwright-report/
+artifacts/lab-02/test-results/
+e2e/test-results/

@@ -123,6 +123,7 @@ describe("Attachment lifecycle APIs", () => {
     expect(response.body).toEqual(fileBytes);
     expect(response.headers["content-type"]).toMatch(/^image\/png/);
     expect(response.headers["content-disposition"]).toBe('attachment; filename="report.png"');
+    expect(response.headers["access-control-expose-headers"]).toBe("Content-Disposition");
   });
 
   it("soft-removes an owned active attachment and validates the reason", async () => {

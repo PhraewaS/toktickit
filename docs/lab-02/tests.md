@@ -123,7 +123,7 @@ Test Levels:
 ```text
 npm --prefix server test
 npm --prefix client test
-npm --prefix client exec playwright test -- --config ../e2e/playwright.config.ts
+npm --prefix e2e exec playwright test -- --config e2e/playwright.config.ts
 ```
 
 Expected Result: ทุก Command Exit `0`, Required Tests ผ่านทั้งหมด และไม่มี Test ที่ Skip, Disable หรือ Comment out
