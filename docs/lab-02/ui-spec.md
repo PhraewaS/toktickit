@@ -1,12 +1,12 @@
-# Lab 2 — Zen Green UI Specification
+# Lab 2 — ข้อกำหนด UI แบบ Zen Green
 
 ข้อกำหนด UI สำหรับ TokTickIT Requester Ticketing MVP
 
-**สถานะ:** รออนุมัติก่อนเริ่ม Implementation
+**สถานะ:** UI Implementation เสร็จและถูกรวมใน `lab2-staging` แล้ว; รอ Release Integration และการตรวจยืนยันผลสุดท้ายบน `main`
 
 ---
 
-## 1. Design Principles
+## 1. หลักการออกแบบ
 
 - UI ต้องดูสงบ เป็นมืออาชีพ และนำ Component กลับมาใช้ซ้ำได้
 - State และความหมายต้องสื่อด้วยข้อความหรือ Icon ร่วมกับสี
@@ -37,7 +37,7 @@ Typography ใช้ System/Bootstrap Sans-serif Stack เดิม Base Text �
 
 ---
 
-## 3. Application Shell
+## 3. โครงสร้าง Application Shell
 
 - Header แสดง TokTickIT, My Tickets, Create Ticket, Selected Requester และ Change Requester
 - Current Route ต้องมี Visual Emphasis และ `aria-current="page"`
@@ -47,7 +47,7 @@ Typography ใช้ System/Bootstrap Sans-serif Stack เดิม Base Text �
 
 ---
 
-## 4. Development Requester Selection
+## 4. การเลือก Development Requester
 
 Required Elements/States:
 
@@ -64,7 +64,7 @@ Required Elements/States:
 
 ---
 
-## 5. Reusable Control States
+## 5. สถานะของ Control ที่นำกลับมาใช้ซ้ำ
 
 - Editable Control: White Background, Neutral Border และ Consistent Minimum Height
 - Read-only Field: Gray-green Background, Text อ่านได้ และมี Read-only Semantics/Label เมื่อจำเป็น
@@ -76,7 +76,7 @@ Required Elements/States:
 
 ---
 
-## 6. Button Hierarchy
+## 6. ลำดับความสำคัญของปุ่ม
 
 - Primary: Solid Primary Green สำหรับ Submit, Continue, Create Ticket และ Confirm Add Attachment
 - Secondary: Bordered Green สำหรับ Back, Retry หรือ Secondary Navigation
@@ -88,9 +88,9 @@ Required Elements/States:
 
 ---
 
-## 7. Create Ticket Screen
+## 7. หน้าสร้าง Ticket
 
-### Field Groups
+### กลุ่ม Field
 
 1. Read-only Context: Ticket Number (`Generated after submission`), Ticket Date (`Assigned on submission`), Requester และ Current Status (`New`) โดย Ticket Date อ่านจาก API `ticketDate` ซึ่งเป็น Alias ของ Database `Ticket.createdAt` และไม่มี Field `ticketDate` แยก
 2. Classification: Category, Related System และ Requested Priority
@@ -98,7 +98,7 @@ Required Elements/States:
 4. Attachments: Selected Files, Per-file Validation และ Active-count Guidance
 5. Actions: Submit Ticket เป็น Primary Action; Reset และ Cancel ไม่อยู่ใน Scope ของ Lab 2
 
-### Required States
+### สถานะที่ต้องรองรับ
 
 - Initial: Editable Fields ว่างและ Requester ถูก Populate
 - Loading: Reference Controls Disabled พร้อม Status Feedback
@@ -110,7 +110,7 @@ Required Elements/States:
 
 ---
 
-## 8. My Tickets Screen
+## 8. หน้า My Tickets
 
 ### Controls
 
@@ -121,7 +121,7 @@ Required Elements/States:
 - Create Ticket เป็น Primary Action
 - Pagination แสดง Current Page, Total Pages/Items, Previous/Next และ Page Size
 
-### Desktop Table Fields
+### Field ของตาราง Desktop
 
 - Ticket Number
 - Created Date
@@ -133,11 +133,11 @@ Required Elements/States:
 - Last Updated
 - View Detail Action ที่ชัดเจน
 
-### Mobile Cards
+### Cards บน Mobile
 
 แสดง Ticket Number, Summary, Category, Requested Priority, Current Status และ Last Updated พร้อม Full-width View Details โดย Search/Filter/Sort Controls Stack แนวตั้ง
 
-### Required States
+### สถานะที่ต้องรองรับ
 
 - Loading: Skeleton หรือ Status
 - Empty: Response มี `totalOwnedItems = 0`; แสดงว่า Requester ยังไม่มี Ticket พร้อม Create Ticket Action
@@ -146,7 +146,7 @@ Required Elements/States:
 
 ---
 
-## 9. Requester Ticket Detail
+## 9. รายละเอียด Ticket ของ Requester
 
 - มี Breadcrumb หรือ Back to My Tickets
 - Ticket Number เป็น Heading และแสดง Status/Priority Badges
@@ -155,7 +155,7 @@ Required Elements/States:
 - Attachment Section แยกจากข้อมูล Ticket ชัดเจน มี Active Count และ Add Attachment
 - ห้ามมี Edit Ticket, Status Change, Public Comments, Internal Notes, Actions Taken หรือ IT Staff Controls
 
-### Attachment States
+### สถานะของ Attachment
 
 - Active: Filename, Type, Human-readable Size, Uploaded Date, Download และ Remove
 - Uploading: Filename, Progress/Busy Label และ Actions Disabled
@@ -163,11 +163,11 @@ Required Elements/States:
 - Removed: Removed Badge, Removal Date/Reason และ Metadata เท่านั้น ไม่มี Download/Preview/Remove
 - Unavailable/Failure: Safe Message และ Retry เมื่อเหมาะสม
 
-Removal Confirmation ต้องระบุชื่อไฟล์ เตือนว่าไฟล์จะใช้งานไม่ได้ บังคับ Reason 3-500 ตัวอักษร และใช้ Destructive Confirmation Button พร้อม Busy State
+Removal Confirmation ต้องระบุชื่อไฟล์ เตือนว่าไฟล์จะใช้งานไม่ได้ บังคับ Reason 3–500 ตัวอักษร และใช้ Destructive Confirmation Button พร้อม Busy State
 
 ---
 
-## 10. Badges
+## 10. Badge
 
 - Requested Priority แสดง Text Low/Medium/High พร้อม Accessible Styling ที่ต่างกัน
 - Current Status แสดง Text `New` ด้วย Pale-green Styling ที่สม่ำเสมอ
@@ -176,7 +176,7 @@ Removal Confirmation ต้องระบุชื่อไฟล์ เตื�
 
 ---
 
-## 11. Responsive Rules
+## 11. กฎ Responsive
 
 | Viewport | Required Behavior |
 |---|---|
@@ -200,21 +200,26 @@ Removal Confirmation ต้องระบุชื่อไฟล์ เตื�
 
 ---
 
-## 13. Visual Inspection และ Screenshot Evidence
+## 13. การตรวจภาพและหลักฐาน Screenshot
 
 เก็บ Playwright Screenshots ที่:
 
 - `artifacts/lab-02/screenshots/create-ticket/`
 - `artifacts/lab-02/screenshots/my-tickets/`
 - `artifacts/lab-02/screenshots/ticket-detail/`
+- `artifacts/lab-02/screenshots/states/{state}/{desktop,tablet,mobile}.png`
 
 ตรวจ Desktop, Tablet และ Mobile ดังนี้:
 
-- [ ] Zen Green Tokens และ Button Hierarchy ถูกต้อง
-- [ ] Editable, Read-only, Invalid, Disabled, Busy และ Focused States แยกชัดเจน
-- [ ] Required Marker และ Field-level Message อยู่ตำแหน่งถูกต้อง
-- [ ] ไม่มี Clipping, Overlap, Hidden Controls หรือ Horizontal Page Overflow
-- [ ] Desktop Table/Mobile Cards ใช้งานได้
-- [ ] Search, Filters, Sort, Clear Filters, Pagination และ Attachment Controls ใช้งานได้ทุกขนาด
-- [ ] Priority, Status และ Removed Badges สม่ำเสมอและเข้าใจได้โดยไม่พึ่งสี
-- [ ] Initial, Loading, Submitting/Uploading, Success, Empty, No-results และ Failure States ตรงกับ Specification
+- [x] Zen Green Tokens และ Button Hierarchy ถูกต้อง
+- [x] Editable, Read-only, Invalid, Disabled, Busy และ Focused States แยกชัดเจน
+- [x] Required Marker และ Field-level Message อยู่ตำแหน่งถูกต้อง
+- [x] ไม่มี Clipping, Overlap, Hidden Controls หรือ Horizontal Page Overflow
+- [x] Desktop Table/Mobile Cards ใช้งานได้
+- [x] Search, Filters, Sort, Clear Filters, Pagination และ Attachment Controls ใช้งานได้ทุกขนาด
+- [x] Priority, Status และ Removed Badges สม่ำเสมอและเข้าใจได้โดยไม่พึ่งสี
+- [x] Initial, Loading, Submitting/Uploading, Success, Empty, No-results และ Failure States ตรงกับ Specification
+
+สำหรับ State Evidence ให้เก็บภาพอย่างน้อย `create-ticket-validation`, `create-ticket-submitting`,
+`create-ticket-success`, `create-ticket-api-failure`, `attachment-invalid`, `attachment-removed`,
+`my-tickets-empty`, `my-tickets-no-results` และ `requester-switch` ในโครงสร้าง `states/{state}/`

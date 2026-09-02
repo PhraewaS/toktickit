@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import AttachmentSection from "../../src/AttachmentSection.js";
@@ -68,5 +68,28 @@ describe("AttachmentSection", () => {
     expect(apiMocks.downloadAttachment).toHaveBeenCalledWith(7, 8);
     expect(createObjectURL).toHaveBeenCalled();
     expect(revokeObjectURL).toHaveBeenCalledWith("blob:test");
+  });
+
+  it("enforces the 3–500 character removal-reason contract", () => {
+    render(<AttachmentSection requesterId={1} ticketId={42} attachments={[active]} onChanged={vi.fn()} />);
+    fireEvent.click(screen.getByRole("button", { name: "Remove" }));
+    const reason = screen.getByLabelText(/Removal reason/);
+    const confirm = screen.getByRole("button", { name: "Confirm removal" });
+    expect(screen.getByText(/Removal reason \*/)).toBeInTheDocument();
+    expect(reason).toBeRequired();
+    expect(reason).toHaveAttribute("aria-required", "true");
+    expect(reason).toHaveAttribute("minlength", "3");
+    expect(reason).toHaveAttribute("maxlength", "500");
+
+    fireEvent.change(reason, { target: { value: "ab" } });
+    expect(confirm).toBeDisabled();
+    expect(screen.getByText(/between 3 and 500 characters/)).toBeInTheDocument();
+
+    fireEvent.change(reason, { target: { value: "abc" } });
+    expect(confirm).not.toBeDisabled();
+    fireEvent.change(reason, { target: { value: "a".repeat(500) } });
+    expect(confirm).not.toBeDisabled();
+    fireEvent.change(reason, { target: { value: "a".repeat(501) } });
+    expect(confirm).toBeDisabled();
   });
 });

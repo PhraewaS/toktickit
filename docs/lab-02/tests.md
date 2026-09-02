@@ -1,16 +1,16 @@
-# Lab 2 — Test Plan and Evidence
+# Lab 2 — แผนการทดสอบและหลักฐาน
 
 แผน Test DD, TDD และ Acceptance-Criterion Traceability สำหรับ TokTickIT Lab 2
 
-**สถานะ:** วางแผนก่อน Implementation แล้ว ส่วน Final Results ยังเป็น Pending
+**สถานะ:** Planned Tests ถูก Implement และตรวจสอบผ่านบน `lab2-staging` แล้ว ส่วนคอลัมน์ `Final` และ Final Results ยังคง `Pending` จนกว่าจะรันยืนยันบน Final `main` ตาม Labsheet
 
 ---
 
-## 1. Test Strategy
+## 1. กลยุทธ์การทดสอบ
 
 Lab 2 ใช้ Test DD และ TDD โดย Acceptance Criterion ทุกข้อใน `specification.md` ต้อง Map ไปยัง Planned Test อย่างน้อยหนึ่งรายการ ในแต่ละ Issue ให้เขียน Test ที่เกี่ยวข้องก่อน ยืนยันว่า Test Fail เพราะ Behavior ยังไม่มี จากนั้น Implement Behavior ขั้นต่ำและ Refactor โดย Tests ยังผ่าน
 
-Test Levels:
+ระดับการทดสอบ:
 
 - **Unit:** Validation, Ticket Number, Query Parsing และ File Policy ที่เป็น Pure Logic
 - **API/Integration:** Route Contract, Persistence Calls, Validation, Ownership, Failure และ Attachment Lifecycle
@@ -24,9 +24,9 @@ Test Levels:
 
 ---
 
-## 2. Planned Tests
+## 2. การทดสอบตามแผน
 
-| Test ID | Type | Requirement / AC | What It Tests | Expected Result | Test File / Evidence Path | Final |
+| รหัสการทดสอบ | ประเภท | ข้อกำหนด / AC | สิ่งที่ทดสอบ | ผลลัพธ์ที่คาดหวัง | ไฟล์ทดสอบ / เส้นทางหลักฐาน | ผลบน Final |
 |---|---|---|---|---|---|---|
 | UNIT-01 | Unit | BR-09, AC-05 | Ticket Number Format และ Uniqueness Inputs | ได้ UTC Format ตาม Spec และค่าต่างกัน | `server/tests/lab-02/ticket-number.unit.test.ts` | Pending |
 | UNIT-02 | Unit | BR-13-17, AC-07 | Create Validation, Trimming และ Boundaries | Valid ผ่าน Invalid ได้ Field Details | `server/tests/lab-02/ticket-validation.unit.test.ts` | Pending |
@@ -44,7 +44,7 @@ Test Levels:
 | API-10 | API | FR-09, BR-27-32, AC-10-12 | Valid/Mixed/Invalid Upload และ Compensation | Allowed Metadata ถูกเก็บ Invalid/Failed File รายงานอย่างปลอดภัย | `server/tests/lab-02/attachments.api.test.ts` | Pending |
 | API-11 | API | BR-28-29, AC-23 | 5 MiB และ Five-active Boundaries | Boundary ผ่าน Excess ถูก Reject Removed File คืน Slot | `server/tests/lab-02/attachments.api.test.ts` | Pending |
 | API-12 | API | FR-14, AC-19-20 | Controlled Download และ Ownership | Owner ได้ Bytes/Name คนอื่น Safe `404` | `server/tests/lab-02/attachments.api.test.ts` | Pending |
-| API-13 | API | FR-15-16, AC-21-22 | Soft Removal, Reason, Metadata และ Blocked Download | Metadata อยู่ File ใช้ไม่ได้ | `server/tests/lab-02/attachments.api.test.ts` | Pending |
+| API-13 | API | FR-15-16, AC-21-22 | Soft Removal, Trimmed Reason `3–500` ตัวอักษร, Metadata และ Blocked Download | Boundary ที่อยู่นอกช่วงตอบ Safe `400`; Metadata อยู่และ File ใช้ไม่ได้ | `server/tests/lab-02/attachments.api.test.ts` | Pending |
 | UI-01 | UI | FR-01-04, AC-01-04, AC-24 | Selection Loading/Ready/Empty/Failure/Change | แสดง Accessible State และ Session Context ถูกต้อง | `client/tests/lab-02/RequesterSelection.test.tsx` | Pending |
 | UI-02 | UI | FR-05-08, AC-05, AC-09 | Create Initial/Reference/Read-only/Success | DB Data และ Official Number แสดงถูกต้อง | `client/tests/lab-02/CreateTicket.test.tsx` | Pending |
 | UI-03 | UI | AC-07 | Create Field-level Validation | Message อยู่ใต้ Field และไม่เรียก API | `client/tests/lab-02/CreateTicket.test.tsx` | Pending |
@@ -53,7 +53,7 @@ Test Levels:
 | UI-06 | UI | FR-10-11, BR-26, AC-13-16 | My Tickets Controls/List/Empty/No-results/Failure | แยก Empty/No-results จาก `totalOwnedItems` และ `totalItems` ของ Response เดียว; State/Actions ถูกต้อง | `client/tests/lab-02/MyTickets.test.tsx` | Pending |
 | UI-07 | UI | AC-04, AC-13 | Requester Switch Clear Stale List | ข้อมูล A หายก่อนโหลด B | `client/tests/lab-02/MyTickets.test.tsx` | Pending |
 | UI-08 | UI | FR-12-13, AC-17-18 | Read-only Detail และ Error State | Owned Data แสดง Unavailable State ปลอดภัย | `client/tests/lab-02/RequesterTicketDetail.test.tsx` | Pending |
-| UI-09 | UI | FR-14-16, AC-19-23 | Download, Removal Confirmation/Reason และ Removed State | Active/Removed Actions ถูกต้อง | `client/tests/lab-02/AttachmentSection.test.tsx` | Pending |
+| UI-09 | UI | FR-14-16, AC-19-23 | Download, Removal Confirmation/Reason `3–500` ตัวอักษร และ Removed State | แสดง Validation และเปิด Confirm เฉพาะ Reason ที่อยู่ใน Boundary; Active/Removed Actions ถูกต้อง | `client/tests/lab-02/AttachmentSection.test.tsx` | Pending |
 | STYLE-01 | UI Style | AC-25-26 | Tokens, Labels, Read-only/Invalid/Focus/Button/Badge | Required Semantics/Styles ครบ | `client/tests/lab-02/ZenGreenStyles.test.tsx` | Pending |
 | A11Y-01 | Accessibility | FR-19, AC-26 | Required Screens ใช้ Keyboard-only, Accessible Names, Error Associations, Status Announcements และ Non-color-only States | Focus มองเห็นและไปตามลำดับ; Controls/Errors/Status มี Accessible Semantics; State ไม่สื่อด้วยสีอย่างเดียว | `client/tests/lab-02/Accessibility.test.tsx` | Pending |
 | RESP-01 | Responsive | AC-25 | Required Screens บน Desktop/Tablet/Mobile | ไม่มี Page Overflow/Clipping และ Controls ใช้ได้ | `e2e/lab-02/requester-ticket-flow.spec.ts` | Pending |
@@ -66,7 +66,26 @@ Test Levels:
 
 ---
 
-## 3. Acceptance-Criterion Traceability
+## 3. การตรวจสอบ Implementation ปัจจุบัน (`lab2-staging`)
+
+ตรวจสอบชุดโค้ดที่ถูกรวมใน `lab2-staging` แล้ว โดย Feature ล่าสุดมาจาก commit [`f2f50a2`](https://github.com/PhraewaS/toktickit/commit/f2f50a2ebf192b2d1e31f1e0753e61d5d28549ef) และถูกรวมด้วย merge commit [`6b42926`](https://github.com/PhraewaS/toktickit/commit/6b429266b5b9f125ddebeed538cc569f5a398dc7)
+
+| รายการตรวจสอบ | ผลลัพธ์ |
+|---|---|
+| Server tests | ผ่าน 46 รายการ |
+| Client tests | ผ่าน 31 รายการ |
+| Playwright E2E/Responsive | ผ่าน 15 รายการ ครบ desktop/tablet/mobile |
+| Server build | ผ่าน |
+| Client build | ผ่าน |
+| หลักฐานภาพหน้าจอ | หน้าหลัก: `artifacts/lab-02/screenshots/{create-ticket,my-tickets,ticket-detail}/{desktop,tablet,mobile}.png`; State Evidence: `artifacts/lab-02/screenshots/states/{state}/{desktop,tablet,mobile}.png` |
+
+ผลชุดนี้ยืนยัน Implementation บน `lab2-staging` เท่านั้น ยังไม่ใช่ Final Verification ตาม AC-27 เพราะ `origin/main` ยังไม่ได้รวม `lab2-staging` ขณะบันทึกเอกสารนี้
+
+การปรับ Contract ของ Removal Reason ใน Feature Branch นี้ยึด Boundary เดียวกันทุกชั้นคือ `3–500` ตัวอักษรหลัง Trim และเพิ่ม Boundary Assertions ใน Unit/API/UI Tests แล้ว โดยผลตรวจบน Feature Branch ล่าสุดคือ Server Tests 46 รายการ, Client Tests 32 รายการ และ Playwright E2E/Responsive 15 รายการผ่านจากการรันบน Commit `670ecb7` (เพิ่ม UI Boundary Test 1 รายการและ State Evidence ใน E2E) การอัปเดตนี้จะนับรวมใน `lab2-staging` หลัง Merge PR นี้
+
+---
+
+## 4. การเชื่อมโยง Acceptance Criteria กับการทดสอบ
 
 | AC | Planned Tests |
 |---|---|
@@ -100,25 +119,26 @@ Test Levels:
 
 ---
 
-## 4. Responsive and Visual Checklist
+## 5. รายการตรวจ Responsive และภาพหน้าจอ
 
 ตรวจ Selection, Create Ticket, My Tickets และ Ticket Detail ที่ Desktop (`>=992px`), Tablet (`768-991px`) และ Mobile (`<768px`)
 
-- [ ] Zen Green Tokens และ Button Hierarchy ตรง `ui-spec.md`
-- [ ] Editable, Read-only, Invalid, Disabled, Busy และ Focused Controls แยกชัดเจน
-- [ ] Required Marker และ Validation Message อยู่ตำแหน่งถูกต้อง
-- [ ] ไม่มี Clipped Labels, Overlap, Hidden Action, Unreadable Filename หรือ Horizontal Page Overflow
-- [ ] Desktop Table/Mobile Cards, Filters, Sort, Pagination และ Attachment Controls ใช้งานได้
-- [ ] Loading, Empty, No-results, Success, Removed และ Failure States เข้าใจได้โดยไม่ใช้สีอย่างเดียว
-- [ ] Screenshot Paths ชี้ไป `artifacts/lab-02/screenshots/{create-ticket,my-tickets,ticket-detail}/{desktop,tablet,mobile}.png` และภาพอ่านได้
+- [x] Zen Green Tokens และ Button Hierarchy ตรง `ui-spec.md` (ตรวจบน `lab2-staging`)
+- [x] Editable, Read-only, Invalid, Disabled, Busy และ Focused Controls แยกชัดเจน (ตรวจบน `lab2-staging`)
+- [x] Required Marker และ Validation Message อยู่ตำแหน่งถูกต้อง (ตรวจบน `lab2-staging`)
+- [x] ไม่มี Clipped Labels, Overlap, Hidden Action, Unreadable Filename หรือ Horizontal Page Overflow (ตรวจบน `lab2-staging`)
+- [x] Desktop Table/Mobile Cards, Filters, Sort, Pagination และ Attachment Controls ใช้งานได้ (ตรวจบน `lab2-staging`)
+- [x] Loading, Empty, No-results, Success, Removed และ Failure States เข้าใจได้โดยไม่ใช้สีอย่างเดียว (ตรวจบน `lab2-staging`)
+- [x] Screenshot Paths ชี้ไป `artifacts/lab-02/screenshots/{create-ticket,my-tickets,ticket-detail}/{desktop,tablet,mobile}.png` และภาพอ่านได้ (ตรวจบน `lab2-staging`)
+- [x] State Evidence มี Validation, Submitting, Success, API Failure, Invalid Attachment, Empty, No-results, Requester Switch และ Removed Attachment (ตรวจจาก Feature Branch ล่าสุด)
 
 ---
 
-## 5. Test Commands
+## 6. คำสั่งทดสอบ
 
 รันจาก Repository Root โดย Project แยก Client และ Server Packages:
 
-### VERIFY-01 — Full Required Tests on Final `main`
+### VERIFY-01 — การทดสอบที่จำเป็นทั้งหมดบน Final `main`
 
 ```text
 npm --prefix server test
@@ -126,34 +146,34 @@ npm --prefix client test
 npm --prefix e2e exec playwright test -- --config e2e/playwright.config.ts
 ```
 
-Expected Result: ทุก Command Exit `0`, Required Tests ผ่านทั้งหมด และไม่มี Test ที่ Skip, Disable หรือ Comment out
+ผลลัพธ์ที่คาดหวัง: ทุก Command Exit `0`, Required Tests ผ่านทั้งหมด และไม่มี Test ที่ Skip, Disable หรือ Comment out
 
-Evidence: เก็บ Complete Console Output พร้อม Final Commit SHA และเวลาที่รันไว้ที่ `artifacts/lab-02/test-results/final-tests.txt` และอ้าง Link ใน Release PR/Final PDF
+หลักฐาน: เก็บ Complete Console Output พร้อม Final Commit SHA และเวลาที่รันไว้ที่ `artifacts/lab-02/test-results/final-tests.txt` และอ้าง Link ใน Release PR/Final PDF
 
-### VERIFY-02 — Client and Server Builds on Final `main`
+### VERIFY-02 — การ Build Client และ Server บน Final `main`
 
 ```text
 npm --prefix server run build
 npm --prefix client run build
 ```
 
-Expected Result: ทั้งสอง Command Exit `0` โดยไม่มี TypeScript Compile Error หรือ Vite Bundle Error
+ผลลัพธ์ที่คาดหวัง: ทั้งสอง Command Exit `0` โดยไม่มี TypeScript Compile Error หรือ Vite Bundle Error
 
-Evidence: เก็บ Complete Console Output พร้อม Final Commit SHA และเวลาที่รันไว้ที่ `artifacts/lab-02/test-results/final-builds.txt` และอ้าง Link ใน Release PR/Final PDF
+หลักฐาน: เก็บ Complete Console Output พร้อม Final Commit SHA และเวลาที่รันไว้ที่ `artifacts/lab-02/test-results/final-builds.txt` และอ้าง Link ใน Release PR/Final PDF
 
 Database Integration/E2E Setup และ Teardown Commands ต้องเพิ่มใน README ก่อนประกาศว่า Implementation เสร็จ
 
 ---
 
-## 6. Final Results
+## 7. ผลลัพธ์สุดท้าย
 
-**Pending Implementation**
+**รอการตรวจสอบบน Final `main`**
 
 เมื่อเสร็จแล้วต้องสรุปผล `VERIFY-01` และ `VERIFY-02` จาก Final `main` ในส่วนนี้ พร้อม Link ไป Evidence Files, Final Commit SHA, วันที่/เวลา, Playwright Viewports และ Screenshot Paths ตามรูปแบบเดียวกับ `docs/lab-01/tests.md`
 
 ---
 
-## 7. Known Limitations or Deferred Tests
+## 8. ข้อจำกัดที่ทราบหรือการทดสอบที่เลื่อนไป
 
 - ตอนวางแผนยังไม่มี Approved Limitation หรือ Deferred Required Test
 - Authentication จริง, IT Staff Workflow, Comments/Notes/Actions Taken, Status Changes และ Administration เป็น Excluded Lab 2 Scope ไม่ใช่ Deferred Required Test

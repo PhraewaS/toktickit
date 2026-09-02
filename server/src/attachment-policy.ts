@@ -2,6 +2,8 @@ import path from "node:path";
 
 export const MAX_ATTACHMENT_BYTES = 5 * 1024 * 1024;
 export const MAX_ACTIVE_ATTACHMENTS = 5;
+export const MIN_REMOVAL_REASON_LENGTH = 3;
+export const MAX_REMOVAL_REASON_LENGTH = 500;
 
 export const ALLOWED_ATTACHMENT_TYPES = {
   ".jpg": "image/jpeg",
@@ -55,5 +57,5 @@ export function validateAttachment(file: {
 export function validateRemovalReason(value: unknown) {
   if (typeof value !== "string") return null;
   const reason = value.trim();
-  return reason.length >= 3 && reason.length <= 500 ? reason : null;
+  return reason.length >= MIN_REMOVAL_REASON_LENGTH && reason.length <= MAX_REMOVAL_REASON_LENGTH ? reason : null;
 }

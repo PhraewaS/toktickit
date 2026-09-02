@@ -127,9 +127,12 @@ describe("Attachment lifecycle APIs", () => {
   });
 
   it("soft-removes an owned active attachment and validates the reason", async () => {
-    const invalid = await request(app).delete("/api/attachments/8").set("X-Development-Requester-Id", "1").send({ reason: "no" });
+    const invalid = await request(app).delete("/api/attachments/8").set("X-Development-Requester-Id", "1").send({ reason: "ab" });
     expect(invalid.status).toBe(400);
     expect(invalid.body.error.code).toBe("INVALID_REMOVAL_REASON");
+    const tooLong = await request(app).delete("/api/attachments/8").set("X-Development-Requester-Id", "1").send({ reason: "a".repeat(501) });
+    expect(tooLong.status).toBe(400);
+    expect(tooLong.body.error.code).toBe("INVALID_REMOVAL_REASON");
     const response = await request(app).delete("/api/attachments/8").set("X-Development-Requester-Id", "1").send({ reason: "  Wrong file  " });
     expect(response.status).toBe(200);
     expect(response.body.data).toMatchObject({ state: "REMOVED", removalReason: "Wrong file" });
