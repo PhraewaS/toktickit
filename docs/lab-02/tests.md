@@ -81,7 +81,7 @@ Lab 2 ใช้ Test DD และ TDD โดย Acceptance Criterion ทุก�
 
 ผลชุดนี้ยืนยัน Implementation บน `lab2-staging` เท่านั้น ยังไม่ใช่ Final Verification ตาม AC-27 เพราะ `origin/main` ยังไม่ได้รวม `lab2-staging` ขณะบันทึกเอกสารนี้
 
-การปรับ Contract ของ Removal Reason ใน Feature Branch นี้ยึด Boundary เดียวกันทุกชั้นคือ `3–500` ตัวอักษรหลัง Trim และเพิ่ม Boundary Assertions ใน Unit/API/UI Tests แล้ว โดยผลตรวจบน Feature Branch ล่าสุดคือ Server Tests 46 รายการ, Client Tests 32 รายการ และ Playwright E2E/Responsive 15 รายการผ่านจากการรันบน Commit ล่าสุด (เพิ่ม UI Boundary Test 1 รายการและ State Evidence ใน E2E) การอัปเดตนี้จะนับรวมใน `lab2-staging` หลัง Merge PR นี้
+การปรับ Contract ของ Removal Reason ใน Feature Branch นี้ยึด Boundary เดียวกันทุกชั้นคือ `3–500` ตัวอักษรหลัง Trim และเพิ่ม Boundary Assertions ใน Unit/API/UI Tests แล้ว โดยผลตรวจบน Feature Branch ล่าสุดคือ Server Tests 46 รายการ, Client Tests 32 รายการ และ Playwright E2E/Responsive 15 รายการผ่านจากการรันบน Commit `670ecb7` (เพิ่ม UI Boundary Test 1 รายการและ State Evidence ใน E2E) การอัปเดตนี้จะนับรวมใน `lab2-staging` หลัง Merge PR นี้
 
 ---
 
