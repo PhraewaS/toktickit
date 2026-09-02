@@ -68,12 +68,12 @@ Lab 2 ใช้ Test DD และ TDD โดย Acceptance Criterion ทุก�
 
 ## 3. การตรวจสอบ Implementation ปัจจุบัน (`lab2-staging`)
 
-ตรวจสอบชุดโค้ดที่ถูกรวมใน `lab2-staging` แล้ว โดย Feature ล่าสุดมาจาก commit [`f2f50a2`](https://github.com/PhraewaS/toktickit/commit/f2f50a2ebf192b2d1e31f1e0753e61d5d28549ef) และถูกรวมด้วย merge commit [`6b42926`](https://github.com/PhraewaS/toktickit/commit/6b429266b5b9f125ddebeed538cc569f5a398dc7)
+ตรวจสอบชุดโค้ดที่ถูกรวมใน `lab2-staging` แล้ว โดย Feature ล่าสุดมาจาก commit [`f164483`](https://github.com/PhraewaS/toktickit/commit/f1644830f0520ee36eb031154eb5c88ec09e4188) และถูกรวมด้วย merge commit [`8d9cca0`](https://github.com/PhraewaS/toktickit/commit/8d9cca04bf4f51015eee63c51c01f2689800fab9)
 
 | รายการตรวจสอบ | ผลลัพธ์ |
 |---|---|
 | Server tests | ผ่าน 46 รายการ |
-| Client tests | ผ่าน 31 รายการ |
+| Client tests | ผ่าน 32 รายการ |
 | Playwright E2E/Responsive | ผ่าน 15 รายการ ครบ desktop/tablet/mobile |
 | Server build | ผ่าน |
 | Client build | ผ่าน |
@@ -81,7 +81,7 @@ Lab 2 ใช้ Test DD และ TDD โดย Acceptance Criterion ทุก�
 
 ผลชุดนี้ยืนยัน Implementation บน `lab2-staging` เท่านั้น ยังไม่ใช่ Final Verification ตาม AC-27 เพราะ `origin/main` ยังไม่ได้รวม `lab2-staging` ขณะบันทึกเอกสารนี้
 
-การปรับ Contract ของ Removal Reason ใน Feature Branch นี้ยึด Boundary เดียวกันทุกชั้นคือ `3–500` ตัวอักษรหลัง Trim และเพิ่ม Boundary Assertions ใน Unit/API/UI Tests แล้ว โดยผลตรวจบน Feature Branch ล่าสุดคือ Server Tests 46 รายการ, Client Tests 32 รายการ และ Playwright E2E/Responsive 15 รายการผ่านจากการรันบน Commit `670ecb7` (เพิ่ม UI Boundary Test 1 รายการและ State Evidence ใน E2E) การอัปเดตนี้จะนับรวมใน `lab2-staging` หลัง Merge PR นี้
+การปรับ Contract ของ Removal Reason ใน Feature Branch นี้ยึด Boundary เดียวกันทุกชั้นคือ `3–500` ตัวอักษรหลัง Trim และเพิ่ม Boundary Assertions ใน Unit/API/UI Tests แล้ว โดยผลตรวจล่าสุดคือ Server Tests 46 รายการ, Client Tests 32 รายการ และ Playwright E2E/Responsive 15 รายการผ่านจากการรันบน Commit `670ecb7` (เพิ่ม UI Boundary Test 1 รายการและ State Evidence ใน E2E) และผลการแก้ไขถูกรวมใน `lab2-staging` ด้วย Merge PR #24 แล้ว
 
 ---
 
