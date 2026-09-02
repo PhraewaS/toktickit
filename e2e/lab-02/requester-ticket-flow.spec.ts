@@ -53,9 +53,16 @@ async function createTicketViaApi(request: APIRequestContext, requesterId = requ
   return (await response.json()).data as { id: number; ticketNumber: string; summary: string };
 }
 
+async function captureState(page: Page, state: string, projectName: string) {
+  const directory = path.resolve("artifacts/lab-02/screenshots/states", state);
+  await mkdir(directory, { recursive: true });
+  await page.screenshot({ path: path.join(directory, `${projectName}.png`), fullPage: true });
+}
+
 test.describe("Lab 2 requester E2E flows", () => {
-  test("E2E-01 Select A, create, find in My Tickets, and open detail", async ({ page }) => {
+  test("E2E-01 Select A, create, find in My Tickets, and open detail", async ({ page }, testInfo) => {
     const summary = await createTicket(page);
+    await captureState(page, "create-ticket-success", testInfo.project.name);
     await page.getByRole("link", { name: "My Tickets" }).click();
     await expect(page.getByRole("heading", { name: "My Tickets" })).toBeVisible();
     await page.getByLabel("Search").fill(summary);
@@ -66,14 +73,21 @@ test.describe("Lab 2 requester E2E flows", () => {
     await expect(page.getByLabel("Summary")).toHaveValue(summary);
   });
 
-  test("E2E-02 uploads, downloads, soft-removes, and blocks removed download", async ({ page }) => {
+  test("E2E-02 uploads, downloads, soft-removes, and blocks removed download", async ({ page }, testInfo) => {
     await createTicket(page);
     const file = {
       name: "e2e-proof.png",
       mimeType: "image/png",
       buffer: Buffer.from("E2E attachment bytes"),
     };
-    await page.getByLabel("Add attachments").setInputFiles(file);
+    const invalidFile = {
+      name: "e2e-invalid.pdf",
+      mimeType: "image/png",
+      buffer: Buffer.from("invalid attachment bytes"),
+    };
+    await page.getByLabel("Add attachments").setInputFiles([file, invalidFile]);
+    await expect(page.getByRole("alert")).toContainText("Invalid file");
+    await captureState(page, "attachment-invalid", testInfo.project.name);
     await page.getByRole("button", { name: "Confirm add attachments" }).click();
     await expect(page.getByText(file.name)).toBeVisible();
 
@@ -88,10 +102,11 @@ test.describe("Lab 2 requester E2E flows", () => {
     await page.getByLabel(/Removal reason/).fill("E2E replacement");
     await page.getByRole("button", { name: "Confirm removal" }).click();
     await expect(page.getByText("Removed", { exact: true })).toBeVisible();
+    await captureState(page, "attachment-removed", testInfo.project.name);
     await expect(page.getByRole("button", { name: "Download" })).toHaveCount(0);
   });
 
-  test("E2E-03 clears requester A data and blocks direct cross-owner access", async ({ page, request }) => {
+  test("E2E-03 clears requester A data and blocks direct cross-owner access", async ({ page, request }, testInfo) => {
     const ticket = await createTicketViaApi(request);
     await chooseRequester(page, requesterA);
     await page.getByRole("link", { name: "My Tickets" }).click();
@@ -103,7 +118,8 @@ test.describe("Lab 2 requester E2E flows", () => {
     await page.getByRole("link", { name: "My Tickets" }).click();
     await page.getByLabel("Search").fill(ticket.summary);
     await page.getByRole("button", { name: "Apply filters" }).click();
-    await expect(page.getByText("You do not have any Tickets yet.")).toBeVisible();
+    await expect(page.getByText(ticket.summary)).toHaveCount(0);
+    await captureState(page, "requester-switch", testInfo.project.name);
 
     const detail = await request.get(`${apiBaseURL}/api/tickets/${ticket.id}`, { headers: { "X-Development-Requester-Id": String(requesterB.id) } });
     expect(detail.status()).toBe(404);
@@ -111,10 +127,15 @@ test.describe("Lab 2 requester E2E flows", () => {
     expect(attachments.status()).toBe(404);
   });
 
-  test("E2E-04 covers validation, API failure, empty, and no-results states", async ({ page }) => {
+  test("E2E-04 covers validation, API failure, empty, and no-results states", async ({ page }, testInfo) => {
     await page.route("**/api/tickets*", async (route) => {
       if (route.request().method() === "POST") {
-        await route.abort();
+        await new Promise((resolve) => setTimeout(resolve, 1_000));
+        await route.fulfill({
+          status: 500,
+          contentType: "application/json",
+          body: JSON.stringify({ error: { code: "INTERNAL_ERROR", message: "TokTickIT could not create the Ticket. Please try again." } }),
+        });
         return;
       }
       const hasSearch = new URL(route.request().url()).searchParams.has("search");
@@ -130,16 +151,22 @@ test.describe("Lab 2 requester E2E flows", () => {
     await chooseRequester(page);
     await page.getByRole("link", { name: "My Tickets" }).click();
     await expect(page.getByText("You do not have any Tickets yet.")).toBeVisible();
+    await captureState(page, "my-tickets-empty", testInfo.project.name);
     await page.getByRole("button", { name: "Create Ticket" }).first().click();
     await page.getByRole("button", { name: "Submit Ticket" }).click();
     await expect(page.getByText("Select a Category.")).toBeVisible();
+    await captureState(page, "create-ticket-validation", testInfo.project.name);
     await fillTicket(page, `Failure ticket ${Date.now()}`);
     await page.getByRole("button", { name: "Submit Ticket" }).click();
+    await expect(page.getByRole("button", { name: "Submitting…" })).toBeVisible();
+    await captureState(page, "create-ticket-submitting", testInfo.project.name);
     await expect(page.getByText("Ticket was not created.")).toBeVisible();
+    await captureState(page, "create-ticket-api-failure", testInfo.project.name);
     await page.getByRole("link", { name: "My Tickets" }).click();
     await page.getByLabel("Search").fill("does-not-exist");
     await page.getByRole("button", { name: "Apply filters" }).click();
     await expect(page.getByText("No Tickets match these filters.")).toBeVisible();
+    await captureState(page, "my-tickets-no-results", testInfo.project.name);
   });
 });
 

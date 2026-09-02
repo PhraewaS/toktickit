@@ -77,11 +77,11 @@ Lab 2 ใช้ Test DD และ TDD โดย Acceptance Criterion ทุก�
 | Playwright E2E/Responsive | ผ่าน 15 รายการ ครบ desktop/tablet/mobile |
 | Server build | ผ่าน |
 | Client build | ผ่าน |
-| หลักฐานภาพหน้าจอ | `artifacts/lab-02/screenshots/{create-ticket,my-tickets,ticket-detail}/{desktop,tablet,mobile}.png` |
+| หลักฐานภาพหน้าจอ | หน้าหลัก: `artifacts/lab-02/screenshots/{create-ticket,my-tickets,ticket-detail}/{desktop,tablet,mobile}.png`; State Evidence: `artifacts/lab-02/screenshots/states/{state}/{desktop,tablet,mobile}.png` |
 
 ผลชุดนี้ยืนยัน Implementation บน `lab2-staging` เท่านั้น ยังไม่ใช่ Final Verification ตาม AC-27 เพราะ `origin/main` ยังไม่ได้รวม `lab2-staging` ขณะบันทึกเอกสารนี้
 
-การปรับ Contract ของ Removal Reason ใน Feature Branch นี้ยึด Boundary เดียวกันทุกชั้นคือ `3–500` ตัวอักษรหลัง Trim และเพิ่ม Boundary Assertions ใน Unit/API/UI Tests แล้ว โดยผลตรวจบน Feature Branch ล่าสุดคือ Server Tests 46 รายการ และ Client Tests 32 รายการ (เพิ่ม UI Boundary Test 1 รายการ) ส่วน E2E ยัง 15 รายการเท่าเดิม การอัปเดตนี้จะนับรวมใน `lab2-staging` หลัง Merge PR นี้
+การปรับ Contract ของ Removal Reason ใน Feature Branch นี้ยึด Boundary เดียวกันทุกชั้นคือ `3–500` ตัวอักษรหลัง Trim และเพิ่ม Boundary Assertions ใน Unit/API/UI Tests แล้ว โดยผลตรวจบน Feature Branch ล่าสุดคือ Server Tests 46 รายการ, Client Tests 32 รายการ และ Playwright E2E/Responsive 15 รายการผ่านจากการรันบน Commit ล่าสุด (เพิ่ม UI Boundary Test 1 รายการและ State Evidence ใน E2E) การอัปเดตนี้จะนับรวมใน `lab2-staging` หลัง Merge PR นี้
 
 ---
 
@@ -130,6 +130,7 @@ Lab 2 ใช้ Test DD และ TDD โดย Acceptance Criterion ทุก�
 - [x] Desktop Table/Mobile Cards, Filters, Sort, Pagination และ Attachment Controls ใช้งานได้ (ตรวจบน `lab2-staging`)
 - [x] Loading, Empty, No-results, Success, Removed และ Failure States เข้าใจได้โดยไม่ใช้สีอย่างเดียว (ตรวจบน `lab2-staging`)
 - [x] Screenshot Paths ชี้ไป `artifacts/lab-02/screenshots/{create-ticket,my-tickets,ticket-detail}/{desktop,tablet,mobile}.png` และภาพอ่านได้ (ตรวจบน `lab2-staging`)
+- [x] State Evidence มี Validation, Submitting, Success, API Failure, Invalid Attachment, Empty, No-results, Requester Switch และ Removed Attachment (ตรวจจาก Feature Branch ล่าสุด)
 
 ---
 

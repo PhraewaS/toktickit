@@ -207,6 +207,7 @@ Removal Confirmation ต้องระบุชื่อไฟล์ เตื�
 - `artifacts/lab-02/screenshots/create-ticket/`
 - `artifacts/lab-02/screenshots/my-tickets/`
 - `artifacts/lab-02/screenshots/ticket-detail/`
+- `artifacts/lab-02/screenshots/states/{state}/{desktop,tablet,mobile}.png`
 
 ตรวจ Desktop, Tablet และ Mobile ดังนี้:
 
@@ -218,3 +219,7 @@ Removal Confirmation ต้องระบุชื่อไฟล์ เตื�
 - [ ] Search, Filters, Sort, Clear Filters, Pagination และ Attachment Controls ใช้งานได้ทุกขนาด
 - [ ] Priority, Status และ Removed Badges สม่ำเสมอและเข้าใจได้โดยไม่พึ่งสี
 - [ ] Initial, Loading, Submitting/Uploading, Success, Empty, No-results และ Failure States ตรงกับ Specification
+
+สำหรับ State Evidence ให้เก็บภาพอย่างน้อย `create-ticket-validation`, `create-ticket-submitting`,
+`create-ticket-success`, `create-ticket-api-failure`, `attachment-invalid`, `attachment-removed`,
+`my-tickets-empty`, `my-tickets-no-results` และ `requester-switch` ในโครงสร้าง `states/{state}/`
