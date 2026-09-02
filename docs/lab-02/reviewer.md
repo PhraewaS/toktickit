@@ -294,7 +294,7 @@
 
 >ขอบคุณสำหรับการตรวจสอบค่ะ
 
-แหล่งที่มา: [ความคิดเห็นใน PR #18](https://github.com/guluJa/toktickit/pull/18#issuecomment-5440219143)(https://github.com/guluJa/toktickit/pull/18#issuecomment-5440340843) และสถานะรีวิว `APPROVED`
+แหล่งที่มา: [ความคิดเห็นแรกใน PR #18](https://github.com/guluJa/toktickit/pull/18#issuecomment-5440219143), [ความคิดเห็นติดตามผล](https://github.com/guluJa/toktickit/pull/18#issuecomment-5440340843) และสถานะรีวิว `APPROVED` [บน GitHub](https://github.com/guluJa/toktickit/pull/18#pullrequestreview-5041770150)
 
 
 ### PR #20 — Implement Lab 2 ticket creation
@@ -320,7 +320,7 @@
 
 >ขอบคุณสำหรับการตรวจสอบอีกครั้งนะคะ
 
-แหล่งที่มา: [ความคิดเห็นใน PR #20](https://github.com/guluJa/toktickit/pull/20#issuecomment-5470309189)(https://github.com/guluJa/toktickit/pull/20#issuecomment-5472961251) และสถานะรีวิว `APPROVED`
+แหล่งที่มา: [ความคิดเห็นแรกใน PR #20](https://github.com/guluJa/toktickit/pull/20#issuecomment-5470309189), [ความคิดเห็นติดตามผล](https://github.com/guluJa/toktickit/pull/20#issuecomment-5472961251) และสถานะรีวิว `APPROVED` [บน GitHub](https://github.com/guluJa/toktickit/pull/20#pullrequestreview-5062692623)
 
 
 ### PR #22 — Implement requester-owned My Tickets
@@ -345,7 +345,7 @@
 
 >ขอบคุณสำหรับการตรวจสอบรวมถึงคำแนะนำต่าง ๆ ค่ะ
 
-แหล่งที่มา: [ความคิดเห็นใน PR #22](https://github.com/guluJa/toktickit/pull/22#issuecomment-5475707803)(https://github.com/guluJa/toktickit/pull/22#issuecomment-5476077652) และสถานะรีวิว `APPROVED`
+แหล่งที่มา: [ความคิดเห็นแรกใน PR #22](https://github.com/guluJa/toktickit/pull/22#issuecomment-5475707803), [ความคิดเห็นติดตามผล](https://github.com/guluJa/toktickit/pull/22#issuecomment-5476077652) และสถานะรีวิว `APPROVED` [บน GitHub](https://github.com/guluJa/toktickit/pull/22#pullrequestreview-5064709231)
 
 
 ### PR #24 — Ticket Detail ของ Requester
