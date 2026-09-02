@@ -68,7 +68,9 @@ test.describe("Lab 2 requester E2E flows", () => {
     await page.getByLabel("Search").fill(summary);
     await page.getByRole("button", { name: "Apply filters" }).click();
     await expect(page.getByText(summary)).toBeVisible();
-    await page.getByRole("button", { name: "View details" }).click();
+    const ticketRow = page.getByRole("row").filter({ hasText: summary });
+    await expect(ticketRow).toHaveCount(1);
+    await ticketRow.getByRole("button", { name: "View details" }).click();
     await expect(page.getByRole("heading", { name: /TKT-\d{8}-[A-Z0-9]{8}/ })).toBeVisible();
     await expect(page.getByLabel("Summary")).toHaveValue(summary);
   });
