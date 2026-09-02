@@ -211,14 +211,14 @@ Removal Confirmation ต้องระบุชื่อไฟล์ เตื�
 
 ตรวจ Desktop, Tablet และ Mobile ดังนี้:
 
-- [ ] Zen Green Tokens และ Button Hierarchy ถูกต้อง
-- [ ] Editable, Read-only, Invalid, Disabled, Busy และ Focused States แยกชัดเจน
-- [ ] Required Marker และ Field-level Message อยู่ตำแหน่งถูกต้อง
-- [ ] ไม่มี Clipping, Overlap, Hidden Controls หรือ Horizontal Page Overflow
-- [ ] Desktop Table/Mobile Cards ใช้งานได้
-- [ ] Search, Filters, Sort, Clear Filters, Pagination และ Attachment Controls ใช้งานได้ทุกขนาด
-- [ ] Priority, Status และ Removed Badges สม่ำเสมอและเข้าใจได้โดยไม่พึ่งสี
-- [ ] Initial, Loading, Submitting/Uploading, Success, Empty, No-results และ Failure States ตรงกับ Specification
+- [x] Zen Green Tokens และ Button Hierarchy ถูกต้อง
+- [x] Editable, Read-only, Invalid, Disabled, Busy และ Focused States แยกชัดเจน
+- [x] Required Marker และ Field-level Message อยู่ตำแหน่งถูกต้อง
+- [x] ไม่มี Clipping, Overlap, Hidden Controls หรือ Horizontal Page Overflow
+- [x] Desktop Table/Mobile Cards ใช้งานได้
+- [x] Search, Filters, Sort, Clear Filters, Pagination และ Attachment Controls ใช้งานได้ทุกขนาด
+- [x] Priority, Status และ Removed Badges สม่ำเสมอและเข้าใจได้โดยไม่พึ่งสี
+- [x] Initial, Loading, Submitting/Uploading, Success, Empty, No-results และ Failure States ตรงกับ Specification
 
 สำหรับ State Evidence ให้เก็บภาพอย่างน้อย `create-ticket-validation`, `create-ticket-submitting`,
 `create-ticket-success`, `create-ticket-api-failure`, `attachment-invalid`, `attachment-removed`,
