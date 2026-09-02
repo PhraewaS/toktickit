@@ -212,6 +212,40 @@
 
 แหล่งที่มา: [ความคิดเห็นเพิ่มเติม](https://github.com/PhraewaS/toktickit/pull/21#issuecomment-5468651811)
 
+### PR #24 — Final staging verification and peer-review records
+
+**ข้อความรีวิวจาก `@guluJa` (คัดลอกตรงจาก GitHub):**
+
+> ตรวจแล้วภาพรวมของ Removal Reason 3–500 ตัวอักษร, Boundary Tests และ State Screenshots สอดคล้องกันดีค่ะ แต่ขอให้แก้อีก 2 จุดนะคะ
+> - Removal Reason เป็น Required Field แต่ Label ยังไม่มีเครื่องหมาย * และ textarea ยังไม่มี required หรือ aria-required รบกวนเพิ่มพร้อม Test ตรวจ Required semantics ให้ตรงกับกติกา UI ใน Labsheet
+> - Checklist ท้าย docs/lab-02/ui-spec.md ยังเป็น [ ] ทั้งหมด ทั้งที่ PR ระบุว่าตรวจ Visual/Responsive แล้ว รบกวนเปลี่ยนรายการที่ตรวจผ่านจริงเป็น [x] เพื่อให้หลักฐาน Answer Part 9 สอดคล้องกับผล Verification
+> แก้สองจุดนี้แล้วส่งมาให้ตรวจอีกครั้งได้เลยนะคะ
+
+แหล่งที่มา: [รีวิว PR #24 บน GitHub](https://github.com/PhraewaS/toktickit/pull/24#pullrequestreview-5090129896)
+
+**การตอบกลับของผู้จัดทำ (คัดลอกตรงจาก GitHub):**
+
+> อัปเดตตามข้อเสนอแนะเรียบร้อยแล้วค่ะ
+>
+> - เพิ่มเครื่องหมาย `*`, HTML `required` และ `aria-required="true"` ให้ Removal Reason พร้อมเพิ่ม Test ตรวจ Required semantics และ Boundary `3–500`
+> - เปลี่ยน Responsive/Visual Checklist ท้าย `docs/lab-02/ui-spec.md` รายการที่ตรวจผ่านจริงเป็น `[x]`
+> - Client Tests `32/32` ผ่าน และ Client Build ผ่าน
+> - Commit ล่าสุด: `f164483`
+>
+> รบกวนตรวจสอบ PR #24 อีกครั้งได้เลยค่ะ
+
+แหล่งที่มา: [ความคิดเห็นใน PR #24](https://github.com/PhraewaS/toktickit/pull/24#issuecomment-5510416165)
+
+**ผลตรวจซ้ำจาก `@guluJa` (คัดลอกตรงจาก GitHub):**
+
+> ตรวจการแก้ไขล่าสุดแล้วค่ะ เพิ่ม Required semantics พร้อม Test และอัปเดต Visual Checklist ครบทั้งสองจุดแล้ว ไม่พบประเด็นที่ต้องแก้เพิ่มเติมค่ะ
+
+แหล่งที่มา: [ความคิดเห็นติดตามผล](https://github.com/PhraewaS/toktickit/pull/24#issuecomment-5510519949) และสถานะรีวิว `APPROVED` [บน GitHub](https://github.com/PhraewaS/toktickit/pull/24#pullrequestreview-5090468739)
+
+**สถานะการ Merge:**
+
+PR #24 ถูก Merge เข้า `lab2-staging` แล้วเมื่อวันที่ 2 กันยายน 2026 ด้วย Merge Commit [`8d9cca0`](https://github.com/PhraewaS/toktickit/commit/8d9cca04bf4f51015eee63c51c01f2689800fab9)
+
 
 
 ## Pull Request ที่ผู้จัดทำ `@PhraewaS` เป็นผู้ตรวจให้เพื่อน
