@@ -5,10 +5,7 @@
 **ผู้จัดทำ:** นางสาวแพรวา สภานนท์ — 67070507213 — GitHub: [@PhraewaS](https://github.com/PhraewaS)
 
 **ผู้ตรวจจาก Lab 1:**
-
-- นางสาวธนภรณ์ บุณฑริกมาศ — 67070507204 — GitHub: [@thanapornboont-star](https://github.com/thanapornboont-star)
 - นางสาวณัฐวดี ภูเขม่า — 67070507201 — GitHub: [@guluJa](https://github.com/guluJa)
-- นายสิริกร ฝันนิมิตร — 67070507215 — GitHub: [@chaproi](https://github.com/chaproi)
 
 ---
 
@@ -34,7 +31,7 @@
 
 ข้อความในกรอบด้านล่างเป็นข้อความที่คัดลอกตรงจาก GitHub ส่วนคำอธิบายก่อนกรอบใช้ภาษาไทยเพื่อบอกบริบทเท่านั้น
 
-### PR #11 — สัญญาวิศวกรรมและแผนการทดสอบ
+### PR #11 — Engineering Contract and Test Plan for Sprint 2
 
 **ข้อความรีวิวจาก `@guluJa` (คัดลอกตรงจาก GitHub):**
 
@@ -66,7 +63,7 @@
 
 แหล่งที่มา: [ความคิดเห็นใน PR #11](https://github.com/PhraewaS/toktickit/pull/11#issuecomment-5409746386) และสถานะรีวิว `APPROVED` [บน GitHub](https://github.com/PhraewaS/toktickit/pull/11#pullrequestreview-5018573392)
 
-### PR #13 — ฐานข้อมูล Seed และบริบท Requester สำหรับพัฒนา
+### PR #13 — Database Seed และบริบท Requester สำหรับพัฒนา
 
 **ข้อความรีวิวจาก `@guluJa` (คัดลอกตรงจาก GitHub):**
 
@@ -83,7 +80,7 @@
 
 แหล่งที่มา: [ความคิดเห็นใน PR #13](https://github.com/PhraewaS/toktickit/pull/13#issuecomment-5421458441) และสถานะรีวิว `APPROVED` [บน GitHub](https://github.com/PhraewaS/toktickit/pull/13#pullrequestreview-5027366379)
 
-### PR #15 — API และ UI สำหรับสร้าง Ticket
+### PR #15 — Ticket Creation API and UI
 
 **ข้อความรีวิวจาก `@guluJa` (คัดลอกตรงจาก GitHub):**
 
@@ -105,7 +102,7 @@
 
 แหล่งที่มา: [ความคิดเห็นใน PR #15](https://github.com/PhraewaS/toktickit/pull/15#issuecomment-5433633783) และสถานะรีวิว `APPROVED` [บน GitHub](https://github.com/PhraewaS/toktickit/pull/15#pullrequestreview-5036755638)
 
-### PR #17 — My Tickets API และ UI
+### PR #17 — My Tickets API and UI
 
 **ข้อความรีวิวจาก `@guluJa` (คัดลอกตรงจาก GitHub):**
 
@@ -139,7 +136,7 @@
 
 แหล่งที่มา: [ความคิดเห็นใน PR #17](https://github.com/PhraewaS/toktickit/pull/17#issuecomment-5466818247) และสถานะรีวิว `APPROVED` [บน GitHub](https://github.com/PhraewaS/toktickit/pull/17#pullrequestreview-5060060658)
 
-### PR #19 — รายละเอียด Ticket และวงจรชีวิต Attachment
+### PR #19 — Ticket Detail and Attachment Lifecycle
 
 **ข้อความรีวิวจาก `@guluJa` (คัดลอกตรงจาก GitHub):**
 
@@ -168,7 +165,7 @@
 
 แหล่งที่มา: [ความคิดเห็นใน PR #19](https://github.com/PhraewaS/toktickit/pull/19#issuecomment-5467906071) และสถานะรีวิว `APPROVED` [บน GitHub](https://github.com/PhraewaS/toktickit/pull/19#pullrequestreview-5060511887)
 
-### PR #21 — Responsive, E2E และหลักฐานภาพ
+### PR #21 — Responsive, E2E and Visual Evidence
 
 **ข้อความรีวิวจาก `@guluJa` (คัดลอกตรงจาก GitHub):**
 
@@ -182,26 +179,241 @@
 > 5. กรุณาปรับ Screenshot Path ให้ตรงกับ `ui-spec.md` และโครงสร้างใน Labsheet เช่น
 >    `artifacts/lab-02/screenshots/create-ticket/{desktop,tablet,mobile}.png`
 >    และรูปแบบเดียวกันสำหรับ My Tickets กับ Ticket Detail
->
 > หากมีการนำไปปรับแก้ไขแล้ว สามารถแจ้งให้ตรวจอีกครั้งได้เลยนะคะ
 
 แหล่งที่มา: [รีวิว PR #21 บน GitHub](https://github.com/PhraewaS/toktickit/pull/21#pullrequestreview-5060679045)
+
+**ผลตรวจซ้ำจาก `@guluJa` (คัดลอกตรงจาก GitHub):**
+
+> ตรวจสอบการแก้ไขล่าสุดแล้วค่ะ แก้ไขครบตามข้อเสนอแนะทั้ง 5 ประเด็นแล้ว
+> ไม่พบประเด็นที่ต้องแก้ไขเพิ่มเติมค่ะ
+
+แหล่งที่มา: [ความคิดเห็นติดตามผล](https://github.com/PhraewaS/toktickit/pull/21#issuecomment-5468532070)
+
+**ความคิดเห็นเพิ่มเติมจาก `@guluJa` (คัดลอกตรงจาก GitHub):**
+
+> ไม่มีค่ะ ดีแล้วตอนนี้
+
+แหล่งที่มา: [ความคิดเห็นเพิ่มเติม](https://github.com/PhraewaS/toktickit/pull/21#issuecomment-5468666447)
 
 **การตอบกลับของผู้จัดทำและผลตรวจซ้ำ (คัดลอกตรงจาก GitHub):**
 
 > แก้ไขตามข้อเสนอแนะครบแล้วค่ะ ทั้ง Responsive Cards, Overflow Check, A11Y Test และ Screenshot Path ตาม ui-spec.md
 > ผลตรวจสอบ Server 46, Client 31 และ E2E 15 tests ผ่านทั้งหมด พร้อมอัปเดต PR และ Push commit ล่าสุดแล้วค่ะ รบกวนตรวจสอบอีกครั้งนะคะ
 
-แหล่งที่มา: [ความคิดเห็นใน PR #21](https://github.com/PhraewaS/toktickit/pull/21#issuecomment-5468514508)
+แหล่งที่มา: [ความคิดเห็นใน PR #21](https://github.com/PhraewaS/toktickit/pull/21#issuecomment-5468514508) และสถานะรีวิว `APPROVED` [บน GitHub](https://github.com/PhraewaS/toktickit/pull/21#pullrequestreview-5060807684)
 
-> ตรวจสอบการแก้ไขล่าสุดแล้วค่ะ แก้ไขครบตามข้อเสนอแนะทั้ง 5 ประเด็นแล้ว
-> ไม่พบประเด็นที่ต้องแก้ไขเพิ่มเติมค่ะ
+**ความคิดเห็นเพิ่มเติมของผู้จัดทำ (คัดลอกตรงจาก GitHub):**
 
-แหล่งที่มา: [ความคิดเห็นใน PR #21](https://github.com/PhraewaS/toktickit/pull/21#issuecomment-5468532070) และสถานะรีวิว `APPROVED` [บน GitHub](https://github.com/PhraewaS/toktickit/pull/21#pullrequestreview-5060807684)
+> ขอบคุณครับหวังว่าจะไม่ได้มีแก้อีกแล้วนะคะ
 
-## Pull Request ที่ผู้จัดทำเป็นผู้ตรวจให้เพื่อน
+แหล่งที่มา: [ความคิดเห็นเพิ่มเติม](https://github.com/PhraewaS/toktickit/pull/21#issuecomment-5468651811)
 
-จากข้อมูลใน Repository และ GitHub ที่เข้าถึงได้ขณะจัดทำเอกสารนี้ ยังไม่พบลิงก์ PR/Issue ของเพื่อนที่ผู้จัดทำเป็นผู้ตรวจ จึงยังไม่มีข้อความรีวิวหรือการตอบกลับส่วนนี้ให้บันทึก หากมีลิงก์ภายหลังให้เพิ่มข้อมูลตามข้อความจริงจาก GitHub โดยไม่สรุปหรือแปลข้อความรีวิว
+
+
+## Pull Request ที่ผู้จัดทำ `@PhraewaS` เป็นผู้ตรวจให้เพื่อน
+
+### PR #14 — เอกสารสัญญาวิศวกรรมและแผนการทดสอบ Lab 2
+
+**ข้อความรีวิวจาก `@PhraewaS` (คัดลอกตรงจาก GitHub):**
+
+>เมื่อเทียบกับข้อกำหนดใน Lab 2 แล้ว โดยรวมเอกสาร Engineering Contract จัดทำได้ค่อนข้างละเอียด มี Functional Requirements, Business Rules, Acceptance Criteria รวมถึง Data, API, UI Specification และ Definition of Done ครบถ้วนในระดับหนึ่งอย่างไรก็ตาม ก่อน Merge
+>ขอเสนอให้แก้ไขเพิ่มเติมดังนี้:
+
+>1. หน้า My Tickets ยังขาด UI/E2E Test สำหรับ Search, Filter, Sort และ Pagination ปัจจุบันพฤติกรรมเหล่านี้ถูกตรวจเฉพาะในระดับ API จึงควรเพิ่ม Component Test และ E2E Test เพื่อยืนยันว่าผู้ใช้สามารถใช้งาน Controls บนหน้า UI ได้จริง
+
+>2. หน้า Create Ticket ยังขาด Acceptance Criteria และ Test สำหรับการโหลด Reference Data เช่น Category และ Related System ควรเพิ่มกรณี Loading, Ready, Failure, การปิดปุ่ม Submit เมื่อโหลดไม่สำเร็จ และ Retry
+
+>3. Response shape ของ POST /api/tickets ยังไม่ชัดเจนว่า replayed จะอยู่ภายใน Ticket object หรือใช้รูปแบบ Response เช่น:
+>
+>```json
+>{
+>  "ticket": {},
+>  "replayed": false
+>}
+>```
+>
+>ควรกำหนดรูปแบบ Response ของ HTTP 201 และ HTTP 200 ให้ชัดเจน พร้อมระบุใน API และ UI tests เพื่อป้องกันความเข้าใจไม่ตรงกันระหว่าง Frontend กับ Backend
+
+แหล่งที่มา: [รีวิว PR #14 บน GitHub](https://github.com/guluJa/toktickit/pull/14#pullrequestreview-5018117061)
+
+**การตอบกลับของเพื่อนผู้จัดทำ `@guluJa` (คัดลอกตรงจาก GitHub):**
+
+> ขอบคุณสำหรับความคิดเห็นค่ะ ตรวจสอบแล้วเห็นด้วยกับทั้งสามประเด็นที่ควรแก้ หากแก้ไขและตรวจความสอดคล้องระหว่าง Specification, API Specification, UI Specification และ Test Plan แล้วจะแจ้งให้ทราบอีกครั้งค่ะ
+>ขอบคุณสำหรับความคิดเห็นค่ะ แก้ไขตามข้อเสนอแนะเรียบร้อยแล้ว รบกวนช่วยตรวจสอบดูให้อีกครั้งทีนะคะ
+
+แหล่งที่มา: [ความคิดเห็นแรกใน PR #14](https://github.com/guluJa/toktickit/pull/14#issuecomment-5409814212), [ความคิดเห็นถัดมา](https://github.com/guluJa/toktickit/pull/14#issuecomment-5409973958)
+
+**ผลตรวจซ้ำ `@PhraewaS`(คัดลอกตรงจาก GitHub):**
+> ตรวจสอบการแก้ไขรอบใหม่แล้ว จากการ Review ในครั้งก่อนหน้าได้รับการแก้ไขครบถ้วน ได้แก่ การเพิ่ม UI/E2E Test สำหรับ My Tickets controls, การเพิ่ม Acceptance Criteria และ Test สำหรับ Reference Data states และการกำหนด Create Ticket Response contract เป็น { ticket, replayed } อย่างชัดเจน เอกสาร Specification, API, UI และ Test Traceability สอดคล้องกันแล้ว จึงไม่มีสิ่งที่ต้องแก้ไขเพิ่มเติมแล้วค่ะ
+
+แหล่งที่มา: [รีวิวติดตามผล PR #14](https://github.com/guluJa/toktickit/pull/14#pullrequestreview-5018625420)
+
+**การตอบกลับของเพื่อนผู้จัดทำ `@guluJa` (คัดลอกตรงจาก GitHub):**
+>ขอบคุณสำหรับคำแนะนำค่ะ
+
+แหล่งที่มา: [ความคิดเห็นใน PR #14](https://github.com/guluJa/toktickit/pull/14#issuecomment-5410107481) และสถานะรีวิว `APPROVED` [บน GitHub](https://github.com/guluJa/toktickit/pull/14#pullrequestreview-5018654555)
+
+
+### PR #16 — Implement the Lab 2 data foundation and seed data
+
+**ข้อความรีวิวจาก `@PhraewaS` (คัดลอกตรงจาก GitHub):**
+
+>ตรวจสอบ Schema, Migration, Seed Data และผล Verification แล้ว พบว่าครบตามข้อกำหนดของ Lab 2 Data Foundation and Seed สามารถรันซ้ำได้โดยไม่สร้างข้อมูลซ้ำ จำนวน Categories, Related Systems และ Active/Inactive Development Requesters ถูกต้อง รวมถึง Prisma validation, migration status, server tests และ server build ผ่านครบถ้วนไม่พบประเด็นที่ต้องแก้ไขเพิ่มเติมภายในขอบเขตของ PR นี้แล้วค่ะ
+
+แหล่งที่มา: [รีวิว PR #16 บน GitHub](https://github.com/guluJa/toktickit/pull/16#pullrequestreview-5022642437)
+
+**การตอบกลับของเพื่อนผู้จัดทำ `@guluJa` (คัดลอกตรงจาก GitHub):**
+
+> ขอบคุณค่ะ
+
+แหล่งที่มา: [ความคิดเห็นใน PR #16](https://github.com/guluJa/toktickit/pull/16#issuecomment-5421435939) และสถานะรีวิว `APPROVED`
+
+
+### PR #18 — Implement the Development Requester context
+
+**ข้อความรีวิวจาก `@PhraewaS` (คัดลอกตรงจาก GitHub):**
+
+>ตรวจสอบ Development Requester Selection, API endpoints, Requester context middleware, localStorage restore และ Change Requester แล้ว การทำงานหลักสอดคล้องกับขอบเขตของ PR นี้ก่อน Approve รบกวนเพิ่ม Test อีก 2 กรณี:
+>Unknown positive requester ID ใน X-Development-Requester-Id ต้องคืน Safe 403
+>ระหว่างกด Continue และกำลัง validate requester ให้ตรวจว่า Select/Continue ถูก disable และไม่สามารถเรียก API ซ้ำได้หลังจากตรวจสอบและแก้ไขแล้ว สามารถบอกให้เค้ามาช่วยดูให้อีกรอบได้นะคะ
+
+>ได้ตรวจสอบการแก้ไขแล้ว พอว่าครบถ้วนตามประเด็นที่แจ้งเอาไว้
+>เพิ่ม Test สำหรับ unknown requester context ให้คืน Safe 403
+>เพิ่ม UI Test สำหรับสถานะ Continuing... เพื่อป้องกันการเรียก API ซ้ำ
+>ไม่พบประเด็นที่ต้องแก้ไขเพิ่มเติมในขอบเขตของ PR นี้แล้วค่ะ
+
+แหล่งที่มา: [รีวิว PR #18 ครั้งแรก](https://github.com/guluJa/toktickit/pull/18#pullrequestreview-5036581771), [รีวิวติดตามผล](https://github.com/guluJa/toktickit/pull/18#pullrequestreview-5041725927)
+
+**การตอบกลับของเพื่อนผู้จัดทำ `@guluJa` (คัดลอกตรงจาก GitHub):**
+
+> ขอบคุณสำหรับคำแนะนำค่ะ เพิ่ม Test ตามข้อเสนอแนะเรียบร้อยแล้ว:
+>เพิ่มกรณี Unknown positive requester ID ใน X-Development-Requester-Id และตรวจสอบ Safe HTTP 403
+>เพิ่มกรณี Continuing state โดยตรวจว่า Requester Select และ Continue ถูก Disable พร้อมยืนยันว่าเรียก Validation API เพียงครั้งเดียว
+>Push การแก้ไขเข้า PR เดิมแล้ว รบกวนช่วยตรวจสอบให้อีกครั้งหน่อยนะคะ
+
+>ขอบคุณสำหรับการตรวจสอบค่ะ
+
+แหล่งที่มา: [ความคิดเห็นใน PR #18](https://github.com/guluJa/toktickit/pull/18#issuecomment-5440219143)(https://github.com/guluJa/toktickit/pull/18#issuecomment-5440340843) และสถานะรีวิว `APPROVED`
+
+
+### PR #20 — Implement Lab 2 ticket creation
+
+**ข้อความรีวิวจาก `@PhraewaS` (คัดลอกตรงจาก GitHub):**
+
+>ตรวจสอบ Ticket Creation PR แล้ว การสร้าง Ticket, validation, reference-data loading และ test หลักทำได้ดี ก่อน Merge รบกวนแก้ไขเพิ่มเติมดังนี้:
+>เพิ่ม System Information แบบ read-only/Pending ได้แก่ Ticket Number, Ticket Date, Requester และ Current Status รวมถึงแสดง Saved Values และปุ่ม View Ticket / My Tickets หลังสร้างสำเร็จ
+>จัดการกรณี Ticket Number ซ้ำและ concurrent request ที่ใช้ submissionKey เดียวกัน เพื่อไม่ให้เกิด HTTP 500; ควร retry หรือ replay ตาม API Contract พร้อมเพิ่ม tests
+>แสดง Backend error.fields เป็น Field-level errors ใน UI
+>เพิ่ม required marker (*) หรือ aria-required สำหรับ required fields
+>หาก Attachment จะทำใน PR ถัดไป กรุณาระบุ dependency ใน PR Description ให้ชัดเจน
+>กรุณาแก้ไขแล้วส่งมาให้ตรวจอีกครั้งครับ/ค่ะ
+
+>ตรวจสอบการแก้ไขแล้ว ประเด็นจาก Review ก่อนหน้าได้รับการแก้ไขครบถ้วน ทั้ง System Information, Saved Values, required fields, Backend field errors และการจัดการ Ticket Number collision/concurrent submission
+>ไม่พบประเด็นที่ต้องแก้ไขเพิ่มเติมในขอบเขตของ PR นี้แล้วค่ะ
+
+แหล่งที่มา: [รีวิว PR #20 ครั้งแรก](https://github.com/guluJa/toktickit/pull/20#pullrequestreview-5061423156), [รีวิวติดตามผล](https://github.com/guluJa/toktickit/pull/20#pullrequestreview-5062650506)
+
+**การตอบกลับของเพื่อนผู้จัดทำ `@guluJa` (คัดลอกตรงจาก GitHub):**
+
+> แก้ไขตาม Review ครบทุกประเด็นเรียบร้อยแล้วค่ะ พร้อมอัปเดต PR Description ให้ระบุ Deferred Dependencies ชัดเจน ตรวจสอบแล้ว Server Tests ผ่าน 36 รายการ, Client Tests ผ่าน 16 รายการ และ Build ทั้ง Server/Client ผ่านค่ะ รบกวนตรวจสอบอีกครั้งได้เลยนะคะ
+
+>ขอบคุณสำหรับการตรวจสอบอีกครั้งนะคะ
+
+แหล่งที่มา: [ความคิดเห็นใน PR #20](https://github.com/guluJa/toktickit/pull/20#issuecomment-5470309189)(https://github.com/guluJa/toktickit/pull/20#issuecomment-5472961251) และสถานะรีวิว `APPROVED`
+
+
+### PR #22 — Implement requester-owned My Tickets
+
+**ข้อความรีวิวจาก `@PhraewaS` (คัดลอกตรงจาก GitHub):**
+
+>ตรวจสอบ My Tickets PR แล้ว ส่วนการแสดงรายการ Ticket, search/filter/sort, pagination, การจำกัดข้อมูลตาม requester และ test หลักทำได้ครบถ้วนดีค่ะ ก่อน Merge รบกวนดำเนินการเพิ่มเติมดังนี้:
+>ปัจจุบันปุ่ม View ยัง disabled อยู่ เนื่องจากยังไม่ได้เชื่อมไปยัง Ticket Detail หากจะดำเนินการใน PR ถัดไป กรุณาระบุ dependency พร้อมลิงก์ PR/Issue ใน PR Description ให้ชัดเจน
+>เพิ่ม API test สำหรับกรณีไม่มีหรือใช้ requester context ที่ไม่ถูกต้อง โดย API ควรตอบ 403 Forbidden แก้ไขหรือระบุ scope ให้ชัดเจนแล้ว รบกวนส่งมาให้ตรวจอีกครั้งนะคะ
+
+>ตรวจสอบการแก้ไขแล้วครับ/ค่ะ มีการเพิ่ม test สำหรับ requester context ครบถ้วน โดยกรณี header หายหรือไม่ถูกต้องตอบ 400 และกรณี requester ไม่พบตอบ 403 ส่วน Ticket Detail ได้ระบุเป็นงานใน PR ถัดไปอย่างชัดเจนแล้ว ไม่พบสิ่งที่ต้องแก้ไขเพิ่มเติมแล้วนะคะ
+
+แหล่งที่มา: [รีวิว PR #22 ครั้งแรก](https://github.com/guluJa/toktickit/pull/22#pullrequestreview-5064173303), [รีวิวติดตามผล](https://github.com/guluJa/toktickit/pull/22#pullrequestreview-5064677205)
+
+**การตอบกลับของเพื่อนผู้จัดทำ `@guluJa` (คัดลอกตรงจาก GitHub):**
+
+> แก้ไขตาม Review เรียบร้อยแล้วค่ะ
+>เพิ่ม API Tests สำหรับ Missing/Malformed Requester Context ซึ่งคืน HTTP 400 และ Unknown Requester Context ซึ่งคืน Safe HTTP 403 ตาม API Contract
+>เพิ่ม Dependency และลิงก์ Issue Implement requester-owned Ticket Detail #23 สำหรับ Ticket Detail ใน PR Description แล้ว
+>ตรวจซ้ำ Server Tests ผ่าน 52 รายการ, Client Tests ผ่าน 22 รายการ และ Build ทั้ง Server/Client ผ่านค่ะ
+>รบกวนตรวจ commit ล่าสุดอีกครั้งได้เลยนะคะ
+
+>ขอบคุณสำหรับการตรวจสอบรวมถึงคำแนะนำต่าง ๆ ค่ะ
+
+แหล่งที่มา: [ความคิดเห็นใน PR #22](https://github.com/guluJa/toktickit/pull/22#issuecomment-5475707803)(https://github.com/guluJa/toktickit/pull/22#issuecomment-5476077652) และสถานะรีวิว `APPROVED`
+
+
+### PR #24 — Ticket Detail ของ Requester
+
+**ข้อความรีวิวจาก `@PhraewaS` (คัดลอกตรงจาก GitHub):**
+
+>ตรวจสอบการแก้ไขแล้ว ปุ่ม View เชื่อมไปยัง Ticket Detail ได้ถูกต้อง พร้อมการตรวจสอบ ownership, การจัดการสถานะ loading / not found / error และ tests ที่ครอบคลุมดีค่ะ
+>อย่างไรก็ตาม PR นี้ยังแสดง Attachment ได้เฉพาะข้อมูล metadata เท่านั้น ยังไม่มีการเพิ่มไฟล์ ดาวน์โหลดไฟล์ หรือ soft-remove Attachment ซึ่งเป็นส่วนที่ต้องมีใน Lab 2
+>หากส่วน Attachment จะดำเนินการใน PR ถัดไป กรุณาระบุไว้ใน PR Description ว่าเป็นงานต่อเนื่อง พร้อมแนบลิงก์ PR หรือ Issue ที่เกี่ยวข้องให้ชัดเจน
+>ถ้าแก้ไขเรียบร้อยแล้วสามารถส่งมาให้ตรวจอีกครั้งได้นะคะ
+
+>ตรวจสอบแล้วค่ะ ได้ระบุขอบเขตของ PR และ dependency สำหรับ Attachment lifecycle พร้อมแนบ Issue #25 ไว้อย่างชัดเจนแล้ว PR นี้จึงครอบคลุมส่วน requester-owned read-only Ticket Detail และ Attachment metadata ตามขอบเขตที่ระบุไว้ นอกเหนือจากนี้ไม่มีอะไรต้องแก้ไขแล้วค่ะ
+
+แหล่งที่มา: [รีวิว PR #24 ครั้งแรก](https://github.com/guluJa/toktickit/pull/24#pullrequestreview-5066700516), [รีวิวติดตามผล](https://github.com/guluJa/toktickit/pull/24#pullrequestreview-5067071338)
+
+**การตอบกลับของเพื่อนผู้จัดทำ `@guluJa` (คัดลอกตรงจาก GitHub):**
+
+> เพิ่ม Issue #25 สำหรับ Attachment lifecycle และแนบลิงก์ไว้ใน PR Description เรียบร้อยแล้วค่ะ โดย PR นี้คงขอบเขตเป็น requester-owned read-only Ticket Detail และ Attachment metadata ส่วน upload, download และ soft removalจะดำเนินการใน Issue #25 รบกวนตรวจสอบอีกครั้งได้เลยนะคะ
+
+>ตรวจสอบทุกอย่างเรียบร้อยแล้ว ขอบคุณมากค่ะ
+
+แหล่งที่มา: [ความคิดเห็นแรกใน PR #24](https://github.com/guluJa/toktickit/pull/24#issuecomment-5478921254), [ความคิดเห็นติดตามผล](https://github.com/guluJa/toktickit/pull/24#issuecomment-5479142508) และสถานะรีวิว `APPROVED` [บน GitHub](https://github.com/guluJa/toktickit/pull/24#pullrequestreview-5067104285)
+
+
+### PR #26 — วงจรชีวิต Attachment ของ Requester
+
+**ข้อความรีวิวจาก `@PhraewaS` (คัดลอกตรงจาก GitHub):**
+
+>ตรวจสอบ Attachment lifecycle PR แล้ว พบว่า Upload, Download, Soft-remove, ownership check และการเก็บไฟล์แบบ private ทำได้ดีค่ะ ก่อน Merge รบกวนเพิ่ม test ดังนี้:
+>เลือกไฟล์ valid และ invalid พร้อมกัน โดยต้องแสดง error ของไฟล์ invalid แต่ยังอัปโหลดไฟล์ valid ได้
+>Download ให้ตรวจครบทั้ง file bytes, original filename, Content-Type และ Content-Disposition รวมถึง UI ที่กด Download
+>เมื่อมี Active Attachment ครบ 5 ไฟล์ แล้ว soft-remove 1 ไฟล์ ต้องอัปโหลดไฟล์ใหม่ได้อีก 1 ไฟล์ และ Active count ยังคงเป็น 5
+>กรณี database failure ระหว่าง Download ต้องตอบ Safe 500 INTERNAL_ERROR และไม่เปิดเผยข้อมูลภายใน
+>เพิ่ม cross-owner test สำหรับ GET /api/tickets/:ticketId/attachments โดยต้องตอบ Safe 404
+>แก้ไขแล้วรบกวนส่งมาให้ตรวจอีกครั้งค่ะ
+
+>ตรวจสอบการแก้ไขล่าสุดแล้วค่ะ แก้ไขครบตามข้อเสนอแนะทั้งหมดแล้ว ทั้งกรณีเลือกไฟล์ valid และ invalid พร้อมกัน, การตรวจสอบ Download response, การอัปโหลดไฟล์ทดแทนหลัง soft-remove, Safe 500 สำหรับ Download failure และ cross-owner Attachment list ไม่พบประเด็นที่ต้องแก้ไขเพิ่มเติมภายในขอบเขตของ PR นี้แล้วนะคะ
+
+แหล่งที่มา: [รีวิว PR #26 ครั้งแรก](https://github.com/guluJa/toktickit/pull/26#pullrequestreview-5073952885), [รีวิวติดตามผล](https://github.com/guluJa/toktickit/pull/26#pullrequestreview-5076476351)
+
+**การตอบกลับของเพื่อนผู้จัดทำ `@guluJa` (คัดลอกตรงจาก GitHub):**
+
+> แก้ไขตาม Review ครบทั้ง 5 ประเด็นแล้วค่ะ
+>เพิ่ม UI Test สำหรับเลือกไฟล์ valid และ invalid พร้อมกัน โดยไฟล์ valid ยังอัปโหลดได้และไฟล์ invalid แสดง Error
+>เพิ่ม Download assertions สำหรับ file bytes, original filename, Content-Type, Content-Disposition และ UI Download action
+>เพิ่ม API Test สำหรับครบ 5 Active Attachments แล้ว soft-remove 1 ไฟล์ จากนั้นอัปโหลดไฟล์ใหม่ได้และ Active count ยังคงเป็น 5
+>เพิ่ม Safe 500 INTERNAL_ERROR Test สำหรับ database failure ระหว่าง Download โดยไม่เปิดเผยข้อมูลภายใน
+>เพิ่ม cross-owner Test สำหรับ GET /api/tickets/:ticketId/attachments ให้คืน Safe 404
+>ตรวจซ้ำแล้ว Server Tests ผ่าน 91 รายการ, Client Tests ผ่าน 36 รายการ และ Build ทั้ง Server/Client ผ่านค่ะ รบกวนตรวจสอบอีกครั้งได้เลยนะคะ
+
+>ขอบคุณสำหรับคำแนะนำต่าง ๆ ค่ะ
+
+แหล่งที่มา: [ความคิดเห็นแรกใน PR #26](https://github.com/guluJa/toktickit/pull/26#issuecomment-5491972613), [ความคิดเห็นติดตามผล](https://github.com/guluJa/toktickit/pull/26#issuecomment-5492174759) และสถานะรีวิว `APPROVED` [บน GitHub](https://github.com/guluJa/toktickit/pull/26#pullrequestreview-5076601081)
+
+
+### PR #28 — Responsive, E2E และหลักฐานภาพของ Lab 2
+
+**ข้อความรีวิวจาก `@PhraewaS` (คัดลอกตรงจาก GitHub):**
+
+>ตรวจสอบ PR ล่าสุดแล้วค่ะ ครอบคลุม Responsive UI, Zen Green styling, accessibility, E2E flow, requester ownership, Attachment lifecycle และ Visual Evidence ตามขอบเขต Lab 2 ครบถ้วน เอกสาร Test Plan ระบุผลการทดสอบในระดับ Feature Branch อย่างถูกต้อง และคงการยืนยันผลบน Final main ไว้สำหรับ Release PR ไม่พบประเด็นที่ต้องแก้ไขเพิ่มเติมใน PR นี้แล้วค่ะ
+
+แหล่งที่มา: [รีวิว PR #28 บน GitHub](https://github.com/guluJa/toktickit/pull/28#pullrequestreview-5080167942)
+
+**การตอบกลับของเพื่อนผู้จัดทำ `@guluJa` (คัดลอกตรงจาก GitHub):**
+
+> ขอบคุณที่ช่วยตรวจสอบนะคะ
+
+แหล่งที่มา: [ความคิดเห็นใน PR #28](https://github.com/guluJa/toktickit/pull/28#issuecomment-5496681829) และสถานะรีวิว `APPROVED` [บน GitHub](https://github.com/guluJa/toktickit/pull/28#pullrequestreview-5080230189)
 
 ## รายการตรวจสอบความครบถ้วน
 
