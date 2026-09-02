@@ -79,7 +79,7 @@ Lab 2 ใช้ Test DD และ TDD โดย Acceptance Criterion ทุก�
 | Client build | ผ่าน |
 | หลักฐานภาพหน้าจอ | หน้าหลัก: `artifacts/lab-02/screenshots/{create-ticket,my-tickets,ticket-detail}/{desktop,tablet,mobile}.png`; State Evidence: `artifacts/lab-02/screenshots/states/{state}/{desktop,tablet,mobile}.png` |
 
-ผลชุดนี้ยืนยัน Implementation บน `lab2-staging` เท่านั้น ยังไม่ใช่ Final Verification ตาม AC-27 เพราะ `origin/main` ยังไม่ได้รวม `lab2-staging` ขณะบันทึกเอกสารนี้
+ผลชุดเดิมยืนยัน Implementation ที่มีอยู่บน `lab2-staging` เท่านั้น ยังไม่ใช่ Final Verification ตาม AC-27 เพราะ `origin/main` ยังไม่ได้รวม `lab2-staging` ขณะบันทึกเอกสารนี้ ส่วน Verification fixes ที่ระบุถัดไปเป็นผลจาก Feature Branch แยกและยังไม่ถือเป็นผลของ `lab2-staging`
 
 การปรับ Contract ของ Removal Reason ใน Feature Branch นี้ยึด Boundary เดียวกันทุกชั้นคือ `3–500` ตัวอักษรหลัง Trim และเพิ่ม Boundary Assertions ใน Unit/API/UI Tests แล้ว โดยผลตรวจล่าสุดจาก Branch แยก [`feature/lab2-release-verification-fixes`](https://github.com/PhraewaS/toktickit/tree/feature/lab2-release-verification-fixes) ที่ Commit [`17416e7`](https://github.com/PhraewaS/toktickit/commit/17416e7) คือ Server Tests 46 รายการ, Client Tests 32 รายการ และ Playwright E2E/Responsive 15 รายการผ่านครบทุก Viewport รวมถึง Server/Client Build ผ่าน การแก้ไขชุดนี้จัดทำเป็น PR แยกเพื่อรอ Peer Review และ Merge เข้า `lab2-staging` ไม่ได้รวมอยู่ใน PR #24
 
@@ -92,7 +92,7 @@ Lab 2 ใช้ Test DD และ TDD โดย Acceptance Criterion ทุก�
 - Playwright Responsive/E2E: `15/15` ผ่านครบ Desktop/Tablet/Mobile
 - Server Build และ Client Build ผ่าน
 
-ผลชุดนี้เป็น Pre-release Verification บน `lab2-staging` ยังไม่ใช่ผล Final ของ `main`
+ผลชุดนี้เป็น Pre-release Verification บน Feature Branch `feature/lab2-release-verification-fixes` เท่านั้น ยังไม่ใช่ผลยืนยันบน `lab2-staging` และยังไม่ใช่ผล Final ของ `main` โดยจะนับเป็นผลของ `lab2-staging` หลัง PR #26 ผ่าน Peer Review และถูก Merge แล้ว
 
 ---
 
