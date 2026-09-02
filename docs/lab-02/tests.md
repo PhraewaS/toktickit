@@ -81,11 +81,11 @@ Lab 2 ใช้ Test DD และ TDD โดย Acceptance Criterion ทุก�
 
 ผลชุดนี้ยืนยัน Implementation บน `lab2-staging` เท่านั้น ยังไม่ใช่ Final Verification ตาม AC-27 เพราะ `origin/main` ยังไม่ได้รวม `lab2-staging` ขณะบันทึกเอกสารนี้
 
-การปรับ Contract ของ Removal Reason ใน Feature Branch นี้ยึด Boundary เดียวกันทุกชั้นคือ `3–500` ตัวอักษรหลัง Trim และเพิ่ม Boundary Assertions ใน Unit/API/UI Tests แล้ว โดยผลตรวจล่าสุดจาก PR Head [`f1867b7`](https://github.com/PhraewaS/toktickit/commit/f1867b7) คือ Server Tests 46 รายการ, Client Tests 32 รายการ และ Playwright E2E/Responsive 15 รายการผ่านครบทุก Viewport รวมถึง Server/Client Build ผ่าน และผลการแก้ไขถูกรวมใน `lab2-staging` ด้วย Merge PR #24 แล้ว
+การปรับ Contract ของ Removal Reason ใน Feature Branch นี้ยึด Boundary เดียวกันทุกชั้นคือ `3–500` ตัวอักษรหลัง Trim และเพิ่ม Boundary Assertions ใน Unit/API/UI Tests แล้ว โดยผลตรวจล่าสุดจาก Branch แยก [`feature/lab2-release-verification-fixes`](https://github.com/PhraewaS/toktickit/tree/feature/lab2-release-verification-fixes) ที่ Commit [`17416e7`](https://github.com/PhraewaS/toktickit/commit/17416e7) คือ Server Tests 46 รายการ, Client Tests 32 รายการ และ Playwright E2E/Responsive 15 รายการผ่านครบทุก Viewport รวมถึง Server/Client Build ผ่าน การแก้ไขชุดนี้จัดทำเป็น PR แยกเพื่อรอ Peer Review และ Merge เข้า `lab2-staging` ไม่ได้รวมอยู่ใน PR #24
 
 ### ผลตรวจซ้ำจาก PR Head ปัจจุบัน
 
-การตรวจรอบนี้รันจาก Commit [`f1867b7`](https://github.com/PhraewaS/toktickit/commit/f1867b7) ซึ่งเป็น PR Head ล่าสุดของ Release PR #25 ณ เวลาตรวจสอบ:
+การตรวจรอบนี้รันจาก Commit [`17416e7`](https://github.com/PhraewaS/toktickit/commit/17416e7) บน Branch แยกสำหรับ PR แก้ไข Workflow โดยจะถือเป็นผลของ `lab2-staging` เมื่อ PR นี้ผ่าน Peer Review และถูก Merge แล้ว:
 
 - Server Tests: `46/46` ผ่าน
 - Client Tests: `32/32` ผ่าน
