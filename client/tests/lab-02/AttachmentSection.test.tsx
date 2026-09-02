@@ -75,6 +75,8 @@ describe("AttachmentSection", () => {
     fireEvent.click(screen.getByRole("button", { name: "Remove" }));
     const reason = screen.getByLabelText(/Removal reason/);
     const confirm = screen.getByRole("button", { name: "Confirm removal" });
+    expect(reason).toHaveAttribute("minlength", "3");
+    expect(reason).toHaveAttribute("maxlength", "500");
 
     fireEvent.change(reason, { target: { value: "ab" } });
     expect(confirm).toBeDisabled();
