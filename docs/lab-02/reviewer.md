@@ -21,10 +21,12 @@
 | [My Tickets API และ UI](https://github.com/PhraewaS/toktickit/issues/16) | `feature/lab2-my-tickets` | [#17](https://github.com/PhraewaS/toktickit/pull/17) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | `c78128b` |
 | [Requester Ticket Detail and Attachment Lifecycle](https://github.com/PhraewaS/toktickit/issues/18) | `feature/lab2-ticket-detail-attachments` | [#19](https://github.com/PhraewaS/toktickit/pull/19) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | `127b66f` |
 | [Responsive, E2E and Visual Evidence](https://github.com/PhraewaS/toktickit/issues/20) | `feature/lab2-responsive-e2e-visual` | [#21](https://github.com/PhraewaS/toktickit/pull/21) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | `6b42926` |
-| [Final staging verification and peer-review records](https://github.com/PhraewaS/toktickit/issues/23) | `feature/lab2-final-verification` | [#22](https://github.com/PhraewaS/toktickit/pull/22) | รอตรวจ | รอดำเนินการ | ยังไม่มี |
+| [Final staging verification and peer-review records](https://github.com/PhraewaS/toktickit/issues/23) | `feature/lab2-responsive-e2e-visual` | [#22](https://github.com/PhraewaS/toktickit/pull/22) | รอตรวจ | รอดำเนินการ | ยังไม่มี |
 | การรวม Release | `lab2-staging` → `main` | ยังไม่มี PR | ยังไม่มี | รอดำเนินการ | ยังไม่มี |
 
 หมายเหตุ: ขณะจัดทำเอกสารนี้ยังไม่มี Release PR จาก `lab2-staging` ไป `main` จึงยังไม่บันทึกผลการตรวจหรือการอนุมัติในส่วนดังกล่าว
+
+หมายเหตุ Workflow: PR #21 ถูก Merge แล้ว และ PR #22 ยังแสดง Source Branch เดิมตามข้อจำกัดของ GitHub ที่ไม่อนุญาตให้เปลี่ยน Head Branch ของ Pull Request ที่เปิดอยู่ จึงสร้าง `feature/lab2-final-verification` เป็น Branch แยกสำหรับงานต่อไปโดยชี้ไปยัง Commit เดียวกัน
 
 ---
 
