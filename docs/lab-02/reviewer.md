@@ -28,6 +28,8 @@
 
 หมายเหตุ Workflow: PR #21 และ PR #24 ถูก Merge เข้า `lab2-staging` แล้ว โดยงาน Final staging verification ใช้ PR #24 จาก Branch แยก `feature/lab2-final-verification` เพื่อไม่ให้ปะปนกับ Branch ของ PR #21 ส่วน PR #22 ถูกปิดเป็นรายการที่ถูกแทนที่ เนื่องจาก GitHub ไม่อนุญาตให้เปลี่ยน Head Branch ของ Pull Request ที่เปิดอยู่ ปัจจุบัน PR #25 เป็น Release PR ที่รอการตรวจจาก `lab2-staging` ไป `main`
 
+หมายเหตุ Final Evidence: หลัง PR #25 ผ่าน Peer Review และถูก Merge เข้า `main` แล้ว ให้สร้าง Branch แยก เช่น `feature/lab2-final-verification-evidence` จาก Final `main` เพื่อบันทึกผล `VERIFY-01`/`VERIFY-02`, Final Commit SHA และ Merge Evidence ใน `tests.md`/`reviewer.md` แล้วเปิด Peer-reviewed PR กลับเข้า `main` ห้ามแก้ `main` โดยตรง
+
 ---
 
 ## ข้อเสนอแนะและการตอบกลับที่เกิดขึ้นจริงใน GitHub
