@@ -22,7 +22,7 @@
 | [Requester Ticket Detail and Attachment Lifecycle](https://github.com/PhraewaS/toktickit/issues/18) | `feature/lab2-ticket-detail-attachments` | [#19](https://github.com/PhraewaS/toktickit/pull/19) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | `127b66f` |
 | [Responsive, E2E and Visual Evidence](https://github.com/PhraewaS/toktickit/issues/20) | `feature/lab2-responsive-e2e-visual` | [#21](https://github.com/PhraewaS/toktickit/pull/21) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | `6b42926` |
 | [Final staging verification and peer-review records](https://github.com/PhraewaS/toktickit/issues/23) | `feature/lab2-final-verification` | [#24](https://github.com/PhraewaS/toktickit/pull/24) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | [`8d9cca0`](https://github.com/PhraewaS/toktickit/commit/8d9cca04bf4f51015eee63c51c01f2689800fab9) |
-| ย้าย Verification fixes ตาม Required Branch Flow | `feature/lab2-release-verification-fixes` | [#26](https://github.com/PhraewaS/toktickit/pull/26) | [@guluJa](https://github.com/guluJa) | รอตรวจ (`Pending`) | รอดำเนินการ |
+| [ย้าย Verification fixes ตาม Required Branch Flow](https://github.com/PhraewaS/toktickit/issues/27) | `feature/lab2-release-verification-fixes` | [#26](https://github.com/PhraewaS/toktickit/pull/26) | [@guluJa](https://github.com/guluJa) | รอตรวจ (`Pending`) | รอดำเนินการ |
 | การรวม Release | `lab2-staging` → `main` | [#25](https://github.com/PhraewaS/toktickit/pull/25) | [@guluJa](https://github.com/guluJa) | รอตรวจ | รอดำเนินการ |
 
 หมายเหตุ: Release PR #25 จาก `lab2-staging` ไป `main` เปิดอยู่และอยู่ระหว่างรอ Peer Review จึงยังไม่บันทึกผลการตรวจหรือ Merge Commit ในส่วนดังกล่าว
