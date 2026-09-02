@@ -21,12 +21,12 @@
 | [My Tickets API และ UI](https://github.com/PhraewaS/toktickit/issues/16) | `feature/lab2-my-tickets` | [#17](https://github.com/PhraewaS/toktickit/pull/17) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | `c78128b` |
 | [Requester Ticket Detail and Attachment Lifecycle](https://github.com/PhraewaS/toktickit/issues/18) | `feature/lab2-ticket-detail-attachments` | [#19](https://github.com/PhraewaS/toktickit/pull/19) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | `127b66f` |
 | [Responsive, E2E and Visual Evidence](https://github.com/PhraewaS/toktickit/issues/20) | `feature/lab2-responsive-e2e-visual` | [#21](https://github.com/PhraewaS/toktickit/pull/21) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | `6b42926` |
-| [Final staging verification and peer-review records](https://github.com/PhraewaS/toktickit/issues/23) | `feature/lab2-final-verification` | [#24](https://github.com/PhraewaS/toktickit/pull/24) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | `8d9cca0` |
-| การรวม Release | `lab2-staging` → `main` | ยังไม่มี PR | ยังไม่มี | รอดำเนินการ | ยังไม่มี |
+| [Final staging verification and peer-review records](https://github.com/PhraewaS/toktickit/issues/23) | `feature/lab2-final-verification` | [#24](https://github.com/PhraewaS/toktickit/pull/24) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | [`8d9cca0`](https://github.com/PhraewaS/toktickit/commit/8d9cca04bf4f51015eee63c51c01f2689800fab9) |
+| การรวม Release | `lab2-staging` → `main` | [#25](https://github.com/PhraewaS/toktickit/pull/25) | [@guluJa](https://github.com/guluJa) | รอตรวจ | รอดำเนินการ |
 
-หมายเหตุ: ขณะจัดทำเอกสารนี้ยังไม่มี Release PR จาก `lab2-staging` ไป `main` จึงยังไม่บันทึกผลการตรวจหรือการอนุมัติในส่วนดังกล่าว
+หมายเหตุ: Release PR #25 จาก `lab2-staging` ไป `main` เปิดอยู่และอยู่ระหว่างรอ Peer Review จึงยังไม่บันทึกผลการตรวจหรือ Merge Commit ในส่วนดังกล่าว
 
-หมายเหตุ Workflow: PR #21 และ PR #24 ถูก Merge เข้า `lab2-staging` แล้ว โดยงาน Final staging verification ใช้ PR #24 จาก Branch แยก `feature/lab2-final-verification` เพื่อไม่ให้ปะปนกับ Branch ของ PR #21 ส่วน PR #22 ถูกปิดเป็นรายการที่ถูกแทนที่ เนื่องจาก GitHub ไม่อนุญาตให้เปลี่ยน Head Branch ของ Pull Request ที่เปิดอยู่
+หมายเหตุ Workflow: PR #21 และ PR #24 ถูก Merge เข้า `lab2-staging` แล้ว โดยงาน Final staging verification ใช้ PR #24 จาก Branch แยก `feature/lab2-final-verification` เพื่อไม่ให้ปะปนกับ Branch ของ PR #21 ส่วน PR #22 ถูกปิดเป็นรายการที่ถูกแทนที่ เนื่องจาก GitHub ไม่อนุญาตให้เปลี่ยน Head Branch ของ Pull Request ที่เปิดอยู่ ปัจจุบัน PR #25 เป็น Release PR ที่รอการตรวจจาก `lab2-staging` ไป `main`
 
 ---
 
