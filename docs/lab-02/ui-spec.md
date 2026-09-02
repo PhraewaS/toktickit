@@ -163,7 +163,7 @@ Required Elements/States:
 - Removed: Removed Badge, Removal Date/Reason และ Metadata เท่านั้น ไม่มี Download/Preview/Remove
 - Unavailable/Failure: Safe Message และ Retry เมื่อเหมาะสม
 
-Removal Confirmation ต้องระบุชื่อไฟล์ เตือนว่าไฟล์จะใช้งานไม่ได้ บังคับ Reason 3-500 ตัวอักษร และใช้ Destructive Confirmation Button พร้อม Busy State
+Removal Confirmation ต้องระบุชื่อไฟล์ เตือนว่าไฟล์จะใช้งานไม่ได้ บังคับ Reason 3–500 ตัวอักษร และใช้ Destructive Confirmation Button พร้อม Busy State
 
 ---
 

@@ -279,7 +279,7 @@ Soft-remove Active Owned Attachment
 }
 ```
 
-Reason ต้อง Trim และยาว 3-500 ตัวอักษร
+Reason ต้อง Trim และยาว 3–500 ตัวอักษร
 
 - Success `200` คืน Public Metadata พร้อม State `REMOVED`
 - Invalid Reason ตอบ `400 INVALID_REMOVAL_REASON`

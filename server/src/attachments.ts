@@ -9,6 +9,8 @@ import { DevelopmentRequesterRequest } from "./requester-context.js";
 import {
   MAX_ACTIVE_ATTACHMENTS,
   MAX_ATTACHMENT_BYTES,
+  MAX_REMOVAL_REASON_LENGTH,
+  MIN_REMOVAL_REASON_LENGTH,
   sanitizeOriginalFilename,
   validateAttachment,
   validateRemovalReason,
@@ -302,8 +304,8 @@ export const removeAttachment: RequestHandler = async (req, res) => {
     res.status(400).json({
       error: {
         code: "INVALID_REMOVAL_REASON",
-        message: "Removal reason must be between 3 and 500 characters.",
-        fields: { reason: "Enter a reason between 3 and 500 characters." },
+        message: `Removal reason must be between ${MIN_REMOVAL_REASON_LENGTH} and ${MAX_REMOVAL_REASON_LENGTH} characters.`,
+        fields: { reason: `Enter a reason between ${MIN_REMOVAL_REASON_LENGTH} and ${MAX_REMOVAL_REASON_LENGTH} characters.` },
       },
     });
     return;

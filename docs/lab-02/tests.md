@@ -44,7 +44,7 @@ Lab 2 ใช้ Test DD และ TDD โดย Acceptance Criterion ทุก�
 | API-10 | API | FR-09, BR-27-32, AC-10-12 | Valid/Mixed/Invalid Upload และ Compensation | Allowed Metadata ถูกเก็บ Invalid/Failed File รายงานอย่างปลอดภัย | `server/tests/lab-02/attachments.api.test.ts` | Pending |
 | API-11 | API | BR-28-29, AC-23 | 5 MiB และ Five-active Boundaries | Boundary ผ่าน Excess ถูก Reject Removed File คืน Slot | `server/tests/lab-02/attachments.api.test.ts` | Pending |
 | API-12 | API | FR-14, AC-19-20 | Controlled Download และ Ownership | Owner ได้ Bytes/Name คนอื่น Safe `404` | `server/tests/lab-02/attachments.api.test.ts` | Pending |
-| API-13 | API | FR-15-16, AC-21-22 | Soft Removal, Reason, Metadata และ Blocked Download | Metadata อยู่ File ใช้ไม่ได้ | `server/tests/lab-02/attachments.api.test.ts` | Pending |
+| API-13 | API | FR-15-16, AC-21-22 | Soft Removal, Trimmed Reason `3–500` ตัวอักษร, Metadata และ Blocked Download | Boundary ที่อยู่นอกช่วงตอบ Safe `400`; Metadata อยู่และ File ใช้ไม่ได้ | `server/tests/lab-02/attachments.api.test.ts` | Pending |
 | UI-01 | UI | FR-01-04, AC-01-04, AC-24 | Selection Loading/Ready/Empty/Failure/Change | แสดง Accessible State และ Session Context ถูกต้อง | `client/tests/lab-02/RequesterSelection.test.tsx` | Pending |
 | UI-02 | UI | FR-05-08, AC-05, AC-09 | Create Initial/Reference/Read-only/Success | DB Data และ Official Number แสดงถูกต้อง | `client/tests/lab-02/CreateTicket.test.tsx` | Pending |
 | UI-03 | UI | AC-07 | Create Field-level Validation | Message อยู่ใต้ Field และไม่เรียก API | `client/tests/lab-02/CreateTicket.test.tsx` | Pending |
@@ -53,7 +53,7 @@ Lab 2 ใช้ Test DD และ TDD โดย Acceptance Criterion ทุก�
 | UI-06 | UI | FR-10-11, BR-26, AC-13-16 | My Tickets Controls/List/Empty/No-results/Failure | แยก Empty/No-results จาก `totalOwnedItems` และ `totalItems` ของ Response เดียว; State/Actions ถูกต้อง | `client/tests/lab-02/MyTickets.test.tsx` | Pending |
 | UI-07 | UI | AC-04, AC-13 | Requester Switch Clear Stale List | ข้อมูล A หายก่อนโหลด B | `client/tests/lab-02/MyTickets.test.tsx` | Pending |
 | UI-08 | UI | FR-12-13, AC-17-18 | Read-only Detail และ Error State | Owned Data แสดง Unavailable State ปลอดภัย | `client/tests/lab-02/RequesterTicketDetail.test.tsx` | Pending |
-| UI-09 | UI | FR-14-16, AC-19-23 | Download, Removal Confirmation/Reason และ Removed State | Active/Removed Actions ถูกต้อง | `client/tests/lab-02/AttachmentSection.test.tsx` | Pending |
+| UI-09 | UI | FR-14-16, AC-19-23 | Download, Removal Confirmation/Reason `3–500` ตัวอักษร และ Removed State | แสดง Validation และเปิด Confirm เฉพาะ Reason ที่อยู่ใน Boundary; Active/Removed Actions ถูกต้อง | `client/tests/lab-02/AttachmentSection.test.tsx` | Pending |
 | STYLE-01 | UI Style | AC-25-26 | Tokens, Labels, Read-only/Invalid/Focus/Button/Badge | Required Semantics/Styles ครบ | `client/tests/lab-02/ZenGreenStyles.test.tsx` | Pending |
 | A11Y-01 | Accessibility | FR-19, AC-26 | Required Screens ใช้ Keyboard-only, Accessible Names, Error Associations, Status Announcements และ Non-color-only States | Focus มองเห็นและไปตามลำดับ; Controls/Errors/Status มี Accessible Semantics; State ไม่สื่อด้วยสีอย่างเดียว | `client/tests/lab-02/Accessibility.test.tsx` | Pending |
 | RESP-01 | Responsive | AC-25 | Required Screens บน Desktop/Tablet/Mobile | ไม่มี Page Overflow/Clipping และ Controls ใช้ได้ | `e2e/lab-02/requester-ticket-flow.spec.ts` | Pending |
@@ -80,6 +80,8 @@ Lab 2 ใช้ Test DD และ TDD โดย Acceptance Criterion ทุก�
 | หลักฐานภาพหน้าจอ | `artifacts/lab-02/screenshots/{create-ticket,my-tickets,ticket-detail}/{desktop,tablet,mobile}.png` |
 
 ผลชุดนี้ยืนยัน Implementation บน `lab2-staging` เท่านั้น ยังไม่ใช่ Final Verification ตาม AC-27 เพราะ `origin/main` ยังไม่ได้รวม `lab2-staging` ขณะบันทึกเอกสารนี้
+
+การปรับ Contract ของ Removal Reason ใน Feature Branch นี้ยึด Boundary เดียวกันทุกชั้นคือ `3–500` ตัวอักษรหลัง Trim และเพิ่ม Boundary Assertions ใน Unit/API/UI Tests แล้ว โดยผลตรวจบน Feature Branch ล่าสุดคือ Server Tests 46 รายการ และ Client Tests 32 รายการ (เพิ่ม UI Boundary Test 1 รายการ) ส่วน E2E ยัง 15 รายการเท่าเดิม การอัปเดตนี้จะนับรวมใน `lab2-staging` หลัง Merge PR นี้
 
 ---
 

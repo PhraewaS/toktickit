@@ -23,6 +23,9 @@ describe("Attachment policy", () => {
   it("sanitizes user paths and validates removal reasons", () => {
     expect(sanitizeOriginalFilename("../../secret.txt")).toBe("secret.txt");
     expect(validateRemovalReason("  wrong file  ")).toBe("wrong file");
-    expect(validateRemovalReason("no")).toBeNull();
+    expect(validateRemovalReason("ab")).toBeNull();
+    expect(validateRemovalReason("abc")).toBe("abc");
+    expect(validateRemovalReason("a".repeat(500))).toHaveLength(500);
+    expect(validateRemovalReason("a".repeat(501))).toBeNull();
   });
 });

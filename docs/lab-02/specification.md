@@ -115,7 +115,7 @@ Lab 2 จะเปลี่ยนระบบจากหน้า Connectivity 
 - BR-30: เก็บ Original Filename เป็น Metadata หลังทำ Basename Sanitization และใช้ Backend-generated UUID เป็น Stored Filename ห้ามใช้ User Path
 - BR-31: Attachment Upload เป็นขั้นที่สองหลัง Ticket Creation ถ้า Ticket สร้างสำเร็จแต่ Upload บางไฟล์ล้มเหลว Ticket ต้องคงอยู่ แสดง Ticket Number ระบุไฟล์ที่ล้มเหลว และ Retry ได้จาก Ticket Detail
 - BR-32: ถ้าเขียนไฟล์ลง Storage สำเร็จแต่บันทึก Attachment Metadata ล้มเหลว Backend ต้องลบไฟล์ที่เพิ่งเขียนเป็น Compensation
-- BR-33: Attachment Removal ต้องมี Confirmation และ Trimmed Reason ความยาว 3-500 ตัวอักษร
+- BR-33: Attachment Removal ต้องมี Confirmation และ Trimmed Reason ความยาว 3–500 ตัวอักษร
 - BR-34: Soft Removal ต้องตั้ง `removedAt` และ `removalReason` โดยไม่ลบ Attachment Metadata Row
 - BR-35: Removed Attachment Metadata ต้องยังแสดง Removed Label, Timestamp และ Reason แต่ไม่มี Preview, Download หรือ Remove Action
 - BR-36: Download ต้องผ่าน Ownership-checking API เท่านั้น และห้าม Serve Upload Directory แบบ Static

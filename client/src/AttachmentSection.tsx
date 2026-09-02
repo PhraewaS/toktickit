@@ -7,6 +7,8 @@ import {
 } from "./api.js";
 
 const MAX_BYTES = 5 * 1024 * 1024;
+const MIN_REMOVAL_REASON_LENGTH = 3;
+const MAX_REMOVAL_REASON_LENGTH = 500;
 const MIME_BY_EXTENSION: Record<string, string> = {
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
@@ -93,7 +95,7 @@ export default function AttachmentSection({
   }
 
   async function confirmRemove() {
-    if (!removeTarget || reason.trim().length < 3 || reason.trim().length > 500 || busy) return;
+    if (!removeTarget || reason.trim().length < MIN_REMOVAL_REASON_LENGTH || reason.trim().length > MAX_REMOVAL_REASON_LENGTH || busy) return;
     setBusy(true);
     setFailure("");
     try {
@@ -188,12 +190,12 @@ export default function AttachmentSection({
           <section className="confirmation-dialog" role="dialog" aria-modal="true" aria-labelledby="remove-heading">
             <h2 id="remove-heading">Remove attachment?</h2>
             <p><strong>{removeTarget.originalFilename}</strong> will no longer be available for download.</p>
-            <label htmlFor="removal-reason">Removal reason (3–500 characters)</label>
+            <label htmlFor="removal-reason">Removal reason ({MIN_REMOVAL_REASON_LENGTH}–{MAX_REMOVAL_REASON_LENGTH} characters)</label>
             <textarea id="removal-reason" value={reason} onChange={(event) => setReason(event.target.value)} rows={4} />
-            {reason.trim().length > 0 && (reason.trim().length < 3 || reason.trim().length > 500) && <span className="field-error">Enter a reason between 3 and 500 characters.</span>}
+            {reason.trim().length > 0 && (reason.trim().length < MIN_REMOVAL_REASON_LENGTH || reason.trim().length > MAX_REMOVAL_REASON_LENGTH) && <span className="field-error">Enter a reason between {MIN_REMOVAL_REASON_LENGTH} and {MAX_REMOVAL_REASON_LENGTH} characters.</span>}
             <div className="form-actions">
               <button className="button button--tertiary" type="button" onClick={() => { setRemoveTarget(null); setReason(""); }} disabled={busy}>Cancel</button>
-              <button className="button button--danger" type="button" onClick={() => void confirmRemove()} disabled={busy || reason.trim().length < 3 || reason.trim().length > 500}>{busy ? "Removing…" : "Confirm removal"}</button>
+              <button className="button button--danger" type="button" onClick={() => void confirmRemove()} disabled={busy || reason.trim().length < MIN_REMOVAL_REASON_LENGTH || reason.trim().length > MAX_REMOVAL_REASON_LENGTH}>{busy ? "Removing…" : "Confirm removal"}</button>
             </div>
           </section>
         </div>
