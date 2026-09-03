@@ -139,7 +139,14 @@ export default function App() {
           ) : activeView === "ticket-detail" && selectedTicketId !== null ? (
             <RequesterTicketDetail requester={currentRequester} ticketId={selectedTicketId} onBack={() => setActiveView("my-tickets")} />
           ) : (
-            <CreateTicket requester={currentRequester} />
+            <CreateTicket
+              requester={currentRequester}
+              onViewTicket={(ticketId) => {
+                setSelectedTicketId(ticketId);
+                setActiveView("ticket-detail");
+              }}
+              onMyTickets={() => setActiveView("my-tickets")}
+            />
           )
         ) : (
           <section className="selection-card" aria-labelledby="selection-heading">

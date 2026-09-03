@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import App from "../../src/App.js";
+import CreateTicket from "../../src/CreateTicket.js";
 import * as api from "../../src/api.js";
 
 vi.mock("../../src/api.js", () => ({
@@ -179,6 +180,59 @@ describe("Create Ticket", () => {
 
     expect(await screen.findByText("TKT-20260824-A1B2C3D4")).toBeInTheDocument();
     expect(screen.getByRole("status")).toHaveTextContent(/ticket created/i);
+    expect(screen.getByText("Laptop battery drains quickly")).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: /^description/i })).toHaveValue(
+      "The battery falls from full charge to 20 percent within one hour.",
+    );
+    expect(screen.getByRole("button", { name: "View Ticket" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "My Tickets" })).toBeInTheDocument();
+  });
+
+  it("renders backend field errors beside the related fields", async () => {
+    vi.mocked(api.createTicket).mockRejectedValue(
+      Object.assign(new Error("Review the highlighted fields and try again."), {
+        fields: {
+          summary: "Summary already exists.",
+          description: "Description is not acceptable.",
+        },
+      }),
+    );
+
+    await openCreateTicket();
+    fillValidTicket();
+    fireEvent.click(screen.getByRole("button", { name: /submit ticket/i }));
+
+    expect(await screen.findByText("Summary already exists.")).toBeInTheDocument();
+    expect(screen.getByText("Description is not acceptable.")).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: /ticket summary/i })).toHaveAttribute(
+      "aria-describedby",
+      "summary-error",
+    );
+    expect(screen.getByRole("textbox", { name: /^description/i })).toHaveAttribute(
+      "aria-describedby",
+      "description-error",
+    );
+  });
+
+  it("provides working next actions after saving backend values", async () => {
+    const onViewTicket = vi.fn();
+    const onMyTickets = vi.fn();
+    render(
+      <CreateTicket
+        requester={requester}
+        onViewTicket={onViewTicket}
+        onMyTickets={onMyTickets}
+      />,
+    );
+    await screen.findByRole("option", { name: "Hardware" });
+    fillValidTicket();
+    fireEvent.click(screen.getByRole("button", { name: /submit ticket/i }));
+
+    await screen.findByText("TKT-20260824-A1B2C3D4");
+    fireEvent.click(screen.getByRole("button", { name: "View Ticket" }));
+    fireEvent.click(screen.getByRole("button", { name: "My Tickets" }));
+    expect(onViewTicket).toHaveBeenCalledWith(42);
+    expect(onMyTickets).toHaveBeenCalledTimes(1);
   });
 
   it("retains entered values and shows a safe error after API failure", async () => {

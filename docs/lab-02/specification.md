@@ -111,7 +111,7 @@ Lab 2 จะเปลี่ยนระบบจากหน้า Connectivity 
 - BR-26: `GET /api/tickets` ต้องคืน `totalOwnedItems` ซึ่งนับ Ticket ทั้งหมดของ Current Requester โดยไม่ใช้ Search/Filter และ `totalItems` ซึ่งนับผลหลังใช้ Search/Filter; Empty State คือ `totalOwnedItems = 0` ส่วน No-results State คือ `totalOwnedItems > 0`, มี Search/Filter อย่างน้อยหนึ่งค่า และ `totalItems = 0` โดย UI ห้ามยิง Unfiltered Request เพิ่มเพื่อแยกสอง State นี้
 - BR-27: Attachment รองรับ JPG/JPEG, PNG, WEBP และ PDF โดย Filename Extension และ MIME Type ต้องตรงกับรายการที่อนุญาต
 - BR-28: Attachment แต่ละไฟล์มีขนาดสูงสุด 5 MiB หรือ `5 * 1024 * 1024` Bytes
-- BR-29: Ticket หนึ่งใบมี Active Attachments ได้สูงสุด 5 ไฟล์ โดย Removed Attachment ไม่นับรวม
+- BR-29: Ticket หนึ่งใบมี Active Attachments ได้สูงสุด 5 ไฟล์ โดย Removed Attachment ไม่นับรวม การตรวจ Count และการสร้าง Metadata ต้องอยู่ใน Serializable Transaction และ Retry เมื่อเกิด Serialization Conflict เพื่อป้องกัน Concurrent Upload ทำให้เกินขีดจำกัด
 - BR-30: เก็บ Original Filename เป็น Metadata หลังทำ Basename Sanitization และใช้ Backend-generated UUID เป็น Stored Filename ห้ามใช้ User Path
 - BR-31: Attachment Upload เป็นขั้นที่สองหลัง Ticket Creation ถ้า Ticket สร้างสำเร็จแต่ Upload บางไฟล์ล้มเหลว Ticket ต้องคงอยู่ แสดง Ticket Number ระบุไฟล์ที่ล้มเหลว และ Retry ได้จาก Ticket Detail
 - BR-32: ถ้าเขียนไฟล์ลง Storage สำเร็จแต่บันทึก Attachment Metadata ล้มเหลว Backend ต้องลบไฟล์ที่เพิ่งเขียนเป็น Compensation

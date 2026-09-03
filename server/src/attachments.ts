@@ -69,6 +69,15 @@ function attachmentState(attachment: { removedAt: Date | null }) {
   return attachment.removedAt ? "REMOVED" : "ACTIVE";
 }
 
+function isSerializationConflict(error: unknown) {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    (error.code === "P2034" || error.code === "40001")
+  );
+}
+
 export function serializeAttachment(attachment: PublicAttachment) {
   return {
     id: attachment.id,
@@ -214,42 +223,60 @@ export const uploadTicketAttachments: RequestHandler = async (req, res) => {
   const requester = (req as DevelopmentRequesterRequest).developmentRequester;
   const writtenPaths: string[] = [];
   try {
-    const result = await getPrisma().$transaction(async (transaction) => {
-      const ticket = await transaction.ticket.findFirst({
-        where: { id: ticketId, requesterId: requester.id },
-        select: { id: true },
-      });
-      if (!ticket) return { kind: "ticket-not-found" as const };
+    type UploadResult =
+      | { kind: "ticket-not-found" }
+      | { kind: "limit"; activeCount: number }
+      | { kind: "created"; created: PublicAttachment[] };
+    let result: UploadResult | undefined;
+    const transactionOptions = {
+      isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
+    };
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      writtenPaths.length = 0;
+      try {
+        result = await getPrisma().$transaction(async (transaction) => {
+          const ticket = await transaction.ticket.findFirst({
+            where: { id: ticketId, requesterId: requester.id },
+            select: { id: true },
+          });
+          if (!ticket) return { kind: "ticket-not-found" as const };
 
-      const activeCount = await transaction.attachment.count({
-        where: { ticketId, removedAt: null },
-      });
-      if (activeCount + files.length > MAX_ACTIVE_ATTACHMENTS) {
-        return { kind: "limit" as const, activeCount };
-      }
+          const activeCount = await transaction.attachment.count({
+            where: { ticketId, removedAt: null },
+          });
+          if (activeCount + files.length > MAX_ACTIVE_ATTACHMENTS) {
+            return { kind: "limit" as const, activeCount };
+          }
 
-      await mkdir(storageDirectory, { recursive: true });
-      const created: PublicAttachment[] = [];
-      for (const item of validated) {
-        if (!item.result.ok) continue;
-        const storedFilename = randomUUID();
-        const storedPath = path.join(storageDirectory, storedFilename);
-        await writeFile(storedPath, item.file.buffer, { flag: "wx" });
-        writtenPaths.push(storedPath);
-        const attachment = await transaction.attachment.create({
-          data: {
-            ticketId,
-            originalFilename: item.result.originalFilename,
-            storedFilename,
-            mimeType: item.result.mimeType,
-            sizeBytes: item.file.size,
-          },
-          select: publicAttachmentFields,
-        });
-        created.push(attachment);
+          await mkdir(storageDirectory, { recursive: true });
+          const created: PublicAttachment[] = [];
+          for (const item of validated) {
+            if (!item.result.ok) continue;
+            const storedFilename = randomUUID();
+            const storedPath = path.join(storageDirectory, storedFilename);
+            await writeFile(storedPath, item.file.buffer, { flag: "wx" });
+            writtenPaths.push(storedPath);
+            const attachment = await transaction.attachment.create({
+              data: {
+                ticketId,
+                originalFilename: item.result.originalFilename,
+                storedFilename,
+                mimeType: item.result.mimeType,
+                sizeBytes: item.file.size,
+              },
+              select: publicAttachmentFields,
+            });
+            created.push(attachment);
+          }
+          return { kind: "created" as const, created };
+        }, transactionOptions);
+        break;
+      } catch (error) {
+        if (!isSerializationConflict(error) || attempt === 2) throw error;
+        await Promise.all(writtenPaths.splice(0).map((filePath) => unlink(filePath).catch(() => undefined)));
       }
-      return { kind: "created" as const, created };
-    });
+    }
+    if (!result) throw new Error("Attachment upload transaction did not complete.");
 
     if (result.kind === "ticket-not-found") {
       ticketNotFound(res);

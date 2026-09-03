@@ -103,6 +103,17 @@ interface ErrorResponse {
   };
 }
 
+export class ApiError extends Error {
+  constructor(
+    message: string,
+    readonly fields?: Record<string, string>,
+    readonly code?: string,
+  ) {
+    super(message);
+    this.name = "ApiError";
+  }
+}
+
 async function fetchData<T>(path: string): Promise<T> {
   const response = await fetch(`${API_URL}${path}`);
   if (!response.ok) {
@@ -156,7 +167,11 @@ export async function createTicket(
   }
 
   if (!response.ok) {
-    throw new Error(body.error?.message ?? safeMessage);
+    throw new ApiError(
+      body.error?.message ?? safeMessage,
+      body.error?.fields,
+      body.error?.code,
+    );
   }
 
   return body;

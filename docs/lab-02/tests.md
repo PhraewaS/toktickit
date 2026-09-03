@@ -42,11 +42,11 @@ Lab 2 ใช้ Test DD และ TDD โดย Acceptance Criterion ทุก�
 | API-08 | API | BR-25, AC-14 | Invalid List Parameters และ Out-of-range Page | `400 INVALID_QUERY` หรือ `400 PAGE_OUT_OF_RANGE` พร้อม Safe Field Detail | `server/tests/lab-02/my-tickets.api.test.ts` | Pending |
 | API-09 | API | FR-12-13, AC-17-18 | Owned Detail และ Cross-owner Access | Owner ได้ Detail คนอื่นได้ Safe `404` | `server/tests/lab-02/ticket-detail.api.test.ts` | Pending |
 | API-10 | API | FR-09, BR-27-32, AC-10-12 | Valid/Mixed/Invalid Upload และ Compensation | Allowed Metadata ถูกเก็บ Invalid/Failed File รายงานอย่างปลอดภัย | `server/tests/lab-02/attachments.api.test.ts` | Pending |
-| API-11 | API | BR-28-29, AC-23 | 5 MiB และ Five-active Boundaries | Boundary ผ่าน Excess ถูก Reject Removed File คืน Slot | `server/tests/lab-02/attachments.api.test.ts` | Pending |
+| API-11 | API | BR-28-29, AC-23 | 5 MiB, Five-active Boundaries และ Concurrent Upload | Boundary ผ่าน Excess ถูก Reject; Removed File คืน Slot; Concurrent Requests ถูก Serialize และไม่ทำให้ Active เกิน 5 | `server/tests/lab-02/attachments.api.test.ts` | Pending |
 | API-12 | API | FR-14, AC-19-20 | Controlled Download และ Ownership | Owner ได้ Bytes/Name คนอื่น Safe `404` | `server/tests/lab-02/attachments.api.test.ts` | Pending |
 | API-13 | API | FR-15-16, AC-21-22 | Soft Removal, Trimmed Reason `3–500` ตัวอักษร, Metadata และ Blocked Download | Boundary ที่อยู่นอกช่วงตอบ Safe `400`; Metadata อยู่และ File ใช้ไม่ได้ | `server/tests/lab-02/attachments.api.test.ts` | Pending |
 | UI-01 | UI | FR-01-04, AC-01-04, AC-24 | Selection Loading/Ready/Empty/Failure/Change | แสดง Accessible State และ Session Context ถูกต้อง | `client/tests/lab-02/RequesterSelection.test.tsx` | Pending |
-| UI-02 | UI | FR-05-08, AC-05, AC-09 | Create Initial/Reference/Read-only/Success | DB Data และ Official Number แสดงถูกต้อง | `client/tests/lab-02/CreateTicket.test.tsx` | Pending |
+| UI-02 | UI | FR-05-08, AC-05, AC-09 | Create Initial/Reference/Read-only/Success | Saved Values จาก Backend, Official Number และ Next actions `View Ticket`/`My Tickets` แสดงและใช้งานได้ | `client/tests/lab-02/CreateTicket.test.tsx` | Pending |
 | UI-03 | UI | AC-07 | Create Field-level Validation | Message อยู่ใต้ Field และไม่เรียก API | `client/tests/lab-02/CreateTicket.test.tsx` | Pending |
 | UI-04 | UI | BR-18-20, AC-06, AC-08 | Busy, Duplicate Blocking และ Failure Retention | ส่งหนึ่ง Request, Values อยู่, Error ปลอดภัย | `client/tests/lab-02/CreateTicket.test.tsx` | Pending |
 | UI-05 | UI | AC-10-12 | Valid/Invalid Files และ Partial Upload Result | แสดง Per-file State และ Ticket Success ยังคงอยู่ | `client/tests/lab-02/AttachmentSection.test.tsx` | Pending |
