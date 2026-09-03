@@ -91,6 +91,34 @@ describe("Attachment lifecycle APIs", () => {
     expect(limited.body.error.code).toBe("ATTACHMENT_LIMIT");
   });
 
+  it("serializes concurrent uploads so the active limit cannot be exceeded", async () => {
+    let activeCount = 4;
+    let queue = Promise.resolve();
+    mocks.attachmentCount.mockImplementation(async () => activeCount);
+    mocks.attachmentCreate.mockImplementation(async () => {
+      activeCount += 1;
+      return { ...attachment, id: activeCount };
+    });
+    mocks.transaction.mockImplementation((callback, options) => {
+      expect(options).toEqual({ isolationLevel: "Serializable" });
+      const run = queue.then(() => callback({
+        ticket: { findFirst: mocks.ticketFindFirst },
+        attachment: { count: mocks.attachmentCount, create: mocks.attachmentCreate },
+      }));
+      queue = run.then(() => undefined, () => undefined);
+      return run;
+    });
+
+    const makeUpload = () => request(app)
+      .post("/api/tickets/42/attachments")
+      .set("X-Development-Requester-Id", "1")
+      .attach("files", Buffer.from("x"), { filename: "concurrent.png", contentType: "image/png" });
+    const [first, second] = await Promise.all([makeUpload(), makeUpload()]);
+
+    expect([first.status, second.status].sort()).toEqual([201, 409]);
+    expect(activeCount).toBe(5);
+  });
+
   it("allows a replacement upload after soft-removing one of five active attachments", async () => {
     mocks.attachmentCount.mockResolvedValue(5);
     const full = await request(app)

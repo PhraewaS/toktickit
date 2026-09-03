@@ -22,7 +22,9 @@
 | [Requester Ticket Detail and Attachment Lifecycle](https://github.com/PhraewaS/toktickit/issues/18) | `feature/lab2-ticket-detail-attachments` | [#19](https://github.com/PhraewaS/toktickit/pull/19) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | `127b66f` |
 | [Responsive, E2E and Visual Evidence](https://github.com/PhraewaS/toktickit/issues/20) | `feature/lab2-responsive-e2e-visual` | [#21](https://github.com/PhraewaS/toktickit/pull/21) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | `6b42926` |
 | [Final staging verification and peer-review records](https://github.com/PhraewaS/toktickit/issues/23) | `feature/lab2-final-verification` | [#24](https://github.com/PhraewaS/toktickit/pull/24) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | [`8d9cca0`](https://github.com/PhraewaS/toktickit/commit/8d9cca04bf4f51015eee63c51c01f2689800fab9) |
-| [ย้าย Verification fixes ตาม Required Branch Flow](https://github.com/PhraewaS/toktickit/issues/27) | `feature/lab2-release-verification-fixes` | [#26](https://github.com/PhraewaS/toktickit/pull/26) | [@guluJa](https://github.com/guluJa) | อนุมัติและ Merge (`Approved/Merged`) | [`68de92b`](https://github.com/PhraewaS/toktickit/commit/68de92bbad045c0565af6c2c8fea673f11cb9de8) |
+| [Move release verification fixes through reviewed branch](https://github.com/PhraewaS/toktickit/issues/27) | `feature/lab2-release-verification-fixes` | [#26](https://github.com/PhraewaS/toktickit/pull/26) | [@guluJa](https://github.com/guluJa) | อนุมัติและ Merge (`Approved/Merged`) | [`68de92b`](https://github.com/PhraewaS/toktickit/commit/68de92bbad045c0565af6c2c8fea673f11cb9de8) |
+| [Record PR #26 approval and merge evidence](https://github.com/PhraewaS/toktickit/pull/28) | `feature/lab2-record-pr26-merge` | [#28](https://github.com/PhraewaS/toktickit/pull/28) | [@guluJa](https://github.com/guluJa) | อนุมัติและ Merge (`Approved/Merged`) | [`f264f40`](https://github.com/PhraewaS/toktickit/commit/f264f40ca2e51801f263b371d38850de537ac325) |
+| การแก้ไขตามข้อเสนอแนะของ Release PR | `feature/lab2-release-review-fixes` | [#30](https://github.com/PhraewaS/toktickit/pull/30) | [@guluJa](https://github.com/guluJa) | ตรวจแล้ว ไม่พบประเด็นเพิ่มเติม (`COMMENTED`) | รอ Merge |
 | การรวม Release | `lab2-staging` → `main` | [#25](https://github.com/PhraewaS/toktickit/pull/25) | [@guluJa](https://github.com/guluJa) | รอตรวจ | รอดำเนินการ |
 
 หมายเหตุ: Release PR #25 จาก `lab2-staging` ไป `main` เปิดอยู่และอยู่ระหว่างรอ Peer Review จึงยังไม่บันทึกผลการตรวจหรือ Merge Commit ในส่วนดังกล่าว
@@ -422,50 +424,81 @@ PR #26 ถูก Merge เข้า `lab2-staging` เมื่อวันท�
 แหล่งที่มา: [ความคิดเห็นแรกใน PR #24](https://github.com/guluJa/toktickit/pull/24#issuecomment-5478921254), [ความคิดเห็นติดตามผล](https://github.com/guluJa/toktickit/pull/24#issuecomment-5479142508) และสถานะรีวิว `APPROVED` [บน GitHub](https://github.com/guluJa/toktickit/pull/24#pullrequestreview-5067104285)
 
 
-### PR #26 — วงจรชีวิต Attachment ของ Requester
+### PR #26 — Move release verification fixes through reviewed branch
 
-**ข้อความรีวิวจาก `@PhraewaS` (คัดลอกตรงจาก GitHub):**
+**การตอบกลับของผู้จัดทำ `@PhraewaS` ต่อ Review ก่อนหน้า (คัดลอกตรงจาก GitHub):**
 
->ตรวจสอบ Attachment lifecycle PR แล้ว พบว่า Upload, Download, Soft-remove, ownership check และการเก็บไฟล์แบบ private ทำได้ดีค่ะ ก่อน Merge รบกวนเพิ่ม test ดังนี้:
->เลือกไฟล์ valid และ invalid พร้อมกัน โดยต้องแสดง error ของไฟล์ invalid แต่ยังอัปโหลดไฟล์ valid ได้
->Download ให้ตรวจครบทั้ง file bytes, original filename, Content-Type และ Content-Disposition รวมถึง UI ที่กด Download
->เมื่อมี Active Attachment ครบ 5 ไฟล์ แล้ว soft-remove 1 ไฟล์ ต้องอัปโหลดไฟล์ใหม่ได้อีก 1 ไฟล์ และ Active count ยังคงเป็น 5
->กรณี database failure ระหว่าง Download ต้องตอบ Safe 500 INTERNAL_ERROR และไม่เปิดเผยข้อมูลภายใน
->เพิ่ม cross-owner test สำหรับ GET /api/tickets/:ticketId/attachments โดยต้องตอบ Safe 404
->แก้ไขแล้วรบกวนส่งมาให้ตรวจอีกครั้งค่ะ
+> แก้ตาม Review แล้วค่ะ
+>
+> - ปรับ `tests.md` ให้ระบุชัดว่าผลจาก Commit `17416e7` เป็น Pre-release Verification ของ Feature Branch `feature/lab2-release-verification-fixes`
+> - ไม่เรียกผลดังกล่าวว่าเป็นผลบน `lab2-staging` ก่อน PR #26 Merge
+> - ระบุว่าเมื่อ PR #26 ผ่าน Peer Review และ Merge แล้ว จึงรัน/อ้างผลจาก `lab2-staging` ล่าสุดสำหรับ PR #25
+> - Commit ล่าสุดของ PR นี้คือ `51fd8b3`
+>
+> รบกวนตรวจสอบ PR #26 อีกครั้งได้เลยนะคะ
 
->ตรวจสอบการแก้ไขล่าสุดแล้วค่ะ แก้ไขครบตามข้อเสนอแนะทั้งหมดแล้ว ทั้งกรณีเลือกไฟล์ valid และ invalid พร้อมกัน, การตรวจสอบ Download response, การอัปโหลดไฟล์ทดแทนหลัง soft-remove, Safe 500 สำหรับ Download failure และ cross-owner Attachment list ไม่พบประเด็นที่ต้องแก้ไขเพิ่มเติมภายในขอบเขตของ PR นี้แล้วนะคะ
+แหล่งที่มา: [การตอบกลับของผู้จัดทำใน PR #26](https://github.com/PhraewaS/toktickit/pull/26#issuecomment-5513664620)
 
-แหล่งที่มา: [รีวิว PR #26 ครั้งแรก](https://github.com/guluJa/toktickit/pull/26#pullrequestreview-5073952885), [รีวิวติดตามผล](https://github.com/guluJa/toktickit/pull/26#pullrequestreview-5076476351)
+**ความคิดเห็นของผู้รีวิว `@guluJa` (คัดลอกตรงจาก GitHub):**
 
-**การตอบกลับของเพื่อนผู้จัดทำ `@guluJa` (คัดลอกตรงจาก GitHub):**
+> ตรวจสอบการแก้ไขล่าสุดแล้วค่ะ การย้าย Verification fixes มาอยู่ใน Feature Branch และนำกลับเข้า lab2-staging ผ่าน Peer Review เป็นไปตาม Required Branch Flow แล้ว เอกสารแยกผล Feature Branch, lab2-staging และ Final main ชัดเจน รวมถึง E2E selector จำกัดการเลือก View details อยู่ใน Ticket row ที่ตรงกับ Summary แล้ว
+> ไม่พบประเด็นที่ต้องแก้เพิ่มเติมค่ะ
 
-> แก้ไขตาม Review ครบทั้ง 5 ประเด็นแล้วค่ะ
->เพิ่ม UI Test สำหรับเลือกไฟล์ valid และ invalid พร้อมกัน โดยไฟล์ valid ยังอัปโหลดได้และไฟล์ invalid แสดง Error
->เพิ่ม Download assertions สำหรับ file bytes, original filename, Content-Type, Content-Disposition และ UI Download action
->เพิ่ม API Test สำหรับครบ 5 Active Attachments แล้ว soft-remove 1 ไฟล์ จากนั้นอัปโหลดไฟล์ใหม่ได้และ Active count ยังคงเป็น 5
->เพิ่ม Safe 500 INTERNAL_ERROR Test สำหรับ database failure ระหว่าง Download โดยไม่เปิดเผยข้อมูลภายใน
->เพิ่ม cross-owner Test สำหรับ GET /api/tickets/:ticketId/attachments ให้คืน Safe 404
->ตรวจซ้ำแล้ว Server Tests ผ่าน 91 รายการ, Client Tests ผ่าน 36 รายการ และ Build ทั้ง Server/Client ผ่านค่ะ รบกวนตรวจสอบอีกครั้งได้เลยนะคะ
+แหล่งที่มา: [ความคิดเห็นตรวจซ้ำใน PR #26](https://github.com/PhraewaS/toktickit/pull/26#issuecomment-5523574403)
 
->ขอบคุณสำหรับคำแนะนำต่าง ๆ ค่ะ
+**การตอบกลับของผู้จัดทำ `@PhraewaS` (คัดลอกตรงจาก GitHub):**
 
-แหล่งที่มา: [ความคิดเห็นแรกใน PR #26](https://github.com/guluJa/toktickit/pull/26#issuecomment-5491972613), [ความคิดเห็นติดตามผล](https://github.com/guluJa/toktickit/pull/26#issuecomment-5492174759) และสถานะรีวิว `APPROVED` [บน GitHub](https://github.com/guluJa/toktickit/pull/26#pullrequestreview-5076601081)
+> ขอบคุณสำหรับการตรวจและการแนะนำต่างๆนะคะ
+
+แหล่งที่มา: [การตอบกลับของผู้จัดทำใน PR #26](https://github.com/PhraewaS/toktickit/pull/26#issuecomment-5523617454)
+
+**ผล Peer Review และการ Merge:**
+
+- Formal Review จาก `@guluJa`: `APPROVED` (ไม่มีข้อความใน Review body)
+- [สถานะ Review `APPROVED`](https://github.com/PhraewaS/toktickit/pull/26#pullrequestreview-5100209117)
+- Merge Commit: [`68de92b`](https://github.com/PhraewaS/toktickit/commit/68de92bbad045c0565af6c2c8fea673f11cb9de8)
 
 
-### PR #28 — Responsive, E2E และหลักฐานภาพของ Lab 2
+### PR #28 — Record PR #26 approval and merge evidence
 
-**ข้อความรีวิวจาก `@PhraewaS` (คัดลอกตรงจาก GitHub):**
+**ข้อความรีวิวของผู้รีวิว `@guluJa` (คัดลอกตรงจาก GitHub):**
 
->ตรวจสอบ PR ล่าสุดแล้วค่ะ ครอบคลุม Responsive UI, Zen Green styling, accessibility, E2E flow, requester ownership, Attachment lifecycle และ Visual Evidence ตามขอบเขต Lab 2 ครบถ้วน เอกสาร Test Plan ระบุผลการทดสอบในระดับ Feature Branch อย่างถูกต้อง และคงการยืนยันผลบน Final main ไว้สำหรับ Release PR ไม่พบประเด็นที่ต้องแก้ไขเพิ่มเติมใน PR นี้แล้วค่ะ
+> ตรวจสอบแล้วค่ะ ข้อมูล Approval และ Merge Commit 68de92b ของ PR #26 ตรงกับ GitHub จริง รวมถึงสถานะ Issue #27 ปิดแล้ว และการบันทึกใน reviewer.md สอดคล้องกับ Required Branch Flow ค่ะ ไม่พบประเด็นที่ต้องแก้เพิ่มเติม
 
-แหล่งที่มา: [รีวิว PR #28 บน GitHub](https://github.com/guluJa/toktickit/pull/28#pullrequestreview-5080167942)
+แหล่งที่มา: [Review ของผู้รีวิวใน PR #28](https://github.com/PhraewaS/toktickit/pull/28#pullrequestreview-5100444120) จาก Commit [`db97699`](https://github.com/PhraewaS/toktickit/commit/db97699f2ecfeba63f296740e66d063523a24d38)
 
-**การตอบกลับของเพื่อนผู้จัดทำ `@guluJa` (คัดลอกตรงจาก GitHub):**
+**การตอบกลับของผู้จัดทำ `@PhraewaS` (คัดลอกตรงจาก GitHub):**
 
-> ขอบคุณที่ช่วยตรวจสอบนะคะ
+> ขอบคุณมากๆเลยนะคะ ที่ค่อยมาตรวจให้เยอะแยะไปหมด
 
-แหล่งที่มา: [ความคิดเห็นใน PR #28](https://github.com/guluJa/toktickit/pull/28#issuecomment-5496681829) และสถานะรีวิว `APPROVED` [บน GitHub](https://github.com/guluJa/toktickit/pull/28#pullrequestreview-5080230189)
+แหล่งที่มา: [การตอบกลับของผู้จัดทำใน PR #28](https://github.com/PhraewaS/toktickit/pull/28#issuecomment-5524039678)
+
+**การตอบกลับของผู้รีวิว `@guluJa` (คัดลอกตรงจาก GitHub):**
+
+> ไม่เป็นไรเลยค่ะ
+
+แหล่งที่มา: [การตอบกลับของผู้รีวิวใน PR #28](https://github.com/PhraewaS/toktickit/pull/28#issuecomment-5524062756)
+
+**หลักฐานสถานะรีวิวและการ Merge (ไม่ใช่บทสนทนา):**
+
+- ผู้รีวิว `@guluJa` ส่ง Review สถานะ `COMMENTED` ที่ [Review #5100444120](https://github.com/PhraewaS/toktickit/pull/28#pullrequestreview-5100444120)
+- ผู้รีวิว `@guluJa` ส่ง Review สถานะ `APPROVED` ที่ [Review #5100563953](https://github.com/PhraewaS/toktickit/pull/28#pullrequestreview-5100563953) โดยไม่มีข้อความใน Review body
+- PR #28 ถูก Merge เข้า `lab2-staging` ด้วย Commit [`f264f40`](https://github.com/PhraewaS/toktickit/commit/f264f40ca2e51801f263b371d38850de537ac325)
+
+
+### PR #30 — Address release review feedback
+
+**ข้อความรีวิวจากผู้รีวิว `@guluJa` (คัดลอกตรงจาก GitHub):**
+
+> ได้ทำการตรวจสอบแล้ว PR #30 ถูกต้องและแก้ครบตาม 3 ประเด็นที่ระบุไว้ค่ะ
+> - Success หลังสร้าง Ticket แสดง Saved Values จาก Backend และปุ่ม View Ticket / My Tickets ใช้งานได้จริง
+> - error.fields ถูกส่งผ่าน ApiError และแสดงใต้ฟิลด์ที่เกี่ยวข้อง พร้อม test
+> - Concurrent Attachment Upload ใช้ Serializable Transaction, retry เมื่อชนกัน และมี test ยืนยันว่า Active attachments ไม่เกิน 5
+> - เอกสาร API/spec/tests และ screenshot evidence ถูกอัปเดตให้ตรงกับการแก้ไข
+> - Branch flow ถูกต้อง: feature branch → lab2-staging
+> ดังนั้นไม่พบประเด็นที่ต้องแก้ไขเพิ่มเติมค่ะ
+
+แหล่งที่มา: [รีวิว PR #30](https://github.com/PhraewaS/toktickit/pull/30#pullrequestreview-5101274831) สถานะ `COMMENTED` จาก Commit [`3dc5123`](https://github.com/PhraewaS/toktickit/commit/3dc5123923ac04af8e7fddbc6c391ae43088fc47)
 
 ## รายการตรวจสอบความครบถ้วน
 

@@ -77,10 +77,27 @@ function formatDate(value: string) {
   }).format(new Date(value));
 }
 
+function getFieldErrors(error: unknown): Record<string, string> | undefined {
+  if (typeof error !== "object" || error === null || !("fields" in error)) {
+    return undefined;
+  }
+  const fields = error.fields;
+  if (typeof fields !== "object" || fields === null) return undefined;
+  return Object.fromEntries(
+    Object.entries(fields).filter(
+      ([, value]) => typeof value === "string",
+    ),
+  );
+}
+
 export default function CreateTicket({
   requester,
+  onViewTicket,
+  onMyTickets,
 }: {
   requester: DevelopmentRequester;
+  onViewTicket?: (ticketId: number) => void;
+  onMyTickets?: () => void;
 }) {
   const formRef = useRef<HTMLFormElement>(null);
   const [referenceState, setReferenceState] =
@@ -151,6 +168,10 @@ export default function CreateTicket({
       });
       setCreatedTicket({ ...result.data, attachments: [] });
     } catch (error) {
+      const fieldErrors = getFieldErrors(error);
+      if (fieldErrors) {
+        setErrors((current) => ({ ...current, ...fieldErrors }));
+      }
       setFailure(
         error instanceof Error
           ? error.message
@@ -192,6 +213,22 @@ export default function CreateTicket({
             <span>
               Official Ticket Number: <b>{createdTicket.ticketNumber}</b>
             </span>
+            <dl className="saved-ticket-values">
+              <div><dt>Requester</dt><dd>{createdTicket.requester.name}</dd></div>
+              <div><dt>Category</dt><dd>{createdTicket.category.name}</dd></div>
+              <div><dt>Related System</dt><dd>{createdTicket.relatedSystem.name}</dd></div>
+              <div><dt>Requested Priority</dt><dd>{createdTicket.requestedPriority}</dd></div>
+              <div><dt>Summary</dt><dd>{createdTicket.summary}</dd></div>
+              <div><dt>Description</dt><dd>{createdTicket.description}</dd></div>
+            </dl>
+            <div className="success-panel__actions">
+              <button className="button button--primary" type="button" onClick={() => onViewTicket?.(createdTicket.id)}>
+                View Ticket
+              </button>
+              <button className="button button--secondary" type="button" onClick={onMyTickets}>
+                My Tickets
+              </button>
+            </div>
           </div>
         </div>
       )}

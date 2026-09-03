@@ -235,7 +235,7 @@ Attachment Shape:
 
 ### POST `/api/tickets/:ticketId/attachments`
 
-ใช้ `multipart/form-data` และ Field Name `files` ส่งอย่างน้อย 1 และสูงสุด 5 ไฟล์ แต่ Active Attachment รวมของ Ticket ต้องไม่เกิน 5
+ใช้ `multipart/form-data` และ Field Name `files` ส่งอย่างน้อย 1 และสูงสุด 5 ไฟล์ แต่ Active Attachment รวมของ Ticket ต้องไม่เกิน 5 โดย Backend ต้องตรวจ Count และเขียน Metadata ใน Serializable Transaction พร้อม Retry เมื่อเกิด Serialization Conflict เพื่อให้ Concurrent Upload ไม่ทำให้จำนวน Active เกิน 5
 
 | Extension | MIME Type |
 |---|---|

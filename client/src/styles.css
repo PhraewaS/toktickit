@@ -334,6 +334,41 @@ h1 {
   color: var(--danger);
 }
 
+.saved-ticket-values {
+  display: grid;
+  gap: 0.45rem 1.25rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0.85rem 0 0;
+}
+
+.saved-ticket-values div {
+  min-width: 0;
+}
+
+.saved-ticket-values dt {
+  color: var(--muted-text);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.saved-ticket-values dd {
+  margin: 0.1rem 0 0;
+  overflow-wrap: anywhere;
+}
+
+.success-panel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 640px) {
+  .saved-ticket-values {
+    grid-template-columns: 1fr;
+  }
+}
+
 .state-panel .button {
   justify-self: start;
   margin-top: 0.5rem;
