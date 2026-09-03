@@ -255,7 +255,7 @@ PR #24 ถูก Merge เข้า `lab2-staging` แล้วเมื่อ�
 >ตรวจการแก้ไขแล้วค่ะ E2E selector, Verification SHA และ Post-release Workflow แก้ถูกต้องครบแล้ว แต่พบว่า Commit f1867b7 และ 0a3507a ถูก Commit เข้า lab2-staging โดยตรง ซึ่งไม่ตรงกับ Required Branch Flow ใน Labsheet
 >รบกวนย้ายการแก้ไขสอง Commit นี้ไปผ่าน Branch แยกและ Peer-reviewed PR เข้า lab2-staging ก่อน แล้วให้ Release PR #25 อัปเดตจาก Staging หลัง Merge อีกครั้งค่ะ พร้อมปรับข้อความใน tests.md ไม่ให้สื่อว่าการแก้ที่ Commit f1867b7 ถูกรวมผ่าน PR #24 เพราะ Commit นี้เกิดหลัง PR #24 Merge แล้ว
 
->ตรวจสอบการแก้ไขล่าสุดแล้วค่ะ การย้าย Verification fixes มาอยู่ใน Feature Branch และนำกลับเข้า lab2-staging ผ่าน Peer Review เป็นไปตาม Required Branch Flow แล้ว เอกสารแยกผล Feature Branch, lab2-staging และ Final main ชัดเจน รวมถึง E2E selector จำกัดการเลือก View details อยู่ใน Ticket row ที่ตรงกับ Summary แล้วไม่พบประเด็นที่ต้องแก้เพิ่มเติมค่ะ 
+>ตรวจสอบการแก้ไขล่าสุดแล้วค่ะ การย้าย Verification fixes มาอยู่ใน Feature Branch และนำกลับเข้า lab2-staging ผ่าน Peer Review เป็นไปตาม Required Branch Flow แล้ว เอกสารแยกผล Feature Branch, lab2-staging และ Final main ชัดเจน รวมถึง E2E selector จำกัดการเลือก View details อยู่ใน Ticket row ที่ตรงกับ Summary แล้วไม่พบประเด็นที่ต้องแก้เพิ่มเติมค่ะ
 
 แหล่งที่มา: [ความคิดเห็นใน PR #25 ที่ส่งผลให้เกิด PR #26](https://github.com/PhraewaS/toktickit/pull/25#issuecomment-5513150211)[ความคิดเห็นใน PR #26](https://github.com/PhraewaS/toktickit/pull/26#issuecomment-5523574403)
 
