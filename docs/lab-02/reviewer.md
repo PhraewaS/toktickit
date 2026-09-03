@@ -425,6 +425,19 @@ PR #26 ถูก Merge เข้า `lab2-staging` เมื่อวันท�
 
 ### PR #26 — Move release verification fixes through reviewed branch
 
+**การตอบกลับของผู้จัดทำ `@PhraewaS` ต่อ Review ก่อนหน้า (คัดลอกตรงจาก GitHub):**
+
+> แก้ตาม Review แล้วค่ะ
+>
+> - ปรับ `tests.md` ให้ระบุชัดว่าผลจาก Commit `17416e7` เป็น Pre-release Verification ของ Feature Branch `feature/lab2-release-verification-fixes`
+> - ไม่เรียกผลดังกล่าวว่าเป็นผลบน `lab2-staging` ก่อน PR #26 Merge
+> - ระบุว่าเมื่อ PR #26 ผ่าน Peer Review และ Merge แล้ว จึงรัน/อ้างผลจาก `lab2-staging` ล่าสุดสำหรับ PR #25
+> - Commit ล่าสุดของ PR นี้คือ `51fd8b3`
+>
+> รบกวนตรวจสอบ PR #26 อีกครั้งได้เลยนะคะ
+
+แหล่งที่มา: [การตอบกลับของผู้จัดทำใน PR #26](https://github.com/PhraewaS/toktickit/pull/26#issuecomment-5513664620)
+
 **ความคิดเห็นของผู้รีวิว `@guluJa` (คัดลอกตรงจาก GitHub):**
 
 > ตรวจสอบการแก้ไขล่าสุดแล้วค่ะ การย้าย Verification fixes มาอยู่ใน Feature Branch และนำกลับเข้า lab2-staging ผ่าน Peer Review เป็นไปตาม Required Branch Flow แล้ว เอกสารแยกผล Feature Branch, lab2-staging และ Final main ชัดเจน รวมถึง E2E selector จำกัดการเลือก View details อยู่ใน Ticket row ที่ตรงกับ Summary แล้ว
@@ -462,6 +475,16 @@ PR #26 ถูก Merge เข้า `lab2-staging` เมื่อวันท�
 > > ขอบคุณมากๆเลยนะคะ ที่ค่อยมาตรวจให้เยอะแยะไปหมด
 
 แหล่งที่มา: [การตอบกลับของผู้จัดทำใน PR #28](https://github.com/PhraewaS/toktickit/pull/28#issuecomment-5524039678)
+
+**การตอบกลับของผู้รีวิว `@guluJa` (คัดลอกตรงจาก GitHub):**
+
+> > ตรวจสอบแล้วค่ะ ข้อมูล Approval และ Merge Commit [68de92b](https://github.com/PhraewaS/toktickit/commit/68de92bbad045c0565af6c2c8fea673f11cb9de8) ของ PR #26 ตรงกับ GitHub จริง รวมถึงสถานะ Issue #27 ปิดแล้ว และการบันทึกใน reviewer.md สอดคล้องกับ Required Branch Flow ค่ะ ไม่พบประเด็นที่ต้องแก้เพิ่มเติม
+> >
+> > ขอบคุณมากๆเลยนะคะ ที่ค่อยมาตรวจให้เยอะแยะไปหมด
+>
+> ไม่เป็นไรเลยค่ะ
+
+แหล่งที่มา: [การตอบกลับของผู้รีวิวใน PR #28](https://github.com/PhraewaS/toktickit/pull/28#issuecomment-5524062756)
 
 **หลักฐานสถานะรีวิวและการ Merge (ไม่ใช่บทสนทนา):**
 
