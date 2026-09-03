@@ -469,9 +469,7 @@ PR #26 ถูก Merge เข้า `lab2-staging` เมื่อวันท�
 
 **การตอบกลับของผู้จัดทำ `@PhraewaS` (คัดลอกตรงจาก GitHub):**
 
-> > ตรวจสอบแล้วค่ะ ข้อมูล Approval และ Merge Commit [68de92b](https://github.com/PhraewaS/toktickit/commit/68de92bbad045c0565af6c2c8fea673f11cb9de8) ของ PR #26 ตรงกับ GitHub จริง รวมถึงสถานะ Issue #27 ปิดแล้ว และการบันทึกใน reviewer.md สอดคล้องกับ Required Branch Flow ค่ะ ไม่พบประเด็นที่ต้องแก้เพิ่มเติม
-> >
-> > ขอบคุณมากๆเลยนะคะ ที่ค่อยมาตรวจให้เยอะแยะไปหมด
+> ขอบคุณมากๆเลยนะคะ ที่ค่อยมาตรวจให้เยอะแยะไปหมด
 
 แหล่งที่มา: [การตอบกลับของผู้จัดทำใน PR #28](https://github.com/PhraewaS/toktickit/pull/28#issuecomment-5524039678)
 
