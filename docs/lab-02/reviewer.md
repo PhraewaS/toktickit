@@ -23,6 +23,7 @@
 | [Responsive, E2E and Visual Evidence](https://github.com/PhraewaS/toktickit/issues/20) | `feature/lab2-responsive-e2e-visual` | [#21](https://github.com/PhraewaS/toktickit/pull/21) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | `6b42926` |
 | [Final staging verification and peer-review records](https://github.com/PhraewaS/toktickit/issues/23) | `feature/lab2-final-verification` | [#24](https://github.com/PhraewaS/toktickit/pull/24) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | [`8d9cca0`](https://github.com/PhraewaS/toktickit/commit/8d9cca04bf4f51015eee63c51c01f2689800fab9) |
 | [Move release verification fixes through reviewed branch](https://github.com/PhraewaS/toktickit/issues/27) | `feature/lab2-release-verification-fixes` | [#26](https://github.com/PhraewaS/toktickit/pull/26) | [@guluJa](https://github.com/guluJa) | อนุมัติและ Merge (`Approved/Merged`) | [`68de92b`](https://github.com/PhraewaS/toktickit/commit/68de92bbad045c0565af6c2c8fea673f11cb9de8) |
+| การแก้ไขตามข้อเสนอแนะของ Release PR | `feature/lab2-release-review-fixes` | [#30](https://github.com/PhraewaS/toktickit/pull/30) | [@guluJa](https://github.com/guluJa) | ตรวจแล้ว ไม่พบประเด็นเพิ่มเติม (`Commented`) | รอ Merge |
 | การรวม Release | `lab2-staging` → `main` | [#25](https://github.com/PhraewaS/toktickit/pull/25) | [@guluJa](https://github.com/guluJa) | รอตรวจ | รอดำเนินการ |
 
 หมายเหตุ: Release PR #25 จาก `lab2-staging` ไป `main` เปิดอยู่และอยู่ระหว่างรอ Peer Review จึงยังไม่บันทึกผลการตรวจหรือ Merge Commit ในส่วนดังกล่าว
@@ -472,6 +473,21 @@ PR #26 ถูก Merge เข้า `lab2-staging` เมื่อวันท�
 > ขอบคุณที่ช่วยตรวจสอบนะคะ
 
 แหล่งที่มา: [ความคิดเห็นใน PR #28](https://github.com/guluJa/toktickit/pull/28#issuecomment-5496681829) และสถานะรีวิว `APPROVED` [บน GitHub](https://github.com/guluJa/toktickit/pull/28#pullrequestreview-5080230189)
+
+
+### PR #30 — Address release review feedback
+
+**ข้อความรีวิวจากผู้รีวิว `@guluJa` (คัดลอกตรงจาก GitHub):**
+
+> ได้ทำการตรวจสอบแล้ว PR #30 ถูกต้องและแก้ครบตาม 3 ประเด็นที่ระบุไว้ค่ะ
+> - Success หลังสร้าง Ticket แสดง Saved Values จาก Backend และปุ่ม View Ticket / My Tickets ใช้งานได้จริง
+> - error.fields ถูกส่งผ่าน ApiError และแสดงใต้ฟิลด์ที่เกี่ยวข้อง พร้อม test
+> - Concurrent Attachment Upload ใช้ Serializable Transaction, retry เมื่อชนกัน และมี test ยืนยันว่า Active attachments ไม่เกิน 5
+> - เอกสาร API/spec/tests และ screenshot evidence ถูกอัปเดตให้ตรงกับการแก้ไข
+> - Branch flow ถูกต้อง: feature branch → lab2-staging
+> ดังนั้นไม่พบประเด็นที่ต้องแก้ไขเพิ่มเติมค่ะ
+
+แหล่งที่มา: [รีวิว PR #30](https://github.com/PhraewaS/toktickit/pull/30#pullrequestreview-5101274831) สถานะ `COMMENTED` จาก Commit [`3dc5123`](https://github.com/PhraewaS/toktickit/commit/3dc5123923ac04af8e7fddbc6c391ae43088fc47)
 
 ## รายการตรวจสอบความครบถ้วน
 
