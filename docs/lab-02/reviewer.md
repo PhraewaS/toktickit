@@ -500,6 +500,10 @@ PR #26 ถูก Merge เข้า `lab2-staging` เมื่อวันท�
 
 แหล่งที่มา: [รีวิว PR #30](https://github.com/PhraewaS/toktickit/pull/30#pullrequestreview-5101274831) สถานะ `COMMENTED` จาก Commit [`3dc5123`](https://github.com/PhraewaS/toktickit/commit/3dc5123923ac04af8e7fddbc6c391ae43088fc47)
 
+**หลักฐานสถานะอนุมัติ (ไม่ใช่บทสนทนา):**
+
+- ผู้รีวิว `@guluJa` ส่ง Review สถานะ `APPROVED` ที่ [Review #5102229713](https://github.com/PhraewaS/toktickit/pull/30#pullrequestreview-5102229713) โดยไม่มีข้อความใน Review body
+
 ### PR #25 — Release integration and final verification
 
 **ความคิดเห็นของผู้รีวิว `@guluJa` (คัดลอกตรงจาก GitHub):**
