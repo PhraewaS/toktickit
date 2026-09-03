@@ -448,8 +448,6 @@ PR #26 ถูก Merge เข้า `lab2-staging` เมื่อวันท�
 
 **การตอบกลับของผู้จัดทำ `@PhraewaS` (คัดลอกตรงจาก GitHub):**
 
-> > ตรวจสอบการแก้ไขล่าสุดแล้วค่ะ การย้าย Verification fixes มาอยู่ใน Feature Branch และนำกลับเข้า lab2-staging ผ่าน Peer Review เป็นไปตาม Required Branch Flow แล้ว เอกสารแยกผล Feature Branch, lab2-staging และ Final main ชัดเจน รวมถึง E2E selector จำกัดการเลือก View details อยู่ใน Ticket row ที่ตรงกับ Summary แล้ว ไม่พบประเด็นที่ต้องแก้เพิ่มเติมค่ะ
->
 > ขอบคุณสำหรับการตรวจและการแนะนำต่างๆนะคะ
 
 แหล่งที่มา: [การตอบกลับของผู้จัดทำใน PR #26](https://github.com/PhraewaS/toktickit/pull/26#issuecomment-5523617454)
