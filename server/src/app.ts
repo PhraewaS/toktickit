@@ -1,46 +1,106 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import { getPrisma } from "./prisma.js";
-// getPrisma() is your lazy database handle. Call it INSIDE a route when you
-// need the DB (Issue 4). It is intentionally unused until then.
-void getPrisma;
+import { requireDevelopmentRequester } from "./requester-context.js";
+import { createTicket, listTickets } from "./tickets.js";
+import {
+  attachmentUpload,
+  downloadAttachment,
+  getTicketDetail,
+  handleMulterError,
+  listTicketAttachments,
+  removeAttachment,
+  uploadTicketAttachments,
+} from "./attachments.js";
 
-// The Express app is exported separately from app.listen() (see index.ts) so
-// Supertest can import `app` without opening a port. Do not merge these files.
 export const app = express();
 
-app.use(cors());          // already wired: lets the Vite dev server call this API
+app.use(cors({ exposedHeaders: ["Content-Disposition"] }));
 app.use(express.json());
 
-// ---------------------------------------------------------------------------
-// Issue 2 — API health check
-// Make the test in tests/lab-01/health.test.ts pass.
-// It must return HTTP 200 with JSON: { status: "ok", service: "TokTickIT API" }
-// ---------------------------------------------------------------------------
 app.get("/api/health", (_req: Request, res: Response) => {
-  // TODO(Issue 2): replace this stub with the required 200 response.
   res.status(200).json({ status: "ok", service: "TokTickIT API" });
 });
 
-// ---------------------------------------------------------------------------
-// Issue 4 — Category list
-// Add:  GET /api/categories
-//   -> read categories from PostgreSQL via getPrisma().category.findMany(...)
-//   -> return each { id, name } in a predictable (id) order
-//   -> on failure, respond 500 with a safe message (no internal details)
-// ---------------------------------------------------------------------------
-app.get("/api/categories", async (_req: Request, res: Response) => {
+app.get("/api/development-requesters", async (_req: Request, res: Response) => {
   try {
-    const prisma = getPrisma();
-    const categories = await prisma.category.findMany({
-      select: { id: true, name: true },
-      orderBy: { id: "asc" },
+    const requesters = await getPrisma().requesterUser.findMany({
+      where: { isActive: true },
+      select: { id: true, name: true, email: true },
+      orderBy: [{ name: "asc" }, { id: "asc" }],
     });
-    res.status(200).json(categories);
+
+    res.status(200).json({ data: requesters });
   } catch (error) {
-    console.error("Error fetching categories:", error);
-    res.status(500).json({ error: "Failed to fetch categories" });
+    console.error("Unable to load Development Requesters:", error);
+    res.status(503).json({
+      error: {
+        code: "REQUESTER_LIST_UNAVAILABLE",
+        message:
+          "Development requesters are temporarily unavailable. Please try again.",
+      },
+    });
   }
 });
+
+app.get("/api/categories", async (_req: Request, res: Response) => {
+  try {
+    const categories = await getPrisma().category.findMany({
+      where: { isActive: true },
+      select: { id: true, name: true },
+      orderBy: [{ name: "asc" }, { id: "asc" }],
+    });
+
+    res.status(200).json({ data: categories });
+  } catch (error) {
+    sendReferenceDataUnavailable(res, error);
+  }
+});
+
+app.get("/api/related-systems", async (_req: Request, res: Response) => {
+  try {
+    const relatedSystems = await getPrisma().relatedSystem.findMany({
+      where: { isActive: true },
+      select: { id: true, name: true },
+      orderBy: [{ name: "asc" }, { id: "asc" }],
+    });
+
+    res.status(200).json({ data: relatedSystems });
+  } catch (error) {
+    sendReferenceDataUnavailable(res, error);
+  }
+});
+
+app.post("/api/tickets", requireDevelopmentRequester, createTicket);
+app.get("/api/tickets", requireDevelopmentRequester, listTickets);
+app.get("/api/tickets/:ticketId", requireDevelopmentRequester, getTicketDetail);
+app.get("/api/tickets/:ticketId/attachments", requireDevelopmentRequester, listTicketAttachments);
+app.post(
+  "/api/tickets/:ticketId/attachments",
+  requireDevelopmentRequester,
+  (req, res, next) => {
+    attachmentUpload.array("files", 5)(req, res, (error) => {
+      if (error) {
+        if (handleMulterError(error, res)) return;
+        next(error);
+        return;
+      }
+      next();
+    });
+  },
+  uploadTicketAttachments,
+);
+app.get("/api/attachments/:attachmentId/download", requireDevelopmentRequester, downloadAttachment);
+app.delete("/api/attachments/:attachmentId", requireDevelopmentRequester, removeAttachment);
+
+function sendReferenceDataUnavailable(res: Response, error: unknown) {
+  console.error("Unable to load reference data:", error);
+  res.status(503).json({
+    error: {
+      code: "REFERENCE_DATA_UNAVAILABLE",
+      message: "Reference data is temporarily unavailable. Please try again.",
+    },
+  });
+}
 
 export default app;
