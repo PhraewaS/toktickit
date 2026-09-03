@@ -79,9 +79,20 @@ Lab 2 ใช้ Test DD และ TDD โดย Acceptance Criterion ทุก�
 | Client build | ผ่าน |
 | หลักฐานภาพหน้าจอ | หน้าหลัก: `artifacts/lab-02/screenshots/{create-ticket,my-tickets,ticket-detail}/{desktop,tablet,mobile}.png`; State Evidence: `artifacts/lab-02/screenshots/states/{state}/{desktop,tablet,mobile}.png` |
 
-ผลชุดนี้ยืนยัน Implementation บน `lab2-staging` เท่านั้น ยังไม่ใช่ Final Verification ตาม AC-27 เพราะ `origin/main` ยังไม่ได้รวม `lab2-staging` ขณะบันทึกเอกสารนี้
+ผลชุดเดิมยืนยัน Implementation ที่มีอยู่บน `lab2-staging` เท่านั้น ยังไม่ใช่ Final Verification ตาม AC-27 เพราะ `origin/main` ยังไม่ได้รวม `lab2-staging` ขณะบันทึกเอกสารนี้ ส่วน Verification fixes ที่ระบุถัดไปเป็นผลจาก Feature Branch แยกและยังไม่ถือเป็นผลของ `lab2-staging`
 
-การปรับ Contract ของ Removal Reason ใน Feature Branch นี้ยึด Boundary เดียวกันทุกชั้นคือ `3–500` ตัวอักษรหลัง Trim และเพิ่ม Boundary Assertions ใน Unit/API/UI Tests แล้ว โดยผลตรวจล่าสุดคือ Server Tests 46 รายการ, Client Tests 32 รายการ และ Playwright E2E/Responsive 15 รายการผ่านจากการรันบน Commit `670ecb7` (เพิ่ม UI Boundary Test 1 รายการและ State Evidence ใน E2E) และผลการแก้ไขถูกรวมใน `lab2-staging` ด้วย Merge PR #24 แล้ว
+การปรับ Contract ของ Removal Reason ใน Feature Branch นี้ยึด Boundary เดียวกันทุกชั้นคือ `3–500` ตัวอักษรหลัง Trim และเพิ่ม Boundary Assertions ใน Unit/API/UI Tests แล้ว โดยผลตรวจล่าสุดจาก Branch แยก [`feature/lab2-release-verification-fixes`](https://github.com/PhraewaS/toktickit/tree/feature/lab2-release-verification-fixes) ที่ Commit [`17416e7`](https://github.com/PhraewaS/toktickit/commit/17416e7) คือ Server Tests 46 รายการ, Client Tests 32 รายการ และ Playwright E2E/Responsive 15 รายการผ่านครบทุก Viewport รวมถึง Server/Client Build ผ่าน การแก้ไขชุดนี้จัดทำเป็น PR แยกเพื่อรอ Peer Review และ Merge เข้า `lab2-staging` ไม่ได้รวมอยู่ใน PR #24
+
+### ผลตรวจซ้ำจาก PR Head ปัจจุบัน
+
+การตรวจรอบนี้รันจาก Commit [`17416e7`](https://github.com/PhraewaS/toktickit/commit/17416e7) บน Branch แยกสำหรับ PR แก้ไข Workflow โดยจะถือเป็นผลของ `lab2-staging` เมื่อ PR นี้ผ่าน Peer Review และถูก Merge แล้ว:
+
+- Server Tests: `46/46` ผ่าน
+- Client Tests: `32/32` ผ่าน
+- Playwright Responsive/E2E: `15/15` ผ่านครบ Desktop/Tablet/Mobile
+- Server Build และ Client Build ผ่าน
+
+ผลชุดนี้เป็น Pre-release Verification บน Feature Branch `feature/lab2-release-verification-fixes` เท่านั้น ยังไม่ใช่ผลยืนยันบน `lab2-staging` และยังไม่ใช่ผล Final ของ `main` โดยจะนับเป็นผลของ `lab2-staging` หลัง PR #26 ผ่าน Peer Review และถูก Merge แล้ว
 
 ---
 
@@ -168,6 +179,8 @@ Database Integration/E2E Setup และ Teardown Commands ต้องเพิ
 ## 7. ผลลัพธ์สุดท้าย
 
 **รอการตรวจสอบบน Final `main`**
+
+สถานะ `Final` และ Final Results ของ Test Cases รวมถึงสถานะ Release PR #25 จะคงเป็น `Pending` จนกว่า PR #25 จะผ่าน Peer Review และ Merge เข้า `main` ก่อน การอัปเดตหลังจากนั้นต้องทำใน Branch แยก เช่น `feature/lab2-final-verification-evidence` ที่แตกจาก Final `main` แล้วเปิด Peer-reviewed PR กลับเข้า `main` ห้ามแก้ `main` โดยตรง
 
 เมื่อเสร็จแล้วต้องสรุปผล `VERIFY-01` และ `VERIFY-02` จาก Final `main` ในส่วนนี้ พร้อม Link ไป Evidence Files, Final Commit SHA, วันที่/เวลา, Playwright Viewports และ Screenshot Paths ตามรูปแบบเดียวกับ `docs/lab-01/tests.md`
 
