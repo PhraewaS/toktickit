@@ -22,12 +22,12 @@
 | [Requester Ticket Detail and Attachment Lifecycle](https://github.com/PhraewaS/toktickit/issues/18) | `feature/lab2-ticket-detail-attachments` | [#19](https://github.com/PhraewaS/toktickit/pull/19) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | `127b66f` |
 | [Responsive, E2E and Visual Evidence](https://github.com/PhraewaS/toktickit/issues/20) | `feature/lab2-responsive-e2e-visual` | [#21](https://github.com/PhraewaS/toktickit/pull/21) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | `6b42926` |
 | [Final staging verification and peer-review records](https://github.com/PhraewaS/toktickit/issues/23) | `feature/lab2-final-verification` | [#24](https://github.com/PhraewaS/toktickit/pull/24) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | [`8d9cca0`](https://github.com/PhraewaS/toktickit/commit/8d9cca04bf4f51015eee63c51c01f2689800fab9) |
-| [ย้าย Verification fixes ตาม Required Branch Flow](https://github.com/PhraewaS/toktickit/issues/27) | `feature/lab2-release-verification-fixes` | [#26](https://github.com/PhraewaS/toktickit/pull/26) | [@guluJa](https://github.com/guluJa) | รอตรวจ (`Pending`) | รอดำเนินการ |
+| [ย้าย Verification fixes ตาม Required Branch Flow](https://github.com/PhraewaS/toktickit/issues/27) | `feature/lab2-release-verification-fixes` | [#26](https://github.com/PhraewaS/toktickit/pull/26) | [@guluJa](https://github.com/guluJa) | อนุมัติและ Merge (`Approved/Merged`) | [`68de92b`](https://github.com/PhraewaS/toktickit/commit/68de92bbad045c0565af6c2c8fea673f11cb9de8) |
 | การรวม Release | `lab2-staging` → `main` | [#25](https://github.com/PhraewaS/toktickit/pull/25) | [@guluJa](https://github.com/guluJa) | รอตรวจ | รอดำเนินการ |
 
 หมายเหตุ: Release PR #25 จาก `lab2-staging` ไป `main` เปิดอยู่และอยู่ระหว่างรอ Peer Review จึงยังไม่บันทึกผลการตรวจหรือ Merge Commit ในส่วนดังกล่าว
 
-หมายเหตุ Workflow: PR #21 และ PR #24 ถูก Merge เข้า `lab2-staging` แล้ว โดยงาน Final staging verification ใช้ PR #24 จาก Branch แยก `feature/lab2-final-verification` เพื่อไม่ให้ปะปนกับ Branch ของ PR #21 ส่วน PR #22 ถูกปิดเป็นรายการที่ถูกแทนที่ เนื่องจาก GitHub ไม่อนุญาตให้เปลี่ยน Head Branch ของ Pull Request ที่เปิดอยู่ ภายหลังพบ Verification fixes สอง Commit ที่ถูกเขียนตรงบน `lab2-staging` จึงย้ายออกจากปลาย Branch และจัดทำ PR #26 จาก `feature/lab2-release-verification-fixes` เพื่อรอ Peer Review และ Merge กลับเข้า `lab2-staging` ก่อนให้ PR #25 อัปเดตตาม Staging อีกครั้ง
+หมายเหตุ Workflow: PR #21, PR #24 และ PR #26 ถูก Merge เข้า `lab2-staging` แล้ว โดยงาน Final staging verification ใช้ PR #24 จาก Branch แยก `feature/lab2-final-verification` เพื่อไม่ให้ปะปนกับ Branch ของ PR #21 ส่วน PR #22 ถูกปิดเป็นรายการที่ถูกแทนที่ เนื่องจาก GitHub ไม่อนุญาตให้เปลี่ยน Head Branch ของ Pull Request ที่เปิดอยู่ ภายหลังพบ Verification fixes สอง Commit ที่ถูกเขียนตรงบน `lab2-staging` จึงย้ายออกจากปลาย Branch และจัดทำ PR #26 จาก `feature/lab2-release-verification-fixes` ผ่าน Peer Review ก่อน Merge กลับเข้า `lab2-staging` ด้วย Merge Commit [`68de92b`](https://github.com/PhraewaS/toktickit/commit/68de92bbad045c0565af6c2c8fea673f11cb9de8) แล้ว ขั้นตอนถัดไปคืออัปเดต PR #25 ตาม Staging ล่าสุด
 
 หมายเหตุ Final Evidence: หลัง PR #25 ผ่าน Peer Review และถูก Merge เข้า `main` แล้ว ให้สร้าง Branch แยก เช่น `feature/lab2-final-verification-evidence` จาก Final `main` เพื่อบันทึกผล `VERIFY-01`/`VERIFY-02`, Final Commit SHA และ Merge Evidence ใน `tests.md`/`reviewer.md` แล้วเปิด Peer-reviewed PR กลับเข้า `main` ห้ามแก้ `main` โดยตรง
 
@@ -248,6 +248,18 @@
 **สถานะการ Merge:**
 
 PR #24 ถูก Merge เข้า `lab2-staging` แล้วเมื่อวันที่ 2 กันยายน 2026 ด้วย Merge Commit [`8d9cca0`](https://github.com/PhraewaS/toktickit/commit/8d9cca04bf4f51015eee63c51c01f2689800fab9)
+
+### PR #26 — Move release verification fixes through reviewed branch
+
+**ข้อความรีวิวจาก `@guluJa`:** ไม่มีข้อความแนบใน Review บน GitHub
+
+**สถานะรีวิว:** `APPROVED`
+
+แหล่งที่มา: [Approval Review ของ PR #26](https://github.com/PhraewaS/toktickit/pull/26#pullrequestreview-5100209117)
+
+**สถานะการ Merge:**
+
+PR #26 ถูก Merge เข้า `lab2-staging` เมื่อวันที่ 3 กันยายน 2026 ด้วย Merge Commit [`68de92b`](https://github.com/PhraewaS/toktickit/commit/68de92bbad045c0565af6c2c8fea673f11cb9de8)
 
 
 
