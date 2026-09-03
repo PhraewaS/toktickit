@@ -24,14 +24,14 @@
 | [Final staging verification and peer-review records](https://github.com/PhraewaS/toktickit/issues/23) | `feature/lab2-final-verification` | [#24](https://github.com/PhraewaS/toktickit/pull/24) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | [`8d9cca0`](https://github.com/PhraewaS/toktickit/commit/8d9cca04bf4f51015eee63c51c01f2689800fab9) |
 | [Move release verification fixes through reviewed branch](https://github.com/PhraewaS/toktickit/issues/27) | `feature/lab2-release-verification-fixes` | [#26](https://github.com/PhraewaS/toktickit/pull/26) | [@guluJa](https://github.com/guluJa) | อนุมัติและ Merge (`Approved/Merged`) | [`68de92b`](https://github.com/PhraewaS/toktickit/commit/68de92bbad045c0565af6c2c8fea673f11cb9de8) |
 | [Record PR #26 approval and merge evidence](https://github.com/PhraewaS/toktickit/pull/28) | `feature/lab2-record-pr26-merge` | [#28](https://github.com/PhraewaS/toktickit/pull/28) | [@guluJa](https://github.com/guluJa) | อนุมัติและ Merge (`Approved/Merged`) | [`f264f40`](https://github.com/PhraewaS/toktickit/commit/f264f40ca2e51801f263b371d38850de537ac325) |
-| การแก้ไขตามข้อเสนอแนะของ Release PR | `feature/lab2-release-review-fixes` | [#30](https://github.com/PhraewaS/toktickit/pull/30) | [@guluJa](https://github.com/guluJa) | ตรวจแล้ว ไม่พบประเด็นเพิ่มเติม (`COMMENTED`) | รอ Merge |
-| การรวม Release | `lab2-staging` → `main` | [#25](https://github.com/PhraewaS/toktickit/pull/25) | [@guluJa](https://github.com/guluJa) | รอตรวจ | รอดำเนินการ |
+| การแก้ไขตามข้อเสนอแนะของ Release PR | `feature/lab2-release-review-fixes` | [#30](https://github.com/PhraewaS/toktickit/pull/30) | [@guluJa](https://github.com/guluJa) | ตรวจแล้ว ไม่พบประเด็นเพิ่มเติม (`COMMENTED`) และ Merge | [`752deb7`](https://github.com/PhraewaS/toktickit/commit/752deb75056a00d54736dc3e3e66b33414478a65) |
+| การรวม Release | `lab2-staging` → `main` | [#25](https://github.com/PhraewaS/toktickit/pull/25) | [@guluJa](https://github.com/guluJa) | อนุมัติและ Merge (`Approved/Merged`) | [`687f8a0`](https://github.com/PhraewaS/toktickit/commit/687f8a0da1f9fc65cb3698a41c97862970f1c785) |
 
-หมายเหตุ: Release PR #25 จาก `lab2-staging` ไป `main` เปิดอยู่และอยู่ระหว่างรอ Peer Review จึงยังไม่บันทึกผลการตรวจหรือ Merge Commit ในส่วนดังกล่าว
+หมายเหตุ: Release PR #25 ผ่าน Peer Review และถูก Merge จาก `lab2-staging` เข้า `main` แล้วด้วย Merge Commit [`687f8a0`](https://github.com/PhraewaS/toktickit/commit/687f8a0da1f9fc65cb3698a41c97862970f1c785) เมื่อวันที่ 3 กันยายน 2026
 
-หมายเหตุ Workflow: PR #21, PR #24 และ PR #26 ถูก Merge เข้า `lab2-staging` แล้ว โดยงาน Final staging verification ใช้ PR #24 จาก Branch แยก `feature/lab2-final-verification` เพื่อไม่ให้ปะปนกับ Branch ของ PR #21 ส่วน PR #22 ถูกปิดเป็นรายการที่ถูกแทนที่ เนื่องจาก GitHub ไม่อนุญาตให้เปลี่ยน Head Branch ของ Pull Request ที่เปิดอยู่ ภายหลังพบ Verification fixes สอง Commit ที่ถูกเขียนตรงบน `lab2-staging` จึงย้ายออกจากปลาย Branch และจัดทำ PR #26 จาก `feature/lab2-release-verification-fixes` ผ่าน Peer Review ก่อน Merge กลับเข้า `lab2-staging` ด้วย Merge Commit [`68de92b`](https://github.com/PhraewaS/toktickit/commit/68de92bbad045c0565af6c2c8fea673f11cb9de8) แล้ว ขั้นตอนถัดไปคืออัปเดต PR #25 ตาม Staging ล่าสุด
+หมายเหตุ Workflow: PR #21, PR #24, PR #26 และ PR #30 ถูก Merge เข้า `lab2-staging` ตาม Required Branch Flow แล้ว จากนั้น PR #25 จึงรวม `lab2-staging` เข้า `main` ด้วย Merge Commit [`687f8a0`](https://github.com/PhraewaS/toktickit/commit/687f8a0da1f9fc65cb3698a41c97862970f1c785) และเริ่มบันทึกหลักฐาน Final verification ใน Branch แยก `feature/lab2-final-verification-evidence` ที่แตกจาก Final `main`
 
-หมายเหตุ Final Evidence: หลัง PR #25 ผ่าน Peer Review และถูก Merge เข้า `main` แล้ว ให้สร้าง Branch แยก เช่น `feature/lab2-final-verification-evidence` จาก Final `main` เพื่อบันทึกผล `VERIFY-01`/`VERIFY-02`, Final Commit SHA และ Merge Evidence ใน `tests.md`/`reviewer.md` แล้วเปิด Peer-reviewed PR กลับเข้า `main` ห้ามแก้ `main` โดยตรง
+หมายเหตุ Final Evidence: Branch `feature/lab2-final-verification-evidence` ถูกสร้างจาก Final `main` แล้ว เพื่อบันทึกผล `VERIFY-01`/`VERIFY-02`, Final Commit SHA และ Merge Evidence ใน `tests.md`/`reviewer.md` ก่อนเปิด Peer-reviewed PR กลับเข้า `main` โดยไม่แก้ `main` โดยตรง
 
 ---
 
@@ -500,6 +500,25 @@ PR #26 ถูก Merge เข้า `lab2-staging` เมื่อวันท�
 
 แหล่งที่มา: [รีวิว PR #30](https://github.com/PhraewaS/toktickit/pull/30#pullrequestreview-5101274831) สถานะ `COMMENTED` จาก Commit [`3dc5123`](https://github.com/PhraewaS/toktickit/commit/3dc5123923ac04af8e7fddbc6c391ae43088fc47)
 
+### PR #25 — Release integration and final verification
+
+**ความคิดเห็นของผู้รีวิว `@guluJa` (คัดลอกตรงจาก GitHub):**
+
+> ได้ทำการตรวจสอบ PR #25 ตามลำดับใน Lab sheet แล้วค่ะ PR นี้เป็นการรวมงานจาก lab2-staging เข้า main ไม่พบประเด็นที่ต้องแก้เพิ่มเติมค่ะ
+
+แหล่งที่มา: [รีวิว PR #25](https://github.com/PhraewaS/toktickit/pull/25#pullrequestreview-5103858759) จาก Commit [`752deb7`](https://github.com/PhraewaS/toktickit/commit/752deb75056a00d54736dc3e3e66b33414478a65)
+
+**การตอบกลับของผู้จัดทำ `@PhraewaS` (คัดลอกตรงจาก GitHub):**
+
+> ขอบคุณมากนะคะ ที่รอตรวจให้กันจนจบในแต่ละอัน
+
+แหล่งที่มา: [ความคิดเห็นของผู้จัดทำใน PR #25](https://github.com/PhraewaS/toktickit/pull/25#issuecomment-5528447351)
+
+**หลักฐานสถานะอนุมัติและการ Merge (ไม่ใช่บทสนทนา):**
+
+- ผู้รีวิว `@guluJa` ส่ง Review สถานะ `APPROVED` ที่ [Review #5104100468](https://github.com/PhraewaS/toktickit/pull/25#pullrequestreview-5104100468) โดยไม่มีข้อความใน Review body
+- PR #25 ถูก Merge จาก `lab2-staging` เข้า `main` ด้วย Merge Commit [`687f8a0`](https://github.com/PhraewaS/toktickit/commit/687f8a0da1f9fc65cb3698a41c97862970f1c785)
+
 ## รายการตรวจสอบความครบถ้วน
 
 - [x] ทุก Feature PR มี Target เป็น `lab2-staging`
@@ -508,5 +527,5 @@ PR #26 ถูก Merge เข้า `lab2-staging` เมื่อวันท�
 - [x] ข้อเสนอแนะและการตอบกลับปรากฏใน PR จริง
 - [x] มีสถานะอนุมัติก่อน Merge
 - [x] `reviewer.md` มีตัวตนผู้ตรวจ ลิงก์ PR ข้อความรีวิว การตอบกลับ และผลอนุมัติ
-- [ ] มี Release PR ไป `main` พร้อมผล Integration/Test
+- [x] มี Release PR ไป `main` พร้อมผล Integration/Test (PR #25 ถูก Merge แล้ว)
 - [ ] ตรวจยืนยันผลสุดท้ายบน `main` และสร้าง Final PDF
