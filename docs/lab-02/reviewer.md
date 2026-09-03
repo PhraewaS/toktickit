@@ -460,19 +460,31 @@ PR #26 ถูก Merge เข้า `lab2-staging` เมื่อวันท�
 - Merge Commit: [`68de92b`](https://github.com/PhraewaS/toktickit/commit/68de92bbad045c0565af6c2c8fea673f11cb9de8)
 
 
-### PR #28 — Responsive, E2E และหลักฐานภาพของ Lab 2
+### PR #28 — Record PR #26 approval and merge evidence
 
-**ข้อความรีวิวจาก `@PhraewaS` (คัดลอกตรงจาก GitHub):**
+**ความคิดเห็นของผู้จัดทำ `@PhraewaS` (คัดลอกตรงจาก GitHub):**
 
->ตรวจสอบ PR ล่าสุดแล้วค่ะ ครอบคลุม Responsive UI, Zen Green styling, accessibility, E2E flow, requester ownership, Attachment lifecycle และ Visual Evidence ตามขอบเขต Lab 2 ครบถ้วน เอกสาร Test Plan ระบุผลการทดสอบในระดับ Feature Branch อย่างถูกต้อง และคงการยืนยันผลบน Final main ไว้สำหรับ Release PR ไม่พบประเด็นที่ต้องแก้ไขเพิ่มเติมใน PR นี้แล้วค่ะ
+> > ตรวจสอบแล้วค่ะ ข้อมูล Approval และ Merge Commit [68de92b](https://github.com/PhraewaS/toktickit/commit/68de92bbad045c0565af6c2c8fea673f11cb9de8) ของ PR #26 ตรงกับ GitHub จริง รวมถึงสถานะ Issue #27 ปิดแล้ว และการบันทึกใน reviewer.md สอดคล้องกับ Required Branch Flow ค่ะ ไม่พบประเด็นที่ต้องแก้เพิ่มเติม
+> >
+> > ขอบคุณมากๆเลยนะคะ ที่ค่อยมาตรวจให้เยอะแยะไปหมด
 
-แหล่งที่มา: [รีวิว PR #28 บน GitHub](https://github.com/guluJa/toktickit/pull/28#pullrequestreview-5080167942)
+แหล่งที่มา: [ความคิดเห็นของผู้จัดทำใน PR #28](https://github.com/PhraewaS/toktickit/pull/28#issuecomment-5524039678)
 
-**การตอบกลับของเพื่อนผู้จัดทำ `@guluJa` (คัดลอกตรงจาก GitHub):**
+**การตอบกลับของผู้รีวิว `@guluJa` (คัดลอกตรงจาก GitHub):**
 
-> ขอบคุณที่ช่วยตรวจสอบนะคะ
+> > > ตรวจสอบแล้วค่ะ ข้อมูล Approval และ Merge Commit [68de92b](https://github.com/PhraewaS/toktickit/commit/68de92bbad045c0565af6c2c8fea673f11cb9de8) ของ PR #26 ตรงกับ GitHub จริง รวมถึงสถานะ Issue #27 ปิดแล้ว และการบันทึกใน reviewer.md สอดคล้องกับ Required Branch Flow ค่ะ ไม่พบประเด็นที่ต้องแก้เพิ่มเติม
+> > >
+> > > ขอบคุณมากๆเลยนะคะ ที่ค่อยมาตรวจให้เยอะแยะไปหมด
+>
+> ไม่เป็นไรเลยค่ะ
 
-แหล่งที่มา: [ความคิดเห็นใน PR #28](https://github.com/guluJa/toktickit/pull/28#issuecomment-5496681829) และสถานะรีวิว `APPROVED` [บน GitHub](https://github.com/guluJa/toktickit/pull/28#pullrequestreview-5080230189)
+แหล่งที่มา: [การตอบกลับของผู้รีวิวใน PR #28](https://github.com/PhraewaS/toktickit/pull/28#issuecomment-5524062756)
+
+**หลักฐานสถานะรีวิวและการ Merge (ไม่ใช่บทสนทนา):**
+
+- ผู้รีวิว `@guluJa` ส่ง Review สถานะ `COMMENTED` ที่ [Review #5100444120](https://github.com/PhraewaS/toktickit/pull/28#pullrequestreview-5100444120)
+- ผู้รีวิว `@guluJa` ส่ง Review สถานะ `APPROVED` ที่ [Review #5100563953](https://github.com/PhraewaS/toktickit/pull/28#pullrequestreview-5100563953) โดยไม่มีข้อความใน Review body
+- PR #28 ถูก Merge เข้า `lab2-staging` ด้วย Commit [`f264f40`](https://github.com/PhraewaS/toktickit/commit/f264f40ca2e51801f263b371d38850de537ac325)
 
 
 ### PR #30 — Address release review feedback
