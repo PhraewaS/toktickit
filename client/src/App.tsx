@@ -258,7 +258,7 @@ export default function App() {
   if (state === "loading") return <div className="app-frame"><main className="page-content"><div className="state-panel" role="status" aria-live="polite"><span className="spinner" aria-hidden="true" />Checking your session…</div></main></div>;
   if (state === "login") return <Login onLoggedIn={(next) => { setUser(next); setState("authenticated"); }} />;
   if (!user) return null;
-  if (user.mustChangePassword) return <ChangePassword onChanged={(next) => { setUser(next); setView("create"); }} />;
+  if (user.mustChangePassword) return <ChangePassword onChanged={(next) => { setUser(next); setView(next.role === "IT_STAFF" ? "staff-queue" : next.role === "ADMINISTRATOR" ? "users" : "create"); }} />;
 
   const requester = user;
   const isRequester = user.role === "REQUESTER";
