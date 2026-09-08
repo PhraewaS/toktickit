@@ -25,8 +25,8 @@ Excluded: invitations, email or social login, MFA/SSO, self-registration, passwo
 - FR-05: Requester ticket and attachment APIs derive ownership from the authenticated Requester, not a client requester ID.
 - FR-06: Requesters can create tickets, list/detail their own tickets, upload/download/remove permitted attachments, post Public Comments, and indicate that a problem appears resolved.
 - FR-07: IT Staff can retrieve a searchable, filterable, sortable, paginated queue and open ticket detail. Administrators may retrieve the same ticket views read-only for oversight, but do not receive Staff operations.
-- FR-08: IT Staff can claim/reassign ownership, set IT Priority, perform permitted status transitions, post Public Comments, and create Internal Notes.
-- FR-09: Public Comments are retrievable by all roles with ticket visibility; Internal Notes are retrievable by IT Staff and Administrators. Only IT Staff may append either kind of staff-side entry.
+- FR-08: IT Staff can assign/reassign ownership, set IT Priority, perform permitted status transitions, post Public Comments, and create Internal Notes. Administrators may be selected as a Ticket Owner and may update IT Priority, but may not assign/reassign, change status, or append staff-side comments/notes.
+- FR-09: Requesters can retrieve and create Public Comments only on their own tickets. IT Staff and Administrators can retrieve Public Comments and Internal Notes for tickets visible to them; only IT Staff may append staff-side comments/notes.
 - FR-10: Administrators can list/search/filter users, create users, edit name/email/role/activation, and set a new initial password.
 - FR-11: User management rejects invalid roles and duplicate emails, prevents self-deactivation, and preserves at least one active Administrator.
 - FR-12: All protected operations enforce authorization on the server and return safe, distinguishable errors.
@@ -39,17 +39,17 @@ Excluded: invitations, email or social login, MFA/SSO, self-registration, passwo
 - BR-04: Sessions are opaque, hashed at rest, HttpOnly, SameSite=Lax cookies with a bounded expiry.
 - BR-05: The authenticated Requester identity determines ticket ownership; supplied requester IDs are ignored by authenticated routes.
 - BR-06: Requester ticket and attachment access is ownership checked; another user's protected resource has the same safe 404 as a missing resource.
-- BR-07: A Ticket has zero or one primary owner, and the owner must be an active IT Staff account. Administrators may read the owner field but cannot become an owner.
-- BR-08: Requested Priority is immutable requester input; IT Priority initially copies it and changes only through the staff operation.
+- BR-07: A Ticket has zero or one primary owner, and the owner must be an active IT Staff or Administrator account. Only IT Staff may assign, reassign, or unassign the owner; an Administrator may be the selected owner but cannot perform assignment operations.
+- BR-08: Requested Priority is immutable requester input; IT Priority initially copies it and may be changed by IT Staff or Administrator through the authorized priority operation.
 - BR-09: Ticket statuses are `NEW`, `OPEN`, `IN_PROGRESS`, `WAITING_FOR_REQUESTER`, `RESOLVED`, `CLOSED`, `REOPENED`, and `CANCELLED`.
 - BR-10: IT Staff may transition `NEW -> OPEN`, `OPEN -> IN_PROGRESS|WAITING_FOR_REQUESTER|CANCELLED`, `IN_PROGRESS -> WAITING_FOR_REQUESTER|RESOLVED|CANCELLED`, `WAITING_FOR_REQUESTER -> IN_PROGRESS|RESOLVED|CANCELLED`, `RESOLVED -> CLOSED|REOPENED`, and `CLOSED -> REOPENED`. No-op and other transitions conflict.
 - BR-11: A Requester can indicate a problem appears resolved, but cannot set a formal Resolved or Closed status.
-- BR-12: Comments and notes are append-only, backend-authored, trimmed, non-empty, and limited to 5,000 characters. Public Comments are visible to Requester, IT Staff, and Administrator where the role has ticket visibility; Internal Notes are visible read-only to IT Staff and Administrator. Only IT Staff may create staff-side Public Comments or Internal Notes; Administrators cannot append, edit, or delete them.
+- BR-12: Comments and notes are append-only, backend-authored, trimmed, non-empty, and limited to 5,000 characters. Requesters may retrieve/create Public Comments only for their own tickets. Public Comments are visible to roles with ticket visibility; Internal Notes are visible read-only to IT Staff and Administrator. Only IT Staff may create staff-side Public Comments or Internal Notes; Administrators cannot append, edit, or delete them.
 - BR-13: User email is unique case-insensitively; each user has exactly one permitted role.
 - BR-14: New and reset initial passwords set `mustChangePassword=true`.
 - BR-15: An Administrator cannot deactivate their own account or deactivate/remove the last active Administrator. Users are deactivated, never deleted.
 - BR-16: Seed data is deterministic and idempotent and contains at least four active Requesters, one inactive Requester, three active IT Staff, one inactive IT Staff, one active Administrator, realistic tickets, comments, and notes.
-- BR-17: Invalid input, unauthenticated access, forbidden access, missing resources, conflicts, and unexpected failures use safe distinct status/error codes. The legacy Development Requester route is not a production API and returns `410 DEVELOPMENT_REQUESTERS_RETIRED` unless explicit test/migration compatibility mode is enabled.
+- BR-17: Invalid input, unauthenticated access, forbidden access, missing resources, conflicts, and unexpected failures use safe distinct status/error codes. The legacy Development Requester route is not a production API and returns `410 DEVELOPMENT_REQUESTERS_RETIRED` in production regardless of environment flags. It may be enabled only by non-production regression or migration tooling with an explicit compatibility context.
 
 ## 6. Authorization matrix
 
@@ -58,10 +58,13 @@ Excluded: invitations, email or social login, MFA/SSO, self-registration, passwo
 | Login/logout/current user/password change | Yes | Yes | Yes |
 | Create/list/detail own tickets and attachments | Own only | No | No |
 | Requester resolved indication | Own only | No | No |
-| Staff queue/detail | No | Yes | Yes, read-only |
-| Staff assignment/priority/status | No | Yes | No |
-| Public Comments retrieve/create | No | Yes | Retrieve only |
+| Staff queue/detail | No | Yes | Yes, read-only except IT Priority update |
+| Staff assignment/reassignment | No | Yes | No |
+| IT Priority update | No | Yes | Yes |
+| Staff status transition | No | Yes | No |
+| Public Comments retrieve/create | Own ticket only | Visible tickets | Retrieve only |
 | Internal Notes retrieve/create | No | Yes | Retrieve only |
+| Ticket Owner eligibility | No | Yes | Yes |
 | User list/create/edit/reset password | No | No | Yes |
 
 The backend is authoritative; UI hiding is only usability feedback.
@@ -78,11 +81,13 @@ Authentication: `POST /auth/login`, `POST /auth/logout`, `GET /auth/me`, `POST /
 
 Requester-compatible routes remain at `/tickets`, `/tickets/:id`, attachment routes, and add `POST/GET /tickets/:id/comments` and `POST /tickets/:id/resolved`.
 
-Staff routes: `GET /staff/tickets`, `GET /staff/tickets/:id`, `GET /staff/tickets/:id/comments`, and `GET /staff/tickets/:id/notes` are available to IT Staff and Administrators as read operations. `POST /staff/tickets/:id/assignment`, `PATCH /staff/tickets/:id/priority`, `PATCH /staff/tickets/:id/status`, `POST /staff/tickets/:id/comments`, and `POST /staff/tickets/:id/notes` are IT Staff-only operations. Assignment accepts only an active IT Staff owner.
+Requester comment routes: `GET/POST /tickets/:id/comments` are available to an authenticated Requester only when the ticket belongs to that Requester; GET returns `200`, POST returns `201`, invalid content returns `400`, missing/invalid session returns `401`, and another user's/missing ticket returns safe `404`.
+
+Staff routes: `GET /staff/tickets`, `GET /staff/tickets/:id`, `GET /staff/tickets/:id/comments`, and `GET /staff/tickets/:id/notes` are available to IT Staff and Administrators as read operations. `PATCH /staff/tickets/:id/priority` is available to IT Staff and Administrators. `POST /staff/tickets/:id/assignment`, `PATCH /staff/tickets/:id/status`, `POST /staff/tickets/:id/comments`, and `POST /staff/tickets/:id/notes` are IT Staff-only operations. Assignment accepts an active IT Staff or Administrator owner, while only IT Staff can perform the assignment.
 
 Administrator routes: `GET /admin/users`, `POST /admin/users`, `PATCH /admin/users/:id`, and `POST /admin/users/:id/initial-password`.
 
-Authentication failures are `401`; forbidden role/ownership is `403` or safe `404` as specified; invalid input is `400`; duplicate/state conflicts are `409`; retired compatibility access is `410`; unexpected failures are `500` with no SQL, stack, path, hash, or secret detail.
+Authentication failures are `401`; forbidden role/ownership is `403` or safe `404` as specified; invalid input is `400`; duplicate/state conflicts are `409`; retired compatibility access is `410`; unexpected failures are `500` with no SQL, stack, path, hash, or secret detail. `LAB2_COMPATIBILITY_MODE=true` is accepted only in a non-production migration/regression process and must be rejected or ignored when `NODE_ENV=production`.
 
 ## 9. Acceptance criteria
 
@@ -93,14 +98,14 @@ Authentication failures are `401`; forbidden role/ownership is `403` or safe `40
 - AC-05: Requester create/list/detail/attachment behavior continues using authenticated identity only.
 - AC-06: Requester cannot access another user's ticket, attachment, Internal Note, or staff/admin routes.
 - AC-07: IT Staff queue supports search, filters, sorting, pagination, ownership, status, and priority data.
-- AC-08: IT Staff can claim/reassign only to active IT Staff, update IT Priority, make only permitted status transitions, and append comments/notes. Administrator attempts to perform any of these mutations receive `403 ROLE_FORBIDDEN`.
-- AC-09: IT Staff and Administrators can read the staff ticket detail, Public Comments, and Internal Notes according to the matrix; Administrators are read-only; Internal Notes never appear in Requester responses.
+- AC-08: IT Staff can assign/reassign to an active IT Staff or Administrator, update IT Priority, make only permitted status transitions, and append comments/notes. Administrators can update IT Priority and may be assigned as owner, but Administrator assignment/status/comment/note mutations receive `403 ROLE_FORBIDDEN`.
+- AC-09: Requesters can read/create Public Comments only on their own tickets. IT Staff and Administrators can read staff-visible Public Comments and Internal Notes according to the matrix; Administrators are otherwise read-only; Internal Notes never appear in Requester responses.
 - AC-10: Requester resolved indication is available without changing formal status.
 - AC-11: Administrator can list/search/filter/create/edit/deactivate/reset users with the stated safety rules.
 - AC-12: Seed and migration preserve Lab 2 tickets/attachments and are safe to rerun.
 - AC-13: Required screens provide loading, saving, validation, success, empty/no-results, forbidden, not-found, conflict, and safe failure feedback where applicable.
 - AC-14: Major screens fit desktop, tablet, and mobile viewports with keyboard-visible focus and no horizontal page overflow.
-- AC-15: The production client never calls or renders the Development Requester selector. `GET /development-requesters` returns the retired response outside explicit test/migration compatibility mode.
+- AC-15: The production client never calls or renders the Development Requester selector. `GET /development-requesters` returns `410 DEVELOPMENT_REQUESTERS_RETIRED` in production, even if `LAB2_COMPATIBILITY_MODE=true`; only explicit non-production regression/migration tooling may enable it.
 
 ## 10. Product Definition of Done
 
@@ -114,4 +119,4 @@ Authentication failures are `401`; forbidden role/ownership is `403` or safe `40
 
 ## 11. Assumptions and decisions
 
-Session cookies are selected because the existing browser application is same-site and the server can invalidate sessions immediately. SameSite=Lax, JSON state-changing endpoints, and an Origin check for browser mutations provide the Lab 3 CSRF baseline. Seed credentials are local development fixtures only and must be changed at first login. Administrator ticket visibility is explicitly read-only; Administrator is not a valid Ticket Owner. The legacy Development Requester endpoint is retained only for regression/migration tooling with `LAB2_COMPATIBILITY_MODE=true` and is disabled by default.
+Session cookies are selected because the existing browser application is same-site and the server can invalidate sessions immediately. SameSite=Lax, JSON state-changing endpoints, and an Origin check for browser mutations provide the Lab 3 CSRF baseline. Seed credentials are local development fixtures only and must be changed at first login. Administrators may be Ticket Owners and may update IT Priority, but only IT Staff may assign/reassign, change status, or append staff-side comments/notes. The legacy Development Requester endpoint is disabled in production and can be enabled only by an explicit non-production regression/migration tooling context.

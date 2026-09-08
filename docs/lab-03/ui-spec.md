@@ -11,15 +11,15 @@ The Lab 3 client extends the Lab 2 Zen Green tokens, field groups, cards, badges
 | Create Ticket | create, loading, validation, success/failure | Existing Lab 2 fields and attachments, authenticated requester read-only |
 | My Tickets | loading, populated, empty, no-results, failure | Existing search/filter/sort/pagination and owned-only results |
 | Requester Ticket Detail | loading, view, comment, resolved, failure | Read-only ticket data, attachments, Public Comments, resolved indication |
-| Staff Ticket Queue | loading, populated, empty/no-results, forbidden/failure | IT Staff: operational queue; Administrator: read-only oversight view if exposed; search, status/priority/owner filters, sortable table, page controls, open detail |
-| Staff Ticket Detail | view/edit/read-only, saving, success/validation/conflict/failure | IT Staff: owner, IT Priority, status, public comment and Internal Note composers; Administrator: ticket, owner, comments, notes and attachments read-only with all mutation controls absent |
+| Staff Ticket Queue | loading, populated, empty/no-results, forbidden/failure | IT Staff: operational queue; Administrator: oversight queue with IT Priority editing; search, status/priority/owner filters, sortable table, page controls, open detail |
+| Staff Ticket Detail | view/edit/read-only, saving, success/validation/conflict/failure | IT Staff: owner assignment, IT Priority, status, public comment and Internal Note composers; Administrator: may be shown/selected as owner and may edit IT Priority, while assignment, status, comment and note mutation controls are absent |
 | User Management | loading, list, create, edit, reset-password, validation/forbidden/failure | Name/email/role/status list, search, optional role filter, small modal/form |
 
 ## Responsive and accessibility rules
 
 Desktop uses a readable queue table with Ticket Number, Summary, Category, Requested Priority, IT Priority, Status, Owner, and Last Updated. Tablet keeps the table within a scroll-safe card; mobile switches each row to a labeled stacked card and keeps actions reachable. User and ticket forms collapse to one column below 760px. No page-level horizontal overflow is allowed. Every input has a label, errors are adjacent and connected through `aria-describedby`, focus is visible, status is not communicated by color alone, and loading/saving states use `aria-live` or `role=alert/status`.
 
-Internal Notes use a clearly labeled tinted panel and a “private to IT Staff and Administrators” warning directly above the list. Only IT Staff sees the composer; Administrator sees the notes read-only and never sees an Add Internal Note control. Public Comments use a separate neutral panel; only IT Staff sees the staff-side composer. Editable controls are visibly distinct from read-only fields. Destructive deactivation uses confirmation and conflict messages.
+Internal Notes use a clearly labeled tinted panel and a “private to IT Staff and Administrators” warning directly above the list. Only IT Staff sees the composer; Administrator sees the notes read-only and never sees an Add Internal Note control. Public Comments use a separate neutral panel. Requesters see the list and composer only for their own tickets; IT Staff sees the staff-side composer; Administrator sees comments read-only. IT Priority is editable for IT Staff and Administrator, while owner assignment and status controls are IT Staff-only. Editable controls are visibly distinct from read-only fields. Destructive deactivation uses confirmation and conflict messages.
 
 ## Visual checklist
 
