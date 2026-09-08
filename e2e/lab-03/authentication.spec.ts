@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-test("E2E-01 login, mandatory first password change, and logout", async ({ page }) => {
+test("E2E-01 login, mandatory first password change, and logout", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop", "This flow mutates the seeded first-login fixture; responsive coverage is provided by RESP-01.");
   await page.goto("/");
   await page.getByLabel("Email address").fill("jennifer@example.test");
   await page.getByLabel("Password").fill("Requester-Change1!");

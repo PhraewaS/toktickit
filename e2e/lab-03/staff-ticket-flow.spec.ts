@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 
-test("E2E-02 IT Staff queue and detail workflow", async ({ page }) => {
+test("E2E-02 IT Staff queue and detail workflow", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop", "This flow mutates the seeded first-login fixture; responsive coverage is provided by RESP-01.");
   await page.goto("/");
   await page.getByLabel("Email address").fill("mali.staff@example.test");
   await page.getByLabel("Password").fill("Staff-Change1!");
