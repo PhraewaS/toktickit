@@ -10,6 +10,7 @@ test("E2E-02 IT Staff queue and detail workflow", async ({ page }, testInfo) => 
   await page.getByLabel("New password", { exact: true }).fill("Staff-Changed2!");
   await page.getByLabel("Confirm new password", { exact: true }).fill("Staff-Changed2!");
   await page.getByRole("button", { name: "Save password" }).click();
+  await page.reload();
   await expect(page.getByRole("heading", { name: "Ticket Queue" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Apply filters" })).toBeVisible();
 });
