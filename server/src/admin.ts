@@ -25,7 +25,7 @@ export const createUser: RequestHandler = async (req, res) => {
   const passwordError = validatePassword(initialPassword); const fields: Record<string, string> = {};
   if (!validName(name)) fields.name = "Name must be between 2 and 150 characters."; if (!validEmail(email)) fields.email = "Enter a valid email address."; if (!roles.has(role)) fields.role = "Choose one permitted role."; if (typeof isActive !== "boolean") fields.isActive = "Activation state is invalid."; if (passwordError) fields.initialPassword = passwordError;
   if (Object.keys(fields).length) { error(res, 400, "VALIDATION_ERROR", "Review the highlighted user fields.", fields); return; }
-  try { if (await emailExists(email)) { error(res, 409, "DUPLICATE_EMAIL", "That email address is already in use.", { email: "Email must be unique." }); return; } const user = await getPrisma().requesterUser.create({ data: { name, email, role: role as UserRole, isActive, passwordHash: hashPassword(initialPassword), mustChangePassword: true }, select: userSelect }); res.status(201).json({ data: { user: safeUser(user), initialPassword } }); }
+  try { if (await emailExists(email)) { error(res, 409, "DUPLICATE_EMAIL", "That email address is already in use.", { email: "Email must be unique." }); return; } const user = await getPrisma().requesterUser.create({ data: { name, email, role: role as UserRole, isActive, passwordHash: hashPassword(initialPassword), mustChangePassword: true }, select: userSelect }); res.status(201).json({ data: { user: safeUser(user) } }); }
   catch (e) { console.error("Unable to create user:", e); error(res, 500, "INTERNAL_ERROR", "TokTickIT could not create the user. Please try again."); }
 };
 
@@ -51,6 +51,6 @@ export const resetInitialPassword: RequestHandler = async (req, res) => {
   const id = parseId(req.params.userId); const password = req.body?.initialPassword; const passwordError = validatePassword(password);
   if (id === null) { error(res, 400, "INVALID_USER_ID", "User ID must be a positive integer."); return; }
   if (passwordError) { error(res, 400, "VALIDATION_ERROR", "Review the password field.", { initialPassword: passwordError }); return; }
-  try { const exists = await getPrisma().requesterUser.findUnique({ where: { id }, select: { id: true } }); if (!exists) { error(res, 404, "USER_NOT_FOUND", "User was not found."); return; } const user = await getPrisma().requesterUser.update({ where: { id }, data: { passwordHash: hashPassword(password), mustChangePassword: true }, select: userSelect }); await getPrisma().session.deleteMany({ where: { userId: id } }); res.status(200).json({ data: { user: safeUser(user), initialPassword: password } }); }
+  try { const exists = await getPrisma().requesterUser.findUnique({ where: { id }, select: { id: true } }); if (!exists) { error(res, 404, "USER_NOT_FOUND", "User was not found."); return; } const user = await getPrisma().requesterUser.update({ where: { id }, data: { passwordHash: hashPassword(password), mustChangePassword: true }, select: userSelect }); await getPrisma().session.deleteMany({ where: { userId: id } }); res.status(200).json({ data: { user: safeUser(user) } }); }
   catch (e) { console.error("Unable to reset initial password:", e); error(res, 500, "INTERNAL_ERROR", "TokTickIT could not set the initial password. Please try again."); }
 };
