@@ -6,6 +6,7 @@ import { changePassword, currentUser, login, logout, requireAuthenticated, requi
 import { UserRole } from "@prisma/client";
 import { listRequesterComments, createRequesterComment, markRequesterResolved } from "./comments.js";
 import { assignStaffTicket, createStaffComment, createStaffNote, getStaffTicketDetail, listAssignableStaff, listStaffComments, listStaffNotes, listStaffTickets, updateStaffPriority, updateStaffStatus } from "./staff.js";
+import { createUser, listUsers, resetInitialPassword, updateUser } from "./admin.js";
 import { createTicket, listTickets } from "./tickets.js";
 import {
   attachmentUpload,
@@ -127,6 +128,11 @@ app.get("/api/staff/tickets/:ticketId/comments", requireAuthenticated, requireRo
 app.post("/api/staff/tickets/:ticketId/comments", requireAuthenticated, requireRole(UserRole.IT_STAFF), createStaffComment);
 app.get("/api/staff/tickets/:ticketId/notes", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), listStaffNotes);
 app.post("/api/staff/tickets/:ticketId/notes", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), createStaffNote);
+
+app.get("/api/admin/users", requireAuthenticated, requireRole(UserRole.ADMINISTRATOR), listUsers);
+app.post("/api/admin/users", requireAuthenticated, requireRole(UserRole.ADMINISTRATOR), createUser);
+app.patch("/api/admin/users/:userId", requireAuthenticated, requireRole(UserRole.ADMINISTRATOR), updateUser);
+app.post("/api/admin/users/:userId/initial-password", requireAuthenticated, requireRole(UserRole.ADMINISTRATOR), resetInitialPassword);
 
 function sendReferenceDataUnavailable(res: Response, error: unknown) {
   console.error("Unable to load reference data:", error);
