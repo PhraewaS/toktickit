@@ -20,7 +20,13 @@ import {
 
 export const app = express();
 
-app.use(cors({ exposedHeaders: ["Content-Disposition"] }));
+const allowedCorsOrigins = [process.env.APP_ORIGIN, "http://localhost:5173", "http://127.0.0.1:5173"].filter((origin): origin is string => Boolean(origin));
+
+app.use(cors({
+  origin: allowedCorsOrigins,
+  credentials: true,
+  exposedHeaders: ["Content-Disposition"],
+}));
 app.use(express.json());
 
 app.use((req, res, next) => {
