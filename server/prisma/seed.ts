@@ -20,12 +20,13 @@ const administrator = { name: "Nok Administrator", email: "admin@example.test", 
 
 async function main() {
   const prisma = getPrisma();
+  const resetFixturePasswords = process.env.LAB3_E2E_RESET_PASSWORDS === "true";
   for (const name of categories) await prisma.category.upsert({ where: { name }, update: { isActive: true }, create: { name, isActive: true } });
   for (const name of relatedSystems) await prisma.relatedSystem.upsert({ where: { name }, update: { isActive: true }, create: { name, isActive: true } });
   const allUsers = [...requesters.map((user) => ({ ...user, role: "REQUESTER" as const })), ...staff.map((user) => ({ ...user, role: "IT_STAFF" as const })), { ...administrator, role: "ADMINISTRATOR" as const }];
   for (const item of allUsers) {
     const saved = await prisma.requesterUser.upsert({ where: { email: item.email }, update: { name: item.name, isActive: item.isActive, role: item.role }, create: { name: item.name, email: item.email, isActive: item.isActive, role: item.role, passwordHash: hashPassword(item.password, `seed-${item.email}`), mustChangePassword: true } });
-    if (saved.mustChangePassword) await prisma.requesterUser.update({ where: { id: saved.id }, data: { passwordHash: hashPassword(item.password, `seed-${item.email}`), mustChangePassword: true } });
+    if (resetFixturePasswords || saved.mustChangePassword) await prisma.requesterUser.update({ where: { id: saved.id }, data: { passwordHash: hashPassword(item.password, `seed-${item.email}`), mustChangePassword: true } });
   }
   const requesterRows = await prisma.requesterUser.findMany({ where: { role: "REQUESTER" }, orderBy: { id: "asc" } });
   const staffRows = await prisma.requesterUser.findMany({ where: { role: "IT_STAFF", isActive: true }, orderBy: { id: "asc" } });
