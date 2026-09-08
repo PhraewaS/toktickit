@@ -238,6 +238,7 @@ import StaffTicketDetail from "./StaffTicketDetail.js";
 import UserManagement from "./UserManagement.js";
 
 type Lab3View = "create" | "my-tickets" | "requester-detail" | "staff-queue" | "staff-detail" | "users";
+function homeView(role: UserRole): Lab3View { return role === "IT_STAFF" ? "staff-queue" : role === "ADMINISTRATOR" ? "users" : "create"; }
 
 export default function App() {
   // This guard exists only so the committed Lab 2 component tests can still
@@ -250,15 +251,15 @@ export default function App() {
   const [ticketId, setTicketId] = useState<number | null>(null);
 
   const loadUser = useCallback(async () => {
-    try { const current = await fetchCurrentUser(); setUser(current); setState("authenticated"); }
+    try { const current = await fetchCurrentUser(); setUser(current); setView(homeView(current.role)); setState("authenticated"); }
     catch { setUser(null); setState("login"); }
   }, []);
   useEffect(() => { void loadUser(); }, [loadUser]);
 
   if (state === "loading") return <div className="app-frame"><main className="page-content"><div className="state-panel" role="status" aria-live="polite"><span className="spinner" aria-hidden="true" />Checking your session…</div></main></div>;
-  if (state === "login") return <Login onLoggedIn={(next) => { setUser(next); setState("authenticated"); }} />;
+  if (state === "login") return <Login onLoggedIn={(next) => { setUser(next); setView(homeView(next.role)); setState("authenticated"); }} />;
   if (!user) return null;
-  if (user.mustChangePassword) return <ChangePassword onChanged={(next) => { setUser(next); setView(next.role === "IT_STAFF" ? "staff-queue" : next.role === "ADMINISTRATOR" ? "users" : "create"); }} />;
+  if (user.mustChangePassword) return <ChangePassword onChanged={(next) => { setUser(next); setView(homeView(next.role)); }} />;
 
   const requester = user;
   const isRequester = user.role === "REQUESTER";
