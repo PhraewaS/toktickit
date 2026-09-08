@@ -7,7 +7,7 @@ const statuses = new Set<string>(Object.values(TicketStatus));
 const priorities = new Set<string>(Object.values(RequestedPriority));
 export const listAssignableStaff: RequestHandler = async (_req, res) => {
   try {
-    const users = await getPrisma().requesterUser.findMany({ where: { isActive: true, role: { in: [UserRole.IT_STAFF, UserRole.ADMINISTRATOR] } }, select: { id: true, name: true, email: true, role: true, isActive: true, mustChangePassword: true }, orderBy: [{ name: "asc" }, { id: "asc" }] });
+    const users = await getPrisma().requesterUser.findMany({ where: { isActive: true, role: UserRole.IT_STAFF }, select: { id: true, name: true, email: true, role: true, isActive: true, mustChangePassword: true }, orderBy: [{ name: "asc" }, { id: "asc" }] });
     res.status(200).json({ data: users });
   } catch (e) { console.error("Unable to load assignable staff:", e); error(res, 500, "INTERNAL_ERROR", "TokTickIT could not load Ticket owners. Please try again."); }
 };
@@ -65,10 +65,10 @@ export const getStaffTicketDetail: RequestHandler = async (req, res) => {
 export const assignStaffTicket: RequestHandler = async (req, res) => {
   const ticketId = parseId(req.params.ticketId); if (ticketId === null) { error(res, 400, "INVALID_TICKET_ID", "Ticket ID must be a positive integer."); return; }
   const ownerId = req.body?.ownerId === null ? null : parseId(String(req.body?.ownerId ?? ""));
-  if (req.body?.ownerId !== null && ownerId === null) { error(res, 400, "VALIDATION_ERROR", "Choose an active IT Staff or Administrator owner.", { ownerId: "Owner is invalid." }); return; }
+  if (req.body?.ownerId !== null && ownerId === null) { error(res, 400, "VALIDATION_ERROR", "Choose an active IT Staff owner.", { ownerId: "Owner is invalid." }); return; }
   try {
     const ticket = await getPrisma().ticket.findUnique({ where: { id: ticketId }, select: { id: true } }); if (!ticket) { ticketNotFound(res); return; }
-    if (ownerId !== null) { const owner = await getPrisma().requesterUser.findFirst({ where: { id: ownerId, isActive: true, role: { in: [UserRole.IT_STAFF, UserRole.ADMINISTRATOR] } }, select: { id: true } }); if (!owner) { error(res, 409, "INVALID_OWNER", "Owner must be an active IT Staff or Administrator."); return; } }
+    if (ownerId !== null) { const owner = await getPrisma().requesterUser.findFirst({ where: { id: ownerId, isActive: true, role: UserRole.IT_STAFF }, select: { id: true } }); if (!owner) { error(res, 400, "INVALID_OWNER", "Owner must be an active IT Staff user."); return; } }
     const updated = await getPrisma().ticket.update({ where: { id: ticketId }, data: { ownerId }, include: staffInclude }); res.status(200).json({ data: serializeTicket(updated) });
   } catch (e) { console.error("Unable to assign staff Ticket:", e); error(res, 500, "INTERNAL_ERROR", "TokTickIT could not update Ticket ownership. Please try again."); }
 };
@@ -81,13 +81,17 @@ export const updateStaffPriority: RequestHandler = async (req, res) => {
   catch (e) { if ((e as { code?: string }).code === "P2025") { ticketNotFound(res); return; } console.error("Unable to update IT Priority:", e); error(res, 500, "INTERNAL_ERROR", "TokTickIT could not update IT Priority. Please try again."); }
 };
 
-const transitions: Record<TicketStatus, TicketStatus[]> = { NEW: [TicketStatus.OPEN], OPEN: [TicketStatus.IN_PROGRESS, TicketStatus.WAITING_FOR_REQUESTER, TicketStatus.CANCELLED], IN_PROGRESS: [TicketStatus.WAITING_FOR_REQUESTER, TicketStatus.RESOLVED, TicketStatus.CANCELLED], WAITING_FOR_REQUESTER: [TicketStatus.IN_PROGRESS, TicketStatus.RESOLVED, TicketStatus.CANCELLED], RESOLVED: [TicketStatus.CLOSED, TicketStatus.REOPENED], CLOSED: [TicketStatus.REOPENED], REOPENED: [TicketStatus.IN_PROGRESS, TicketStatus.CANCELLED], CANCELLED: [TicketStatus.REOPENED] };
+export const allowedStaffStatusTransitions: Readonly<Record<TicketStatus, readonly TicketStatus[]>> = { NEW: [TicketStatus.OPEN], OPEN: [TicketStatus.IN_PROGRESS, TicketStatus.WAITING_FOR_REQUESTER, TicketStatus.CANCELLED], IN_PROGRESS: [TicketStatus.WAITING_FOR_REQUESTER, TicketStatus.RESOLVED, TicketStatus.CANCELLED], WAITING_FOR_REQUESTER: [TicketStatus.IN_PROGRESS, TicketStatus.RESOLVED, TicketStatus.CANCELLED], RESOLVED: [TicketStatus.CLOSED, TicketStatus.REOPENED], CLOSED: [TicketStatus.REOPENED], REOPENED: [TicketStatus.IN_PROGRESS, TicketStatus.CANCELLED], CANCELLED: [TicketStatus.REOPENED] };
+
+export function isAllowedStaffStatusTransition(current: TicketStatus, next: TicketStatus) {
+  return allowedStaffStatusTransitions[current].includes(next);
+}
 
 export const updateStaffStatus: RequestHandler = async (req, res) => {
   const ticketId = parseId(req.params.ticketId); const nextStatus = req.body?.status as TicketStatus;
   if (ticketId === null) { error(res, 400, "INVALID_TICKET_ID", "Ticket ID must be a positive integer."); return; }
   if (!statuses.has(nextStatus)) { error(res, 400, "VALIDATION_ERROR", "Choose a permitted Ticket status.", { status: "Status is invalid." }); return; }
-  try { const current = await getPrisma().ticket.findUnique({ where: { id: ticketId }, select: { currentStatus: true } }); if (!current) { ticketNotFound(res); return; } if (!transitions[current.currentStatus].includes(nextStatus)) { error(res, 409, "STATUS_CONFLICT", `A Ticket cannot move from ${current.currentStatus} to ${nextStatus}.`); return; } const updated = await getPrisma().ticket.update({ where: { id: ticketId }, data: { currentStatus: nextStatus }, include: staffInclude }); res.status(200).json({ data: serializeTicket(updated) }); }
+  try { const current = await getPrisma().ticket.findUnique({ where: { id: ticketId }, select: { currentStatus: true } }); if (!current) { ticketNotFound(res); return; } if (!isAllowedStaffStatusTransition(current.currentStatus, nextStatus)) { error(res, 409, "STATUS_TRANSITION_NOT_ALLOWED", `A Ticket cannot move from ${current.currentStatus} to ${nextStatus}.`); return; } const updated = await getPrisma().ticket.update({ where: { id: ticketId }, data: { currentStatus: nextStatus }, include: staffInclude }); res.status(200).json({ data: serializeTicket(updated) }); }
   catch (e) { console.error("Unable to update Ticket status:", e); error(res, 500, "INTERNAL_ERROR", "TokTickIT could not update Ticket status. Please try again."); }
 };
 

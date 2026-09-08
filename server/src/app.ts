@@ -44,6 +44,15 @@ app.get("/api/health", (_req: Request, res: Response) => {
 });
 
 app.get("/api/development-requesters", async (_req: Request, res: Response) => {
+  if (process.env.NODE_ENV !== "test" && process.env.LAB2_COMPATIBILITY_MODE !== "true") {
+    res.status(410).json({
+      error: {
+        code: "DEVELOPMENT_REQUESTERS_RETIRED",
+        message: "Development Requester selection is retired. Sign in with an account to continue.",
+      },
+    });
+    return;
+  }
   try {
     const requesters = await getPrisma().requesterUser.findMany({
       where: { isActive: true },
@@ -117,16 +126,16 @@ app.get("/api/tickets/:ticketId/comments", requireAuthenticatedOrDevelopmentRequ
 app.post("/api/tickets/:ticketId/comments", requireAuthenticatedOrDevelopmentRequester, createRequesterComment);
 app.post("/api/tickets/:ticketId/resolved", requireAuthenticatedOrDevelopmentRequester, markRequesterResolved);
 
-app.get("/api/staff/tickets", requireAuthenticated, requireRole(UserRole.IT_STAFF), listStaffTickets);
+app.get("/api/staff/tickets", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), listStaffTickets);
 app.get("/api/staff/assignees", requireAuthenticated, requireRole(UserRole.IT_STAFF), listAssignableStaff);
-app.get("/api/staff/tickets/:ticketId", requireAuthenticated, requireRole(UserRole.IT_STAFF), getStaffTicketDetail);
+app.get("/api/staff/tickets/:ticketId", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), getStaffTicketDetail);
 app.post("/api/staff/tickets/:ticketId/assignment", requireAuthenticated, requireRole(UserRole.IT_STAFF), assignStaffTicket);
 app.patch("/api/staff/tickets/:ticketId/priority", requireAuthenticated, requireRole(UserRole.IT_STAFF), updateStaffPriority);
 app.patch("/api/staff/tickets/:ticketId/status", requireAuthenticated, requireRole(UserRole.IT_STAFF), updateStaffStatus);
-app.get("/api/staff/tickets/:ticketId/comments", requireAuthenticated, requireRole(UserRole.IT_STAFF), listStaffComments);
+app.get("/api/staff/tickets/:ticketId/comments", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), listStaffComments);
 app.post("/api/staff/tickets/:ticketId/comments", requireAuthenticated, requireRole(UserRole.IT_STAFF), createStaffComment);
 app.get("/api/staff/tickets/:ticketId/notes", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), listStaffNotes);
-app.post("/api/staff/tickets/:ticketId/notes", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), createStaffNote);
+app.post("/api/staff/tickets/:ticketId/notes", requireAuthenticated, requireRole(UserRole.IT_STAFF), createStaffNote);
 
 function sendReferenceDataUnavailable(res: Response, error: unknown) {
   console.error("Unable to load reference data:", error);
