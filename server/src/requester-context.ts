@@ -1,5 +1,6 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import { getPrisma } from "./prisma.js";
+import { AuthenticatedRequest, getSessionUser } from "./auth.js";
 
 export interface DevelopmentRequester {
   id: number;
@@ -9,6 +10,7 @@ export interface DevelopmentRequester {
 
 export interface DevelopmentRequesterRequest extends Request {
   developmentRequester: DevelopmentRequester;
+  authUser?: AuthenticatedRequest["authUser"];
 }
 
 function requesterRequired(res: Response) {
@@ -66,4 +68,41 @@ export const requireDevelopmentRequester: RequestHandler = async (
       },
     });
   }
+};
+
+/**
+ * Lab 2 tests and migration tooling may still use the old header. The Lab 3
+ * client always reaches this middleware with a real session; when present the
+ * session identity wins and the client header is ignored.
+ */
+export const requireAuthenticatedOrDevelopmentRequester: RequestHandler = async (
+  req,
+  res,
+  next,
+) => {
+  try {
+    const user = await getSessionUser(req);
+    if (user) {
+      if (user.mustChangePassword) {
+        res.status(403).json({ error: { code: "PASSWORD_CHANGE_REQUIRED", message: "Change your initial password before continuing." } });
+        return;
+      }
+      if (user.role !== "REQUESTER") {
+        res.status(403).json({ error: { code: "FORBIDDEN", message: "This operation is available to Requesters only." } });
+        return;
+      }
+      const typed = req as DevelopmentRequesterRequest;
+      typed.authUser = user;
+      typed.developmentRequester = { id: user.id, name: user.name, email: user.email };
+      next();
+      return;
+    }
+  } catch (error) {
+    console.error("Unable to validate authenticated requester:", error);
+    res.status(500).json({ error: { code: "INTERNAL_ERROR", message: "TokTickIT could not complete the request. Please try again." } });
+    return;
+  }
+
+  // Compatibility path for Lab 2 API regression tests only.
+  requireDevelopmentRequester(req, res, next);
 };

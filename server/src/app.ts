@@ -1,7 +1,8 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import { getPrisma } from "./prisma.js";
-import { requireDevelopmentRequester } from "./requester-context.js";
+import { requireAuthenticatedOrDevelopmentRequester } from "./requester-context.js";
+import { changePassword, currentUser, login, logout, requireAuthenticated } from "./auth.js";
 import { createTicket, listTickets } from "./tickets.js";
 import {
   attachmentUpload,
@@ -17,6 +18,23 @@ export const app = express();
 
 app.use(cors({ exposedHeaders: ["Content-Disposition"] }));
 app.use(express.json());
+
+app.use((req, res, next) => {
+  if (["POST", "PATCH", "DELETE", "PUT"].includes(req.method)) {
+    const origin = req.get("Origin");
+    const allowed = new Set([process.env.APP_ORIGIN, "http://localhost:5173", "http://127.0.0.1:5173"].filter(Boolean));
+    if (origin && !allowed.has(origin)) {
+      res.status(403).json({ error: { code: "CSRF_REJECTED", message: "The request origin is not permitted." } });
+      return;
+    }
+  }
+  next();
+});
+
+app.post("/api/auth/login", login);
+app.post("/api/auth/logout", logout);
+app.get("/api/auth/me", requireAuthenticated, currentUser);
+app.post("/api/auth/change-password", requireAuthenticated, changePassword);
 
 app.get("/api/health", (_req: Request, res: Response) => {
   res.status(200).json({ status: "ok", service: "TokTickIT API" });
@@ -71,13 +89,13 @@ app.get("/api/related-systems", async (_req: Request, res: Response) => {
   }
 });
 
-app.post("/api/tickets", requireDevelopmentRequester, createTicket);
-app.get("/api/tickets", requireDevelopmentRequester, listTickets);
-app.get("/api/tickets/:ticketId", requireDevelopmentRequester, getTicketDetail);
-app.get("/api/tickets/:ticketId/attachments", requireDevelopmentRequester, listTicketAttachments);
+app.post("/api/tickets", requireAuthenticatedOrDevelopmentRequester, createTicket);
+app.get("/api/tickets", requireAuthenticatedOrDevelopmentRequester, listTickets);
+app.get("/api/tickets/:ticketId", requireAuthenticatedOrDevelopmentRequester, getTicketDetail);
+app.get("/api/tickets/:ticketId/attachments", requireAuthenticatedOrDevelopmentRequester, listTicketAttachments);
 app.post(
   "/api/tickets/:ticketId/attachments",
-  requireDevelopmentRequester,
+  requireAuthenticatedOrDevelopmentRequester,
   (req, res, next) => {
     attachmentUpload.array("files", 5)(req, res, (error) => {
       if (error) {
@@ -90,8 +108,8 @@ app.post(
   },
   uploadTicketAttachments,
 );
-app.get("/api/attachments/:attachmentId/download", requireDevelopmentRequester, downloadAttachment);
-app.delete("/api/attachments/:attachmentId", requireDevelopmentRequester, removeAttachment);
+app.get("/api/attachments/:attachmentId/download", requireAuthenticatedOrDevelopmentRequester, downloadAttachment);
+app.delete("/api/attachments/:attachmentId", requireAuthenticatedOrDevelopmentRequester, removeAttachment);
 
 function sendReferenceDataUnavailable(res: Response, error: unknown) {
   console.error("Unable to load reference data:", error);
