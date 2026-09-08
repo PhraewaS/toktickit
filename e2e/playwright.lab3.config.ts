@@ -14,7 +14,7 @@ export default defineConfig({
   reporter: [["list"], ["html", { outputFolder: path.join(repositoryRoot, "artifacts/lab-03/playwright-report"), open: "never" }]],
   globalSetup: path.join(e2eDirectory, "global-setup.ts"),
   use: {
-    baseURL: "http://127.0.0.1:5173",
+    baseURL: "http://localhost:5173",
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
     video: "retain-on-failure",
