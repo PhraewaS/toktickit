@@ -12,7 +12,7 @@ The Lab 3 client extends the Lab 2 Zen Green tokens, field groups, cards, badges
 | My Tickets | loading, populated, empty, no-results, failure | Existing search/filter/sort/pagination and owned-only results |
 | Requester Ticket Detail | loading, view, comment, resolved, failure | Read-only ticket data, attachments, Public Comments, resolved indication |
 | Staff Ticket Queue | loading, populated, empty/no-results, forbidden/failure | IT Staff: operational queue; Administrator: oversight queue with IT Priority editing; search, status/priority/owner filters, sortable table, page controls, open detail |
-| Staff Ticket Detail | view/edit/read-only, saving, success/validation/conflict/failure | IT Staff: owner assignment, IT Priority, status, public comment and Internal Note composers; Administrator: may be shown/selected as owner and may edit IT Priority, while assignment, status, comment and note mutation controls are absent |
+| Staff Ticket Detail | view/edit/read-only, saving, success/validation/conflict/failure | IT Staff: owner assignment, IT Priority, status, public comment and Internal Note composers; Administrator: owner field is read-only but may display an Administrator assigned by IT Staff, may edit IT Priority, while assignment, status, comment and note mutation controls are absent |
 | User Management | loading, list, create, edit, reset-password, validation/forbidden/failure | Name/email/role/status list, search, optional role filter, small modal/form |
 
 ## Responsive and accessibility rules

@@ -24,7 +24,7 @@ Excluded: invitations, email or social login, MFA/SSO, self-registration, passwo
 - FR-04: The shell shows the authenticated name and role and exposes only permitted navigation.
 - FR-05: Requester ticket and attachment APIs derive ownership from the authenticated Requester, not a client requester ID.
 - FR-06: Requesters can create tickets, list/detail their own tickets, upload/download/remove permitted attachments, post Public Comments, and indicate that a problem appears resolved.
-- FR-07: IT Staff can retrieve a searchable, filterable, sortable, paginated queue and open ticket detail. Administrators may retrieve the same ticket views read-only for oversight, but do not receive Staff operations.
+- FR-07: IT Staff can retrieve a searchable, filterable, sortable, paginated queue and open ticket detail. Administrators may retrieve the same ticket views for oversight and may update IT Priority; all other Staff operations remain unavailable to Administrators.
 - FR-08: IT Staff can assign/reassign ownership, set IT Priority, perform permitted status transitions, post Public Comments, and create Internal Notes. Administrators may be selected as a Ticket Owner and may update IT Priority, but may not assign/reassign, change status, or append staff-side comments/notes.
 - FR-09: Requesters can retrieve and create Public Comments only on their own tickets. IT Staff and Administrators can retrieve Public Comments and Internal Notes for tickets visible to them; only IT Staff may append staff-side comments/notes.
 - FR-10: Administrators can list/search/filter users, create users, edit name/email/role/activation, and set a new initial password.
