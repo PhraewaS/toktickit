@@ -34,7 +34,7 @@ Excluded: invitations, email or social login, MFA/SSO, self-registration, passwo
 ## 5. Business rules
 
 - BR-01: Only an active user with valid credentials may authenticate.
-- BR-02: Initial-password users may call only current-user, logout, and password-change actions until they change it.
+- BR-02: Initial-password users may call only `GET /auth/me`, `POST /auth/logout`, and `POST /auth/change-password` until they change it. Any other protected route returns `403 PASSWORD_CHANGE_REQUIRED` after session authentication and before route-specific ownership or role checks. A successful password change clears `mustChangePassword`; missing or invalid sessions still return `401`.
 - BR-03: Passwords are stored only as salted scrypt hashes; plaintext passwords never enter responses or the database.
 - BR-04: Sessions are opaque, hashed at rest, HttpOnly, SameSite=Lax cookies with a bounded expiry.
 - BR-05: The authenticated Requester identity determines ticket ownership; supplied requester IDs are ignored by authenticated routes.
@@ -77,11 +77,13 @@ The Lab 2 `requester_users` table is evolved in place into the account table so 
 
 Base path is `/api`; JSON uses `{data}` and errors use `{error:{code,message,fields?}}`. Authentication uses the HttpOnly `toktickit_session` cookie. Sessions expire after eight hours and logout deletes the server session and clears the cookie.
 
-Authentication: `POST /auth/login`, `POST /auth/logout`, `GET /auth/me`, `POST /auth/change-password`.
+Authentication: `POST /auth/login`, `POST /auth/logout`, `GET /auth/me`, `POST /auth/change-password`. During the first-login gate, only `GET /auth/me`, `POST /auth/logout`, and `POST /auth/change-password` are allowed; every other protected route returns `403 PASSWORD_CHANGE_REQUIRED` without performing its normal operation.
 
 Requester-compatible routes remain at `/tickets`, `/tickets/:id`, attachment routes, and add `POST/GET /tickets/:id/comments` and `POST /tickets/:id/resolved`.
 
 Requester comment routes: `GET/POST /tickets/:id/comments` are available to an authenticated Requester only when the ticket belongs to that Requester; GET returns `200`, POST returns `201`, invalid content returns `400`, missing/invalid session returns `401`, and another user's/missing ticket returns safe `404`.
+
+`POST /tickets/:id/resolved` accepts an empty JSON object `{}` and is idempotent for the authenticated Requester's own ticket. It returns `200 {data:{ticketId,requesterResolvedAt,currentStatus}}`, sets the Requester's resolved indication, and never changes `currentStatus`. Invalid ticket IDs or malformed/unexpected request fields return `400`; missing/invalid sessions return `401`; another user's or missing tickets return safe `404`; non-Requester roles receive `403 ROLE_FORBIDDEN`; a first-login-gated session receives `403 PASSWORD_CHANGE_REQUIRED` before route-specific validation, ownership, or role checks; unexpected failures return `500 INTERNAL_ERROR`.
 
 Staff routes: `GET /staff/tickets`, `GET /staff/tickets/:id`, `GET /staff/tickets/:id/comments`, and `GET /staff/tickets/:id/notes` are available to IT Staff and Administrators as read operations. `PATCH /staff/tickets/:id/priority` is available to IT Staff and Administrators. `POST /staff/tickets/:id/assignment`, `PATCH /staff/tickets/:id/status`, `POST /staff/tickets/:id/comments`, and `POST /staff/tickets/:id/notes` are IT Staff-only operations. Assignment accepts an active IT Staff or Administrator owner, while only IT Staff can perform the assignment.
 
