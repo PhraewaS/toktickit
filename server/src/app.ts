@@ -16,14 +16,23 @@ import {
 
 export const app = express();
 
-app.use(cors({ exposedHeaders: ["Content-Disposition"] }));
+const allowedOrigins = new Set(
+  [process.env.APP_ORIGIN, "http://localhost:5173", "http://127.0.0.1:5173"].filter(
+    (origin): origin is string => Boolean(origin),
+  ),
+);
+
+app.use(cors({
+  origin: (origin, callback) => callback(null, !origin || allowedOrigins.has(origin)),
+  credentials: true,
+  exposedHeaders: ["Content-Disposition"],
+}));
 app.use(express.json());
 
 app.use((req, res, next) => {
   if (["POST", "PATCH", "DELETE", "PUT"].includes(req.method)) {
     const origin = req.get("Origin");
-    const allowed = new Set([process.env.APP_ORIGIN, "http://localhost:5173", "http://127.0.0.1:5173"].filter(Boolean));
-    if (origin && !allowed.has(origin)) {
+    if (origin && !allowedOrigins.has(origin)) {
       res.status(403).json({ error: { code: "CSRF_REJECTED", message: "The request origin is not permitted." } });
       return;
     }

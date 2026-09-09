@@ -115,7 +115,7 @@ export class ApiError extends Error {
 }
 
 async function fetchData<T>(path: string): Promise<T> {
-  const response = await fetch(`${API_URL}${path}`);
+  const response = await fetch(`${API_URL}${path}`, { credentials: "include" });
   if (!response.ok) {
     throw new Error(`Request failed with status ${response.status}`);
   }
@@ -149,6 +149,7 @@ export async function createTicket(
   try {
     response = await fetch(`${API_URL}/api/tickets`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         ...developmentRequesterHeaders(requesterId),
@@ -195,6 +196,7 @@ export async function fetchMyTickets(
   let response: Response;
   try {
     response = await fetch(`${API_URL}/api/tickets${suffix}`, {
+      credentials: "include",
       headers: developmentRequesterHeaders(requesterId),
     });
   } catch {
@@ -219,6 +221,7 @@ export async function fetchTicketDetail(
   let response: Response;
   try {
     response = await fetch(API_URL + "/api/tickets/" + ticketId, {
+      credentials: "include",
       headers: developmentRequesterHeaders(requesterId),
     });
   } catch {
@@ -246,6 +249,7 @@ export async function uploadTicketAttachments(
   try {
     response = await fetch(API_URL + "/api/tickets/" + ticketId + "/attachments", {
       method: "POST",
+      credentials: "include",
       headers: developmentRequesterHeaders(requesterId),
       body: formData,
     });
@@ -272,6 +276,7 @@ export async function removeAttachment(
   try {
     response = await fetch(API_URL + "/api/attachments/" + attachmentId, {
       method: "DELETE",
+      credentials: "include",
       headers: { "Content-Type": "application/json", ...developmentRequesterHeaders(requesterId) },
       body: JSON.stringify({ reason }),
     });
@@ -296,6 +301,7 @@ export async function downloadAttachment(
   let response: Response;
   try {
     response = await fetch(API_URL + "/api/attachments/" + attachmentId + "/download", {
+      credentials: "include",
       headers: developmentRequesterHeaders(requesterId),
     });
   } catch {
@@ -317,7 +323,7 @@ export async function downloadAttachment(
 }
 
 export async function checkSystem(): Promise<SystemStatus> {
-  const healthResponse = await fetch(`${API_URL}/api/health`);
+  const healthResponse = await fetch(`${API_URL}/api/health`, { credentials: "include" });
   if (!healthResponse.ok) {
     throw new Error("System is offline");
   }

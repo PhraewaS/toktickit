@@ -1,5 +1,7 @@
 import { getPrisma } from "../src/prisma.js";
 import { hashPassword, validatePassword } from "../src/auth.js";
+import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const categories = ["Account and Access", "Hardware", "Software", "Network"];
 const relatedSystems = ["Corporate Laptop", "Email", "Employee Portal", "Network Access", "Printer", "VPN"];
@@ -18,7 +20,7 @@ const staff = [
 ];
 const administrator = { name: "Nok Administrator", email: "admin@example.test", isActive: true };
 
-async function main() {
+export async function runSeed() {
   const seedPassword = process.env.LAB3_SEED_PASSWORD;
   if (!seedPassword) throw new Error("LAB3_SEED_PASSWORD is required for local seeding.");
   const passwordError = validatePassword(seedPassword);
@@ -46,4 +48,8 @@ async function main() {
   console.log(`Seeded ${categories.length} categories, ${systemRows.length} related systems, ${requesterRows.length} requesters, ${staffRows.length} active IT Staff, and one Administrator.`);
 }
 
-main().catch((error) => { console.error(error); process.exit(1); }).finally(async () => { await getPrisma().$disconnect(); });
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  runSeed()
+    .catch((error) => { console.error(error); process.exitCode = 1; })
+    .finally(async () => { await getPrisma().$disconnect(); });
+}
