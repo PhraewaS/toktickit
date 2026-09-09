@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import { getPrisma } from "./prisma.js";
-import { requireAuthenticatedOrDevelopmentRequester } from "./requester-context.js";
+import { isLab2CompatibilityEnabled, requireAuthenticatedOrDevelopmentRequester } from "./requester-context.js";
 import { changePassword, currentUser, login, logout, requireAuthenticated } from "./auth.js";
 import { createTicket, listTickets } from "./tickets.js";
 import {
@@ -41,6 +41,10 @@ app.get("/api/health", (_req: Request, res: Response) => {
 });
 
 app.get("/api/development-requesters", async (_req: Request, res: Response) => {
+  if (!isLab2CompatibilityEnabled()) {
+    res.status(410).json({ error: { code: "DEVELOPMENT_REQUESTERS_RETIRED", message: "Development Requester selection is retired outside non-production compatibility tooling." } });
+    return;
+  }
   try {
     const requesters = await getPrisma().requesterUser.findMany({
       where: { isActive: true },

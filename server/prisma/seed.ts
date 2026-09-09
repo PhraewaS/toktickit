@@ -1,31 +1,35 @@
 import { getPrisma } from "../src/prisma.js";
-import { hashPassword } from "../src/auth.js";
+import { hashPassword, validatePassword } from "../src/auth.js";
 
 const categories = ["Account and Access", "Hardware", "Software", "Network"];
 const relatedSystems = ["Corporate Laptop", "Email", "Employee Portal", "Network Access", "Printer", "VPN"];
 const requesters = [
-  { name: "Jennifer Anderson", email: "jennifer@example.test", isActive: true, password: "Requester-Change1!" },
-  { name: "Kanya Srisawat", email: "kanya@example.test", isActive: true, password: "Requester-Change1!" },
-  { name: "Narin Chai", email: "narin@example.test", isActive: true, password: "Requester-Change1!" },
-  { name: "Preecha Wong", email: "preecha@example.test", isActive: true, password: "Requester-Change1!" },
-  { name: "Archived Requester", email: "archived@example.test", isActive: false, password: "Requester-Change1!" },
+  { name: "Jennifer Anderson", email: "jennifer@example.test", isActive: true },
+  { name: "Kanya Srisawat", email: "kanya@example.test", isActive: true },
+  { name: "Narin Chai", email: "narin@example.test", isActive: true },
+  { name: "Preecha Wong", email: "preecha@example.test", isActive: true },
+  { name: "Archived Requester", email: "archived@example.test", isActive: false },
 ];
 const staff = [
-  { name: "Mali Support", email: "mali.staff@example.test", isActive: true, password: "Staff-Change1!" },
-  { name: "Somchai Technician", email: "somchai.staff@example.test", isActive: true, password: "Staff-Change1!" },
-  { name: "Arisa Service Desk", email: "arisa.staff@example.test", isActive: true, password: "Staff-Change1!" },
-  { name: "Inactive Technician", email: "inactive.staff@example.test", isActive: false, password: "Staff-Change1!" },
+  { name: "Mali Support", email: "mali.staff@example.test", isActive: true },
+  { name: "Somchai Technician", email: "somchai.staff@example.test", isActive: true },
+  { name: "Arisa Service Desk", email: "arisa.staff@example.test", isActive: true },
+  { name: "Inactive Technician", email: "inactive.staff@example.test", isActive: false },
 ];
-const administrator = { name: "Nok Administrator", email: "admin@example.test", isActive: true, password: "Admin-Change1!" };
+const administrator = { name: "Nok Administrator", email: "admin@example.test", isActive: true };
 
 async function main() {
+  const seedPassword = process.env.LAB3_SEED_PASSWORD;
+  if (!seedPassword) throw new Error("LAB3_SEED_PASSWORD is required for local seeding.");
+  const passwordError = validatePassword(seedPassword);
+  if (passwordError) throw new Error(`LAB3_SEED_PASSWORD is required and invalid: ${passwordError}`);
   const prisma = getPrisma();
   for (const name of categories) await prisma.category.upsert({ where: { name }, update: { isActive: true }, create: { name, isActive: true } });
   for (const name of relatedSystems) await prisma.relatedSystem.upsert({ where: { name }, update: { isActive: true }, create: { name, isActive: true } });
   const allUsers = [...requesters.map((user) => ({ ...user, role: "REQUESTER" as const })), ...staff.map((user) => ({ ...user, role: "IT_STAFF" as const })), { ...administrator, role: "ADMINISTRATOR" as const }];
   for (const item of allUsers) {
-    const saved = await prisma.requesterUser.upsert({ where: { email: item.email }, update: { name: item.name, isActive: item.isActive, role: item.role }, create: { name: item.name, email: item.email, isActive: item.isActive, role: item.role, passwordHash: hashPassword(item.password, `seed-${item.email}`), mustChangePassword: true } });
-    if (saved.mustChangePassword) await prisma.requesterUser.update({ where: { id: saved.id }, data: { passwordHash: hashPassword(item.password, `seed-${item.email}`), mustChangePassword: true } });
+    const saved = await prisma.requesterUser.upsert({ where: { email: item.email }, update: { name: item.name, isActive: item.isActive, role: item.role }, create: { name: item.name, email: item.email, isActive: item.isActive, role: item.role, passwordHash: hashPassword(seedPassword, `seed-${item.email}`), mustChangePassword: true } });
+    if (saved.mustChangePassword) await prisma.requesterUser.update({ where: { id: saved.id }, data: { passwordHash: hashPassword(seedPassword, `seed-${item.email}`), mustChangePassword: true } });
   }
   const requesterRows = await prisma.requesterUser.findMany({ where: { role: "REQUESTER" }, orderBy: { id: "asc" } });
   const staffRows = await prisma.requesterUser.findMany({ where: { role: "IT_STAFF", isActive: true }, orderBy: { id: "asc" } });

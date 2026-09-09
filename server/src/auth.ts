@@ -53,7 +53,17 @@ export function validatePassword(value: unknown) {
 function tokenFromRequest(req: Request) {
   const cookie = req.get("Cookie") ?? "";
   const match = cookie.split(";").map((part) => part.trim()).find((part) => part.startsWith(`${SESSION_COOKIE}=`));
-  return match ? decodeURIComponent(match.slice(SESSION_COOKIE.length + 1)) : undefined;
+  if (!match) return undefined;
+  try {
+    return decodeURIComponent(match.slice(SESSION_COOKIE.length + 1));
+  } catch {
+    return undefined;
+  }
+}
+
+export function hasSessionCookie(req: Request) {
+  const cookie = req.get("Cookie") ?? "";
+  return cookie.split(";").map((part) => part.trim()).some((part) => part.startsWith(`${SESSION_COOKIE}=`));
 }
 
 function tokenHash(token: string) {
