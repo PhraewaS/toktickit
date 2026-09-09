@@ -1,13 +1,13 @@
-# Lab 3 Reviewer Record
+# บันทึก Reviewer ของ Lab 3
 
-Reviewer identity: to be completed by the peer reviewer.
+ตัวตนของ Reviewer: ให้ peer reviewer กรอกข้อมูล
 
-| PR / branch | Review comments | Response / fix | Approval |
+| PR / branch | ความคิดเห็นจากการ review | การตอบกลับ / การแก้ไข | การอนุมัติ |
 |---|---|---|---|
-| Sprint 3 specification | Pending peer review | Pending | Pending |
-| Authentication and migration | Pending peer review | Pending | Pending |
-| Staff workflow | Pending peer review | Pending | Pending |
-| Administrator user management | Pending peer review | Pending | Pending |
-| Release integration | Pending peer review | Pending | Pending |
+| Sprint 3 specification | รอ peer review | รอ | รอ |
+| Authentication and migration | รอ peer review | รอ | รอ |
+| Staff workflow | รอ peer review | รอ | รอ |
+| Administrator user management | รอ peer review | รอ | รอ |
+| Release integration | รอ peer review | รอ | รอ |
 
-The final submission must replace each Pending value with working GitHub links, reviewer comments, responses, and approvals from the final main branch.
+การส่งงานฉบับสุดท้ายต้องแทนค่าทุกช่องที่เป็น “รอ” ด้วยลิงก์ GitHub ที่ใช้งานได้จริง ความคิดเห็นของ Reviewer การตอบกลับ และหลักฐานการอนุมัติจาก final main branch

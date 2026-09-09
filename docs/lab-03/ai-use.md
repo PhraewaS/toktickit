@@ -1,18 +1,18 @@
-# Lab 3 AI Use and Reflection
+# การใช้ AI และ Reflection ของ Lab 3
 
-LLM used: OpenAI Codex in the Codex desktop workspace.
+LLM ที่ใช้: OpenAI Codex ใน Codex desktop workspace
 
-Selected prompts:
+Prompt ที่เลือกใช้:
 
-1. Distinguish instructions in the attached Lab 3 sheet from the user's request and continue from Lab 2.
-2. Extract the Lab 3 engineering contract, required database increment, API contract, UI screens, tests, and Answer Part 1-9 submission requirements.
-3. Design an additive Prisma migration that preserves Lab 2 requester IDs, tickets, and attachments.
-4. Define a safe cookie-session authentication approach with first-login password change and role/ownership middleware.
-5. Implement backend enforcement for requester, IT Staff, and Administrator operations with safe errors.
-6. Extend the Zen Green client with Login, Staff Queue, Staff Detail, and User Management while preserving requester regression.
-7. Review the implementation against every acceptance criterion and identify missing tests or evidence.
-8. Verify builds, tests, migrations, seed idempotency, and responsive evidence before release.
+1. แยกคำสั่งใน Lab 3 sheet ที่แนบมาออกจากคำขอของผู้ใช้ และทำงานต่อจาก Lab 2
+2. สกัด engineering contract ของ Lab 3, database increment ที่จำเป็น, API contract, หน้าจอ UI, tests และข้อกำหนดการส่ง Answer Part 1-9
+3. ออกแบบ additive Prisma migration ที่รักษา requester IDs, tickets และ attachments ของ Lab 2 ไว้
+4. กำหนดแนวทาง cookie-session authentication ที่ปลอดภัย พร้อม first-login password change และ role/ownership middleware
+5. Implement การบังคับใช้สิทธิ์ฝั่ง backend สำหรับ Requester, IT Staff และ Administrator พร้อม safe errors
+6. ขยาย Zen Green client ด้วย Login, Staff Queue, Staff Detail และ User Management โดยรักษา requester regression ไว้
+7. ตรวจ implementation เทียบกับ acceptance criteria ทุกข้อ และระบุ tests หรือ evidence ที่ยังขาด
+8. ตรวจ builds, tests, migrations, seed idempotency และ responsive evidence ก่อน release
 
-## My Reflection
+## Reflection ของฉัน
 
-The specification-agent phase forced decisions about session storage, ownership, role separation, status transitions, and migration compatibility before implementation. The coding-agent phase was most useful for repetitive API serialization, validation, and UI state handling, but every authorization rule and migration decision still required manual review against the handout. Tests and final-main evidence are the acceptance gate; generated code is not treated as proof by itself.
+ช่วง specification-agent ช่วยบังคับให้ตัดสินใจเรื่อง session storage, ownership, role separation, status transitions และ migration compatibility ก่อนเริ่ม implementation ส่วน coding-agent มีประโยชน์มากกับงานซ้ำ ๆ เช่น API serialization, validation และการจัดการ UI state แต่ authorization rule และ migration decision ทุกข้อยังต้องตรวจด้วยตนเองเทียบกับเอกสาร Lab 3 อยู่เสมอ Tests และ final-main evidence เป็น acceptance gate; generated code ไม่ถือเป็นหลักฐานด้วยตัวมันเอง

@@ -1,124 +1,124 @@
 # TokTickIT Lab 3 Sprint 3 Engineering Contract
 
-Status: implementation contract for the Lab 3 increment.
+สถานะ: implementation contract สำหรับ Lab 3 increment
 
-## 1. Sprint goal
+## 1. เป้าหมายของ Sprint
 
-Replace the Lab 2 development requester selector with secure account authentication and role-based access while preserving requester ticketing and attachments. Add the first operational IT Staff workflow and a deliberately small Administrator user-management screen using the existing Zen Green language.
+แทนที่ development requester selector ของ Lab 2 ด้วย secure account authentication และ role-based access โดยรักษา requester ticketing และ attachments ไว้ เพิ่ม workflow แรกสำหรับ IT Staff และ minimalist Administrator user-management screen โดยใช้ Zen Green language เดิม
 
-## 2. Stakeholder request
+## 2. ความต้องการของผู้มีส่วนได้ส่วนเสีย
 
-Users sign in with an email and password. An initial password forces a password change before application access. Requesters continue to create and manage only their own tickets, IT Staff process a shared queue and ticket detail, and Administrators manage accounts without deletion or advanced identity-management features.
+ผู้ใช้ sign in ด้วย email และ password โดย initial password จะบังคับให้เปลี่ยน password ก่อนเข้าใช้งาน Requester ยังคงสร้างและจัดการได้เฉพาะ ticket ของตนเอง IT Staff จัดการ shared queue และ ticket detail ส่วน Administrator จัดการบัญชีผู้ใช้โดยไม่มี deletion หรือ advanced identity-management features
 
-## 3. Scope
+## 3. ขอบเขต
 
-Included: cookie-backed sessions, logout, current-user retrieval, first-login password change, three single-role accounts, migration of Lab 2 requester records, requester regression, ticket ownership and IT priority, permitted status workflow, Public Comments, Internal Notes, IT Staff queue/detail, and minimalist Administrator user management.
+รวม: cookie-backed sessions, logout, current-user retrieval, first-login password change, บัญชีสาม role แบบ single-role, การย้ายข้อมูล Lab 2 requester records, requester regression, ticket ownership และ IT priority, permitted status workflow, Public Comments, Internal Notes, IT Staff queue/detail และ minimalist Administrator user management
 
-Excluded: invitations, email or social login, MFA/SSO, self-registration, password-reset email, Actions Taken, SLA/escalation/notifications, dashboards/KPIs, multi-tenancy, departments, multiple roles, user deletion/bulk/import/export, account history, and production deployment changes.
+ไม่รวม: invitations, email หรือ social login, MFA/SSO, self-registration, password-reset email, Actions Taken, SLA/escalation/notifications, dashboards/KPIs, multi-tenancy, departments, multiple roles, user deletion/bulk/import/export, account history และ production deployment changes
 
 ## 4. Functional requirements
 
-- FR-01: An active user with valid credentials can log in; inactive users and invalid credentials receive safe failures.
-- FR-02: A session identifies the authenticated user server-side; logout invalidates it and normal routes cannot be used afterward.
-- FR-03: A user with `mustChangePassword` cannot access normal application routes until a valid new password is saved.
-- FR-04: The shell shows the authenticated name and role and exposes only permitted navigation.
-- FR-05: Requester ticket and attachment APIs derive ownership from the authenticated Requester, not a client requester ID.
-- FR-06: Requesters can create tickets, list/detail their own tickets, upload/download/remove permitted attachments, post Public Comments, and indicate that a problem appears resolved.
-- FR-07: IT Staff can retrieve a searchable, filterable, sortable, paginated queue and open ticket detail. Administrators may retrieve the same ticket views for oversight and may update IT Priority; all other Staff operations remain unavailable to Administrators.
-- FR-08: IT Staff can assign/reassign ownership, set IT Priority, perform permitted status transitions, post Public Comments, and create Internal Notes. Administrators may be selected as a Ticket Owner and may update IT Priority, but may not assign/reassign, change status, or append staff-side comments/notes.
-- FR-09: Requesters can retrieve and create Public Comments only on their own tickets. IT Staff and Administrators can retrieve Public Comments and Internal Notes for tickets visible to them; only IT Staff may append staff-side comments/notes.
-- FR-10: Administrators can list/search/filter users, create users, edit name/email/role/activation, and set a new initial password.
-- FR-11: User management rejects invalid roles and duplicate emails, prevents self-deactivation, and preserves at least one active Administrator.
-- FR-12: All protected operations enforce authorization on the server and return safe, distinguishable errors.
+- FR-01: active user ที่มี credentials ถูกต้องสามารถ log in; inactive users และ invalid credentials ได้รับ safe failures
+- FR-02: session ระบุ authenticated user ฝั่ง server; logout ทำให้ session ใช้ไม่ได้ และไม่สามารถใช้ normal routes ต่อได้
+- FR-03: user ที่มี `mustChangePassword` ไม่สามารถเข้า normal application routes จนกว่าจะบันทึก password ใหม่ที่ถูกต้อง
+- FR-04: shell แสดงชื่อและ role ของ authenticated user และแสดงเฉพาะ navigation ที่ได้รับอนุญาต
+- FR-05: Requester ticket และ attachment APIs derive ownership จาก authenticated Requester ไม่ใช่ client requester ID
+- FR-06: Requester สร้าง ticket, ดู list/detail ของ ticket ตนเอง, upload/download/remove attachments ที่อนุญาต, post Public Comments และระบุว่าปัญหาอาจได้รับการแก้ไขแล้วได้
+- FR-07: IT Staff เรียกดู queue ที่ค้นหา/filter/sort/paginate ได้ และเปิด ticket detail ได้ Administrator เรียกดู ticket views เดียวกันเพื่อ oversight และแก้ IT Priority ได้ แต่ไม่สามารถทำ Staff operations อื่น ๆ
+- FR-08: IT Staff assign/reassign ownership, ตั้ง IT Priority, ทำ permitted status transitions, post Public Comments และสร้าง Internal Notes ได้ Administrator อาจถูกเลือกเป็น Ticket Owner และแก้ IT Priority ได้ แต่ห้าม assign/reassign, เปลี่ยน status หรือเพิ่ม staff-side comments/notes
+- FR-09: Requester retrieve/create Public Comments ได้เฉพาะ ticket ของตนเอง IT Staff และ Administrator retrieve Public Comments และ Internal Notes ของ ticket ที่มองเห็นได้ และมีเพียง IT Staff ที่ append staff-side comments/notes ได้
+- FR-10: Administrator list/search/filter users, create users, edit name/email/role/activation และตั้ง initial password ใหม่ได้
+- FR-11: User management ปฏิเสธ invalid roles และ duplicate emails, ป้องกัน self-deactivation และรักษา active Administrator อย่างน้อยหนึ่งคน
+- FR-12: protected operations ทุกตัวบังคับใช้ authorization ฝั่ง server และส่ง safe, distinguishable errors
 
 ## 5. Business rules
 
-- BR-01: Only an active user with valid credentials may authenticate.
-- BR-02: Initial-password users may call only `GET /auth/me`, `POST /auth/logout`, and `POST /auth/change-password` until they change it. Any other protected route returns `403 PASSWORD_CHANGE_REQUIRED` after session authentication and before route-specific ownership or role checks. A successful password change clears `mustChangePassword`; missing or invalid sessions still return `401`.
-- BR-03: Passwords are stored only as salted scrypt hashes; plaintext passwords never enter responses or the database.
-- BR-04: Sessions are opaque, hashed at rest, HttpOnly, SameSite=Lax cookies with a bounded expiry.
-- BR-05: The authenticated Requester identity determines ticket ownership; supplied requester IDs are ignored by authenticated routes.
-- BR-06: Requester ticket and attachment access is ownership checked; another user's protected resource has the same safe 404 as a missing resource.
-- BR-07: A Ticket has zero or one primary owner, and the owner must be an active IT Staff or Administrator account. Only IT Staff may assign, reassign, or unassign the owner; an Administrator may be the selected owner but cannot perform assignment operations.
-- BR-08: Requested Priority is immutable requester input; IT Priority initially copies it and may be changed by IT Staff or Administrator through the authorized priority operation.
-- BR-09: Ticket statuses are `NEW`, `OPEN`, `IN_PROGRESS`, `WAITING_FOR_REQUESTER`, `RESOLVED`, `CLOSED`, `REOPENED`, and `CANCELLED`.
-- BR-10: IT Staff may transition `NEW -> OPEN`, `OPEN -> IN_PROGRESS|WAITING_FOR_REQUESTER|CANCELLED`, `IN_PROGRESS -> WAITING_FOR_REQUESTER|RESOLVED|CANCELLED`, `WAITING_FOR_REQUESTER -> IN_PROGRESS|RESOLVED|CANCELLED`, `RESOLVED -> CLOSED|REOPENED`, and `CLOSED -> REOPENED`. No-op and other transitions conflict.
-- BR-11: A Requester can indicate a problem appears resolved, but cannot set a formal Resolved or Closed status.
-- BR-12: Comments and notes are append-only, backend-authored, trimmed, non-empty, and limited to 5,000 characters. Requesters may retrieve/create Public Comments only for their own tickets. Public Comments are visible to roles with ticket visibility; Internal Notes are visible read-only to IT Staff and Administrator. Only IT Staff may create staff-side Public Comments or Internal Notes; Administrators cannot append, edit, or delete them.
-- BR-13: User email is unique case-insensitively; each user has exactly one permitted role.
-- BR-14: New and reset initial passwords set `mustChangePassword=true`.
-- BR-15: An Administrator cannot deactivate their own account or deactivate/remove the last active Administrator. Users are deactivated, never deleted.
-- BR-16: Seed data is deterministic and idempotent and contains at least four active Requesters, one inactive Requester, three active IT Staff, one inactive IT Staff, one active Administrator, realistic tickets, comments, and notes.
-- BR-17: Invalid input, unauthenticated access, forbidden access, missing resources, conflicts, and unexpected failures use safe distinct status/error codes. The legacy Development Requester route is not a production API and returns `410 DEVELOPMENT_REQUESTERS_RETIRED` in production regardless of environment flags. It may be enabled only by non-production regression or migration tooling with an explicit compatibility context.
+- BR-01: เฉพาะ active user ที่มี credentials ถูกต้องเท่านั้นที่ authenticate ได้
+- BR-02: initial-password users เรียกได้เฉพาะ `GET /auth/me`, `POST /auth/logout` และ `POST /auth/change-password` จนกว่าจะเปลี่ยน password protected route อื่นตอบ `403 PASSWORD_CHANGE_REQUIRED` หลัง session authentication และก่อน route-specific ownership หรือ role checks เมื่อเปลี่ยน password สำเร็จ `mustChangePassword` จะถูกล้าง; missing หรือ invalid sessions ยังคงตอบ `401`
+- BR-03: password เก็บเป็น salted scrypt hashes เท่านั้น; plaintext passwords ไม่เข้า response หรือ database
+- BR-04: sessions เป็น opaque, hashed-at-rest, HttpOnly, SameSite=Lax cookies ที่มี bounded expiry
+- BR-05: authenticated Requester identity เป็นตัวกำหนด ticket ownership; supplied requester IDs จะถูกละเลยใน authenticated routes
+- BR-06: Requester ticket และ attachment access ต้องตรวจ ownership; protected resource ของผู้อื่นใช้ safe 404 เดียวกับ resource ที่ไม่มีอยู่
+- BR-07: Ticket มี primary owner ได้ศูนย์หรือหนึ่งคน และ owner ต้องเป็น active IT Staff หรือ Administrator เท่านั้น เฉพาะ IT Staff assign, reassign หรือ unassign owner ได้; Administrator อาจเป็น selected owner แต่ทำ assignment operations ไม่ได้
+- BR-08: Requested Priority เป็น requester input ที่แก้ไม่ได้; IT Priority เริ่มต้นด้วยค่าดังกล่าว และ IT Staff หรือ Administrator เปลี่ยนผ่าน authorized priority operation ได้
+- BR-09: Ticket statuses คือ `NEW`, `OPEN`, `IN_PROGRESS`, `WAITING_FOR_REQUESTER`, `RESOLVED`, `CLOSED`, `REOPENED` และ `CANCELLED`
+- BR-10: IT Staff transition ได้ดังนี้ `NEW -> OPEN`, `OPEN -> IN_PROGRESS|WAITING_FOR_REQUESTER|CANCELLED`, `IN_PROGRESS -> WAITING_FOR_REQUESTER|RESOLVED|CANCELLED`, `WAITING_FOR_REQUESTER -> IN_PROGRESS|RESOLVED|CANCELLED`, `RESOLVED -> CLOSED|REOPENED` และ `CLOSED -> REOPENED` ส่วน no-op และ transition อื่นให้เป็น conflict
+- BR-11: Requester ระบุว่าปัญหาอาจได้รับการแก้ไขแล้วได้ แต่ไม่สามารถตั้ง formal Resolved หรือ Closed status
+- BR-12: Comments และ notes เป็น append-only, backend-authored, trimmed, non-empty และจำกัด 5,000 ตัวอักษร Requester retrieve/create Public Comments ได้เฉพาะ ticket ของตนเอง Public Comments มองเห็นได้ตาม ticket visibility; Internal Notes มองเห็นแบบ read-only โดย IT Staff และ Administrator เฉพาะ IT Staff สร้าง staff-side Public Comments หรือ Internal Notes ได้ Administrator append, edit หรือ delete ไม่ได้
+- BR-13: User email unique แบบ case-insensitive และ user แต่ละคนมี permitted role เพียงหนึ่ง role
+- BR-14: New และ reset initial passwords ตั้ง `mustChangePassword=true`
+- BR-15: Administrator ห้าม deactivate account ของตนเอง หรือ deactivate/remove active Administrator คนสุดท้าย Users ถูก deactivated แต่ไม่ถูก deleted
+- BR-16: Seed data deterministic และ idempotent มี active Requesters อย่างน้อยสี่คน, inactive Requester หนึ่งคน, active IT Staff สามคน, inactive IT Staff หนึ่งคน, active Administrator หนึ่งคน พร้อม tickets, comments และ notes ที่สมจริง
+- BR-17: invalid input, unauthenticated access, forbidden access, missing resources, conflicts และ unexpected failures ใช้ safe distinct status/error codes legacy Development Requester route ไม่ใช่ production API และตอบ `410 DEVELOPMENT_REQUESTERS_RETIRED` ใน production ไม่ว่า environment flags จะเป็นอย่างไร จะเปิดได้เฉพาะ non-production regression หรือ migration tooling ที่มี explicit compatibility context
 
 ## 6. Authorization matrix
 
 | Operation | Requester | IT Staff | Administrator |
 |---|---:|---:|---:|
-| Login/logout/current user/password change | Yes | Yes | Yes |
-| Create/list/detail own tickets and attachments | Own only | No | No |
-| Requester resolved indication | Own only | No | No |
-| Staff queue/detail | No | Yes | Yes, read-only except IT Priority update |
-| Staff assignment/reassignment | No | Yes | No |
-| IT Priority update | No | Yes | Yes |
-| Staff status transition | No | Yes | No |
-| Public Comments retrieve/create | Own ticket only | Visible tickets | Retrieve only |
-| Internal Notes retrieve/create | No | Yes | Retrieve only |
-| Ticket Owner eligibility | No | Yes | Yes |
-| User list/create/edit/reset password | No | No | Yes |
+| Login/logout/current user/password change | ได้ | ได้ | ได้ |
+| Create/list/detail own tickets and attachments | เฉพาะของตนเอง | ไม่ได้ | ไม่ได้ |
+| Requester resolved indication | เฉพาะของตนเอง | ไม่ได้ | ไม่ได้ |
+| Staff queue/detail | ไม่ได้ | ได้ | ได้, read-only ยกเว้น IT Priority update |
+| Staff assignment/reassignment | ไม่ได้ | ได้ | ไม่ได้ |
+| IT Priority update | ไม่ได้ | ได้ | ได้ |
+| Staff status transition | ไม่ได้ | ได้ | ไม่ได้ |
+| Public Comments retrieve/create | เฉพาะ ticket ของตนเอง | Ticket ที่มองเห็นได้ | Retrieve เท่านั้น |
+| Internal Notes retrieve/create | ไม่ได้ | ได้ | Retrieve เท่านั้น |
+| Ticket Owner eligibility | ไม่ได้ | ได้ | ได้ |
+| User list/create/edit/reset password | ไม่ได้ | ไม่ได้ | ได้ |
 
-The backend is authoritative; UI hiding is only usability feedback.
+Backend เป็นผู้มีอำนาจตัดสินใจสุดท้าย; การซ่อน UI เป็นเพียง usability feedback
 
-## 7. Data and migration decisions
+## 7. Data และ migration decisions
 
-The Lab 2 `requester_users` table is evolved in place into the account table so existing IDs and Ticket foreign keys remain valid. It gains `passwordHash`, `role`, `mustChangePassword`, and login timestamps. Existing Requester rows receive deterministic local-only initial passwords and remain active/inactive as before. Tickets gain nullable `ownerId`, `itPriority`, and `requesterResolvedAt`; existing IT Priority values are backfilled from Requested Priority. Comment and Internal Note tables are additive. Session rows store only a hash of the opaque cookie token. Indexes cover active role/name, ticket queue status/priority/owner/updated time, and comment/note ticket ordering.
+ปรับ `requester_users` table ของ Lab 2 ให้เป็น account table โดยคง existing IDs และ Ticket foreign keys ไว้ เพิ่ม `passwordHash`, `role`, `mustChangePassword` และ login timestamps ให้ Existing Requester rows รับ deterministic local-only initial passwords และคง active/inactive state เดิม Tickets เพิ่ม nullable `ownerId`, `itPriority` และ `requesterResolvedAt`; ค่า IT Priority เดิม backfill จาก Requested Priority ส่วน Comment และ Internal Note tables เป็น additive Session rows เก็บเฉพาะ hash ของ opaque cookie token และ indexes ครอบคลุม active role/name, ticket queue status/priority/owner/updated time และ comment/note ticket ordering
 
 ## 8. API summary
 
-Base path is `/api`; JSON uses `{data}` and errors use `{error:{code,message,fields?}}`. Authentication uses the HttpOnly `toktickit_session` cookie. Sessions expire after eight hours and logout deletes the server session and clears the cookie.
+Base path คือ `/api`; JSON ใช้ `{data}` และ errors ใช้ `{error:{code,message,fields?}}` Authentication ใช้ HttpOnly `toktickit_session` cookie Sessions หมดอายุหลังแปดชั่วโมง และ logout ลบ server session พร้อมล้าง cookie
 
-Authentication: `POST /auth/login`, `POST /auth/logout`, `GET /auth/me`, `POST /auth/change-password`. During the first-login gate, only `GET /auth/me`, `POST /auth/logout`, and `POST /auth/change-password` are allowed; every other protected route returns `403 PASSWORD_CHANGE_REQUIRED` without performing its normal operation.
+Authentication: `POST /auth/login`, `POST /auth/logout`, `GET /auth/me`, `POST /auth/change-password` ระหว่าง first-login gate อนุญาตเฉพาะ `GET /auth/me`, `POST /auth/logout` และ `POST /auth/change-password`; protected route อื่นทั้งหมดตอบ `403 PASSWORD_CHANGE_REQUIRED` โดยไม่ทำ operation ปกติ
 
-Requester-compatible routes remain at `/tickets`, `/tickets/:id`, attachment routes, and add `POST/GET /tickets/:id/comments` and `POST /tickets/:id/resolved`.
+Requester-compatible routes ยังคงอยู่ที่ `/tickets`, `/tickets/:id`, attachment routes และเพิ่ม `POST/GET /tickets/:id/comments` กับ `POST /tickets/:id/resolved`
 
-Requester comment routes: `GET/POST /tickets/:id/comments` are available to an authenticated Requester only when the ticket belongs to that Requester; GET returns `200`, POST returns `201`, invalid content returns `400`, missing/invalid session returns `401`, and another user's/missing ticket returns safe `404`.
+Requester comment routes: `GET/POST /tickets/:id/comments` ใช้ได้กับ authenticated Requester เฉพาะเมื่อ ticket เป็นของ Requester คนนั้น; GET ตอบ `200`, POST ตอบ `201`, invalid content ตอบ `400`, missing/invalid session ตอบ `401` และ ticket ของผู้อื่น/ไม่มีอยู่ตอบ safe `404`
 
-`POST /tickets/:id/resolved` accepts an empty JSON object `{}` and is idempotent for the authenticated Requester's own ticket. It returns `200 {data:{ticketId,requesterResolvedAt,currentStatus}}`, sets the Requester's resolved indication, and never changes `currentStatus`. Invalid ticket IDs or malformed/unexpected request fields return `400`; missing/invalid sessions return `401`; another user's or missing tickets return safe `404`; non-Requester roles receive `403 ROLE_FORBIDDEN`; a first-login-gated session receives `403 PASSWORD_CHANGE_REQUIRED` before route-specific validation, ownership, or role checks; unexpected failures return `500 INTERNAL_ERROR`.
+`POST /tickets/:id/resolved` รับ empty JSON object `{}` และเป็น idempotent สำหรับ authenticated Requester ที่เป็นเจ้าของ ticket ตอบ `200 {data:{ticketId,requesterResolvedAt,currentStatus}}`, ตั้ง resolved indication และไม่เปลี่ยน `currentStatus` invalid ticket IDs หรือ malformed/unexpected request fields ตอบ `400`; missing/invalid sessions ตอบ `401`; ticket ของผู้อื่น/ไม่มีอยู่ตอบ safe `404`; non-Requester roles ตอบ `403 ROLE_FORBIDDEN`; first-login-gated session ตอบ `403 PASSWORD_CHANGE_REQUIRED` ก่อน route-specific validation, ownership หรือ role checks; unexpected failures ตอบ `500 INTERNAL_ERROR`
 
-Staff routes: `GET /staff/tickets`, `GET /staff/tickets/:id`, `GET /staff/tickets/:id/comments`, and `GET /staff/tickets/:id/notes` are available to IT Staff and Administrators as read operations. `PATCH /staff/tickets/:id/priority` is available to IT Staff and Administrators. `POST /staff/tickets/:id/assignment`, `PATCH /staff/tickets/:id/status`, `POST /staff/tickets/:id/comments`, and `POST /staff/tickets/:id/notes` are IT Staff-only operations. Assignment accepts an active IT Staff or Administrator owner, while only IT Staff can perform the assignment.
+Staff routes: `GET /staff/tickets`, `GET /staff/tickets/:id`, `GET /staff/tickets/:id/comments` และ `GET /staff/tickets/:id/notes` ใช้ได้กับ IT Staff และ Administrator ในฐานะ read operations `PATCH /staff/tickets/:id/priority` ใช้ได้กับ IT Staff และ Administrator ส่วน `POST /staff/tickets/:id/assignment`, `PATCH /staff/tickets/:id/status`, `POST /staff/tickets/:id/comments` และ `POST /staff/tickets/:id/notes` เป็น IT Staff-only operations Assignment รับ active IT Staff หรือ Administrator เป็น owner ได้ แต่ผู้ทำ assignment ต้องเป็น IT Staff
 
-Administrator routes: `GET /admin/users`, `POST /admin/users`, `PATCH /admin/users/:id`, and `POST /admin/users/:id/initial-password`.
+Administrator routes: `GET /admin/users`, `POST /admin/users`, `PATCH /admin/users/:id` และ `POST /admin/users/:id/initial-password`
 
-Authentication failures are `401`; forbidden role/ownership is `403` or safe `404` as specified; invalid input is `400`; duplicate/state conflicts are `409`; retired compatibility access is `410`; unexpected failures are `500` with no SQL, stack, path, hash, or secret detail. `LAB2_COMPATIBILITY_MODE=true` is accepted only in a non-production migration/regression process and must be rejected or ignored when `NODE_ENV=production`.
+Authentication failures เป็น `401`; forbidden role/ownership เป็น `403` หรือ safe `404` ตามที่ระบุ; invalid input เป็น `400`; duplicate/state conflicts เป็น `409`; retired compatibility access เป็น `410`; unexpected failures เป็น `500` โดยไม่มี SQL, stack, path, hash หรือ secret detail `LAB2_COMPATIBILITY_MODE=true` ใช้ได้เฉพาะ non-production migration/regression process และต้องถูก reject หรือ ignore เมื่อ `NODE_ENV=production`
 
 ## 9. Acceptance criteria
 
-- AC-01: Valid active credentials establish a session and return safe user identity and role.
-- AC-02: Invalid credentials and inactive users receive safe failures and no session.
-- AC-03: Initial-password login blocks normal routes until a valid password change succeeds.
-- AC-04: Logout invalidates access and direct normal-route access fails afterward.
-- AC-05: Requester create/list/detail/attachment behavior continues using authenticated identity only.
-- AC-06: Requester cannot access another user's ticket, attachment, Internal Note, or staff/admin routes.
-- AC-07: IT Staff queue supports search, filters, sorting, pagination, ownership, status, and priority data.
-- AC-08: IT Staff can assign/reassign to an active IT Staff or Administrator, update IT Priority, make only permitted status transitions, and append comments/notes. Administrators can update IT Priority and may be assigned as owner, but Administrator assignment/status/comment/note mutations receive `403 ROLE_FORBIDDEN`.
-- AC-09: Requesters can read/create Public Comments only on their own tickets. IT Staff and Administrators can read staff-visible Public Comments and Internal Notes according to the matrix; Administrators are otherwise read-only; Internal Notes never appear in Requester responses.
-- AC-10: Requester resolved indication is available without changing formal status.
-- AC-11: Administrator can list/search/filter/create/edit/deactivate/reset users with the stated safety rules.
-- AC-12: Seed and migration preserve Lab 2 tickets/attachments and are safe to rerun.
-- AC-13: Required screens provide loading, saving, validation, success, empty/no-results, forbidden, not-found, conflict, and safe failure feedback where applicable.
-- AC-14: Major screens fit desktop, tablet, and mobile viewports with keyboard-visible focus and no horizontal page overflow.
-- AC-15: The production client never calls or renders the Development Requester selector. `GET /development-requesters` returns `410 DEVELOPMENT_REQUESTERS_RETIRED` in production, even if `LAB2_COMPATIBILITY_MODE=true`; only explicit non-production regression/migration tooling may enable it.
+- AC-01: valid active credentials สร้าง session และคืน safe user identity กับ role
+- AC-02: invalid credentials และ inactive users ได้รับ safe failures และไม่มี session
+- AC-03: initial-password login block normal routes จนกว่าจะเปลี่ยน password สำเร็จ
+- AC-04: logout invalidate access และการเรียก normal-route โดยตรงหลังจากนั้นล้มเหลว
+- AC-05: Requester create/list/detail/attachment behavior ยังคงทำงานด้วย authenticated identity เท่านั้น
+- AC-06: Requester เข้า ticket, attachment, Internal Note หรือ staff/admin routes ของผู้อื่นไม่ได้
+- AC-07: IT Staff queue รองรับ search, filters, sorting, pagination, ownership, status และ priority data
+- AC-08: IT Staff assign/reassign ให้ active IT Staff หรือ Administrator, update IT Priority, ทำ permitted status transitions และ append comments/notes ได้ Administrator update IT Priority และถูก assign เป็น owner ได้ แต่ assignment/status/comment/note mutations ของ Administrator ต้องตอบ `403 ROLE_FORBIDDEN`
+- AC-09: Requester อ่าน/สร้าง Public Comments ได้เฉพาะ ticket ของตนเอง IT Staff และ Administrator อ่าน staff-visible Public Comments และ Internal Notes ตาม matrix ได้ Administrator เป็น read-only ในส่วนอื่น และ Internal Notes ไม่ปรากฏใน Requester responses
+- AC-10: Requester resolved indication ใช้ได้โดยไม่เปลี่ยน formal status
+- AC-11: Administrator list/search/filter/create/edit/deactivate/reset users ตาม safety rules ได้
+- AC-12: Seed และ migration รักษา Lab 2 tickets/attachments และ rerun ได้อย่างปลอดภัย
+- AC-13: หน้าจอที่จำเป็นมี loading, saving, validation, success, empty/no-results, forbidden, not-found, conflict และ safe failure feedback ตามความเหมาะสม
+- AC-14: หน้าจอหลักพอดีกับ desktop, tablet และ mobile พร้อม keyboard-visible focus และไม่มี horizontal page overflow
+- AC-15: production client ไม่เรียกหรือแสดง Development Requester selector `GET /development-requesters` ตอบ `410 DEVELOPMENT_REQUESTERS_RETIRED` ใน production แม้ `LAB2_COMPATIBILITY_MODE=true`; เปิดได้เฉพาะ explicit non-production regression/migration tooling
 
 ## 10. Product Definition of Done
 
-- [ ] This contract, API spec, UI spec, and test plan existed before final implementation integration.
-- [ ] Schema migration is additive/backfills existing data; seed is idempotent and credentials are documented as local-only.
-- [ ] Every protected endpoint has backend auth, role, and ownership checks with safe errors.
-- [ ] Acceptance criteria map to passing unit/API/UI/E2E and responsive/accessibility evidence.
-- [ ] Existing Lab 2 requester and attachment regression tests pass or are updated to authenticated equivalents.
-- [ ] Client/server builds pass; no secrets, plaintext passwords, stored filenames, or storage paths are exposed.
-- [ ] Evidence includes reviewer record, AI-use reflection, final-main test/build output, and one concise Answer Part 1-9 PDF.
+- [ ] contract, API spec, UI spec และ test plan มีอยู่ก่อน final implementation integration
+- [ ] schema migration เป็น additive/backfills existing data; seed เป็น idempotent และ credentials ระบุว่าเป็น local-only
+- [ ] protected endpoint ทุกตัวมี backend auth, role และ ownership checks พร้อม safe errors
+- [ ] acceptance criteria map ไปยัง unit/API/UI/E2E และ responsive/accessibility evidence ที่ผ่าน
+- [ ] Existing Lab 2 requester และ attachment regression tests ผ่าน หรือถูกปรับเป็น authenticated equivalents
+- [ ] client/server builds ผ่าน; ไม่มี secrets, plaintext passwords, stored filenames หรือ storage paths ถูกเปิดเผย
+- [ ] Evidence มี reviewer record, AI-use reflection, final-main test/build output และ Answer Part 1-9 PDF ที่กระชับหนึ่งชุด
 
-## 11. Assumptions and decisions
+## 11. Assumptions และ decisions
 
-Session cookies are selected because the existing browser application is same-site and the server can invalidate sessions immediately. SameSite=Lax, JSON state-changing endpoints, and an Origin check for browser mutations provide the Lab 3 CSRF baseline. Seed credentials are local development fixtures only and must be changed at first login. Administrators may be Ticket Owners and may update IT Priority, but only IT Staff may assign/reassign, change status, or append staff-side comments/notes. The legacy Development Requester endpoint is disabled in production and can be enabled only by an explicit non-production regression/migration tooling context.
+เลือก session cookies เพราะ browser application เดิมเป็น same-site และ server สามารถ invalidate sessions ได้ทันที SameSite=Lax, JSON state-changing endpoints และ Origin check สำหรับ browser mutations เป็น CSRF baseline ของ Lab 3 Seed credentials เป็น local development fixtures เท่านั้นและต้องเปลี่ยนเมื่อ login ครั้งแรก Administrator อาจเป็น Ticket Owner และแก้ IT Priority ได้ แต่เฉพาะ IT Staff assign/reassign, เปลี่ยน status หรือเพิ่ม staff-side comments/notes ได้ legacy Development Requester endpoint ถูกปิดใน production และเปิดได้เฉพาะ explicit non-production regression/migration tooling context
