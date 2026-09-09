@@ -13,7 +13,7 @@ Lab 3 client ขยาย Zen Green tokens, field groups, cards, badges, state p
 | Requester Ticket Detail | loading, view, comment, resolved, failure | ข้อมูล ticket แบบ read-only, attachments, Public Comments และ resolved indication |
 | Staff Ticket Queue | loading, populated, empty/no-results, forbidden/failure | IT Staff: queue สำหรับปฏิบัติงาน; Administrator: queue สำหรับ oversight พร้อมแก้ IT Priority ได้; search, status/priority/owner filters, sortable table, page controls และเปิด detail ได้ |
 | Staff Ticket Detail | view/edit/read-only, saving, success/validation/conflict/failure | IT Staff: owner assignment, IT Priority, status, public comment และ Internal Note composers; Administrator: owner field เป็น read-only และอาจแสดง Administrator ที่ IT Staff assign ไว้ แก้ IT Priority ได้ แต่ไม่มี controls สำหรับ assignment, status, comment และ note mutation |
-| User Management | loading, list, create, edit, reset-password, validation/forbidden/failure | รายการ name/email/role/status, search, optional role filter และ small modal/form |
+| User Management | loading, list, create, edit, reset-password, validation/forbidden/conflict/failure | รายการ name/email/role/status, search, optional role filter และ small modal/form; deactivation มี confirmation และแจ้งว่า sessions ของ user ถูก revoke แล้ว |
 
 ## กฎด้าน Responsive และ Accessibility
 

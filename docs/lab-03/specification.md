@@ -28,7 +28,7 @@
 - FR-08: IT Staff assign/reassign ownership, ตั้ง IT Priority, ทำ permitted status transitions, post Public Comments และสร้าง Internal Notes ได้ Administrator อาจถูกเลือกเป็น Ticket Owner และแก้ IT Priority ได้ แต่ห้าม assign/reassign, เปลี่ยน status หรือเพิ่ม staff-side comments/notes
 - FR-09: Requester retrieve/create Public Comments ได้เฉพาะ ticket ของตนเอง IT Staff และ Administrator retrieve Public Comments และ Internal Notes ของ ticket ที่มองเห็นได้ และมีเพียง IT Staff ที่ append staff-side comments/notes ได้
 - FR-10: Administrator list/search/filter users, create users, edit name/email/role/activation และตั้ง initial password ใหม่ได้
-- FR-11: User management ปฏิเสธ invalid roles และ duplicate emails, ป้องกัน self-deactivation และรักษา active Administrator อย่างน้อยหนึ่งคน
+- FR-11: User management ปฏิเสธ invalid roles และ duplicate emails, ป้องกัน self-deactivation และรักษา active Administrator อย่างน้อยหนึ่งคน เมื่อ deactivate user สำเร็จต้อง revoke sessions เดิมของ user คนนั้นทั้งหมด
 - FR-12: protected operations ทุกตัวบังคับใช้ authorization ฝั่ง server และส่ง safe, distinguishable errors
 
 ## 5. Business rules
@@ -47,7 +47,7 @@
 - BR-12: Comments และ notes เป็น append-only, backend-authored, trimmed, non-empty และจำกัด 5,000 ตัวอักษร Requester retrieve/create Public Comments ได้เฉพาะ ticket ของตนเอง Public Comments มองเห็นได้ตาม ticket visibility; Internal Notes มองเห็นแบบ read-only โดย IT Staff และ Administrator เฉพาะ IT Staff สร้าง staff-side Public Comments หรือ Internal Notes ได้ Administrator append, edit หรือ delete ไม่ได้
 - BR-13: User email unique แบบ case-insensitive และ user แต่ละคนมี permitted role เพียงหนึ่ง role
 - BR-14: New และ reset initial passwords ตั้ง `mustChangePassword=true`
-- BR-15: Administrator ห้าม deactivate account ของตนเอง หรือ deactivate/remove active Administrator คนสุดท้าย Users ถูก deactivated แต่ไม่ถูก deleted
+- BR-15: Administrator ห้าม deactivate account ของตนเอง หรือ deactivate/remove active Administrator คนสุดท้าย Users ถูก deactivated แต่ไม่ถูก deleted เมื่อ account ถูก deactivate ระบบต้อง revoke sessions เดิมของ user ทั้งหมด และ request ถัดไปจาก session เดิมต้องตอบ `401 SESSION_INVALID`
 - BR-16: Seed data deterministic และ idempotent มี active Requesters อย่างน้อยสี่คน, inactive Requester หนึ่งคน, active IT Staff สามคน, inactive IT Staff หนึ่งคน, active Administrator หนึ่งคน พร้อม tickets, comments และ notes ที่สมจริง
 - BR-17: invalid input, unauthenticated access, forbidden access, missing resources, conflicts และ unexpected failures ใช้ safe distinct status/error codes legacy Development Requester route ไม่ใช่ production API และตอบ `410 DEVELOPMENT_REQUESTERS_RETIRED` ใน production ไม่ว่า environment flags จะเป็นอย่างไร จะเปิดได้เฉพาะ non-production regression หรือ migration tooling ที่มี explicit compatibility context
 
@@ -103,7 +103,7 @@ Authentication failures เป็น `401`; forbidden role/ownership เป็�
 - AC-08: IT Staff assign/reassign ให้ active IT Staff หรือ Administrator, update IT Priority, ทำ permitted status transitions และ append comments/notes ได้ Administrator update IT Priority และถูก assign เป็น owner ได้ แต่ assignment/status/comment/note mutations ของ Administrator ต้องตอบ `403 ROLE_FORBIDDEN`
 - AC-09: Requester อ่าน/สร้าง Public Comments ได้เฉพาะ ticket ของตนเอง IT Staff และ Administrator อ่าน staff-visible Public Comments และ Internal Notes ตาม matrix ได้ Administrator เป็น read-only ในส่วนอื่น และ Internal Notes ไม่ปรากฏใน Requester responses
 - AC-10: Requester resolved indication ใช้ได้โดยไม่เปลี่ยน formal status
-- AC-11: Administrator list/search/filter/create/edit/deactivate/reset users ตาม safety rules ได้
+- AC-11: Administrator list/search/filter/create/edit/deactivate/reset users ตาม safety rules ได้ การ deactivate ต้อง revoke sessions เดิมของ target และ request ถัดไปด้วย session เดิมต้องตอบ `401 SESSION_INVALID`
 - AC-12: Seed และ migration รักษา Lab 2 tickets/attachments และ rerun ได้อย่างปลอดภัย
 - AC-13: หน้าจอที่จำเป็นมี loading, saving, validation, success, empty/no-results, forbidden, not-found, conflict และ safe failure feedback ตามความเหมาะสม
 - AC-14: หน้าจอหลักพอดีกับ desktop, tablet และ mobile พร้อม keyboard-visible focus และไม่มี horizontal page overflow
