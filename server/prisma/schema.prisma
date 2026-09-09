@@ -16,8 +16,21 @@ enum RequestedPriority {
   HIGH
 }
 
+enum UserRole {
+  REQUESTER
+  IT_STAFF
+  ADMINISTRATOR
+}
+
 enum TicketStatus {
   NEW
+  OPEN
+  IN_PROGRESS
+  WAITING_FOR_REQUESTER
+  RESOLVED
+  CLOSED
+  REOPENED
+  CANCELLED
 }
 
 model RequesterUser {
@@ -25,11 +38,20 @@ model RequesterUser {
   name      String   @db.VarChar(150)
   email     String   @unique @db.VarChar(254)
   isActive  Boolean  @default(true)
+  passwordHash       String   @db.VarChar(255)
+  role      UserRole @default(REQUESTER)
+  mustChangePassword Boolean  @default(true)
+  lastLoginAt DateTime? @db.Timestamptz(3)
   createdAt DateTime @default(now()) @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @db.Timestamptz(3)
   tickets   Ticket[]
+  ownedTickets Ticket[] @relation("TicketOwner")
+  sessions  Session[]
+  publicComments PublicComment[]
+  internalNotes InternalNote[]
 
   @@index([isActive, name, id], map: "requester_users_active_name_idx")
+  @@index([role, isActive, name, id], map: "requester_users_role_active_name_idx")
   @@map("requester_users")
 }
 
@@ -67,13 +89,19 @@ model Ticket {
   requestedPriority RequestedPriority
   description       String
   currentStatus     TicketStatus      @default(NEW)
+  itPriority        RequestedPriority @default(MEDIUM)
+  ownerId           Int?
+  requesterResolvedAt DateTime?       @db.Timestamptz(3)
   submissionKey     String            @db.Uuid
   createdAt         DateTime          @default(now()) @db.Timestamptz(3)
   updatedAt         DateTime          @updatedAt @db.Timestamptz(3)
   requester         RequesterUser     @relation(fields: [requesterId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  owner             RequesterUser?    @relation("TicketOwner", fields: [ownerId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   category          Category          @relation(fields: [categoryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   relatedSystem     RelatedSystem     @relation(fields: [relatedSystemId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   attachments       Attachment[]
+  publicComments    PublicComment[]
+  internalNotes     InternalNote[]
 
   @@unique([requesterId, submissionKey], map: "tickets_requester_submission_key")
   @@index([requesterId, createdAt, id], map: "tickets_requester_created_idx")
@@ -83,6 +111,7 @@ model Ticket {
   @@index([requesterId, relatedSystemId], map: "tickets_requester_system_idx")
   @@index([requesterId, requestedPriority], map: "tickets_requester_priority_idx")
   @@index([requesterId, currentStatus], map: "tickets_requester_status_idx")
+  @@index([currentStatus, itPriority, ownerId, updatedAt, id], map: "tickets_staff_queue_idx")
   @@map("tickets")
 }
 
@@ -100,4 +129,43 @@ model Attachment {
 
   @@index([ticketId, removedAt, uploadedAt, id], map: "attachments_ticket_state_idx")
   @@map("attachments")
+}
+
+model Session {
+  id        Int      @id @default(autoincrement())
+  tokenHash String   @unique @db.VarChar(128)
+  userId    Int
+  expiresAt DateTime @db.Timestamptz(3)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  user      RequesterUser @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@index([userId, expiresAt], map: "sessions_user_expiry_idx")
+  @@index([expiresAt], map: "sessions_expiry_idx")
+  @@map("sessions")
+}
+
+model PublicComment {
+  id        Int      @id @default(autoincrement())
+  ticketId  Int
+  authorId  Int
+  content   String   @db.VarChar(5000)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  ticket    Ticket        @relation(fields: [ticketId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  author    RequesterUser @relation(fields: [authorId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@index([ticketId, createdAt, id], map: "public_comments_ticket_created_idx")
+  @@map("public_comments")
+}
+
+model InternalNote {
+  id        Int      @id @default(autoincrement())
+  ticketId  Int
+  authorId  Int
+  content   String   @db.VarChar(5000)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  ticket    Ticket        @relation(fields: [ticketId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  author    RequesterUser @relation(fields: [authorId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@index([ticketId, createdAt, id], map: "internal_notes_ticket_created_idx")
+  @@map("internal_notes")
 }

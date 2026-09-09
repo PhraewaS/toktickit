@@ -1,5 +1,6 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import { getPrisma } from "./prisma.js";
+import { AuthenticatedRequest, getSessionUser, hasSessionCookie } from "./auth.js";
 
 export interface DevelopmentRequester {
   id: number;
@@ -9,6 +10,11 @@ export interface DevelopmentRequester {
 
 export interface DevelopmentRequesterRequest extends Request {
   developmentRequester: DevelopmentRequester;
+  authUser?: AuthenticatedRequest["authUser"];
+}
+
+export function isLab2CompatibilityEnabled() {
+  return process.env.NODE_ENV !== "production" && process.env.LAB2_COMPATIBILITY_MODE === "true";
 }
 
 function requesterRequired(res: Response) {
@@ -66,4 +72,51 @@ export const requireDevelopmentRequester: RequestHandler = async (
       },
     });
   }
+};
+
+/**
+ * Lab 2 regression tests and migration tooling may still use the old header,
+ * but only when explicitly enabled outside production. A supplied but invalid
+ * session cookie never falls back to the legacy requester header.
+ */
+export const requireAuthenticatedOrDevelopmentRequester: RequestHandler = async (
+  req,
+  res,
+  next,
+) => {
+  try {
+    const user = await getSessionUser(req);
+    if (user) {
+      if (user.mustChangePassword) {
+        res.status(403).json({ error: { code: "PASSWORD_CHANGE_REQUIRED", message: "Change your initial password before continuing." } });
+        return;
+      }
+      if (user.role !== "REQUESTER") {
+        res.status(403).json({ error: { code: "FORBIDDEN", message: "This operation is available to Requesters only." } });
+        return;
+      }
+      const typed = req as DevelopmentRequesterRequest;
+      typed.authUser = user;
+      typed.developmentRequester = { id: user.id, name: user.name, email: user.email };
+      next();
+      return;
+    }
+
+    if (hasSessionCookie(req)) {
+      res.status(401).json({ error: { code: "SESSION_INVALID", message: "Your session is no longer valid. Sign in again." } });
+      return;
+    }
+
+    if (!isLab2CompatibilityEnabled()) {
+      res.status(401).json({ error: { code: "AUTHENTICATION_REQUIRED", message: "Sign in to continue." } });
+      return;
+    }
+  } catch (error) {
+    console.error("Unable to validate authenticated requester:", error);
+    res.status(500).json({ error: { code: "INTERNAL_ERROR", message: "TokTickIT could not complete the request. Please try again." } });
+    return;
+  }
+
+  // Compatibility path for Lab 2 API regression tests only.
+  requireDevelopmentRequester(req, res, next);
 };
