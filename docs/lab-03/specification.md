@@ -71,7 +71,15 @@ Backend เป็นผู้มีอำนาจตัดสินใจสุ
 
 ## 7. Data และ migration decisions
 
-ปรับ `requester_users` table ของ Lab 2 ให้เป็น account table โดยคง existing IDs และ Ticket foreign keys ไว้ เพิ่ม `passwordHash`, `role`, `mustChangePassword` และ login timestamps ให้ Existing Requester rows รับ deterministic local-only initial passwords และคง active/inactive state เดิม Tickets เพิ่ม nullable `ownerId`, `itPriority` และ `requesterResolvedAt`; ค่า IT Priority เดิม backfill จาก Requested Priority ส่วน Comment และ Internal Note tables เป็น additive Session rows เก็บเฉพาะ hash ของ opaque cookie token และ indexes ครอบคลุม active role/name, ticket queue status/priority/owner/updated time และ comment/note ticket ordering
+ใน Lab 2, `requester_users` คือชื่อ table จริงที่สร้างจาก `lab2_requester_foundation` และ `RequesterUser` คือ Prisma model เดิมของ table นี้ โดยมี `id` เป็น primary key พร้อม `name`, `email`, `isActive`, `createdAt` และ `updatedAt` ส่วน `Ticket.requesterId` เป็น foreign key ที่ชี้ไปยัง `requester_users.id` ดังนั้น `requester_users` ไม่ใช่ development-only list แต่เป็นแหล่งข้อมูลผู้ใช้เดิมที่ต้องรักษาไว้
+
+Lab 3 จะ **evolve `RequesterUser` ใน place ให้เป็น real, role-aware User/Account model** โดยไม่สร้าง table ผู้ใช้ใหม่ ไม่ drop/recreate `requester_users` และไม่เปลี่ยนค่า primary keys เดิม ในระดับ database table ยังคงใช้ `@@map("requester_users")` เพื่อให้ชื่อ table และ foreign keys เดิมทำงานต่อได้ เพิ่ม `passwordHash`, `role`, `mustChangePassword`, `lastLoginAt` และ session relation ให้ model เดิม โดย row เดิมทุกแถวจะกลายเป็น user account ที่มี `role=REQUESTER` พร้อม deterministic local-only initial password และคง `name`, `email`, `isActive`, timestamps และ user ID เดิม
+
+`Ticket.requesterId` และ foreign key เดิมต้องคงค่าเดิมเพื่อให้ tickets ของ Lab 2 ยังเป็นของ Requester คนเดิม ส่วน `Ticket.ownerId` เพิ่มเป็น nullable foreign key ไปยัง user/account table เดียวกัน โดย owner ต้องเป็น active IT Staff หรือ Administrator และใช้ `ON DELETE SET NULL` สำหรับ owner ที่ถูก deactivated; requester relationship ใช้ `ON DELETE RESTRICT` เพื่อป้องกันการลบ account ที่มี tickets การ migrate ห้ามสร้าง requester IDs ใหม่หรือเปลี่ยน requester IDs ของ tickets
+
+ข้อมูล Lab 2 เดิม ได้แก่ tickets, attachments, categories, related systems, ticket numbers, requested priorities, statuses และ timestamps ต้องถูกเก็บไว้ทั้งหมด โดยเพิ่ม `ownerId`, `itPriority` และ `requesterResolvedAt` แบบ additive ให้ tickets และ backfill `itPriority` จาก Requested Priority ส่วน Public Comments, Internal Notes และ Sessions เป็น tables/records ที่เพิ่มใหม่ Seed ต้อง deterministic และ idempotent และ migration ต้องตรวจสอบ row counts, preserved IDs, Ticket foreign keys และ attachment references หลังทำงานเสร็จ
+
+การ authenticate ของ Lab 3 จะ derive user จาก server-side session ที่อ้างถึง user/account ID เดิม ไม่ใช้ requester selector หรือ client-supplied requester ID ดังนั้นการ evolve นี้รักษาความต่อเนื่องของข้อมูล Lab 2 พร้อมเปลี่ยนความหมายจาก “requester record” เป็น authenticated User/Account ที่รองรับทั้ง Requester, IT Staff และ Administrator
 
 ## 8. API summary
 
