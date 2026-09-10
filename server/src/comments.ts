@@ -30,6 +30,8 @@ export const listRequesterComments: RequestHandler = async (req, res) => {
   if (ticketId === null) { res.status(400).json({ error: { code: "INVALID_TICKET_ID", message: "Ticket ID must be a positive integer." } }); return; }
   const requester = (req as DevelopmentRequesterRequest).developmentRequester;
   try {
+    const ticket = await getPrisma().ticket.findFirst({ where: { id: ticketId, requesterId: requester.id }, select: { id: true } });
+    if (!ticket) { res.status(404).json({ error: { code: "TICKET_NOT_FOUND", message: "Ticket was not found." } }); return; }
     const rows = await getPrisma().publicComment.findMany({ where: { ticketId, ticket: { requesterId: requester.id } }, include: { author: { select: { id: true, name: true, role: true } } }, orderBy: [{ createdAt: "asc" }, { id: "asc" }] });
     res.status(200).json({ data: rows.map(serialize) });
   } catch (error) { console.error("Unable to load Public Comments:", error); res.status(500).json({ error: { code: "INTERNAL_ERROR", message: "TokTickIT could not load Public Comments. Please try again." } }); }
@@ -50,12 +52,13 @@ export const createRequesterComment: RequestHandler = async (req, res) => {
 
 export const markRequesterResolved: RequestHandler = async (req, res) => {
   const ticketId = parseId(req.params.ticketId); if (ticketId === null) { res.status(400).json({ error: { code: "INVALID_TICKET_ID", message: "Ticket ID must be a positive integer." } }); return; }
+  if (!req.body || typeof req.body !== "object" || Array.isArray(req.body) || Object.keys(req.body).length > 0) { res.status(400).json({ error: { code: "VALIDATION_ERROR", message: "The resolved indication body must be empty." } }); return; }
   const requester = (req as DevelopmentRequesterRequest).developmentRequester;
   try {
-    const ticket = await getPrisma().ticket.findFirst({ where: { id: ticketId, requesterId: requester.id }, select: { id: true, requesterResolvedAt: true } });
+    const ticket = await getPrisma().ticket.findFirst({ where: { id: ticketId, requesterId: requester.id }, select: { id: true, requesterResolvedAt: true, currentStatus: true } });
     if (!ticket) { res.status(404).json({ error: { code: "TICKET_NOT_FOUND", message: "Ticket was not found." } }); return; }
-    const updated = ticket.requesterResolvedAt ? ticket : await getPrisma().ticket.update({ where: { id: ticket.id }, data: { requesterResolvedAt: new Date() }, select: { id: true, requesterResolvedAt: true } });
-    res.status(200).json({ data: { ticketId: updated.id, requesterResolvedAt: updated.requesterResolvedAt?.toISOString() ?? null } });
+    const updated = ticket.requesterResolvedAt ? ticket : await getPrisma().ticket.update({ where: { id: ticket.id }, data: { requesterResolvedAt: new Date() }, select: { id: true, requesterResolvedAt: true, currentStatus: true } });
+    res.status(200).json({ data: { ticketId: updated.id, requesterResolvedAt: updated.requesterResolvedAt?.toISOString() ?? null, currentStatus: updated.currentStatus } });
   } catch (error) { console.error("Unable to save requester resolution indication:", error); res.status(500).json({ error: { code: "INTERNAL_ERROR", message: "TokTickIT could not save the resolution indication. Please try again." } }); }
 };
 

@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import { getPrisma } from "./prisma.js";
-import { requireAuthenticatedOrDevelopmentRequester } from "./requester-context.js";
+import { isLab2CompatibilityEnabled, requireAuthenticatedOrDevelopmentRequester } from "./requester-context.js";
 import { changePassword, currentUser, login, logout, requireAuthenticated, requireRole } from "./auth.js";
 import { UserRole } from "@prisma/client";
 import { listRequesterComments, createRequesterComment, markRequesterResolved } from "./comments.js";
@@ -19,14 +19,23 @@ import {
 
 export const app = express();
 
-app.use(cors({ exposedHeaders: ["Content-Disposition"] }));
+const allowedOrigins = new Set(
+  [process.env.APP_ORIGIN, "http://localhost:5173", "http://127.0.0.1:5173"].filter(
+    (origin): origin is string => Boolean(origin),
+  ),
+);
+
+app.use(cors({
+  origin: (origin, callback) => callback(null, !origin || allowedOrigins.has(origin)),
+  credentials: true,
+  exposedHeaders: ["Content-Disposition"],
+}));
 app.use(express.json());
 
 app.use((req, res, next) => {
   if (["POST", "PATCH", "DELETE", "PUT"].includes(req.method)) {
     const origin = req.get("Origin");
-    const allowed = new Set([process.env.APP_ORIGIN, "http://localhost:5173", "http://127.0.0.1:5173"].filter(Boolean));
-    if (origin && !allowed.has(origin)) {
+    if (origin && !allowedOrigins.has(origin)) {
       res.status(403).json({ error: { code: "CSRF_REJECTED", message: "The request origin is not permitted." } });
       return;
     }
@@ -44,13 +53,8 @@ app.get("/api/health", (_req: Request, res: Response) => {
 });
 
 app.get("/api/development-requesters", async (_req: Request, res: Response) => {
-  if (process.env.NODE_ENV !== "test" && process.env.LAB2_COMPATIBILITY_MODE !== "true") {
-    res.status(410).json({
-      error: {
-        code: "DEVELOPMENT_REQUESTERS_RETIRED",
-        message: "Development Requester selection is retired. Sign in with an account to continue.",
-      },
-    });
+  if (!isLab2CompatibilityEnabled()) {
+    res.status(410).json({ error: { code: "DEVELOPMENT_REQUESTERS_RETIRED", message: "Development Requester selection is retired outside non-production compatibility tooling." } });
     return;
   }
   try {
@@ -130,7 +134,7 @@ app.get("/api/staff/tickets", requireAuthenticated, requireRole(UserRole.IT_STAF
 app.get("/api/staff/assignees", requireAuthenticated, requireRole(UserRole.IT_STAFF), listAssignableStaff);
 app.get("/api/staff/tickets/:ticketId", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), getStaffTicketDetail);
 app.post("/api/staff/tickets/:ticketId/assignment", requireAuthenticated, requireRole(UserRole.IT_STAFF), assignStaffTicket);
-app.patch("/api/staff/tickets/:ticketId/priority", requireAuthenticated, requireRole(UserRole.IT_STAFF), updateStaffPriority);
+app.patch("/api/staff/tickets/:ticketId/priority", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), updateStaffPriority);
 app.patch("/api/staff/tickets/:ticketId/status", requireAuthenticated, requireRole(UserRole.IT_STAFF), updateStaffStatus);
 app.get("/api/staff/tickets/:ticketId/comments", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), listStaffComments);
 app.post("/api/staff/tickets/:ticketId/comments", requireAuthenticated, requireRole(UserRole.IT_STAFF), createStaffComment);

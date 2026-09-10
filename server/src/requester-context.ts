@@ -1,6 +1,6 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import { getPrisma } from "./prisma.js";
-import { AuthenticatedRequest, getSessionUser } from "./auth.js";
+import { AuthenticatedRequest, getSessionUser, hasSessionCookie } from "./auth.js";
 
 export interface DevelopmentRequester {
   id: number;
@@ -11,6 +11,10 @@ export interface DevelopmentRequester {
 export interface DevelopmentRequesterRequest extends Request {
   developmentRequester: DevelopmentRequester;
   authUser?: AuthenticatedRequest["authUser"];
+}
+
+export function isLab2CompatibilityEnabled() {
+  return process.env.NODE_ENV !== "production" && process.env.LAB2_COMPATIBILITY_MODE === "true";
 }
 
 function requesterRequired(res: Response) {
@@ -71,9 +75,9 @@ export const requireDevelopmentRequester: RequestHandler = async (
 };
 
 /**
- * Lab 2 tests and migration tooling may still use the old header. The Lab 3
- * client always reaches this middleware with a real session; when present the
- * session identity wins and the client header is ignored.
+ * Lab 2 regression tests and migration tooling may still use the old header,
+ * but only when explicitly enabled outside production. A supplied but invalid
+ * session cookie never falls back to the legacy requester header.
  */
 export const requireAuthenticatedOrDevelopmentRequester: RequestHandler = async (
   req,
@@ -88,13 +92,23 @@ export const requireAuthenticatedOrDevelopmentRequester: RequestHandler = async 
         return;
       }
       if (user.role !== "REQUESTER") {
-        res.status(403).json({ error: { code: "FORBIDDEN", message: "This operation is available to Requesters only." } });
+        res.status(403).json({ error: { code: "ROLE_FORBIDDEN", message: "This operation is available to Requesters only." } });
         return;
       }
       const typed = req as DevelopmentRequesterRequest;
       typed.authUser = user;
       typed.developmentRequester = { id: user.id, name: user.name, email: user.email };
       next();
+      return;
+    }
+
+    if (hasSessionCookie(req)) {
+      res.status(401).json({ error: { code: "SESSION_INVALID", message: "Your session is no longer valid. Sign in again." } });
+      return;
+    }
+
+    if (!isLab2CompatibilityEnabled()) {
+      res.status(401).json({ error: { code: "AUTHENTICATION_REQUIRED", message: "Sign in to continue." } });
       return;
     }
   } catch (error) {
