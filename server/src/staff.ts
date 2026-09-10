@@ -32,6 +32,7 @@ export const listStaffTickets: RequestHandler = async (req, res) => {
   const q = req.query;
   const allowedQueryKeys = new Set(["search", "status", "requestedPriority", "itPriority", "ownerId", "sortBy", "sortOrder", "page", "pageSize"]);
   if (Object.keys(q).some((key) => !allowedQueryKeys.has(key))) { error(res, 400, "INVALID_QUERY", "Review the Ticket queue filters and try again."); return; }
+  if (Object.values(q).some((value) => typeof value !== "string")) { error(res, 400, "INVALID_QUERY", "Review the Ticket queue filters and try again."); return; }
   const search = q.search === undefined ? "" : typeof q.search === "string" ? q.search.trim() : null;
   const page = q.page === undefined ? 1 : typeof q.page === "string" ? Number(q.page) : NaN;
   const pageSize = q.pageSize === undefined ? 10 : typeof q.pageSize === "string" ? Number(q.pageSize) : NaN;

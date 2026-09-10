@@ -109,12 +109,30 @@ describe("Lab 3 staff operations production routes", () => {
     const unknownQuery = await request(app)
       .get("/api/staff/tickets?unexpected=value")
       .set("Cookie", cookie);
+    const repeatedQuery = await request(app)
+      .get("/api/staff/tickets?sortOrder=asc&sortOrder=desc")
+      .set("Cookie", cookie);
 
     expect(invalidSort.status).toBe(400);
     expect(invalidSort.body.error.code).toBe("INVALID_QUERY");
     expect(unknownQuery.status).toBe(400);
     expect(unknownQuery.body.error.code).toBe("INVALID_QUERY");
+    expect(repeatedQuery.status).toBe(400);
+    expect(repeatedQuery.body.error.code).toBe("INVALID_QUERY");
     expect(prismaMocks.ticketCount).not.toHaveBeenCalled();
+  });
+
+  it("serves Staff Detail through the production route and returns Ticket not found", async () => {
+    const cookie = authenticate(UserRole.IT_STAFF);
+    prismaMocks.ticketFindUnique.mockResolvedValueOnce(staffTicket).mockResolvedValueOnce(null);
+
+    const detail = await request(app).get("/api/staff/tickets/42").set("Cookie", cookie);
+    const missing = await request(app).get("/api/staff/tickets/999").set("Cookie", cookie);
+
+    expect(detail.status).toBe(200);
+    expect(detail.body.data).toMatchObject({ id: 42, ticketNumber: staffTicket.ticketNumber, publicComments: [], internalNotes: [] });
+    expect(missing.status).toBe(404);
+    expect(missing.body.error.code).toBe("TICKET_NOT_FOUND");
   });
 
   it("checks Ticket existence before reading staff comments and notes", async () => {
@@ -165,6 +183,44 @@ describe("Lab 3 staff operations production routes", () => {
     expect(priority.status).toBe(200);
     expect(status.status).toBe(403);
     expect(status.body.error.code).toBe("ROLE_FORBIDDEN");
+  });
+
+  it("allows Administrator to read comments and notes but keeps staff mutations IT Staff-only", async () => {
+    const cookie = authenticate(UserRole.ADMINISTRATOR);
+    prismaMocks.ticketFindUnique.mockResolvedValue({ id: 42 });
+    prismaMocks.publicCommentFindMany.mockResolvedValue([comment]);
+    prismaMocks.internalNoteFindMany.mockResolvedValue([note]);
+
+    const comments = await request(app).get("/api/staff/tickets/42/comments").set("Cookie", cookie);
+    const notes = await request(app).get("/api/staff/tickets/42/notes").set("Cookie", cookie);
+    const createComment = await request(app).post("/api/staff/tickets/42/comments").set("Cookie", cookie).send({ content: "Admin must not post." });
+    const createNote = await request(app).post("/api/staff/tickets/42/notes").set("Cookie", cookie).send({ content: "Admin must not post." });
+
+    expect(comments.status).toBe(200);
+    expect(comments.body.data.items).toHaveLength(1);
+    expect(notes.status).toBe(200);
+    expect(notes.body.data.items).toHaveLength(1);
+    expect(createComment.status).toBe(403);
+    expect(createComment.body.error.code).toBe("ROLE_FORBIDDEN");
+    expect(createNote.status).toBe(403);
+    expect(createNote.body.error.code).toBe("ROLE_FORBIDDEN");
+    expect(prismaMocks.publicCommentCreate).not.toHaveBeenCalled();
+    expect(prismaMocks.internalNoteCreate).not.toHaveBeenCalled();
+  });
+
+  it("allows a Requester to read and create Public Comments on the Requester's own Ticket", async () => {
+    const cookie = authenticate(UserRole.REQUESTER);
+    prismaMocks.ticketFindFirst.mockResolvedValue({ id: 42 });
+    prismaMocks.publicCommentFindMany.mockResolvedValue([comment]);
+    prismaMocks.publicCommentCreate.mockResolvedValue(comment);
+
+    const comments = await request(app).get("/api/tickets/42/comments").set("Cookie", cookie);
+    const created = await request(app).post("/api/tickets/42/comments").set("Cookie", cookie).send({ content: comment.content });
+
+    expect(comments.status).toBe(200);
+    expect(comments.body).toEqual({ data: { items: [{ id: 101, content: comment.content, createdAt: now.toISOString(), author }] } });
+    expect(created.status).toBe(201);
+    expect(created.body).toEqual({ data: { comment: { id: 101, content: comment.content, createdAt: now.toISOString(), author } } });
   });
 
   it("runs assignment and status operations through the real IT Staff routes", async () => {
