@@ -19,7 +19,18 @@ describe("IT Staff Ticket Detail API", () => {
     }
   });
 
-  it("rejects no-op and every transition outside the Lab 3 status matrix", () => {
+  it("matches the Lab 3 status matrix and rejects no-op transitions", () => {
+    const expected: Record<TicketStatus, readonly TicketStatus[]> = {
+      NEW: [TicketStatus.OPEN],
+      OPEN: [TicketStatus.IN_PROGRESS, TicketStatus.WAITING_FOR_REQUESTER, TicketStatus.CANCELLED],
+      IN_PROGRESS: [TicketStatus.WAITING_FOR_REQUESTER, TicketStatus.RESOLVED, TicketStatus.CANCELLED],
+      WAITING_FOR_REQUESTER: [TicketStatus.IN_PROGRESS, TicketStatus.RESOLVED, TicketStatus.CANCELLED],
+      RESOLVED: [TicketStatus.CLOSED, TicketStatus.REOPENED],
+      CLOSED: [TicketStatus.REOPENED],
+      REOPENED: [],
+      CANCELLED: [],
+    };
+    expect(allowedStaffStatusTransitions).toEqual(expected);
     const allStatuses = Object.values(TicketStatus);
     for (const current of allStatuses) {
       for (const next of allStatuses) {

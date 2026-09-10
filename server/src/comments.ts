@@ -33,7 +33,7 @@ export const listRequesterComments: RequestHandler = async (req, res) => {
     const ticket = await getPrisma().ticket.findFirst({ where: { id: ticketId, requesterId: requester.id }, select: { id: true } });
     if (!ticket) { res.status(404).json({ error: { code: "TICKET_NOT_FOUND", message: "Ticket was not found." } }); return; }
     const rows = await getPrisma().publicComment.findMany({ where: { ticketId, ticket: { requesterId: requester.id } }, include: { author: { select: { id: true, name: true, role: true } } }, orderBy: [{ createdAt: "asc" }, { id: "asc" }] });
-    res.status(200).json({ data: rows.map(serialize) });
+    res.status(200).json({ data: { items: rows.map(serialize) } });
   } catch (error) { console.error("Unable to load Public Comments:", error); res.status(500).json({ error: { code: "INTERNAL_ERROR", message: "TokTickIT could not load Public Comments. Please try again." } }); }
 };
 
@@ -46,7 +46,7 @@ export const createRequesterComment: RequestHandler = async (req, res) => {
     const ticket = await getPrisma().ticket.findFirst({ where: { id: ticketId, requesterId: requester.id }, select: { id: true } });
     if (!ticket) { res.status(404).json({ error: { code: "TICKET_NOT_FOUND", message: "Ticket was not found." } }); return; }
     const row = await getPrisma().publicComment.create({ data: { ticketId, authorId: requester.id, content }, include: { author: { select: { id: true, name: true, role: true } } } });
-    res.status(201).json({ data: serialize(row) });
+    res.status(201).json({ data: { comment: serialize(row) } });
   } catch (error) { console.error("Unable to create Public Comment:", error); res.status(500).json({ error: { code: "INTERNAL_ERROR", message: "TokTickIT could not save the Public Comment. Please try again." } }); }
 };
 
