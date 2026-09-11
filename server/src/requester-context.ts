@@ -1,6 +1,7 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
+import { UserRole } from "@prisma/client";
 import { getPrisma } from "./prisma.js";
-import { AuthenticatedRequest, getSessionUser, hasSessionCookie } from "./auth.js";
+import { AuthenticatedRequest, getSessionUser, hasSessionCookie, safeUser } from "./auth.js";
 
 export interface DevelopmentRequester {
   id: number;
@@ -118,5 +119,50 @@ export const requireAuthenticatedOrDevelopmentRequester: RequestHandler = async 
   }
 
   // Compatibility path for Lab 2 API regression tests only.
+  requireDevelopmentRequester(req, res, next);
+};
+
+/**
+ * Attachment downloads are available to authenticated Requesters for their
+ * own Tickets and to authenticated IT Staff/Administrators from Staff Detail.
+ * The Lab 2 header remains available only in explicit non-production
+ * compatibility mode.
+ */
+export const requireAttachmentDownloadAccess: RequestHandler = async (
+  req,
+  res,
+  next,
+) => {
+  try {
+    const user = await getSessionUser(req);
+    if (user) {
+      if (user.mustChangePassword) {
+        res.status(403).json({ error: { code: "PASSWORD_CHANGE_REQUIRED", message: "Change your initial password before continuing." } });
+        return;
+      }
+      const typed = req as DevelopmentRequesterRequest;
+      typed.authUser = safeUser(user);
+      if (user.role === UserRole.REQUESTER) {
+        typed.developmentRequester = { id: user.id, name: user.name, email: user.email };
+      }
+      next();
+      return;
+    }
+
+    if (hasSessionCookie(req)) {
+      res.status(401).json({ error: { code: "SESSION_INVALID", message: "Your session is no longer valid. Sign in again." } });
+      return;
+    }
+
+    if (!isLab2CompatibilityEnabled()) {
+      res.status(401).json({ error: { code: "AUTHENTICATION_REQUIRED", message: "Sign in to continue." } });
+      return;
+    }
+  } catch (error) {
+    console.error("Unable to validate attachment access:", error);
+    res.status(500).json({ error: { code: "INTERNAL_ERROR", message: "TokTickIT could not complete the request." } });
+    return;
+  }
+
   requireDevelopmentRequester(req, res, next);
 };

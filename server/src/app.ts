@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import { getPrisma } from "./prisma.js";
-import { isLab2CompatibilityEnabled, requireAuthenticatedOrDevelopmentRequester } from "./requester-context.js";
+import { isLab2CompatibilityEnabled, requireAuthenticatedOrDevelopmentRequester, requireAttachmentDownloadAccess } from "./requester-context.js";
 import { changePassword, currentUser, login, logout, requireAuthenticated, requireRole } from "./auth.js";
 import { UserRole } from "@prisma/client";
 import { listRequesterComments, createRequesterComment, markRequesterResolved } from "./comments.js";
@@ -124,7 +124,7 @@ app.post(
   },
   uploadTicketAttachments,
 );
-app.get("/api/attachments/:attachmentId/download", requireAuthenticatedOrDevelopmentRequester, downloadAttachment);
+app.get("/api/attachments/:attachmentId/download", requireAttachmentDownloadAccess, downloadAttachment);
 app.delete("/api/attachments/:attachmentId", requireAuthenticatedOrDevelopmentRequester, removeAttachment);
 app.get("/api/tickets/:ticketId/comments", requireAuthenticatedOrDevelopmentRequester, listRequesterComments);
 app.post("/api/tickets/:ticketId/comments", requireAuthenticatedOrDevelopmentRequester, createRequesterComment);
