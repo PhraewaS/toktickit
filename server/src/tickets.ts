@@ -117,6 +117,7 @@ async function createTicketAttempt(
         relatedSystemId: input.relatedSystemId,
         summary: input.summary,
         requestedPriority: input.requestedPriority as RequestedPriority,
+        itPriority: input.requestedPriority as RequestedPriority,
         description: input.description,
         currentStatus: TicketStatus.NEW,
         submissionKey: input.submissionKey,
