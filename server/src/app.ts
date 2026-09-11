@@ -1,8 +1,11 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import { getPrisma } from "./prisma.js";
-import { isLab2CompatibilityEnabled, requireAuthenticatedOrDevelopmentRequester } from "./requester-context.js";
-import { changePassword, currentUser, login, logout, requireAuthenticated } from "./auth.js";
+import { isLab2CompatibilityEnabled, requireAuthenticatedOrDevelopmentRequester, requireAttachmentDownloadAccess } from "./requester-context.js";
+import { changePassword, currentUser, login, logout, requireAuthenticated, requireRole } from "./auth.js";
+import { UserRole } from "@prisma/client";
+import { listRequesterComments, createRequesterComment, markRequesterResolved } from "./comments.js";
+import { assignStaffTicket, createStaffComment, createStaffNote, getStaffTicketDetail, listAssignableStaff, listStaffComments, listStaffNotes, listStaffTickets, updateStaffPriority, updateStaffStatus } from "./staff.js";
 import { createTicket, listTickets } from "./tickets.js";
 import {
   attachmentUpload,
@@ -121,8 +124,22 @@ app.post(
   },
   uploadTicketAttachments,
 );
-app.get("/api/attachments/:attachmentId/download", requireAuthenticatedOrDevelopmentRequester, downloadAttachment);
+app.get("/api/attachments/:attachmentId/download", requireAttachmentDownloadAccess, downloadAttachment);
 app.delete("/api/attachments/:attachmentId", requireAuthenticatedOrDevelopmentRequester, removeAttachment);
+app.get("/api/tickets/:ticketId/comments", requireAuthenticatedOrDevelopmentRequester, listRequesterComments);
+app.post("/api/tickets/:ticketId/comments", requireAuthenticatedOrDevelopmentRequester, createRequesterComment);
+app.post("/api/tickets/:ticketId/resolved", requireAuthenticatedOrDevelopmentRequester, markRequesterResolved);
+
+app.get("/api/staff/tickets", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), listStaffTickets);
+app.get("/api/staff/assignees", requireAuthenticated, requireRole(UserRole.IT_STAFF), listAssignableStaff);
+app.get("/api/staff/tickets/:ticketId", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), getStaffTicketDetail);
+app.post("/api/staff/tickets/:ticketId/assignment", requireAuthenticated, requireRole(UserRole.IT_STAFF), assignStaffTicket);
+app.patch("/api/staff/tickets/:ticketId/priority", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), updateStaffPriority);
+app.patch("/api/staff/tickets/:ticketId/status", requireAuthenticated, requireRole(UserRole.IT_STAFF), updateStaffStatus);
+app.get("/api/staff/tickets/:ticketId/comments", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), listStaffComments);
+app.post("/api/staff/tickets/:ticketId/comments", requireAuthenticated, requireRole(UserRole.IT_STAFF), createStaffComment);
+app.get("/api/staff/tickets/:ticketId/notes", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), listStaffNotes);
+app.post("/api/staff/tickets/:ticketId/notes", requireAuthenticated, requireRole(UserRole.IT_STAFF), createStaffNote);
 
 function sendReferenceDataUnavailable(res: Response, error: unknown) {
   console.error("Unable to load reference data:", error);

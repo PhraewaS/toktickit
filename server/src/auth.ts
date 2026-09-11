@@ -87,9 +87,10 @@ export async function getSessionUser(req: Request): Promise<SafeUser | null> {
 
 export const requireAuthenticated: RequestHandler = async (req, res, next) => {
   try {
+    const hasCookie = Boolean(tokenFromRequest(req));
     const user = await getSessionUser(req);
     if (!user) {
-      res.status(401).json({ error: { code: "AUTHENTICATION_REQUIRED", message: "Sign in to continue." } });
+      res.status(401).json({ error: { code: hasCookie ? "SESSION_INVALID" : "AUTHENTICATION_REQUIRED", message: hasCookie ? "Your session is invalid or expired. Sign in again." : "Sign in to continue." } });
       return;
     }
     if (user.mustChangePassword && !req.originalUrl.startsWith("/api/auth/change-password") && !req.originalUrl.startsWith("/api/auth/me")) {
@@ -112,7 +113,7 @@ export function requireRole(...roles: UserRole[]): RequestHandler {
       return;
     }
     if (!roles.includes(user.role)) {
-      res.status(403).json({ error: { code: "FORBIDDEN", message: "You are not permitted to perform this action." } });
+      res.status(403).json({ error: { code: "ROLE_FORBIDDEN", message: "You are not permitted to perform this action." } });
       return;
     }
     next();

@@ -40,6 +40,6 @@ describe("Lab 3 authentication primitives", () => {
 
     const response = await request(roleApp).get("/protected");
     expect(response.status).toBe(403);
-    expect(response.body.error.code).toBe("FORBIDDEN");
+    expect(response.body.error.code).toBe("ROLE_FORBIDDEN");
   });
 });
