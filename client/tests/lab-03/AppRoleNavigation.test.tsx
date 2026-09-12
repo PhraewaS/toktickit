@@ -35,6 +35,7 @@ describe("Lab 3 role navigation and safe session failures", () => {
     vi.mocked(api.fetchCurrentUser).mockResolvedValue(user);
     render(<App />);
     expect(await screen.findByRole("link", { name: landing })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: landing })).toBeInTheDocument();
   });
 
   it("shows a safe retry state when session loading fails", async () => {
