@@ -163,11 +163,11 @@ export async function createTicket(
   try {
     response = await fetch(`${API_URL}/api/tickets`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(payload),
-      credentials: "include",
     });
   } catch {
     throw new Error(safeMessage);
@@ -340,7 +340,7 @@ async function downloadAttachmentWithSession(attachmentId: number): Promise<Atta
 }
 
 export async function checkSystem(): Promise<SystemStatus> {
-  const healthResponse = await fetch(`${API_URL}/api/health`);
+  const healthResponse = await fetch(`${API_URL}/api/health`, { credentials: "include" });
   if (!healthResponse.ok) {
     throw new Error("System is offline");
   }
