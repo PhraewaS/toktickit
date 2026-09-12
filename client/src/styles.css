@@ -1038,3 +1038,31 @@ fieldset:disabled textarea {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Lab 3 additions keep the Lab 2 Zen Green visual system intact. */
+.auth-page { max-width: 720px; margin: 0 auto; }
+.badge--role { background: #d8eee2; color: #15553b; }
+.comment-panel { border-left: 4px solid #2d8b63; }
+.internal-note-panel { border-left: 4px solid #d39e35; background: #fffaf0; }
+.requester-resolution-panel { border-left: 4px solid #587f6a; }
+.entry-list { display: grid; gap: .75rem; margin: 1rem 0; }
+.entry { border: 1px solid #d7e3db; border-radius: .75rem; padding: .8rem 1rem; background: #fff; }
+.internal-note-panel .entry { border-color: #ecd8a7; background: #fffdf8; }
+.entry strong, .entry time { display: block; }
+.entry time { color: #5b6e63; font-size: .85rem; margin-top: .15rem; }
+.entry p { margin: .6rem 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.user-form { margin-top: 1.5rem; }
+.checkbox-label { display: flex; align-items: center; gap: .5rem; margin: 1rem 0; }
+.checkbox-label input { width: 1.1rem; height: 1.1rem; }
+.dialog-backdrop { position: fixed; inset: 0; display: grid; place-items: center; padding: 1rem; background: rgb(10 34 23 / .45); z-index: 20; }
+.confirmation-dialog { width: min(100%, 32rem); padding: 1.5rem; background: #fff; border-radius: 1rem; box-shadow: 0 1rem 3rem rgb(0 0 0 / .2); }
+.confirmation-dialog .button { margin: .35rem .5rem .35rem 0; }
+@media (max-width: 760px) {
+  .ticket-table-wrap { overflow-x: visible; }
+  .ticket-table thead { display: none; }
+  .ticket-table, .ticket-table tbody, .ticket-table tr, .ticket-table td { display: block; width: 100%; }
+  .ticket-table tr { margin: 0 0 1rem; padding: .75rem; border: 1px solid #d7e3db; border-radius: .75rem; background: #fff; }
+  .ticket-table td { display: grid; grid-template-columns: 8rem 1fr; gap: .75rem; border: 0; padding: .35rem 0; overflow-wrap: anywhere; }
+  .ticket-table td::before { content: attr(data-label); font-weight: 700; color: #395b49; }
+  .ticket-table td:last-child { display: block; padding-top: .75rem; }
+}
