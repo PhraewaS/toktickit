@@ -1,6 +1,6 @@
 # Lab 3 Verification Evidence
 
-Revision: `d56b069`
+Revision: [`a9f0130`](https://github.com/PhraewaS/toktickit/commit/a9f0130af7a2e3b899c3eddb04ca60f9fc9d3d71)
 
 All commands below were executed locally with PostgreSQL at `127.0.0.1:5433`. The seed password was supplied through the environment only and is intentionally not recorded here.
 
