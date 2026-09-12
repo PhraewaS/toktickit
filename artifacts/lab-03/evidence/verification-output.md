@@ -42,12 +42,13 @@ Result: passed.
 ```text
 Command: npm exec --prefix e2e playwright test -- --config e2e/playwright.lab3.config.ts
 Result: exit code 0
-Passed: 6
+Total: 21
+Passed: 15
 Skipped: 6
 Failed: 0
 ```
 
-The six skipped tests are intentional. Authentication, staff, and administrator mutation flows modify the seeded first-login fixture and are limited to the desktop project. Responsive coverage runs in desktop, tablet, and mobile projects, and all three responsive tests passed.
+The six skipped tests are intentional. Authentication, staff, and administrator mutation flows modify the seeded first-login fixture and are limited to the desktop project. Responsive coverage and the three major-screen evidence flows run in desktop, tablet, and mobile projects. All responsive and evidence screenshots passed in all three projects.
 
 ## Evidence files
 
@@ -55,3 +56,12 @@ The six skipped tests are intentional. Authentication, staff, and administrator 
 - [Login screenshot - desktop](./screenshots/login-desktop.png)
 - [Login screenshot - tablet](./screenshots/login-tablet.png)
 - [Login screenshot - mobile](./screenshots/login-mobile.png)
+- [Staff Queue screenshot - desktop](./screenshots/staff-queue-desktop.png)
+- [Staff Queue screenshot - tablet](./screenshots/staff-queue-tablet.png)
+- [Staff Queue screenshot - mobile](./screenshots/staff-queue-mobile.png)
+- [Staff Ticket Detail screenshot - desktop](./screenshots/staff-ticket-detail-desktop.png)
+- [Staff Ticket Detail screenshot - tablet](./screenshots/staff-ticket-detail-tablet.png)
+- [Staff Ticket Detail screenshot - mobile](./screenshots/staff-ticket-detail-mobile.png)
+- [Administrator User Management screenshot - desktop](./screenshots/user-management-desktop.png)
+- [Administrator User Management screenshot - tablet](./screenshots/user-management-tablet.png)
+- [Administrator User Management screenshot - mobile](./screenshots/user-management-mobile.png)
