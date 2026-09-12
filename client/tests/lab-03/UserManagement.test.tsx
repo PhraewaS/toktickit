@@ -8,6 +8,16 @@ vi.mock("../../src/api.js", async () => ({ ...(await vi.importActual<typeof impo
 const admin = { id: 9, name: "Nok Administrator", email: "admin@example.test", role: "ADMINISTRATOR" as const, isActive: true, mustChangePassword: false };
 describe("Lab 3 User Management", () => { it("renders the minimalist administrator list and create action", async () => { vi.mocked(api.fetchUsers).mockResolvedValue([admin]); render(<UserManagement currentUser={admin} />); expect(await screen.findByText(admin.email)).toBeInTheDocument(); expect(screen.getAllByRole("button", { name: "Create user" }).length).toBeGreaterThan(0); expect(screen.getByRole("button", { name: "Set initial password" })).toBeInTheDocument(); }); });
 
+it("clears the previous load error after a successful retry", async () => {
+  const user = userEvent.setup();
+  vi.mocked(api.fetchUsers).mockRejectedValueOnce(new Error("private user list details")).mockResolvedValueOnce([admin]);
+  render(<UserManagement currentUser={admin} />);
+  expect(await screen.findByRole("alert")).toHaveTextContent(/could not load users/i);
+  await user.click(screen.getByRole("button", { name: "Try again" }));
+  expect(await screen.findByText(admin.email)).toBeInTheDocument();
+  expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+});
+
 it("submits the administrator create-user action", async () => {
   const user = userEvent.setup();
   vi.mocked(api.fetchUsers).mockResolvedValue([admin]);

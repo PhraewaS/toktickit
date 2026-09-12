@@ -390,9 +390,9 @@ export async function createStaffNote(ticketId: number, content: string) { retur
 export interface AdminUserPayload { name: string; email: string; role: UserRole; isActive: boolean; initialPassword: string }
 export interface AdminUserQuery { search?: string; role?: UserRole }
 export function fetchUsers(query: AdminUserQuery = {}) { return requestJson<User[]>(`/api/admin/users${queryString(query)}`); }
-export async function createAdminUser(payload: AdminUserPayload) { return (await requestJson<{ user: User; initialPassword: string }>("/api/admin/users", { method: "POST", body: JSON.stringify(payload) })).user; }
+export async function createAdminUser(payload: AdminUserPayload) { return (await requestJson<{ user: User }>("/api/admin/users", { method: "POST", body: JSON.stringify(payload) })).user; }
 export async function updateAdminUser(userId: number, payload: Partial<Pick<User, "name" | "email" | "role" | "isActive">>) { return (await requestJson<{ user: User }>(`/api/admin/users/${userId}`, { method: "PATCH", body: JSON.stringify(payload) })).user; }
-export async function resetAdminPassword(userId: number, initialPassword: string) { return (await requestJson<{ user: User; initialPassword: string }>(`/api/admin/users/${userId}/initial-password`, { method: "POST", body: JSON.stringify({ initialPassword }) })).user; }
+export async function resetAdminPassword(userId: number, initialPassword: string) { return (await requestJson<{ user: User }>(`/api/admin/users/${userId}/initial-password`, { method: "POST", body: JSON.stringify({ initialPassword }) })).user; }
 export async function fetchRequesterComments(ticketId: number) { return (await requestJson<{ items: CommentEntry[] }>(`/api/tickets/${ticketId}/comments`)).items; }
 export async function createRequesterComment(ticketId: number, content: string) { return (await requestJson<{ comment: CommentEntry }>(`/api/tickets/${ticketId}/comments`, { method: "POST", body: JSON.stringify({ content }) })).comment; }
 export function markRequesterResolved(ticketId: number) { return requestJson<{ ticketId: number; requesterResolvedAt: string | null }>(`/api/tickets/${ticketId}/resolved`, { method: "POST", body: JSON.stringify({}) }); }
