@@ -107,9 +107,17 @@ describe("Administrator User Management API", () => {
 
     prismaMocks.userFindFirst.mockResolvedValue(null);
     prismaMocks.userUpdate.mockResolvedValue({ ...requester, isActive: false });
-    const deactivated = await request(app).patch("/api/admin/users/2").set("Cookie", authenticate()).send({ isActive: false });
+    prismaMocks.sessionFindUnique.mockReset();
+    prismaMocks.sessionFindUnique
+      .mockResolvedValueOnce({ expiresAt: new Date(Date.now() + 60_000), user: admin })
+      .mockResolvedValueOnce(null);
+    const deactivated = await request(app).patch("/api/admin/users/2").set("Cookie", "toktickit_session=admin-session").send({ isActive: false });
     expect(deactivated.status).toBe(200);
     expect(prismaMocks.sessionDeleteMany).toHaveBeenCalledWith({ where: { userId: 2 } });
+
+    const oldSession = await request(app).get("/api/auth/me").set("Cookie", "toktickit_session=target-session");
+    expect(oldSession.status).toBe(401);
+    expect(oldSession.body.error.code).toBe("SESSION_INVALID");
   });
 
   it("rejects self-deactivation and removal of the last active Administrator", async () => {
@@ -128,12 +136,20 @@ describe("Administrator User Management API", () => {
   it("resets an initial password, sets the first-login gate, and revokes sessions", async () => {
     prismaMocks.userFindUnique.mockResolvedValue({ id: 2 });
     prismaMocks.userUpdate.mockResolvedValue({ ...requester, mustChangePassword: true });
-    const response = await request(app).post("/api/admin/users/2/initial-password").set("Cookie", authenticate()).send({ initialPassword: password });
+    prismaMocks.sessionFindUnique.mockReset();
+    prismaMocks.sessionFindUnique
+      .mockResolvedValueOnce({ expiresAt: new Date(Date.now() + 60_000), user: admin })
+      .mockResolvedValueOnce(null);
+    const response = await request(app).post("/api/admin/users/2/initial-password").set("Cookie", "toktickit_session=admin-session").send({ initialPassword: password });
     expect(response.status).toBe(200);
     expect(response.body.data.user.mustChangePassword).toBe(true);
-    expect(response.body).not.toHaveProperty("initialPassword");
-    expect(response.body).not.toHaveProperty("passwordHash");
+    expect(response.body.data.user).not.toHaveProperty("initialPassword");
+    expect(response.body.data.user).not.toHaveProperty("passwordHash");
     expect(prismaMocks.sessionDeleteMany).toHaveBeenCalledWith({ where: { userId: 2 } });
+
+    const oldSession = await request(app).get("/api/auth/me").set("Cookie", "toktickit_session=target-session");
+    expect(oldSession.status).toBe(401);
+    expect(oldSession.body.error.code).toBe("SESSION_INVALID");
   });
 
   it("rejects invalid initial passwords and missing users safely", async () => {
