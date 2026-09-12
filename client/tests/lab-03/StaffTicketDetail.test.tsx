@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import StaffTicketDetail from "../../src/StaffTicketDetail.js";
@@ -23,5 +23,55 @@ describe("Administrator ticket oversight", () => {
     expect(screen.queryByRole("button", { name: "Add Internal Note" })).not.toBeInTheDocument();
     expect(screen.getByText("report.pdf")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Download" })).toBeInTheDocument();
+  });
+
+  it("shows only status transitions allowed from the current status and requester resolution", async () => {
+    const user = userEvent.setup();
+    vi.mocked(api.fetchStaffTicketDetail).mockResolvedValue({ ...ticket, currentStatus: "RESOLVED", requesterResolvedAt: "2026-09-08T01:00:00Z" });
+    vi.mocked(api.updateStaffStatus).mockResolvedValue({ ...ticket, currentStatus: "CLOSED" });
+    render(<StaffTicketDetail ticketId={42} currentUser={actor} onBack={vi.fn()} />);
+    await screen.findByRole("heading", { name: ticket.ticketNumber });
+    const status = screen.getByLabelText(/Move status from RESOLVED/i);
+    expect(status).toHaveValue("");
+    expect(screen.getByRole("option", { name: "CLOSED" })).toBeInTheDocument();
+    expect(screen.getByRole("option", { name: "REOPENED" })).toBeInTheDocument();
+    expect(screen.queryByRole("option", { name: "CANCELLED" })).not.toBeInTheDocument();
+    expect(screen.getByText(/Requester marked this problem as appears resolved/i)).toBeInTheDocument();
+    await user.selectOptions(status, "CLOSED");
+    expect(api.updateStaffStatus).toHaveBeenCalledWith(42, "CLOSED");
+  });
+});
+
+describe("Staff ticket operations and evidence", () => {
+  it("posts Public Comments and Internal Notes through the staff controls", async () => {
+    const user = userEvent.setup();
+    vi.mocked(api.fetchStaffTicketDetail).mockResolvedValue(ticket);
+    vi.mocked(api.fetchAssignableStaff).mockResolvedValue([actor]);
+    vi.mocked(api.createStaffComment).mockResolvedValue({ id: 10, content: "Public update", createdAt: "2026-09-08T01:00:00Z", author: actor });
+    vi.mocked(api.createStaffNote).mockResolvedValue({ id: 11, content: "Internal update", createdAt: "2026-09-08T01:00:00Z", author: actor });
+    render(<StaffTicketDetail ticketId={42} currentUser={actor} onBack={vi.fn()} />);
+    await screen.findByRole("heading", { name: ticket.ticketNumber });
+    await user.type(screen.getByLabelText("Add Public Comment"), "Public update");
+    await user.click(screen.getByRole("button", { name: "Post Public Comment" }));
+    await user.type(screen.getByLabelText("Add Internal Note"), "Internal update");
+    await user.click(screen.getByRole("button", { name: "Add Internal Note" }));
+    await waitFor(() => expect(api.createStaffComment).toHaveBeenCalledWith(42, "Public update"));
+    expect(api.createStaffNote).toHaveBeenCalledWith(42, "Internal update");
+  });
+
+  it("downloads an Attachment from Staff Ticket Detail", async () => {
+    const user = userEvent.setup();
+    const attachmentTicket = { ...ticket, attachments: [{ id: 8, originalFilename: "report.pdf", mimeType: "application/pdf", sizeBytes: 12, uploadedAt: "2026-09-08T00:00:00Z", removedAt: null, removalReason: null, state: "ACTIVE" as const }] };
+    vi.mocked(api.fetchStaffTicketDetail).mockResolvedValue(attachmentTicket);
+    vi.mocked(api.fetchAssignableStaff).mockResolvedValue([actor]);
+    vi.mocked(api.downloadStaffAttachment).mockResolvedValue({ blob: new Blob(["report"]), filename: "report.pdf" });
+    const anchorClick = vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => undefined);
+    Object.defineProperty(URL, "createObjectURL", { configurable: true, value: vi.fn(() => "blob:test") });
+    Object.defineProperty(URL, "revokeObjectURL", { configurable: true, value: vi.fn() });
+    render(<StaffTicketDetail ticketId={42} currentUser={actor} onBack={vi.fn()} />);
+    await screen.findByRole("heading", { name: ticket.ticketNumber });
+    await user.click(screen.getByRole("button", { name: "Download" }));
+    await waitFor(() => expect(api.downloadStaffAttachment).toHaveBeenCalledWith(8));
+    anchorClick.mockRestore();
   });
 });

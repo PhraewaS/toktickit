@@ -1,5 +1,5 @@
 import { FormEvent, useEffect, useState } from "react";
-import { fetchStaffTickets, RequestedPriority, StaffTicket, StaffTicketQuery, TicketStatus } from "./api.js";
+import { ApiError, fetchStaffTickets, RequestedPriority, StaffTicket, StaffTicketQuery, TicketStatus } from "./api.js";
 
 const statuses: TicketStatus[] = ["NEW", "OPEN", "IN_PROGRESS", "WAITING_FOR_REQUESTER", "RESOLVED", "CLOSED", "REOPENED", "CANCELLED"];
 const priorities: RequestedPriority[] = ["LOW", "MEDIUM", "HIGH"];
@@ -11,7 +11,7 @@ function label(value: string) {
 export default function StaffTicketQueue({ onOpen }: { onOpen: (id: number) => void }) {
   const [data, setData] = useState<StaffTicket[]>([]);
   const [pagination, setPagination] = useState({ page: 1, pageSize: 10 as 10 | 20 | 50, totalItems: 0, totalPages: 0 });
-  const [state, setState] = useState<"loading" | "ready" | "error">("loading");
+  const [state, setState] = useState<"loading" | "ready" | "forbidden" | "error">("loading");
   const [failure, setFailure] = useState("");
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState<"" | TicketStatus>("");
@@ -27,14 +27,14 @@ export default function StaffTicketQueue({ onOpen }: { onOpen: (id: number) => v
     setFailure("");
     try {
       const result = await fetchStaffTickets(query);
-      setData(result.data);
+      setData(result.items);
       setPagination(result.pagination);
       setApplied(query);
       setState("ready");
-    } catch {
+    } catch (error) {
       setData([]);
       setFailure("TokTickIT could not load the Ticket queue. Please try again.");
-      setState("error");
+      setState(error instanceof ApiError && error.code === "ROLE_FORBIDDEN" ? "forbidden" : "error");
     }
   }
 
@@ -72,6 +72,7 @@ export default function StaffTicketQueue({ onOpen }: { onOpen: (id: number) => v
       <button className="button button--primary" type="submit">Apply filters</button>
     </form>
     {state === "loading" && <div className="state-panel" role="status" aria-live="polite"><span className="spinner" aria-hidden="true" />Loading Ticket Queue…</div>}
+    {state === "forbidden" && <div className="state-panel state-panel--error" role="alert"><strong>Ticket Queue access is forbidden.</strong><span>Your role cannot view the Staff Queue.</span></div>}
     {state === "error" && <div className="state-panel state-panel--error" role="alert"><strong>Could not load Ticket Queue.</strong><span>{failure}</span><button className="button button--secondary" type="button" onClick={() => void load(applied)}>Try again</button></div>}
     {state === "ready" && pagination.totalItems === 0 && <div className="state-panel" role="status"><strong>{hasFilters ? "No Tickets match these filters." : "The Ticket Queue is empty."}</strong><span>Try a different search or check back when new work arrives.</span></div>}
     {state === "ready" && data.length > 0 && <><div className="ticket-table-wrap"><table className="ticket-table"><caption className="visually-hidden">IT Staff Ticket Queue</caption><thead><tr><th>Ticket</th><th>Summary</th><th>Category</th><th>Requested</th><th>IT Priority</th><th>Status</th><th>Owner</th><th>Last Updated</th><th>Actions</th></tr></thead><tbody>{data.map((ticket) => <tr key={ticket.id}><td data-label="Ticket"><span className="ticket-number">{ticket.ticketNumber}</span></td><td data-label="Summary">{ticket.summary}</td><td data-label="Category">{ticket.category.name}</td><td data-label="Requested"><span className="badge badge--priority">{ticket.requestedPriority}</span></td><td data-label="IT Priority"><span className="badge badge--priority">{ticket.itPriority}</span></td><td data-label="Status"><span className="badge badge--status">{label(ticket.currentStatus)}</span></td><td data-label="Owner">{ticket.owner?.name ?? "Unassigned"}</td><td data-label="Last Updated">{new Date(ticket.updatedAt).toLocaleString()}</td><td data-label="Actions"><button className="button button--secondary" type="button" onClick={() => onOpen(ticket.id)}>Open detail</button></td></tr>)}</tbody></table></div><div className="pagination-controls"><span>Page {pagination.page} of {pagination.totalPages}</span><button className="button button--secondary" type="button" disabled={pagination.page <= 1} onClick={() => void load({ ...applied, page: pagination.page - 1 })}>Previous</button><button className="button button--secondary" type="button" disabled={pagination.page >= pagination.totalPages} onClick={() => void load({ ...applied, page: pagination.page + 1 })}>Next</button></div></>}

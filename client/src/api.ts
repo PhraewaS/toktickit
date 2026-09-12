@@ -374,7 +374,7 @@ export interface StaffTicket extends Ticket {
   publicComments?: CommentEntry[];
   internalNotes?: CommentEntry[];
 }
-export interface StaffTicketListResult { data: StaffTicket[]; pagination: { page: number; pageSize: 10 | 20 | 50; totalItems: number; totalPages: number } }
+export interface StaffTicketListResult { items: StaffTicket[]; pagination: { page: number; pageSize: 10 | 20 | 50; totalItems: number; totalPages: number } }
 export interface StaffTicketQuery { search?: string; status?: TicketStatus; requestedPriority?: RequestedPriority; itPriority?: RequestedPriority; ownerId?: number | "unassigned"; sortBy?: "ticketNumber" | "summary" | "createdAt" | "updatedAt" | "itPriority" | "currentStatus"; sortOrder?: "asc" | "desc"; page?: number; pageSize?: 10 | 20 | 50 }
 
 function queryString(query: object) { const params = new URLSearchParams(); for (const [key, value] of Object.entries(query)) if (value !== undefined && value !== "") params.set(key, String(value)); return params.toString() ? `?${params.toString()}` : ""; }
@@ -384,8 +384,8 @@ export function fetchAssignableStaff() { return requestJson<User[]>("/api/staff/
 export function assignStaffTicket(ticketId: number, ownerId: number | null) { return requestJson<StaffTicket>(`/api/staff/tickets/${ticketId}/assignment`, { method: "POST", body: JSON.stringify({ ownerId }) }); }
 export function updateStaffPriority(ticketId: number, itPriority: RequestedPriority) { return requestJson<StaffTicket>(`/api/staff/tickets/${ticketId}/priority`, { method: "PATCH", body: JSON.stringify({ itPriority }) }); }
 export function updateStaffStatus(ticketId: number, status: TicketStatus) { return requestJson<StaffTicket>(`/api/staff/tickets/${ticketId}/status`, { method: "PATCH", body: JSON.stringify({ status }) }); }
-export function createStaffComment(ticketId: number, content: string) { return requestJson<CommentEntry>(`/api/staff/tickets/${ticketId}/comments`, { method: "POST", body: JSON.stringify({ content }) }); }
-export function createStaffNote(ticketId: number, content: string) { return requestJson<CommentEntry>(`/api/staff/tickets/${ticketId}/notes`, { method: "POST", body: JSON.stringify({ content }) }); }
+export async function createStaffComment(ticketId: number, content: string) { return (await requestJson<{ comment: CommentEntry }>(`/api/staff/tickets/${ticketId}/comments`, { method: "POST", body: JSON.stringify({ content }) })).comment; }
+export async function createStaffNote(ticketId: number, content: string) { return (await requestJson<{ note: CommentEntry }>(`/api/staff/tickets/${ticketId}/notes`, { method: "POST", body: JSON.stringify({ content }) })).note; }
 
 export interface AdminUserPayload { name: string; email: string; role: UserRole; isActive: boolean; initialPassword: string }
 export interface AdminUserQuery { search?: string; role?: UserRole }
@@ -393,6 +393,6 @@ export function fetchUsers(query: AdminUserQuery = {}) { return requestJson<User
 export async function createAdminUser(payload: AdminUserPayload) { return (await requestJson<{ user: User; initialPassword: string }>("/api/admin/users", { method: "POST", body: JSON.stringify(payload) })).user; }
 export async function updateAdminUser(userId: number, payload: Partial<Pick<User, "name" | "email" | "role" | "isActive">>) { return (await requestJson<{ user: User }>(`/api/admin/users/${userId}`, { method: "PATCH", body: JSON.stringify(payload) })).user; }
 export async function resetAdminPassword(userId: number, initialPassword: string) { return (await requestJson<{ user: User; initialPassword: string }>(`/api/admin/users/${userId}/initial-password`, { method: "POST", body: JSON.stringify({ initialPassword }) })).user; }
-export function fetchRequesterComments(ticketId: number) { return requestJson<CommentEntry[]>(`/api/tickets/${ticketId}/comments`); }
-export function createRequesterComment(ticketId: number, content: string) { return requestJson<CommentEntry>(`/api/tickets/${ticketId}/comments`, { method: "POST", body: JSON.stringify({ content }) }); }
+export async function fetchRequesterComments(ticketId: number) { return (await requestJson<{ items: CommentEntry[] }>(`/api/tickets/${ticketId}/comments`)).items; }
+export async function createRequesterComment(ticketId: number, content: string) { return (await requestJson<{ comment: CommentEntry }>(`/api/tickets/${ticketId}/comments`, { method: "POST", body: JSON.stringify({ content }) })).comment; }
 export function markRequesterResolved(ticketId: number) { return requestJson<{ ticketId: number; requesterResolvedAt: string | null }>(`/api/tickets/${ticketId}/resolved`, { method: "POST", body: JSON.stringify({}) }); }

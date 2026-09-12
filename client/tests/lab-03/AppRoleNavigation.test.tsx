@@ -22,7 +22,7 @@ describe("Lab 3 role navigation and safe session failures", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.mocked(api.fetchUsers).mockResolvedValue([admin]);
-    vi.mocked(api.fetchStaffTickets).mockResolvedValue({ data: [], pagination: { page: 1, pageSize: 10, totalItems: 0, totalPages: 0 } });
+    vi.mocked(api.fetchStaffTickets).mockResolvedValue({ items: [], pagination: { page: 1, pageSize: 10, totalItems: 0, totalPages: 0 } });
     vi.mocked(api.fetchCategories).mockResolvedValue([]);
     vi.mocked(api.fetchRelatedSystems).mockResolvedValue([]);
   });
@@ -43,6 +43,14 @@ describe("Lab 3 role navigation and safe session failures", () => {
     expect(await screen.findByRole("alert")).toHaveTextContent(/could not load your session/i);
     expect(screen.getByRole("alert")).not.toHaveTextContent("database details");
     expect(screen.getByRole("button", { name: "Try again" })).toBeInTheDocument();
+  });
+
+  it("does not render the Lab 2 Development Requester selector in the authenticated shell", async () => {
+    vi.mocked(api.fetchCurrentUser).mockResolvedValue(requester);
+    render(<App />);
+    expect(await screen.findByRole("link", { name: "Create Ticket" })).toBeInTheDocument();
+    expect(screen.queryByText("Select Development Requester")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Change requester" })).not.toBeInTheDocument();
   });
 
   it("keeps the authenticated shell visible and reports a logout failure", async () => {

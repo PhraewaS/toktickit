@@ -11,4 +11,15 @@ describe("Lab 3 first-login password change", () => {
     await actor.type(screen.getByLabelText("New password"), "Staff-Changed2!"); await actor.type(screen.getByLabelText("Confirm new password"), "different"); await actor.click(screen.getByRole("button", { name: "Save password" })); expect(screen.getByRole("alert")).toHaveTextContent(/match/i);
     await actor.clear(screen.getByLabelText("Confirm new password")); await actor.type(screen.getByLabelText("Confirm new password"), "Staff-Changed2!"); await actor.click(screen.getByRole("button", { name: "Save password" })); expect(onChanged).toHaveBeenCalledWith(next);
   });
+
+  it("shows a safe password-change failure", async () => {
+    vi.mocked(api.changePassword).mockRejectedValue(new Error("private password details"));
+    const actor = userEvent.setup();
+    render(<ChangePassword onChanged={vi.fn()} />);
+    await actor.type(screen.getByLabelText("New password"), "Staff-Changed2!");
+    await actor.type(screen.getByLabelText("Confirm new password"), "Staff-Changed2!");
+    await actor.click(screen.getByRole("button", { name: "Save password" }));
+    expect(await screen.findByRole("alert")).toHaveTextContent(/could not change the password/i);
+    expect(screen.getByRole("alert")).not.toHaveTextContent("private password details");
+  });
 });
