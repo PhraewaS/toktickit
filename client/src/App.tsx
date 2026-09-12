@@ -1,5 +1,6 @@
 import { FormEvent, useCallback, useEffect, useState } from "react";
 import {
+  ApiError,
   User,
   fetchCurrentUser,
   logoutUser,
@@ -239,32 +240,70 @@ import UserManagement from "./UserManagement.js";
 
 type Lab3View = "create" | "my-tickets" | "requester-detail" | "staff-queue" | "staff-detail" | "users";
 
+function defaultViewForRole(role: UserRole): Lab3View {
+  if (role === "IT_STAFF") return "staff-queue";
+  if (role === "ADMINISTRATOR") return "users";
+  return "create";
+}
+
 export default function App() {
-  // This guard exists only so the committed Lab 2 component tests can still
-  // mount the legacy fixture when they mock the old API module wholesale.
-  const legacyFixture = typeof fetchDevelopmentRequesters === "function" && Boolean((fetchDevelopmentRequesters as unknown as { _isMockFunction?: boolean })._isMockFunction);
+  // Lab 2 compatibility is test-only. Production always starts from the
+  // authenticated session and never renders or calls the requester selector.
+  const legacyFixture = import.meta.env.MODE === "test" && typeof fetchDevelopmentRequesters === "function" && Boolean((fetchDevelopmentRequesters as unknown as { _isMockFunction?: boolean })._isMockFunction);
   if (legacyFixture) return <LegacyApp />;
-  const [state, setState] = useState<"loading" | "login" | "authenticated">("loading");
+  const [state, setState] = useState<"loading" | "login" | "authenticated" | "session-error">("loading");
   const [user, setUser] = useState<User | null>(null);
   const [view, setView] = useState<Lab3View>("create");
   const [ticketId, setTicketId] = useState<number | null>(null);
+  const [sessionFailure, setSessionFailure] = useState("");
+  const [logoutFailure, setLogoutFailure] = useState("");
+  const [logoutBusy, setLogoutBusy] = useState(false);
 
   const loadUser = useCallback(async () => {
-    try { const current = await fetchCurrentUser(); setUser(current); setState("authenticated"); }
-    catch { setUser(null); setState("login"); }
+    setSessionFailure("");
+    setState("loading");
+    try {
+      const current = await fetchCurrentUser();
+      setUser(current);
+      setView(defaultViewForRole(current.role));
+      setTicketId(null);
+      setState("authenticated");
+    } catch (error) {
+      const authFailure = error instanceof ApiError && (error.code === "AUTHENTICATION_REQUIRED" || error.code === "SESSION_INVALID");
+      setUser(null);
+      if (authFailure) setState("login");
+      else {
+        setSessionFailure("TokTickIT could not load your session. Please try again.");
+        setState("session-error");
+      }
+    }
   }, []);
   useEffect(() => { void loadUser(); }, [loadUser]);
 
   if (state === "loading") return <div className="app-frame"><main className="page-content"><div className="state-panel" role="status" aria-live="polite"><span className="spinner" aria-hidden="true" />Checking your session…</div></main></div>;
-  if (state === "login") return <Login onLoggedIn={(next) => { setUser(next); setState("authenticated"); }} />;
+  if (state === "session-error") return <div className="app-frame"><main className="page-content"><div className="state-panel state-panel--error" role="alert"><strong>Could not load your session.</strong><span>{sessionFailure}</span><button className="button button--secondary" type="button" onClick={() => void loadUser()}>Try again</button></div></main></div>;
+  if (state === "login") return <Login onLoggedIn={(next) => { setUser(next); setView(defaultViewForRole(next.role)); setTicketId(null); setState("authenticated"); }} />;
   if (!user) return null;
-  if (user.mustChangePassword) return <ChangePassword onChanged={(next) => { setUser(next); setView("create"); }} />;
+  if (user.mustChangePassword) return <ChangePassword onChanged={(next) => { setUser(next); setView(defaultViewForRole(next.role)); }} />;
 
   const requester = user;
   const isRequester = user.role === "REQUESTER";
   const isStaff = user.role === "IT_STAFF";
   const isAdmin = user.role === "ADMINISTRATOR";
-  async function handleLogout() { await logoutUser().catch(() => undefined); setUser(null); setState("login"); }
+  const canOpenStaffWorkspace = isStaff || isAdmin;
+  async function handleLogout() {
+    setLogoutBusy(true);
+    setLogoutFailure("");
+    try {
+      await logoutUser();
+      setUser(null);
+      setState("login");
+    } catch {
+      setLogoutFailure("TokTickIT could not sign you out safely. Please try again.");
+    } finally {
+      setLogoutBusy(false);
+    }
+  }
   function go(next: Lab3View) { setView(next); setTicketId(null); }
 
   return <div className="app-frame">
@@ -272,16 +311,17 @@ export default function App() {
       <a className="brand" href="#home" aria-label="TokTickIT home" onClick={(event) => { event.preventDefault(); go(isStaff ? "staff-queue" : isAdmin ? "users" : "create"); }}><span className="brand__mark" aria-hidden="true">T</span><span><strong>TokTickIT</strong><small>IT Service Desk</small></span></a>
       <div className="app-shell-actions"><nav className="app-nav" aria-label="Primary navigation">
         {isRequester && <><a className={`app-nav__link ${view === "my-tickets" ? "app-nav__link--active" : ""}`} href="#my-tickets" onClick={(e) => { e.preventDefault(); go("my-tickets"); }}>My Tickets</a><a className={`app-nav__link ${view === "create" ? "app-nav__link--active" : ""}`} href="#create-ticket" onClick={(e) => { e.preventDefault(); go("create"); }}>Create Ticket</a></>}
-        {isStaff && <a className={`app-nav__link ${view === "staff-queue" ? "app-nav__link--active" : ""}`} href="#staff-queue" onClick={(e) => { e.preventDefault(); go("staff-queue"); }}>Ticket Queue</a>}
+        {canOpenStaffWorkspace && <a className={`app-nav__link ${view === "staff-queue" || view === "staff-detail" ? "app-nav__link--active" : ""}`} href="#staff-queue" onClick={(e) => { e.preventDefault(); go("staff-queue"); }}>Ticket Queue</a>}
         {isAdmin && <a className={`app-nav__link ${view === "users" ? "app-nav__link--active" : ""}`} href="#users" onClick={(e) => { e.preventDefault(); go("users"); }}>User Management</a>}
-      </nav><div className="requester-context" aria-label="Current authenticated user"><span>{user.name} <strong className="badge badge--role">{user.role.replace("_", " ")}</strong></span><button className="button button--secondary" type="button" onClick={() => void handleLogout()}>Logout</button></div></div>
+      </nav><div className="requester-context" aria-label="Current authenticated user"><span>{user.name} <strong className="badge badge--role">{user.role.replace("_", " ")}</strong></span><button className="button button--secondary" type="button" disabled={logoutBusy} onClick={() => void handleLogout()}>{logoutBusy ? "Signing out…" : "Logout"}</button></div></div>
     </div></header>
     <main className="page-content">
+      {logoutFailure && <div className="state-panel state-panel--error" role="alert"><strong>Logout failed.</strong><span>{logoutFailure}</span></div>}
       {isRequester && view === "create" && <CreateTicket requester={requester} onViewTicket={(id) => { setTicketId(id); setView("requester-detail"); }} onMyTickets={() => go("my-tickets")} />}
       {isRequester && view === "my-tickets" && <MyTickets requester={requester} onCreateTicket={() => go("create")} onOpenTicket={(id) => { setTicketId(id); setView("requester-detail"); }} />}
       {isRequester && view === "requester-detail" && ticketId !== null && <RequesterTicketDetail requester={requester} ticketId={ticketId} onBack={() => go("my-tickets")} />}
-      {isStaff && view === "staff-queue" && <StaffTicketQueue onOpen={(id) => { setTicketId(id); setView("staff-detail"); }} />}
-      {isStaff && view === "staff-detail" && ticketId !== null && <StaffTicketDetail ticketId={ticketId} currentUser={user} onBack={() => go("staff-queue")} />}
+      {canOpenStaffWorkspace && view === "staff-queue" && <StaffTicketQueue onOpen={(id) => { setTicketId(id); setView("staff-detail"); }} />}
+      {canOpenStaffWorkspace && view === "staff-detail" && ticketId !== null && <StaffTicketDetail ticketId={ticketId} currentUser={user} onBack={() => go("staff-queue")} />}
       {isAdmin && view === "users" && <UserManagement currentUser={user} />}
     </main>
   </div>;

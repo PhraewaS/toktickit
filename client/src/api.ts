@@ -139,11 +139,10 @@ async function fetchData<T>(path: string): Promise<T> {
   return body.data;
 }
 
-export function developmentRequesterHeaders(requesterId: number): HeadersInit {
-  return { "X-Development-Requester-Id": String(requesterId) };
-}
-
 export function fetchDevelopmentRequesters(): Promise<DevelopmentRequester[]> {
+  if (import.meta.env.MODE !== "test") {
+    return Promise.reject(new ApiError("Development Requester selection is retired.", undefined, "DEVELOPMENT_REQUESTERS_RETIRED"));
+  }
   return fetchData<DevelopmentRequester[]>("/api/development-requesters");
 }
 
@@ -166,7 +165,6 @@ export async function createTicket(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...developmentRequesterHeaders(requesterId),
       },
       body: JSON.stringify(payload),
       credentials: "include",
@@ -211,7 +209,6 @@ export async function fetchMyTickets(
   let response: Response;
   try {
     response = await fetch(`${API_URL}/api/tickets${suffix}`, {
-      headers: developmentRequesterHeaders(requesterId),
       credentials: "include",
     });
   } catch {
@@ -236,7 +233,6 @@ export async function fetchTicketDetail(
   let response: Response;
   try {
     response = await fetch(API_URL + "/api/tickets/" + ticketId, {
-      headers: developmentRequesterHeaders(requesterId),
       credentials: "include",
     });
   } catch {
@@ -264,7 +260,6 @@ export async function uploadTicketAttachments(
   try {
     response = await fetch(API_URL + "/api/tickets/" + ticketId + "/attachments", {
       method: "POST",
-      headers: developmentRequesterHeaders(requesterId),
       credentials: "include",
       body: formData,
     });
@@ -291,7 +286,7 @@ export async function removeAttachment(
   try {
     response = await fetch(API_URL + "/api/attachments/" + attachmentId, {
       method: "DELETE",
-      headers: { "Content-Type": "application/json", ...developmentRequesterHeaders(requesterId) },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ reason }),
       credentials: "include",
     });
@@ -312,11 +307,18 @@ export async function downloadAttachment(
   requesterId: number,
   attachmentId: number,
 ): Promise<AttachmentDownload> {
+  return downloadAttachmentWithSession(attachmentId);
+}
+
+export async function downloadStaffAttachment(attachmentId: number): Promise<AttachmentDownload> {
+  return downloadAttachmentWithSession(attachmentId);
+}
+
+async function downloadAttachmentWithSession(attachmentId: number): Promise<AttachmentDownload> {
   const safeMessage = "TokTickIT could not download the Attachment. Please try again.";
   let response: Response;
   try {
     response = await fetch(API_URL + "/api/attachments/" + attachmentId + "/download", {
-      headers: developmentRequesterHeaders(requesterId),
       credentials: "include",
     });
   } catch {

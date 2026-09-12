@@ -4,6 +4,24 @@ import { describe, expect, it, vi } from "vitest";
 import StaffTicketDetail from "../../src/StaffTicketDetail.js";
 import * as api from "../../src/api.js";
 
-vi.mock("../../src/api.js", async () => ({ ...(await vi.importActual<typeof import("../../src/api.js")>("../../src/api.js")), fetchStaffTicketDetail: vi.fn(), fetchAssignableStaff: vi.fn(), assignStaffTicket: vi.fn(), updateStaffPriority: vi.fn(), updateStaffStatus: vi.fn(), createStaffComment: vi.fn(), createStaffNote: vi.fn() }));
+vi.mock("../../src/api.js", async () => ({ ...(await vi.importActual<typeof import("../../src/api.js")>("../../src/api.js")), fetchStaffTicketDetail: vi.fn(), fetchAssignableStaff: vi.fn(), assignStaffTicket: vi.fn(), updateStaffPriority: vi.fn(), updateStaffStatus: vi.fn(), createStaffComment: vi.fn(), createStaffNote: vi.fn(), downloadStaffAttachment: vi.fn() }));
 const actor = { id: 2, name: "Mali Support", email: "mali.staff@example.test", role: "IT_STAFF" as const, isActive: true, mustChangePassword: false }; const ticket = { id: 42, ticketNumber: "TKT-20260908-10000000", requester: { id: 1, name: "Jennifer", email: "j@example.test" }, category: { id: 1, name: "Hardware" }, relatedSystem: { id: 1, name: "Laptop" }, summary: "VPN unavailable", requestedPriority: "HIGH" as const, itPriority: "HIGH" as const, currentStatus: "OPEN" as const, owner: null, requesterResolvedAt: null, createdAt: "2026-09-08T00:00:00Z", updatedAt: "2026-09-08T00:00:00Z", ticketDate: "2026-09-08T00:00:00Z", description: "VPN unavailable", attachments: [], publicComments: [], internalNotes: [] };
 describe("Lab 3 IT Staff ticket detail", () => { it("supports claim and private note controls", async () => { vi.mocked(api.fetchStaffTicketDetail).mockResolvedValue(ticket); vi.mocked(api.fetchAssignableStaff).mockResolvedValue([actor]); vi.mocked(api.assignStaffTicket).mockResolvedValue({ ...ticket, owner: actor }); const user = userEvent.setup(); render(<StaffTicketDetail ticketId={42} currentUser={actor} onBack={vi.fn()} />); expect(await screen.findByRole("heading", { name: ticket.ticketNumber })).toBeInTheDocument(); await user.click(screen.getByRole("button", { name: "Claim for me" })); expect(api.assignStaffTicket).toHaveBeenCalledWith(42, 2); expect(screen.getByText(/private to it staff/i)).toBeInTheDocument(); }); });
+
+describe("Administrator ticket oversight", () => {
+  it("allows IT Priority and attachment download while keeping operations read-only", async () => {
+    const admin = { id: 9, name: "Nok Administrator", email: "admin@example.test", role: "ADMINISTRATOR" as const, isActive: true, mustChangePassword: false };
+    const adminTicket = { ...ticket, attachments: [{ id: 8, originalFilename: "report.pdf", mimeType: "application/pdf", sizeBytes: 12, uploadedAt: "2026-09-08T00:00:00Z", removedAt: null, removalReason: null, state: "ACTIVE" as const }] };
+    vi.mocked(api.fetchStaffTicketDetail).mockResolvedValue(adminTicket);
+    render(<StaffTicketDetail ticketId={42} currentUser={admin} onBack={vi.fn()} />);
+    expect(await screen.findByRole("heading", { name: ticket.ticketNumber })).toBeInTheDocument();
+    expect(screen.getByLabelText("IT Priority")).toBeInTheDocument();
+    expect(screen.getByLabelText("Ticket owner")).toHaveAttribute("readonly");
+    expect(screen.queryByRole("button", { name: "Claim for me" })).not.toBeInTheDocument();
+    expect(screen.queryByLabelText("Move status from OPEN")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Post Public Comment" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Add Internal Note" })).not.toBeInTheDocument();
+    expect(screen.getByText("report.pdf")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Download" })).toBeInTheDocument();
+  });
+});
