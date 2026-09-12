@@ -27,6 +27,24 @@ describe("GET /api/development-requesters", () => {
     vi.clearAllMocks();
   });
 
+  it("is retired outside test or explicit migration compatibility mode", async () => {
+    const previousNodeEnv = process.env.NODE_ENV;
+    const previousCompatibility = process.env.LAB2_COMPATIBILITY_MODE;
+    process.env.NODE_ENV = "production";
+    delete process.env.LAB2_COMPATIBILITY_MODE;
+    try {
+      const response = await request(app).get("/api/development-requesters");
+      expect(response.status).toBe(410);
+      expect(response.body.error.code).toBe("DEVELOPMENT_REQUESTERS_RETIRED");
+      expect(prismaMocks.requesterFindMany).not.toHaveBeenCalled();
+    } finally {
+      if (previousNodeEnv === undefined) delete process.env.NODE_ENV;
+      else process.env.NODE_ENV = previousNodeEnv;
+      if (previousCompatibility === undefined) delete process.env.LAB2_COMPATIBILITY_MODE;
+      else process.env.LAB2_COMPATIBILITY_MODE = previousCompatibility;
+    }
+  });
+
   it("returns only active requesters in deterministic name order", async () => {
     prismaMocks.requesterFindMany.mockResolvedValue([
       { id: 2, name: "Jennifer Anderson", email: "jennifer@example.test" },

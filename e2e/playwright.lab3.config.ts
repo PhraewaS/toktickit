@@ -11,6 +11,7 @@ export default defineConfig({
   expect: { timeout: 10_000 },
   fullyParallel: false,
   workers: 1,
+  outputDir: path.join(repositoryRoot, "artifacts/lab-03/test-results"),
   reporter: [["list"], ["html", { outputFolder: path.join(repositoryRoot, "artifacts/lab-03/playwright-report"), open: "never" }]],
   globalSetup: path.join(e2eDirectory, "global-setup.ts"),
   use: {

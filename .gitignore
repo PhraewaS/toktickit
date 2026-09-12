@@ -18,4 +18,5 @@ server/storage/
 # Lab 2 generated Playwright reports and transient test output
 artifacts/lab-02/playwright-report/
 artifacts/lab-03/playwright-report/
+artifacts/lab-03/test-results/
 e2e/test-results/

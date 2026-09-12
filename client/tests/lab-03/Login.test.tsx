@@ -13,4 +13,15 @@ describe("Lab 3 Login", () => {
     await actor.type(screen.getByLabelText("Email address"), user.email); await actor.type(screen.getByLabelText("Password"), "Requester-Change1!"); await actor.click(screen.getByRole("button", { name: "Sign in" }));
     expect(onLoggedIn).toHaveBeenCalledWith(user);
   });
+
+  it("shows a safe login failure without exposing API details", async () => {
+    vi.mocked(api.loginUser).mockRejectedValue(new Error("private authentication details"));
+    const actor = userEvent.setup();
+    render(<Login onLoggedIn={vi.fn()} />);
+    await actor.type(screen.getByLabelText("Email address"), user.email);
+    await actor.type(screen.getByLabelText("Password"), "wrong-password");
+    await actor.click(screen.getByRole("button", { name: "Sign in" }));
+    expect(await screen.findByRole("alert")).toHaveTextContent(/email or password is incorrect/i);
+    expect(screen.getByRole("alert")).not.toHaveTextContent("private authentication details");
+  });
 });

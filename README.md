@@ -50,17 +50,11 @@ Do not use `prisma migrate reset` against a shared or evidence database. It is o
 
 The production client opens on Login and sends the HttpOnly `toktickit_session` cookie with API calls. Users with `mustChangePassword` are shown only the mandatory Change Password screen until they save a valid password. The shell displays the authenticated user and role; navigation and backend endpoints are role-restricted. Logout invalidates the server session.
 
-Seed credentials are local-development fixtures only and must not be reused as real passwords:
-
-- Requesters: `jennifer@example.test`, `kanya@example.test`, `narin@example.test`, or `preecha@example.test` with `Requester-Change1!`.
-- IT Staff: `mali.staff@example.test`, `somchai.staff@example.test`, or `arisa.staff@example.test` with `Staff-Change1!`.
-- Administrator: `admin@example.test` with `Admin-Change1!`.
-
-Every seeded account requires a first-login password change. The migration gives pre-Lab 3 requester rows the local migration password `Lab3-ChangeMe1!` so their existing Ticket ownership remains usable; the seed updates named local fixtures without resetting a changed password.
+The deterministic seed requires `LAB3_SEED_PASSWORD` in the local environment. Keep this value outside Git and never place it in source code, README files, screenshots, or committed evidence. Every seeded account requires a first-login password change. The seed can reset local E2E fixtures only when `LAB3_E2E_RESET_PASSWORDS=true` is explicitly set by the E2E setup.
 
 ## Lab 2 compatibility path
 
-The client loads active requesters from `GET /api/development-requesters` and stores the selected requester ID in `sessionStorage`, so the selection lasts only for the current browser tab.
+The Lab 3 production client does not render a Development Requester selector and does not send a development requester header. Authenticated requester operations derive ownership from the HttpOnly session identity.
 
 Requester-specific API calls must send:
 
@@ -68,7 +62,7 @@ Requester-specific API calls must send:
 X-Development-Requester-Id: <positive integer>
 ```
 
-This header is retained only for Lab 2 regression tests and migration tooling. It is not authentication. The Lab 3 client never renders the selector or sends the header; authenticated requester operations derive ownership from the session identity. The backend still validates the legacy context when that compatibility path is explicitly used.
+This header is not authentication and must not be enabled in production. The backend rejects the retired endpoint outside the explicit compatibility mode and still validates the legacy context when that path is used.
 
 Active reference data is available from:
 
@@ -129,7 +123,7 @@ npm --prefix server run build
 npm --prefix client run build
 ```
 
-Lab 3 API/component suites are included in the same commands under `server/tests/lab-03/` and `client/tests/lab-03/`. Run the database-backed migration and seed before E2E testing. The Lab 3 submission evidence must be assembled as one concise PDF with headings `Answer Part 1` through `Answer Part 9`.
+Lab 3 API/component suites are included in the same commands under `server/tests/lab-03/` and `client/tests/lab-03/`. Set `LAB3_SEED_PASSWORD` only in the local shell or an untracked `server/.env`, then run the database-backed migration and seed before E2E testing. The Lab 3 submission evidence must be assembled as one concise PDF with headings `Answer Part 1` through `Answer Part 9`.
 
 Run the Lab 2 Responsive, Accessibility, E2E, and Visual Evidence suite after the local PostgreSQL service is available:
 

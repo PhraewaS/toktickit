@@ -139,11 +139,10 @@ async function fetchData<T>(path: string): Promise<T> {
   return body.data;
 }
 
-export function developmentRequesterHeaders(requesterId: number): HeadersInit {
-  return { "X-Development-Requester-Id": String(requesterId) };
-}
-
 export function fetchDevelopmentRequesters(): Promise<DevelopmentRequester[]> {
+  if (import.meta.env.MODE !== "test") {
+    return Promise.reject(new ApiError("Development Requester selection is retired.", undefined, "DEVELOPMENT_REQUESTERS_RETIRED"));
+  }
   return fetchData<DevelopmentRequester[]>("/api/development-requesters");
 }
 
@@ -164,12 +163,11 @@ export async function createTicket(
   try {
     response = await fetch(`${API_URL}/api/tickets`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        ...developmentRequesterHeaders(requesterId),
       },
       body: JSON.stringify(payload),
-      credentials: "include",
     });
   } catch {
     throw new Error(safeMessage);
@@ -211,7 +209,6 @@ export async function fetchMyTickets(
   let response: Response;
   try {
     response = await fetch(`${API_URL}/api/tickets${suffix}`, {
-      headers: developmentRequesterHeaders(requesterId),
       credentials: "include",
     });
   } catch {
@@ -236,7 +233,6 @@ export async function fetchTicketDetail(
   let response: Response;
   try {
     response = await fetch(API_URL + "/api/tickets/" + ticketId, {
-      headers: developmentRequesterHeaders(requesterId),
       credentials: "include",
     });
   } catch {
@@ -264,7 +260,6 @@ export async function uploadTicketAttachments(
   try {
     response = await fetch(API_URL + "/api/tickets/" + ticketId + "/attachments", {
       method: "POST",
-      headers: developmentRequesterHeaders(requesterId),
       credentials: "include",
       body: formData,
     });
@@ -291,7 +286,7 @@ export async function removeAttachment(
   try {
     response = await fetch(API_URL + "/api/attachments/" + attachmentId, {
       method: "DELETE",
-      headers: { "Content-Type": "application/json", ...developmentRequesterHeaders(requesterId) },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ reason }),
       credentials: "include",
     });
@@ -312,11 +307,18 @@ export async function downloadAttachment(
   requesterId: number,
   attachmentId: number,
 ): Promise<AttachmentDownload> {
+  return downloadAttachmentWithSession(attachmentId);
+}
+
+export async function downloadStaffAttachment(attachmentId: number): Promise<AttachmentDownload> {
+  return downloadAttachmentWithSession(attachmentId);
+}
+
+async function downloadAttachmentWithSession(attachmentId: number): Promise<AttachmentDownload> {
   const safeMessage = "TokTickIT could not download the Attachment. Please try again.";
   let response: Response;
   try {
     response = await fetch(API_URL + "/api/attachments/" + attachmentId + "/download", {
-      headers: developmentRequesterHeaders(requesterId),
       credentials: "include",
     });
   } catch {
@@ -338,7 +340,7 @@ export async function downloadAttachment(
 }
 
 export async function checkSystem(): Promise<SystemStatus> {
-  const healthResponse = await fetch(`${API_URL}/api/health`);
+  const healthResponse = await fetch(`${API_URL}/api/health`, { credentials: "include" });
   if (!healthResponse.ok) {
     throw new Error("System is offline");
   }
@@ -372,25 +374,25 @@ export interface StaffTicket extends Ticket {
   publicComments?: CommentEntry[];
   internalNotes?: CommentEntry[];
 }
-export interface StaffTicketListResult { data: StaffTicket[]; pagination: { page: number; pageSize: 10 | 20 | 50; totalItems: number; totalPages: number } }
+export interface StaffTicketListResult { items: StaffTicket[]; pagination: { page: number; pageSize: 10 | 20 | 50; totalItems: number; totalPages: number } }
 export interface StaffTicketQuery { search?: string; status?: TicketStatus; requestedPriority?: RequestedPriority; itPriority?: RequestedPriority; ownerId?: number | "unassigned"; sortBy?: "ticketNumber" | "summary" | "createdAt" | "updatedAt" | "itPriority" | "currentStatus"; sortOrder?: "asc" | "desc"; page?: number; pageSize?: 10 | 20 | 50 }
 
 function queryString(query: object) { const params = new URLSearchParams(); for (const [key, value] of Object.entries(query)) if (value !== undefined && value !== "") params.set(key, String(value)); return params.toString() ? `?${params.toString()}` : ""; }
-export function fetchStaffTickets(query: StaffTicketQuery = {}) { return requestJson<{ data: StaffTicket[]; pagination: StaffTicketListResult["pagination"] }>(`/api/staff/tickets${queryString(query)}`); }
+export function fetchStaffTickets(query: StaffTicketQuery = {}) { return requestJson<StaffTicketListResult>(`/api/staff/tickets${queryString(query)}`); }
 export function fetchStaffTicketDetail(ticketId: number) { return requestJson<StaffTicket>(`/api/staff/tickets/${ticketId}`); }
 export function fetchAssignableStaff() { return requestJson<User[]>("/api/staff/assignees"); }
 export function assignStaffTicket(ticketId: number, ownerId: number | null) { return requestJson<StaffTicket>(`/api/staff/tickets/${ticketId}/assignment`, { method: "POST", body: JSON.stringify({ ownerId }) }); }
 export function updateStaffPriority(ticketId: number, itPriority: RequestedPriority) { return requestJson<StaffTicket>(`/api/staff/tickets/${ticketId}/priority`, { method: "PATCH", body: JSON.stringify({ itPriority }) }); }
 export function updateStaffStatus(ticketId: number, status: TicketStatus) { return requestJson<StaffTicket>(`/api/staff/tickets/${ticketId}/status`, { method: "PATCH", body: JSON.stringify({ status }) }); }
-export function createStaffComment(ticketId: number, content: string) { return requestJson<CommentEntry>(`/api/staff/tickets/${ticketId}/comments`, { method: "POST", body: JSON.stringify({ content }) }); }
-export function createStaffNote(ticketId: number, content: string) { return requestJson<CommentEntry>(`/api/staff/tickets/${ticketId}/notes`, { method: "POST", body: JSON.stringify({ content }) }); }
+export async function createStaffComment(ticketId: number, content: string) { return (await requestJson<{ comment: CommentEntry }>(`/api/staff/tickets/${ticketId}/comments`, { method: "POST", body: JSON.stringify({ content }) })).comment; }
+export async function createStaffNote(ticketId: number, content: string) { return (await requestJson<{ note: CommentEntry }>(`/api/staff/tickets/${ticketId}/notes`, { method: "POST", body: JSON.stringify({ content }) })).note; }
 
 export interface AdminUserPayload { name: string; email: string; role: UserRole; isActive: boolean; initialPassword: string }
 export interface AdminUserQuery { search?: string; role?: UserRole }
 export function fetchUsers(query: AdminUserQuery = {}) { return requestJson<User[]>(`/api/admin/users${queryString(query)}`); }
-export async function createAdminUser(payload: AdminUserPayload) { return (await requestJson<{ user: User; initialPassword: string }>("/api/admin/users", { method: "POST", body: JSON.stringify(payload) })).user; }
+export async function createAdminUser(payload: AdminUserPayload) { return (await requestJson<{ user: User }>("/api/admin/users", { method: "POST", body: JSON.stringify(payload) })).user; }
 export async function updateAdminUser(userId: number, payload: Partial<Pick<User, "name" | "email" | "role" | "isActive">>) { return (await requestJson<{ user: User }>(`/api/admin/users/${userId}`, { method: "PATCH", body: JSON.stringify(payload) })).user; }
-export async function resetAdminPassword(userId: number, initialPassword: string) { return (await requestJson<{ user: User; initialPassword: string }>(`/api/admin/users/${userId}/initial-password`, { method: "POST", body: JSON.stringify({ initialPassword }) })).user; }
-export function fetchRequesterComments(ticketId: number) { return requestJson<CommentEntry[]>(`/api/tickets/${ticketId}/comments`); }
-export function createRequesterComment(ticketId: number, content: string) { return requestJson<CommentEntry>(`/api/tickets/${ticketId}/comments`, { method: "POST", body: JSON.stringify({ content }) }); }
+export async function resetAdminPassword(userId: number, initialPassword: string) { return (await requestJson<{ user: User }>(`/api/admin/users/${userId}/initial-password`, { method: "POST", body: JSON.stringify({ initialPassword }) })).user; }
+export async function fetchRequesterComments(ticketId: number) { return (await requestJson<{ items: CommentEntry[] }>(`/api/tickets/${ticketId}/comments`)).items; }
+export async function createRequesterComment(ticketId: number, content: string) { return (await requestJson<{ comment: CommentEntry }>(`/api/tickets/${ticketId}/comments`, { method: "POST", body: JSON.stringify({ content }) })).comment; }
 export function markRequesterResolved(ticketId: number) { return requestJson<{ ticketId: number; requesterResolvedAt: string | null }>(`/api/tickets/${ticketId}/resolved`, { method: "POST", body: JSON.stringify({}) }); }
