@@ -596,6 +596,18 @@ h1 {
   overflow-wrap: anywhere;
 }
 
+.ticket-table .ticket-number {
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.ticket-table .ticket-cell-value {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
 .ticket-table .badge--priority {
   display: inline-block;
   min-width: 4.5rem;
@@ -620,6 +632,8 @@ h1 {
   color: var(--green-800);
   font-weight: 800;
   white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 .badge {
@@ -886,9 +900,12 @@ fieldset:disabled textarea {
   .ticket-table td {
     display: block;
     min-width: 0;
+    width: 100%;
   }
 
   .ticket-table {
+    width: 100%;
+    min-width: 0;
     table-layout: auto;
     background: transparent;
   }
@@ -909,8 +926,13 @@ fieldset:disabled textarea {
     display: grid;
     grid-template-columns: 10rem minmax(0, 1fr);
     gap: 0.5rem;
+    width: 100% !important;
     padding: 0.5rem 0;
     border-bottom: 1px solid #e2e9e4;
+  }
+
+  .ticket-table td > * {
+    min-width: 0;
   }
 
   .ticket-table td::before {
@@ -930,8 +952,10 @@ fieldset:disabled textarea {
 
   .ticket-table .ticket-number {
     min-width: 0;
-    white-space: normal;
-    overflow-wrap: anywhere;
+    display: inline-block;
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
   }
 }
 
@@ -1111,7 +1135,9 @@ fieldset:disabled textarea {
   .ticket-table thead { display: none; }
   .ticket-table, .ticket-table tbody, .ticket-table tr, .ticket-table td { display: block; width: 100%; }
   .ticket-table tr { margin: 0 0 1rem; padding: .75rem; border: 1px solid #d7e3db; border-radius: .75rem; background: #fff; }
-  .ticket-table td { display: grid; grid-template-columns: 8rem 1fr; gap: .75rem; border: 0; padding: .35rem 0; overflow-wrap: anywhere; }
+  .ticket-table td { display: grid; grid-template-columns: 8rem minmax(0, 1fr); gap: .75rem; width: 100% !important; border: 0; padding: .35rem 0; overflow-wrap: anywhere; }
+  .ticket-table td > * { min-width: 0; }
+  .ticket-table .ticket-number { display: inline-block; white-space: nowrap; overflow-wrap: normal; word-break: normal; }
   .ticket-table td::before { content: attr(data-label); font-weight: 700; color: #395b49; }
   .ticket-table td:last-child { display: block; padding-top: .75rem; }
 }

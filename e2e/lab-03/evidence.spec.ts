@@ -53,6 +53,11 @@ test("EVIDENCE-01 Staff Queue screenshot", async ({ page }, testInfo) => {
   await expect(page.getByRole("heading", { name: "Ticket Queue" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Apply filters" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Open detail" }).first()).toBeVisible();
+  await expect.poll(() => page.locator(".ticket-number").first().evaluate((element) => {
+    const rect = element.getBoundingClientRect();
+    const style = window.getComputedStyle(element);
+    return rect.width > 0 && rect.height <= 32 && style.whiteSpace === "nowrap" && style.wordBreak === "normal";
+  })).toBe(true);
   await capture(page, testInfo, `staff-queue/staff-queue-${testInfo.project.name}.png`);
 });
 
