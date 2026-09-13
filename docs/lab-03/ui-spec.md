@@ -23,10 +23,12 @@ Internal Notes ใช้ tinted panel ที่มี label ชัดเจน �
 
 ## Visual checklist
 
-- [ ] Green brand tokens และ button/badge conventions ตรงกับ Lab 2
-- [ ] แสดงชื่อ/role ของ authenticated user และเฉพาะ navigation ที่ได้รับอนุญาต
-- [ ] Status, requested priority, IT priority และ role badges มี text labels
-- [ ] Validation, forbidden, empty/no-results, saving และ failure feedback อ่านได้ชัดเจน
-- [ ] Read-only fields และ editable fields แตกต่างกันอย่างเห็นได้ชัด
-- [ ] Screenshots ของ desktop/tablet/mobile ไม่เกิด clipping, overlap, unreadable text หรือ horizontal overflow
-- [ ] Keyboard focus, labels, table/card semantics และ state cues ที่ไม่พึ่งสีเพียงอย่างเดียวผ่าน accessibility review
+- [x] Green brand tokens และ button/badge conventions ตรงกับ Lab 2 — ตรวจด้วย `client/tests/lab-03/ZenGreenStyle.test.tsx`
+- [x] แสดงชื่อ/role ของ authenticated user และเฉพาะ navigation ที่ได้รับอนุญาต — ตรวจด้วย `AppRoleNavigation.test.tsx` และ E2E role landing
+- [x] Status, requested priority, IT priority และ role badges มี text labels — ตรวจจาก component tests และ screenshots ที่สร้างจริง
+- [x] Validation, forbidden, empty/no-results, saving และ failure feedback อ่านได้ชัดเจน — ตรวจด้วย client tests และ E2E/API failure cases
+- [x] Read-only fields และ editable fields แตกต่างกันอย่างเห็นได้ชัด — ตรวจใน Staff Ticket Detail และ User Management tests
+- [x] Screenshots ของ desktop/tablet/mobile ไม่เกิด clipping, overlap, unreadable text หรือ horizontal overflow — ตรวจด้วย `RESP-01`, `RESP-02` และ evidence assertions
+- [x] Keyboard focus, labels, table/card semantics และ state cues ที่ไม่พึ่งสีเพียงอย่างเดียวผ่าน accessibility regression — ตรวจด้วย `client/tests/lab-02/Accessibility.test.tsx`
+
+Checklist นี้ติ๊กเฉพาะรายการที่มี automated test หรือ screenshot evidence รองรับใน revision ล่าสุด ไม่ได้หมายความว่า peer review และ final-main review เสร็จแล้ว

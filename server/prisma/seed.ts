@@ -26,13 +26,35 @@ export async function runSeed() {
   const passwordError = validatePassword(seedPassword);
   if (passwordError) throw new Error(`LAB3_SEED_PASSWORD is required and invalid: ${passwordError}`);
   const prisma = getPrisma();
-  const resetFixturePasswords = process.env.LAB3_E2E_RESET_PASSWORDS === "true";
+  const resetE2eFixture = process.env.LAB3_E2E_RESET_PASSWORDS === "true";
+  if (resetE2eFixture) {
+    const databaseUrl = process.env.DATABASE_URL;
+    if (!databaseUrl || process.env.LAB3_E2E_DATABASE !== "true") {
+      throw new Error("LAB3_E2E_RESET_PASSWORDS requires LAB3_E2E_DATABASE=true and a dedicated local E2E database.");
+    }
+    const database = new URL(databaseUrl);
+    const databaseName = decodeURIComponent(database.pathname.replace(/^\//, "").split("?")[0]);
+    if (!['localhost', '127.0.0.1'].includes(database.hostname) || !/^toktickit_(lab3_)?e2e$/.test(databaseName)) {
+      throw new Error("Refusing E2E fixture reset: DATABASE_URL must point to localhost database toktickit_lab3_e2e or toktickit_e2e.");
+    }
+  }
   for (const name of categories) await prisma.category.upsert({ where: { name }, update: { isActive: true }, create: { name, isActive: true } });
   for (const name of relatedSystems) await prisma.relatedSystem.upsert({ where: { name }, update: { isActive: true }, create: { name, isActive: true } });
   const allUsers = [...requesters.map((user) => ({ ...user, role: "REQUESTER" as const })), ...staff.map((user) => ({ ...user, role: "IT_STAFF" as const })), { ...administrator, role: "ADMINISTRATOR" as const }];
+  if (resetE2eFixture) {
+    const seedEmails = allUsers.map((user) => user.email);
+    await prisma.$transaction([
+      prisma.publicComment.deleteMany(),
+      prisma.internalNote.deleteMany(),
+      prisma.attachment.deleteMany(),
+      prisma.session.deleteMany(),
+      prisma.ticket.deleteMany(),
+      prisma.requesterUser.deleteMany({ where: { email: { notIn: seedEmails } } }),
+    ]);
+  }
   for (const item of allUsers) {
     const saved = await prisma.requesterUser.upsert({ where: { email: item.email }, update: { name: item.name, isActive: item.isActive, role: item.role }, create: { name: item.name, email: item.email, isActive: item.isActive, role: item.role, passwordHash: hashPassword(seedPassword, `seed-${item.email}`), mustChangePassword: true } });
-    if (resetFixturePasswords || saved.mustChangePassword) await prisma.requesterUser.update({ where: { id: saved.id }, data: { passwordHash: hashPassword(seedPassword, `seed-${item.email}`), mustChangePassword: true } });
+    if (resetE2eFixture || saved.mustChangePassword) await prisma.requesterUser.update({ where: { id: saved.id }, data: { passwordHash: hashPassword(seedPassword, `seed-${item.email}`), mustChangePassword: true } });
   }
   const requesterRows = await prisma.requesterUser.findMany({ where: { role: "REQUESTER" }, orderBy: { id: "asc" } });
   const staffRows = await prisma.requesterUser.findMany({ where: { role: "IT_STAFF", isActive: true }, orderBy: { id: "asc" } });
