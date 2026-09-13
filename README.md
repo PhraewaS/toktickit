@@ -1,6 +1,6 @@
 # TokTickIT
 
-TokTickIT is an IT service desk application developed for CPE 334. Lab 2 adds the Requester Ticketing foundation: database models, deterministic seed data, active reference-data APIs, and a Development Requester context used before real authentication is introduced in Lab 3.
+TokTickIT is an IT service desk application developed for CPE 334. Lab 3 replaces the Lab 2 Development Requester selector with real cookie-backed authentication and adds Requester, IT Staff, and Administrator workflows while preserving Lab 2 tickets and attachments.
 
 ## Technology Stack
 
@@ -40,15 +40,21 @@ npm --prefix server run dev
 
 The Prisma commands will:
 
-- `npm --prefix server run prisma:deploy` — apply the committed Lab 1 and Lab 2 migrations without creating a new migration.
+- `npm --prefix server run prisma:deploy` — apply the committed Lab 1, Lab 2, and Lab 3 migrations without creating a new migration.
 - `npm --prefix server run prisma:migrate` — create/apply a migration during intentional local schema development only.
-- `npm --prefix server run prisma:seed` — idempotently seed 4 categories, 6 related systems, 4 active requesters, and 1 inactive requester.
+- `npm --prefix server run prisma:seed` — idempotently seed reference data, 4 active Requesters plus 1 inactive Requester, 3 active IT Staff plus 1 inactive IT Staff, 1 active Administrator, realistic Tickets, Public Comments, and Internal Notes.
 
 Do not use `prisma migrate reset` against a shared or evidence database. It is only appropriate for a disposable local development database.
 
-## Lab 2 Requester Context
+## Lab 3 authentication and local credentials
 
-The client loads active requesters from `GET /api/development-requesters` and stores the selected requester ID in `sessionStorage`, so the selection lasts only for the current browser tab.
+The production client opens on Login and sends the HttpOnly `toktickit_session` cookie with API calls. Users with `mustChangePassword` are shown only the mandatory Change Password screen until they save a valid password. The shell displays the authenticated user and role; navigation and backend endpoints are role-restricted. Logout invalidates the server session.
+
+The deterministic seed requires `LAB3_SEED_PASSWORD` in the local environment. Keep this value outside Git and never place it in source code, README files, screenshots, or committed evidence. Every seeded account requires a first-login password change. The seed can reset local E2E fixtures only when `LAB3_E2E_RESET_PASSWORDS=true` is explicitly set by the E2E setup.
+
+## Lab 2 compatibility path
+
+The Lab 3 production client does not render a Development Requester selector and does not send a development requester header. Authenticated requester operations derive ownership from the HttpOnly session identity.
 
 Requester-specific API calls must send:
 
@@ -56,7 +62,7 @@ Requester-specific API calls must send:
 X-Development-Requester-Id: <positive integer>
 ```
 
-This header is a Lab 2 testing mechanism, not authentication. The backend must still validate that the requester exists and is active before any requester-specific operation.
+This header is not authentication and must not be enabled in production. The backend rejects the retired endpoint outside the explicit compatibility mode and still validates the legacy context when that path is used.
 
 Active reference data is available from:
 
@@ -102,6 +108,10 @@ The read-only detail view and attachment lifecycle are ownership checked with th
 
 Uploads accept JPG/JPEG, PNG, WEBP, and PDF files up to 5 MiB each, with at most five active attachments per Ticket. Original basenames are stored as metadata while backend UUID filenames are kept in the local server/storage/attachments directory, which is ignored by Git. Removed attachments keep their metadata and removal reason but cannot be downloaded.
 
+## Lab 3 operations
+
+The IT Staff Ticket Queue supports search, status/priority/ownership filters, sorting, pagination, assignment, IT Priority, permitted status transitions, Public Comments, and Internal Notes. Administrator User Management supports list/search/role filter, create, basic edit, activation/deactivation, and setting a new initial password. See [`docs/lab-03/specification.md`](docs/lab-03/specification.md), [`docs/lab-03/api-spec.md`](docs/lab-03/api-spec.md), and [`docs/lab-03/ui-spec.md`](docs/lab-03/ui-spec.md).
+
 ## Testing
 
 Run tests and builds from the repository root:
@@ -113,6 +123,8 @@ npm --prefix server run build
 npm --prefix client run build
 ```
 
+Lab 3 API/component suites are included in the same commands under `server/tests/lab-03/` and `client/tests/lab-03/`. Set `LAB3_SEED_PASSWORD` only in the local shell or an untracked `server/.env`, then run the database-backed migration and seed before E2E testing. The Lab 3 submission evidence must be assembled as one concise PDF with headings `Answer Part 1` through `Answer Part 9`.
+
 Run the Lab 2 Responsive, Accessibility, E2E, and Visual Evidence suite after the local PostgreSQL service is available:
 
 ```bash
@@ -122,6 +134,14 @@ npm --prefix e2e exec playwright test -- --config e2e/playwright.config.ts
 ```
 
 The Playwright configuration starts the server and client dev processes, applies the committed migrations, and runs the idempotent seed during global setup. It writes HTML reports to `artifacts/lab-02/playwright-report/`, required-screen screenshots to `artifacts/lab-02/screenshots/{create-ticket,my-tickets,ticket-detail}/{desktop,tablet,mobile}.png`, and state evidence to `artifacts/lab-02/screenshots/states/{state}/{desktop,tablet,mobile}.png`.
+
+Run the Lab 3 authentication, staff, administrator, and responsive flows with the Lab 3 configuration:
+
+```bash
+npm --prefix e2e exec playwright test -- --config e2e/playwright.lab3.config.ts
+```
+
+This writes the Lab 3 HTML report and responsive evidence under `artifacts/lab-03/`.
 
 ## Security
 
