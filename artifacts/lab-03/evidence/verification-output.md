@@ -1,67 +1,71 @@
-# Lab 3 Verification Evidence
+# หลักฐานการตรวจสอบ Lab 3
 
-Revision: [`a9f0130`](https://github.com/PhraewaS/toktickit/commit/a9f0130af7a2e3b899c3eddb04ca60f9fc9d3d71)
+Revision ที่ตรวจสอบผลชุดนี้: [`f2a1312`](https://github.com/PhraewaS/toktickit/commit/f2a1312)
 
-All commands below were executed locally with PostgreSQL at `127.0.0.1:5433`. The seed password was supplied through the environment only and is intentionally not recorded here.
+คำสั่งด้านล่างรันในเครื่องด้วย PostgreSQL ที่ `127.0.0.1:5433` และฐานข้อมูลเฉพาะ `toktickit_lab3_e2e` โดยใช้ `LAB3_E2E_DATABASE=true` และ `LAB3_E2E_RESET_PASSWORDS=true` เท่านั้น รหัสผ่าน seed ส่งผ่าน environment ภายในเครื่องและไม่ได้บันทึกหรือ commit ลง repository
 
-## Migration and seed
-
-```text
-Command: npm run prisma:deploy (from server/)
-Result: passed; 3 migrations found; no pending migrations to apply.
-
-Command: npm run prisma:seed (from server/)
-Result: passed.
-Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
-```
-
-## Server verification
+## Migration และ Seed
 
 ```text
-Command: npm test -- --run (from server/)
-Test Files  22 passed (22)
-Tests       104 passed (104)
+คำสั่ง: npm run prisma:deploy (จาก server/)
+ผลลัพธ์: ผ่าน; พบ 3 migrations และไม่มี migration ค้างอยู่
 
-Command: npm run build (from server/)
-Result: passed.
+คำสั่ง: npm run prisma:seed (จาก server/)
+ผลลัพธ์: ผ่าน
+ข้อมูล seed: 4 categories, 6 related systems, 5 requesters,
+3 active IT Staff และ 1 Administrator
 ```
 
-## Client verification
+## การตรวจสอบ Server
 
 ```text
-Command: npm test -- --run (from client/)
-Test Files  16 passed (16)
-Tests       65 passed (65)
+คำสั่ง: npm test -- --run (จาก server/)
+ผลลัพธ์: ผ่าน 22 test files และ 104 tests
 
-Command: npm run build (from client/)
-Result: passed.
+คำสั่ง: npm run build (จาก server/)
+ผลลัพธ์: ผ่าน
 ```
 
-## Playwright verification
+## การตรวจสอบ Client
 
 ```text
-Command: npm exec --prefix e2e playwright test -- --config e2e/playwright.lab3.config.ts
-Result: exit code 0
-Total: 21
-Passed: 15
-Skipped: 6
-Failed: 0
+คำสั่ง: npm test -- --run (จาก client/)
+ผลลัพธ์: ผ่าน 16 test files และ 65 tests
+
+คำสั่ง: npm run build (จาก client/)
+ผลลัพธ์: ผ่าน
 ```
 
-The six skipped tests are intentional. Authentication, staff, and administrator mutation flows modify the seeded first-login fixture and are limited to the desktop project. Responsive coverage and the three major-screen evidence flows run in desktop, tablet, and mobile projects. All responsive and evidence screenshots passed in all three projects.
+## การตรวจสอบ Playwright
 
-## Evidence files
+```text
+คำสั่ง: npm exec --prefix e2e playwright test -- --config e2e/playwright.lab3.config.ts
+ผลลัพธ์: exit code 0
+รวม: 39 tests
+ผ่าน: 25
+ข้าม: 14
+ไม่ผ่าน: 0
+```
 
-- [Playwright report](./playwright-report.html)
-- [Login screenshot - desktop](./screenshots/login-desktop.png)
-- [Login screenshot - tablet](./screenshots/login-tablet.png)
-- [Login screenshot - mobile](./screenshots/login-mobile.png)
-- [Staff Queue screenshot - desktop](./screenshots/staff-queue-desktop.png)
-- [Staff Queue screenshot - tablet](./screenshots/staff-queue-tablet.png)
-- [Staff Queue screenshot - mobile](./screenshots/staff-queue-mobile.png)
-- [Staff Ticket Detail screenshot - desktop](./screenshots/staff-ticket-detail-desktop.png)
-- [Staff Ticket Detail screenshot - tablet](./screenshots/staff-ticket-detail-tablet.png)
-- [Staff Ticket Detail screenshot - mobile](./screenshots/staff-ticket-detail-mobile.png)
-- [Administrator User Management screenshot - desktop](./screenshots/user-management-desktop.png)
-- [Administrator User Management screenshot - tablet](./screenshots/user-management-tablet.png)
-- [Administrator User Management screenshot - mobile](./screenshots/user-management-mobile.png)
+การข้าม 14 รายการเป็นไปตามการออกแบบของ test เพราะ flow ที่แก้ไขข้อมูล first-login และข้อมูลผู้ใช้ของ Authentication, Requester, Staff และ Administrator กำหนดให้รันเฉพาะ desktop เพื่อป้องกัน fixture ชนกัน ส่วน responsive และ evidence tests รันครบทั้ง desktop, tablet และ mobile
+
+การตรวจ `git diff --check` ผ่าน และมี safety guard ใน fixture/seed ให้ reset ได้เฉพาะ dedicated local/E2E database ที่กำหนดเท่านั้น เพื่อให้ข้อมูลทดสอบ reproducible และไม่สะสม Ticket จากฐานข้อมูลอื่น
+
+## ไฟล์หลักฐานที่เปิดดูได้จาก GitHub
+
+- [Playwright report](../playwright-report/index.html)
+- [Login - desktop](../screenshots/authentication/login-desktop.png)
+- [Login - tablet](../screenshots/authentication/login-tablet.png)
+- [Login - mobile](../screenshots/authentication/login-mobile.png)
+- [Change Password - desktop](../screenshots/authentication/change-password-desktop.png)
+- [Change Password - tablet](../screenshots/authentication/change-password-tablet.png)
+- [Change Password - mobile](../screenshots/authentication/change-password-mobile.png)
+- [Staff Queue - desktop](../screenshots/staff-queue/staff-queue-desktop.png)
+- [Staff Queue - tablet](../screenshots/staff-queue/staff-queue-tablet.png)
+- [Staff Queue - mobile](../screenshots/staff-queue/staff-queue-mobile.png)
+- [Staff Ticket Detail - desktop](../screenshots/staff-ticket-detail/staff-ticket-detail-desktop.png)
+- [Staff Ticket Detail - tablet](../screenshots/staff-ticket-detail/staff-ticket-detail-tablet.png)
+- [Staff Ticket Detail - mobile](../screenshots/staff-ticket-detail/staff-ticket-detail-mobile.png)
+- [Administrator User Management - desktop](../screenshots/user-management/user-management-desktop.png)
+- [Administrator User Management - tablet](../screenshots/user-management/user-management-tablet.png)
+- [Administrator User Management - mobile](../screenshots/user-management/user-management-mobile.png)

@@ -597,6 +597,9 @@ h1 {
 }
 
 .ticket-table .badge--priority {
+  display: inline-block;
+  min-width: 4.5rem;
+  text-align: center;
   white-space: nowrap;
   overflow-wrap: normal;
 }
