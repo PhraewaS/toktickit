@@ -1,6 +1,6 @@
 # หลักฐานการตรวจสอบ Lab 3
 
-ผลการรันจริงชุดนี้เกิดขึ้นบน revision [`cb82e24`](https://github.com/PhraewaS/toktickit/commit/cb82e24) ของ PR #44 และถูกนำมาเก็บไว้ใน revision ปัจจุบัน [`118a358`](https://github.com/PhraewaS/toktickit/commit/118a358) ซึ่งเพิ่มเฉพาะการลบภาพหลักฐานชุดเก่าที่ซ้ำและไม่กระทบโค้ดหรือผลทดสอบ คำสั่งทั้งหมดรันในเครื่องด้วย PostgreSQL ที่ `127.0.0.1:5433` และฐานข้อมูลเฉพาะ `toktickit_lab3_e2e` โดยใช้ `LAB3_E2E_DATABASE=true` และ `LAB3_E2E_RESET_PASSWORDS=true` เท่านั้น รหัสผ่าน seed ส่งผ่าน environment ภายในเครื่อง ไม่ได้บันทึกหรือ commit ลง repository
+ผลการรันจริงชุดนี้เกิดขึ้นบน working tree ก่อน commit [`361ef6e`](https://github.com/PhraewaS/toktickit/commit/361ef6e) ของ PR #44 โดยรวม responsive fix และ evidence ชุดใหม่แล้ว คำสั่งทั้งหมดรันในเครื่องด้วย PostgreSQL ที่ `127.0.0.1:5433` และฐานข้อมูลเฉพาะ `toktickit_lab3_e2e` โดยใช้ `LAB3_E2E_DATABASE=true` และ `LAB3_E2E_RESET_PASSWORDS=true` เท่านั้น รหัสผ่าน seed ส่งผ่าน environment ภายในเครื่อง ไม่ได้บันทึกหรือ commit ลง repository
 
 ไฟล์ด้านล่างเป็น complete console output ที่เก็บจากการรันจริง ไม่ใช่เพียงสรุปจำนวน test
 
