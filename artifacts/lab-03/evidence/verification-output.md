@@ -1,6 +1,6 @@
 # หลักฐานการตรวจสอบ Lab 3
 
-ผลชุดนี้รันกับ revision ล่าสุดของ PR #44 ก่อน commit หลักฐานรอบสุดท้าย คำสั่งทั้งหมดรันในเครื่องด้วย PostgreSQL ที่ `127.0.0.1:5433` และฐานข้อมูลเฉพาะ `toktickit_lab3_e2e` โดยใช้ `LAB3_E2E_DATABASE=true` และ `LAB3_E2E_RESET_PASSWORDS=true` เท่านั้น รหัสผ่าน seed ส่งผ่าน environment ภายในเครื่อง ไม่ได้บันทึกหรือ commit ลง repository
+ผลชุดนี้รันกับ revision [`cb82e24`](https://github.com/PhraewaS/toktickit/commit/cb82e24) ของ PR #44 คำสั่งทั้งหมดรันในเครื่องด้วย PostgreSQL ที่ `127.0.0.1:5433` และฐานข้อมูลเฉพาะ `toktickit_lab3_e2e` โดยใช้ `LAB3_E2E_DATABASE=true` และ `LAB3_E2E_RESET_PASSWORDS=true` เท่านั้น รหัสผ่าน seed ส่งผ่าน environment ภายในเครื่อง ไม่ได้บันทึกหรือ commit ลง repository
 
 ไฟล์ด้านล่างเป็น complete console output ที่เก็บจากการรันจริง ไม่ใช่เพียงสรุปจำนวน test
 
