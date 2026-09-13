@@ -20,3 +20,5 @@ artifacts/lab-02/playwright-report/
 artifacts/lab-03/playwright-report/
 artifacts/lab-03/test-results/
 e2e/test-results/
+!artifacts/lab-03/evidence/playwright-report/
+!artifacts/lab-03/evidence/playwright-report/**

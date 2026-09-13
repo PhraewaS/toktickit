@@ -37,6 +37,13 @@ test("E2E-04 authentication rejects invalid, inactive, gated, and revoked access
   expect(unauthenticated.status()).toBe(401);
   expect(await errorCode(unauthenticated)).toBe("AUTHENTICATION_REQUIRED");
 
+  await login(request, "jennifer@example.test", seedPassword);
+  for (const protectedPath of ["/api/tickets", "/api/staff/tickets", "/api/admin/users"]) {
+    const gated = await getJson(request, protectedPath);
+    expect(gated.status(), `${protectedPath} must remain gated before password change`).toBe(403);
+    expect(await errorCode(gated)).toBe("PASSWORD_CHANGE_REQUIRED");
+  }
+
   await signInAndChangePassword(request, "jennifer@example.test", seedPassword, "Requester-E2E-Changed2!");
   const requesterTickets = await getJson(request, "/api/tickets");
   expect(requesterTickets.status()).toBe(200);

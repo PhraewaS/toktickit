@@ -1,8 +1,8 @@
 # หลักฐานการตรวจสอบ Lab 3
 
-Revision ที่ตรวจสอบผลชุดนี้: [`f2a1312`](https://github.com/PhraewaS/toktickit/commit/f2a1312)
+ผลชุดนี้รันกับ revision ล่าสุดของ PR #44 ก่อน commit หลักฐานรอบสุดท้าย คำสั่งทั้งหมดรันในเครื่องด้วย PostgreSQL ที่ `127.0.0.1:5433` และฐานข้อมูลเฉพาะ `toktickit_lab3_e2e` โดยใช้ `LAB3_E2E_DATABASE=true` และ `LAB3_E2E_RESET_PASSWORDS=true` เท่านั้น รหัสผ่าน seed ส่งผ่าน environment ภายในเครื่อง ไม่ได้บันทึกหรือ commit ลง repository
 
-คำสั่งด้านล่างรันในเครื่องด้วย PostgreSQL ที่ `127.0.0.1:5433` และฐานข้อมูลเฉพาะ `toktickit_lab3_e2e` โดยใช้ `LAB3_E2E_DATABASE=true` และ `LAB3_E2E_RESET_PASSWORDS=true` เท่านั้น รหัสผ่าน seed ส่งผ่าน environment ภายในเครื่องและไม่ได้บันทึกหรือ commit ลง repository
+ไฟล์ด้านล่างเป็น complete console output ที่เก็บจากการรันจริง ไม่ใช่เพียงสรุปจำนวน test
 
 ## Migration และ Seed
 
@@ -20,7 +20,8 @@ Revision ที่ตรวจสอบผลชุดนี้: [`f2a1312`](htt
 
 ```text
 คำสั่ง: npm test -- --run (จาก server/)
-ผลลัพธ์: ผ่าน 22 test files และ 104 tests
+คำสั่งที่ใช้จริง: npm test -- --run --pool=threads --poolOptions.threads.singleThread
+ผลลัพธ์: ผ่าน 22 test files และ 104 tests; exit code 0
 
 คำสั่ง: npm run build (จาก server/)
 ผลลัพธ์: ผ่าน
@@ -30,7 +31,7 @@ Revision ที่ตรวจสอบผลชุดนี้: [`f2a1312`](htt
 
 ```text
 คำสั่ง: npm test -- --run (จาก client/)
-ผลลัพธ์: ผ่าน 16 test files และ 65 tests
+ผลลัพธ์: ผ่าน 16 test files และ 65 tests; exit code 0
 
 คำสั่ง: npm run build (จาก client/)
 ผลลัพธ์: ผ่าน
@@ -51,9 +52,15 @@ Revision ที่ตรวจสอบผลชุดนี้: [`f2a1312`](htt
 
 การตรวจ `git diff --check` ผ่าน และมี safety guard ใน fixture/seed ให้ reset ได้เฉพาะ dedicated local/E2E database ที่กำหนดเท่านั้น เพื่อให้ข้อมูลทดสอบ reproducible และไม่สะสม Ticket จากฐานข้อมูลอื่น
 
+## Complete console output
+
+- [Server: migration, seed, full test suite และ build](./server-console-output.txt)
+- [Client: test suite และ build](./client-console-output.txt)
+- [Playwright: full console output ของ 39 tests](./playwright-console-output.txt)
+
 ## ไฟล์หลักฐานที่เปิดดูได้จาก GitHub
 
-- [Playwright report](../playwright-report/index.html)
+- [Playwright report — latest 39-test run](./playwright-report/index.html)
 - [Login - desktop](../screenshots/authentication/login-desktop.png)
 - [Login - tablet](../screenshots/authentication/login-tablet.png)
 - [Login - mobile](../screenshots/authentication/login-mobile.png)
@@ -69,3 +76,5 @@ Revision ที่ตรวจสอบผลชุดนี้: [`f2a1312`](htt
 - [Administrator User Management - desktop](../screenshots/user-management/user-management-desktop.png)
 - [Administrator User Management - tablet](../screenshots/user-management/user-management-tablet.png)
 - [Administrator User Management - mobile](../screenshots/user-management/user-management-mobile.png)
+
+หมายเหตุด้าน traceability: E2E-02 และ E2E-03 ตรวจ role landing, navigation และการเปิดหน้าจอจริงใน browser ส่วน mutation และ authorization ที่เปลี่ยนข้อมูลตรวจผ่าน production API integration/E2E API flows ตามที่ระบุใน `docs/lab-03/tests.md` ไม่ได้อ้างว่าเป็น UI workflow ครบทุก mutation จาก screenshot เพียงอย่างเดียว การข้าม 14 รายการของ Playwright เป็นไปตามการออกแบบให้ flow ที่แก้ไข first-login หรือข้อมูลผู้ใช้รันเฉพาะ desktop ส่วน responsive/evidence assertions รันครบ desktop, tablet และ mobile

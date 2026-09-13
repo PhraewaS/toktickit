@@ -16,6 +16,7 @@ async function signInAndChangePassword(page: Page, email: string, changedPasswor
   await page.getByLabel("New password", { exact: true }).fill(changedPassword);
   await page.getByLabel("Confirm new password", { exact: true }).fill(changedPassword);
   await page.getByRole("button", { name: "Save password" }).click();
+  await expect(page.getByRole("heading", { name: "Change your password" })).toBeHidden();
   await page.reload();
 }
 
@@ -29,7 +30,9 @@ async function capture(page: Page, testInfo: TestInfo, filename: string) {
   })).toBe(true);
   const root = path.join(repositoryRoot, "artifacts/lab-03/screenshots");
   fs.mkdirSync(path.dirname(path.join(root, filename)), { recursive: true });
-  await page.screenshot({ path: path.join(root, filename), fullPage: true });
+  // Evidence is a viewport artifact. Full-page captures made tablet/mobile
+  // screenshots tens of thousands of pixels tall and obscured responsive defects.
+  await page.screenshot({ path: path.join(root, filename), fullPage: false });
 }
 
 test("EVIDENCE-00 Login and Change Password screenshots", async ({ page }, testInfo) => {

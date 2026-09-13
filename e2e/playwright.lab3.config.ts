@@ -12,7 +12,7 @@ export default defineConfig({
   fullyParallel: false,
   workers: 1,
   outputDir: path.join(repositoryRoot, "artifacts/lab-03/test-results"),
-  reporter: [["list"], ["html", { outputFolder: path.join(repositoryRoot, "artifacts/lab-03/playwright-report"), open: "never" }]],
+  reporter: [["list"], ["html", { outputFolder: path.join(repositoryRoot, "artifacts/lab-03/evidence/playwright-report"), open: "never" }]],
   globalSetup: path.join(e2eDirectory, "global-setup.ts"),
   use: {
     baseURL: "http://localhost:5173",

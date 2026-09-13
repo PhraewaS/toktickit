@@ -32,3 +32,5 @@ Internal Notes ใช้ tinted panel ที่มี label ชัดเจน �
 - [x] Keyboard focus, labels, table/card semantics และ state cues ที่ไม่พึ่งสีเพียงอย่างเดียวผ่าน accessibility regression — ตรวจด้วย `client/tests/lab-02/Accessibility.test.tsx`
 
 Checklist นี้ติ๊กเฉพาะรายการที่มี automated test หรือ screenshot evidence รองรับใน revision ล่าสุด ไม่ได้หมายความว่า peer review และ final-main review เสร็จแล้ว
+
+สำหรับ Staff และ Administrator ภาพหน้าจอใช้ยืนยัน layout, role landing และ read-only/visible controls ตาม UI contract เท่านั้น ส่วนการเปลี่ยนข้อมูลและ authorization ของ queue, ticket operations และ user management ต้องอ้างอิงผล production API tests ใน `docs/lab-03/tests.md` เพิ่มเติม ไม่สรุปว่า UI workflow ของทุก mutation ผ่านจาก screenshot เพียงอย่างเดียว
