@@ -22,7 +22,7 @@ test("E2E-05 authenticated Requester regression: create, own detail, comment, an
   await page.getByLabel("Description").fill("This ticket verifies the authenticated requester regression flow.");
   await page.getByRole("button", { name: "Submit Ticket" }).click();
   await expect(page.getByText("Ticket created successfully.")).toBeVisible();
-  await page.getByRole("button", { name: "My Tickets" }).click();
+  await page.getByRole("link", { name: "My Tickets" }).click();
   await expect(page.getByRole("heading", { name: "My Tickets" })).toBeVisible();
   await page.getByRole("button", { name: "View details" }).first().click();
   await expect(page.getByRole("heading", { name: /TKT-/ })).toBeVisible();
@@ -48,6 +48,6 @@ test("E2E-08 authenticated Requester regression replaces the legacy Lab 2 select
   await page.getByRole("button", { name: "Save password" }).click();
   await expect(page.getByRole("heading", { name: "Create Ticket" })).toBeVisible();
   await expect(page.locator("#development-requester")).toHaveCount(0);
-  await page.getByRole("button", { name: "My Tickets" }).click();
+  await page.getByRole("link", { name: "My Tickets" }).click();
   await expect(page.getByRole("heading", { name: "My Tickets" })).toBeVisible();
 });

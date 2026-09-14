@@ -126,12 +126,12 @@ test("E2E-06 IT Staff queue query and ticket operations use production API route
     const adminPriority = await administrator.patch(`${apiBase}/api/staff/tickets/${adminTicketId}/priority`, { data: { itPriority: "LOW" } });
     expect(adminPriority.status()).toBe(200);
 
-    const assignees = await getJson(request, "/api/staff/assignees");
-    const assigneeBody = await assignees.json() as { data: Array<{ id: number; role: string }> };
-    const administratorOwner = assigneeBody.data.find((user) => user.role === "ADMINISTRATOR");
-    expect(administratorOwner).toBeTruthy();
-    const assignAdministrator = await postJson(request, `/api/staff/tickets/${adminTicketId}/assignment`, { ownerId: administratorOwner!.id });
-    expect(assignAdministrator.status()).toBe(200);
+    const assignees = await getJson(administrator, "/api/staff/assignees");
+    expect(assignees.status()).toBe(403);
+    expect(await errorCode(assignees)).toBe("ROLE_FORBIDDEN");
+    const assignAdministrator = await postJson(administrator, `/api/staff/tickets/${adminTicketId}/assignment`, { ownerId: 1 });
+    expect(assignAdministrator.status()).toBe(403);
+    expect(await errorCode(assignAdministrator)).toBe("ROLE_FORBIDDEN");
 
     for (const [path, method, body] of [
       [`/api/staff/tickets/${adminTicketId}/status`, "patch", { status: "OPEN" }],
