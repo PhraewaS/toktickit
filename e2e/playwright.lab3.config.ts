@@ -1,9 +1,11 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig, devices } from "@playwright/test";
+import { getE2EServerEnvironment } from "./lab-03/database-guard.js";
 
 const e2eDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(e2eDirectory, "..");
+const e2eServerEnvironment = getE2EServerEnvironment();
 
 export default defineConfig({
   testDir: path.join(e2eDirectory, "lab-03"),
@@ -15,7 +17,7 @@ export default defineConfig({
   reporter: [["list"], ["html", { outputFolder: path.join(repositoryRoot, "artifacts/lab-03/evidence/playwright-report"), open: "never" }]],
   globalSetup: path.join(e2eDirectory, "global-setup.ts"),
   use: {
-    baseURL: "http://localhost:5173",
+    baseURL: "http://127.0.0.1:5173",
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
     video: "retain-on-failure",
@@ -30,14 +32,15 @@ export default defineConfig({
       command: "npm.cmd run dev",
       cwd: path.join(repositoryRoot, "server"),
       url: "http://127.0.0.1:3000/api/health",
-      reuseExistingServer: true,
+      env: e2eServerEnvironment,
+      reuseExistingServer: false,
       timeout: 120_000,
     },
     {
       command: "npm.cmd run dev -- --host 127.0.0.1",
       cwd: path.join(repositoryRoot, "client"),
       url: "http://127.0.0.1:5173",
-      reuseExistingServer: true,
+      reuseExistingServer: false,
       timeout: 120_000,
     },
   ],

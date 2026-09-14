@@ -35,20 +35,28 @@ test("E2E-06 IT Staff queue query and ticket operations use production API route
 
   const queue = await getJson(request, "/api/staff/tickets?page=1&pageSize=10&sortBy=updatedAt&sortOrder=desc");
   expect(queue.status()).toBe(200);
-  const queueBody = await queue.json() as { data: { items: Array<{ id: number; currentStatus: string }>; pagination: { page: number } } };
+  const queueBody = await queue.json() as { data: { items: Array<{ id: number; currentStatus: string; summary: string; owner: unknown }>; pagination: { page: number } } };
   expect(queueBody.data.items.length).toBeGreaterThan(0);
   expect(queueBody.data.pagination.page).toBe(1);
 
-  const filtered = await getJson(request, "/api/staff/tickets?search=VPN&ownerId=unassigned&page=1&pageSize=10&sortBy=summary&sortOrder=asc");
+  const filtered = await getJson(request, "/api/staff/tickets?search=Employee&ownerId=unassigned&page=1&pageSize=10&sortBy=summary&sortOrder=asc");
   expect(filtered.status()).toBe(200);
   const filteredBody = await filtered.json() as { data: { items: Array<{ summary: string; owner: unknown }> } };
-  expect(filteredBody.data.items.every((item) => /vpn/i.test(item.summary) && item.owner === null)).toBe(true);
+  expect(filteredBody.data.items.length).toBeGreaterThan(0);
+  expect(filteredBody.data.items.every((item) => /employee/i.test(item.summary) && item.owner === null)).toBe(true);
+
+  const contrasting = await getJson(request, "/api/staff/tickets?search=VPN&ownerId=unassigned&page=1&pageSize=10&sortBy=summary&sortOrder=asc");
+  expect(contrasting.status()).toBe(200);
+  const contrastingBody = await contrasting.json() as { data: { items: Array<{ summary: string; owner: unknown }> } };
+  expect(contrastingBody.data.items).toHaveLength(0);
 
   const ascending = await getJson(request, "/api/staff/tickets?page=1&pageSize=10&sortBy=updatedAt&sortOrder=asc");
   expect(ascending.status()).toBe(200);
-  const ascendingBody = await ascending.json() as { data: { items: Array<{ id: number }>; pagination: { page: number; pageSize: number } } };
+  const ascendingBody = await ascending.json() as { data: { items: Array<{ id: number; updatedAt: string }>; pagination: { page: number; pageSize: number } } };
   expect(ascendingBody.data.pagination).toMatchObject({ page: 1, pageSize: 10 });
-  expect(ascendingBody.data.items.map((item) => item.id)).toEqual([...ascendingBody.data.items.map((item) => item.id)].sort((a, b) => a - b));
+  expect(ascendingBody.data.items.length).toBeGreaterThan(1);
+  const expectedAscending = [...ascendingBody.data.items].sort((left, right) => Date.parse(left.updatedAt) - Date.parse(right.updatedAt) || left.id - right.id);
+  expect(ascendingBody.data.items).toEqual(expectedAscending);
 
   const outOfRangePage = await getJson(request, "/api/staff/tickets?page=2&pageSize=10&sortBy=summary&sortOrder=asc");
   expect(outOfRangePage.status()).toBe(400);

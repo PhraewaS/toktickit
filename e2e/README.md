@@ -12,6 +12,8 @@ $env:LAB3_E2E_RESET_PASSWORDS = "true"
 npm exec --prefix e2e playwright test -- --config e2e/playwright.lab3.config.ts
 ```
 
+The Lab 3 Playwright configuration starts a fresh API and client process for the current revision (`reuseExistingServer=false`). It passes the guarded E2E `DATABASE_URL` to that API process; an already-running development backend is never reused. `E2E_DATABASE_URL` may be used instead of `DATABASE_URL` when the dedicated URL should be supplied separately.
+
 `LAB3_E2E_DATABASE=true` และ `LAB3_E2E_RESET_PASSWORDS=true` จะทำงานได้เฉพาะเมื่อ `DATABASE_URL` ชี้ไปที่ `localhost` หรือ `127.0.0.1` และชื่อฐานข้อมูลเป็น `toktickit_lab3_e2e` หรือ `toktickit_e2e` เท่านั้น หากไม่ตรงเงื่อนไข seed จะหยุดทันทีเพื่อป้องกันการล้างข้อมูลผิดฐานข้อมูล
 
 Fixture reset จะล้าง sessions, tickets, attachments, comments, notes และผู้ใช้ที่ไม่ได้อยู่ใน deterministic seed ก่อน seed ใหม่ จึงทำให้ทุก test เริ่มจากข้อมูลชุดเดิมและไม่สะสม Ticket ข้ามรอบ

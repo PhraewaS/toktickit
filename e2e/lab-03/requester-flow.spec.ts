@@ -34,3 +34,20 @@ test("E2E-05 authenticated Requester regression: create, own detail, comment, an
   await expect(page.getByRole("button", { name: "Problem marked as appears resolved" })).toBeDisabled();
   await expect(page.getByText(/does not formally resolve or close/i)).toBeVisible();
 });
+
+test("E2E-08 authenticated Requester regression replaces the legacy Lab 2 selector flow", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "desktop", "Requester regression runs once in the desktop project; responsive coverage is separate.");
+  resetLocalSeed();
+  await page.goto("/");
+  await page.getByLabel("Email address").fill("jennifer@example.test");
+  await page.getByLabel("Password").fill(getLab3SeedPassword());
+  await page.getByRole("button", { name: "Sign in" }).click();
+  await expect(page.getByRole("heading", { name: "Change your password" })).toBeVisible();
+  await page.getByLabel("New password", { exact: true }).fill("Requester-E2E08-Changed2!");
+  await page.getByLabel("Confirm new password", { exact: true }).fill("Requester-E2E08-Changed2!");
+  await page.getByRole("button", { name: "Save password" }).click();
+  await expect(page.getByRole("heading", { name: "Create Ticket" })).toBeVisible();
+  await expect(page.locator("#development-requester")).toHaveCount(0);
+  await page.getByRole("button", { name: "My Tickets" }).click();
+  await expect(page.getByRole("heading", { name: "My Tickets" })).toBeVisible();
+});
