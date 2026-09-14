@@ -545,6 +545,7 @@ h1 {
 .ticket-table {
   width: 100%;
   min-width: 900px;
+  table-layout: fixed;
   border-collapse: collapse;
   background: var(--surface);
 }
@@ -555,6 +556,64 @@ h1 {
   border-bottom: 1px solid #e2e9e4;
   text-align: left;
   vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.ticket-table th:last-child,
+.ticket-table td:last-child {
+  width: 8.5rem;
+}
+
+.ticket-table th:nth-child(1),
+.ticket-table td:nth-child(1) { width: 14%; }
+.ticket-table th:nth-child(2),
+.ticket-table td:nth-child(2) { width: 15%; }
+.ticket-table th:nth-child(3),
+.ticket-table td:nth-child(3) { width: 10%; }
+.ticket-table th:nth-child(4),
+.ticket-table td:nth-child(4) { width: 8%; }
+.ticket-table th:nth-child(5),
+.ticket-table td:nth-child(5) { width: 9%; }
+.ticket-table th:nth-child(6),
+.ticket-table td:nth-child(6) { width: 14%; }
+.ticket-table th:nth-child(7),
+.ticket-table td:nth-child(7) { width: 11%; }
+.ticket-table th:nth-child(8),
+.ticket-table td:nth-child(8) { width: 10%; }
+.ticket-table th:nth-child(9),
+.ticket-table td:nth-child(9) { width: 9%; }
+
+.ticket-table td:last-child .button {
+  width: 100%;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.ticket-table .ticket-number,
+.ticket-table .badge {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.ticket-table .ticket-number {
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.ticket-table .ticket-cell-value {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+.ticket-table .badge--priority {
+  display: inline-block;
+  min-width: 4.5rem;
+  text-align: center;
+  white-space: nowrap;
+  overflow-wrap: normal;
 }
 
 .ticket-table th {
@@ -573,6 +632,8 @@ h1 {
   color: var(--green-800);
   font-weight: 800;
   white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 .badge {
@@ -839,9 +900,13 @@ fieldset:disabled textarea {
   .ticket-table td {
     display: block;
     min-width: 0;
+    width: 100%;
   }
 
   .ticket-table {
+    width: 100%;
+    min-width: 0;
+    table-layout: auto;
     background: transparent;
   }
 
@@ -861,8 +926,13 @@ fieldset:disabled textarea {
     display: grid;
     grid-template-columns: 10rem minmax(0, 1fr);
     gap: 0.5rem;
+    width: 100% !important;
     padding: 0.5rem 0;
     border-bottom: 1px solid #e2e9e4;
+  }
+
+  .ticket-table td > * {
+    min-width: 0;
   }
 
   .ticket-table td::before {
@@ -882,8 +952,10 @@ fieldset:disabled textarea {
 
   .ticket-table .ticket-number {
     min-width: 0;
-    white-space: normal;
-    overflow-wrap: anywhere;
+    display: inline-block;
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
   }
 }
 
@@ -965,6 +1037,7 @@ fieldset:disabled textarea {
   }
 
   .ticket-table {
+    table-layout: auto;
     background: transparent;
   }
 
@@ -1037,4 +1110,34 @@ fieldset:disabled textarea {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Lab 3 additions keep the Lab 2 Zen Green visual system intact. */
+.auth-page { max-width: 720px; margin: 0 auto; }
+.badge--role { background: #d8eee2; color: #15553b; }
+.comment-panel { border-left: 4px solid #2d8b63; }
+.internal-note-panel { border-left: 4px solid #d39e35; background: #fffaf0; }
+.requester-resolution-panel { border-left: 4px solid #587f6a; }
+.entry-list { display: grid; gap: .75rem; margin: 1rem 0; }
+.entry { border: 1px solid #d7e3db; border-radius: .75rem; padding: .8rem 1rem; background: #fff; }
+.internal-note-panel .entry { border-color: #ecd8a7; background: #fffdf8; }
+.entry strong, .entry time { display: block; }
+.entry time { color: #5b6e63; font-size: .85rem; margin-top: .15rem; }
+.entry p { margin: .6rem 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.user-form { margin-top: 1.5rem; }
+.checkbox-label { display: flex; align-items: center; gap: .5rem; margin: 1rem 0; }
+.checkbox-label input { width: 1.1rem; height: 1.1rem; }
+.dialog-backdrop { position: fixed; inset: 0; display: grid; place-items: center; padding: 1rem; background: rgb(10 34 23 / .45); z-index: 20; }
+.confirmation-dialog { width: min(100%, 32rem); padding: 1.5rem; background: #fff; border-radius: 1rem; box-shadow: 0 1rem 3rem rgb(0 0 0 / .2); }
+.confirmation-dialog .button { margin: .35rem .5rem .35rem 0; }
+@media (max-width: 760px) {
+  .ticket-table-wrap { overflow-x: visible; }
+  .ticket-table thead { display: none; }
+  .ticket-table, .ticket-table tbody, .ticket-table tr, .ticket-table td { display: block; width: 100%; }
+  .ticket-table tr { margin: 0 0 1rem; padding: .75rem; border: 1px solid #d7e3db; border-radius: .75rem; background: #fff; }
+  .ticket-table td { display: grid; grid-template-columns: 8rem minmax(0, 1fr); gap: .75rem; width: 100% !important; border: 0; padding: .35rem 0; overflow-wrap: anywhere; }
+  .ticket-table td > * { min-width: 0; }
+  .ticket-table .ticket-number { display: inline-block; white-space: nowrap; overflow-wrap: normal; word-break: normal; }
+  .ticket-table td::before { content: attr(data-label); font-weight: 700; color: #395b49; }
+  .ticket-table td:last-child { display: block; padding-top: .75rem; }
 }

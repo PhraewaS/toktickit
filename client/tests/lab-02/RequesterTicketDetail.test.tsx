@@ -8,6 +8,9 @@ const apiMocks = vi.hoisted(() => ({
   uploadTicketAttachments: vi.fn(),
   removeAttachment: vi.fn(),
   downloadAttachment: vi.fn(),
+  fetchRequesterComments: vi.fn(),
+  createRequesterComment: vi.fn(),
+  markRequesterResolved: vi.fn(),
 }));
 
 vi.mock("../../src/api.js", async () => {
@@ -48,6 +51,9 @@ describe("Requester Ticket Detail and attachments", () => {
     apiMocks.fetchTicketDetail.mockResolvedValue(ticket);
     apiMocks.uploadTicketAttachments.mockResolvedValue([{ ...attachment, id: 9, originalFilename: "new.pdf", mimeType: "application/pdf" }]);
     apiMocks.removeAttachment.mockResolvedValue({ ...attachment, removedAt: "2026-08-25T08:30:00.000Z", removalReason: "Wrong file", state: "REMOVED" });
+    apiMocks.fetchRequesterComments.mockResolvedValue([]);
+    apiMocks.createRequesterComment.mockResolvedValue({ id: 12, content: "Thanks", createdAt: "2026-08-25T08:30:00.000Z", author: requester });
+    apiMocks.markRequesterResolved.mockResolvedValue({ requesterResolvedAt: "2026-08-25T08:30:00.000Z" });
   });
 
   it("shows owned ticket information as read-only and active attachment actions", async () => {
@@ -82,5 +88,15 @@ describe("Requester Ticket Detail and attachments", () => {
     expect(screen.getByRole("alert")).not.toHaveTextContent("private SQL path");
     await user.click(screen.getByRole("button", { name: "Try again" }));
     expect(await screen.findByRole("heading", { name: ticket.ticketNumber })).toBeInTheDocument();
+  });
+
+  it("shows safe comment failure and supports retry", async () => {
+    const user = userEvent.setup();
+    apiMocks.fetchRequesterComments.mockRejectedValueOnce(new Error("private comment details")).mockResolvedValueOnce([]);
+    render(<RequesterTicketDetail requester={requester} ticketId={42} onBack={vi.fn()} />);
+    expect(await screen.findByRole("alert")).toHaveTextContent(/could not load public comments/i);
+    expect(screen.getByRole("alert")).not.toHaveTextContent("private comment details");
+    await user.click(screen.getByRole("button", { name: "Try again" }));
+    expect(await screen.findByText(/No Public Comments yet/i)).toBeInTheDocument();
   });
 });

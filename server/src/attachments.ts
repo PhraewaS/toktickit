@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 import { mkdir, readFile, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 import multer from "multer";
-import { Prisma } from "@prisma/client";
+import { Prisma, UserRole } from "@prisma/client";
 import { Request, RequestHandler, Response } from "express";
 import { getPrisma } from "./prisma.js";
 import { DevelopmentRequesterRequest } from "./requester-context.js";
@@ -101,8 +101,10 @@ export function serializeTicketDetail(ticket: PublicTicketDetail) {
     relatedSystem: ticket.relatedSystem,
     summary: ticket.summary,
     requestedPriority: ticket.requestedPriority,
+    itPriority: ticket.itPriority,
     description: ticket.description,
     currentStatus: ticket.currentStatus,
+    requesterResolvedAt: ticket.requesterResolvedAt?.toISOString() ?? null,
     createdAt: ticket.createdAt.toISOString(),
     updatedAt: ticket.updatedAt.toISOString(),
     attachments: ticket.attachments.map(serializeAttachment),
@@ -300,10 +302,15 @@ export const downloadAttachment: RequestHandler = async (req, res) => {
     attachmentNotFound(res);
     return;
   }
-  const requester = (req as DevelopmentRequesterRequest).developmentRequester;
+  const typed = req as DevelopmentRequesterRequest;
+  const authUser = typed.authUser;
+  const requester = typed.developmentRequester;
   try {
+    const ownership = authUser && authUser.role !== UserRole.REQUESTER
+      ? {}
+      : { ticket: { requesterId: authUser?.id ?? requester.id } };
     const attachment = await getPrisma().attachment.findFirst({
-      where: { id: attachmentId, removedAt: null, ticket: { requesterId: requester.id } },
+      where: { id: attachmentId, removedAt: null, ...ownership },
       select: { originalFilename: true, storedFilename: true, mimeType: true },
     });
     if (!attachment) {

@@ -1,0 +1,68 @@
+===== Lab 3 client verification =====
+===== npm test -- --run =====
+
+> toktickit-client@1.0.0 test
+> vitest run --run
+
+
+ RUN  v2.1.9 C:/Users/User/OneDrive/Documents/ChatGPT/Lab TokTik (SE)/pr44-work/client
+
+ ✓ tests/lab-03/ApiContract.test.tsx (2 tests) 81ms
+ ✓ tests/lab-03/Login.test.tsx (2 tests) 615ms
+   ✓ Lab 3 Login > validates credentials and returns the authenticated user 429ms
+ ✓ tests/lab-02/ZenGreenStyles.test.tsx (1 test) 663ms
+   ✓ STYLE-01 Zen Green semantics > exposes labeled requester selection and the required shell classes 640ms
+ ✓ tests/lab-03/ZenGreenStyle.test.tsx (1 test) 3ms
+ ✓ tests/lab-02/RequesterTicketDetail.test.tsx (4 tests) 2168ms
+   ✓ Requester Ticket Detail and attachments > shows owned ticket information as read-only and active attachment actions 922ms
+   ✓ Requester Ticket Detail and attachments > uploads a valid file and soft-removes it with a reason 1060ms
+ ✓ tests/lab-03/UserManagement.test.tsx (6 tests) 2768ms
+   ✓ Lab 3 User Management > renders the minimalist administrator list and create action 730ms
+   ✓ clears the previous load error after a successful retry 348ms
+   ✓ submits the administrator create-user action 1106ms
+   ✓ submits edit and reset-password actions 336ms
+ ✓ tests/lab-02/RequesterSelection.test.tsx (6 tests) 1571ms
+   ✓ Development Requester selection > loads active requesters and requires a selection before continuing 896ms
+   ✓ Development Requester selection > stores the requester in the tab session and shows the requester shell 376ms
+ ✓ tests/lab-01/App.test.tsx (3 tests) 1039ms
+   ✓ App > shows the requester-selection screen when the API is available 671ms
+ ✓ tests/lab-02/CreateTicket.test.tsx (7 tests) 2425ms
+   ✓ Create Ticket > loads database reference data and distinguishes read-only context 1280ms
+ ✓ tests/lab-03/ChangePassword.test.tsx (2 tests) 885ms
+   ✓ Lab 3 first-login password change > requires matching passwords and continues after saving 701ms
+ ✓ tests/lab-02/AttachmentSection.test.tsx (4 tests) 731ms
+   ✓ AttachmentSection > reports invalid files while retaining valid files for upload 339ms
+ ✓ tests/lab-02/MyTickets.test.tsx (7 tests) 1982ms
+   ✓ My Tickets screen > loads owned tickets and applies search/filter controls 741ms
+   ✓ My Tickets screen > clears search and filters while keeping the visible sort controls in sync 514ms
+   ✓ My Tickets screen > covers all list controls and previous/next pagination requests 429ms
+ ✓ tests/lab-03/StaffTicketQueue.test.tsx (6 tests) 1491ms
+   ✓ Lab 3 IT Staff queue > shows queue data and empty/no-results feedback from one response 300ms
+   ✓ Lab 3 IT Staff queue > sends independent requested and IT priority filters with search, sort and pagination 713ms
+ ✓ tests/lab-02/Accessibility.test.tsx (3 tests) 656ms
+   ✓ A11Y-01 required accessible semantics > supports keyboard focus order and labeled requester selection 357ms
+ ✓ tests/lab-03/StaffTicketDetail.test.tsx (5 tests) 1479ms
+   ✓ Lab 3 IT Staff ticket detail > supports claim and private note controls 507ms
+   ✓ Staff ticket operations and evidence > posts Public Comments and Internal Notes through the staff controls 559ms
+ ✓ tests/lab-03/AppRoleNavigation.test.tsx (6 tests) 483ms
+
+ Test Files  16 passed (16)
+      Tests  65 passed (65)
+   Start at  21:38:24
+   Duration  28.70s (transform 6.79s, setup 12.17s, collect 65.55s, tests 19.04s, environment 32.75s, prepare 8.10s)
+
+===== npm run build =====
+
+> toktickit-client@1.0.0 build
+> tsc && vite build
+
+vite v6.4.3 building for production...
+transforming...
+✓ 38 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.41 kB │ gzip:  0.27 kB
+dist/assets/index-BJ110OsY.css  248.50 kB │ gzip: 35.02 kB
+dist/assets/index-Cb0cS8JS.js   212.67 kB │ gzip: 60.03 kB
+✓ built in 799ms
+===== client verification exit code: 0 =====

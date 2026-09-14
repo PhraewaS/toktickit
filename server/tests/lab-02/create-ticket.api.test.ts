@@ -49,6 +49,7 @@ const baseTicket = {
   description:
     "The battery falls from full charge to 20 percent within one hour.",
   currentStatus: "NEW",
+  itPriority: "MEDIUM",
   submissionKey: requestBody.submissionKey,
   createdAt,
   updatedAt: createdAt,
@@ -151,6 +152,20 @@ describe("POST /api/tickets", () => {
     expect(response.body.replayed).toBe(true);
     expect(response.body.data.id).toBe(42);
     expect(prismaMocks.ticketCreate).not.toHaveBeenCalled();
+  });
+
+  it.each(["LOW", "HIGH"] as const)("copies requested Priority %s to IT Priority", async (priority) => {
+    const response = await request(app)
+      .post("/api/tickets")
+      .set("X-Development-Requester-Id", "1")
+      .send({ ...requestBody, requestedPriority: priority, submissionKey: `f47ac10b-58cc-4372-a567-0e02b2c3d47${priority === "LOW" ? "1" : "2"}` });
+
+    expect(response.status).toBe(201);
+    expect(response.body.data.requestedPriority).toBe(priority);
+    expect(response.body.data.itPriority).toBe(priority);
+    expect(prismaMocks.ticketCreate).toHaveBeenCalledWith(
+      expect.objectContaining({ data: expect.objectContaining({ requestedPriority: priority, itPriority: priority }) }),
+    );
   });
 
   it("returns safe field details and does not create a Ticket for invalid input", async () => {

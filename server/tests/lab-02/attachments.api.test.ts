@@ -1,7 +1,9 @@
 import request from "supertest";
+import { UserRole } from "@prisma/client";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mocks = vi.hoisted(() => ({
+  sessionFindUnique: vi.fn(),
   requesterFindFirst: vi.fn(),
   ticketFindFirst: vi.fn(),
   attachmentCount: vi.fn(),
@@ -18,6 +20,7 @@ const mocks = vi.hoisted(() => ({
 
 vi.mock("../../src/prisma.js", () => ({
   getPrisma: () => ({
+    session: { findUnique: mocks.sessionFindUnique },
     requesterUser: { findFirst: mocks.requesterFindFirst },
     ticket: { findFirst: mocks.ticketFindFirst },
     attachment: {
@@ -54,6 +57,7 @@ const attachment = {
 describe("Attachment lifecycle APIs", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mocks.sessionFindUnique.mockResolvedValue(null);
     mocks.requesterFindFirst.mockResolvedValue({ id: 1, name: "Jennifer Anderson", email: "jennifer@example.test" });
     mocks.ticketFindFirst.mockResolvedValue({ id: 42 });
     mocks.attachmentCount.mockResolvedValue(0);
@@ -152,6 +156,32 @@ describe("Attachment lifecycle APIs", () => {
     expect(response.headers["content-type"]).toMatch(/^image\/png/);
     expect(response.headers["content-disposition"]).toBe('attachment; filename="report.png"');
     expect(response.headers["access-control-expose-headers"]).toBe("Content-Disposition");
+  });
+
+  it.each([UserRole.IT_STAFF, UserRole.ADMINISTRATOR])("allows %s to download an active Attachment for Staff Detail", async (role) => {
+    mocks.sessionFindUnique.mockResolvedValue({
+      expiresAt: new Date(Date.now() + 60_000),
+      user: {
+        id: role === UserRole.IT_STAFF ? 7 : 9,
+        name: role,
+        email: `${role.toLowerCase()}@example.test`,
+        role,
+        isActive: true,
+        mustChangePassword: false,
+      },
+    });
+    mocks.attachmentFindFirst.mockResolvedValue({ ...attachment, storedFilename: "staff-visible-file" });
+
+    const response = await request(app)
+      .get("/api/attachments/8/download")
+      .set("Cookie", "toktickit_session=staff-session");
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(Buffer.from("PNG bytes"));
+    expect(mocks.attachmentFindFirst).toHaveBeenCalledWith({
+      where: { id: 8, removedAt: null },
+      select: { originalFilename: true, storedFilename: true, mimeType: true },
+    });
   });
 
   it("soft-removes an owned active attachment and validates the reason", async () => {
