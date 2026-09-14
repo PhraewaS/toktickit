@@ -50,6 +50,8 @@
 
 การข้าม 16 รายการเป็นไปตามการออกแบบของ test เพราะ flow ที่แก้ไขข้อมูล first-login และข้อมูลผู้ใช้ของ Authentication, Requester, Staff และ Administrator กำหนดให้รันเฉพาะ desktop เพื่อป้องกัน fixture ชนกัน ส่วน responsive และ evidence tests รันครบทั้ง desktop, tablet และ mobile โดย E2E-06 และ E2E-08 ผ่านจริงใน desktop
 
+Playwright report ถูกสร้างใหม่จาก Final `main` หลังลบ report directory เดิมทั้งหมดก่อนรัน รอบล่าสุดมีเฉพาะ `playwright-report/index.html` และไม่พบ `data/`, `trace/` หรือ failure artifact จากรอบก่อนค้างอยู่
+
 `EVIDENCE-01 Staff Queue screenshot` ผ่านครบ 3/3 viewport หลังปรับ responsive cell layout โดย Ticket Number และข้อความในแต่ละ field แสดงเป็นบรรทัดที่อ่านได้ ไม่ถูกบีบเป็นแนวตั้ง และไม่มี clipping
 
 การตรวจ `git diff --check` ผ่าน และมี safety guard ใน fixture/seed ให้ reset ได้เฉพาะ dedicated local/E2E database ที่กำหนดเท่านั้น เพื่อให้ข้อมูลทดสอบ reproducible และไม่สะสม Ticket จากฐานข้อมูลอื่น

@@ -28,7 +28,7 @@ Command: npm exec --prefix e2e playwright test -- --config e2e/playwright.lab3.c
 Working directory: repository root
 Result: PASS — 42 tests total; 26 passed, 16 skipped, 0 failed.
 Complete output: ../evidence/playwright-console-output.txt
-Report: ../evidence/playwright-report/index.html
+Report: ../evidence/playwright-report/index.html (regenerated after removing the previous report directory; no stale data/trace/failure artifacts)
 
 The 16 skipped tests are intentional: state-mutating authentication, requester, staff, and administrator flows run only in the desktop project. Responsive and evidence coverage runs across desktop, tablet, and mobile.
 
