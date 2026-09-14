@@ -22,13 +22,13 @@
 | [Role-specific client navigation and screens](https://github.com/PhraewaS/toktickit/issues/36) | `feature/lab3-role-client` | [#43](https://github.com/PhraewaS/toktickit/pull/43) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | [`b3c9ba4`](https://github.com/PhraewaS/toktickit/commit/b3c9ba4da5955139b16811a2b0bb523fa1da34e1) |
 | [Automated verification, responsive evidence, and E2E flows](https://github.com/PhraewaS/toktickit/issues/37) | `feature/lab3-verification-evidence` | [#44](https://github.com/PhraewaS/toktickit/pull/44) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | [`cbbeeaf`](https://github.com/PhraewaS/toktickit/commit/cbbeeafd48d6d3526a7d025cdbf4b104b9837502) |
 | [Staging integration, peer review, and final submission](https://github.com/PhraewaS/toktickit/issues/38) | `lab3-staging` → `main` | [#45](https://github.com/PhraewaS/toktickit/pull/45) | [@guluJa](https://github.com/guluJa) | อนุมัติและ Merge (`Approved/Merged`) | [`bc8cee9`](https://github.com/PhraewaS/toktickit/commit/bc8cee95e54bb90017900611ff84e7c45d7b3709) |
-| [Record final main verification evidence](https://github.com/PhraewaS/toktickit/issues/38) | `feature/lab3-final-verification-evidence` | [#46](https://github.com/PhraewaS/toktickit/pull/46) | [@guluJa](https://github.com/guluJa) | รอ Peer Review และ Approval | ยังไม่ Merge |
+| [Record final main verification evidence](https://github.com/PhraewaS/toktickit/issues/38) | `feature/lab3-final-verification-evidence` | [#46](https://github.com/PhraewaS/toktickit/pull/46) | [@guluJa](https://github.com/guluJa) | อนุมัติและ Merge (`Approved/Merged`) | [`e86fe9f`](https://github.com/PhraewaS/toktickit/commit/e86fe9fe419ded9ce9aea9b9b40ea5dc3ddf4e86) |
 
 หมายเหตุ: PR #39–#44 ผ่าน Peer Review, ได้รับ Approval และถูก Merge เข้า `lab3-staging` แล้ว ส่วน PR #45 เป็น Final Integration PR จาก `lab3-staging` เข้า `main` ซึ่งผ่าน Peer Review/Approval และถูก Merge แล้วด้วย commit [`bc8cee9`](https://github.com/PhraewaS/toktickit/commit/bc8cee95e54bb90017900611ff84e7c45d7b3709)
 
 หมายเหตุ Workflow: PR #39 เป็น Contract PR แรก ส่วน PR #40–#44 ใช้ `lab3-staging` ที่มี Contract และงานก่อนหน้าเป็นฐานตามลำดับ จากนั้น PR #45 จึงรวม `lab3-staging` เข้า `main`
 
-หมายเหตุ Final Evidence: หลักฐานใน PR #44 เป็น Feature/Staging verification ส่วน Final main verification ถูกรันหลัง PR #45 Merge เข้า `main` แล้ว โดยผลทดสอบและ complete output อยู่ใน final-evidence PR นี้ และจะเพิ่มลิงก์ Review/Approval, Merge commit และ Final evidence รวมไว้ใน [Issue #38](https://github.com/PhraewaS/toktickit/issues/38)
+หมายเหตุ Final Evidence: หลักฐานใน PR #44 เป็น Feature/Staging verification ส่วน Final main verification ถูกรันหลัง PR #45 Merge เข้า `main` แล้ว โดยผลทดสอบและ complete output อยู่ใน PR #46 ซึ่งผ่าน Approval และ Merge แล้ว จากนั้นบันทึกลิงก์ Review/Approval, Merge commit และ Final evidence รวมไว้ใน [Issue #38](https://github.com/PhraewaS/toktickit/issues/38)
 
 ---
 
@@ -210,7 +210,13 @@ PR นี้เป็น Evidence-only PR ที่แตกจาก Final `mai
 
 แหล่งที่มา: [PR #46](https://github.com/PhraewaS/toktickit/pull/46)
 
-สถานะปัจจุบัน: รอ Peer Review และ Approval จาก `@guluJa` ก่อน Merge กลับเข้า `main`
+ผลตรวจ: `@guluJa` ตรวจ revision [`5369ab6`](https://github.com/PhraewaS/toktickit/commit/5369ab638b3c2804dad3ac6d066adf9aae511244) แล้วไม่พบประเด็นเพิ่มเติม และส่ง Review สถานะ `APPROVED`
+
+แหล่งที่มา: [Approval ของ PR #46](https://github.com/PhraewaS/toktickit/pull/46#pullrequestreview-5200270349)
+
+สถานะการ Merge: PR #46 ถูก Merge เข้า `main` ด้วย [Merge commit `e86fe9f`](https://github.com/PhraewaS/toktickit/commit/e86fe9fe419ded9ce9aea9b9b40ea5dc3ddf4e86)
+
+หลักฐานล่าสุดถูกสร้างใหม่จาก Final `main` หลังลบ report เก่าแล้ว ผลตรงกันที่ 42 tests, 26 passed, 16 skipped และ 0 failed โดยใน `playwright-report/` เหลือเฉพาะ `index.html` และไม่มี failure artifact ค้างอยู่
 
 ---
 
@@ -333,8 +339,8 @@ PR นี้เป็น Evidence-only PR ที่แตกจาก Final `mai
 - [x] PR #45 ผ่าน Peer Review และ Approval
 - [x] PR #45 Merge เข้า `main` ด้วย commit [`bc8cee9`](https://github.com/PhraewaS/toktickit/commit/bc8cee95e54bb90017900611ff84e7c45d7b3709)
 - [x] รันและบันทึก Final verification จาก `main`
-- [ ] Final evidence PR จาก `main` ผ่าน Peer Review และ Approval
-- [ ] Merge Final evidence PR เข้า `main`
-- [ ] เพิ่ม Final evidence, Approval link และ Merge commit ของ Final evidence PR ใน Issue #38
+- [x] Final evidence PR จาก `main` ผ่าน Peer Review และ Approval
+- [x] Merge Final evidence PR เข้า `main` ด้วย commit [`e86fe9f`](https://github.com/PhraewaS/toktickit/commit/e86fe9fe419ded9ce9aea9b9b40ea5dc3ddf4e86)
+- [x] เพิ่ม Final evidence, Approval link และ Merge commit ของ Final evidence PR ใน [Issue #38](https://github.com/PhraewaS/toktickit/issues/38)
 - [ ] จัดทำ Final PDF ตามข้อกำหนด Lab sheet หากยังไม่ได้จัดทำ
-- [ ] เปลี่ยน Issue #38 เป็น `Done` และปิด Issue หลัง Final evidence PR Merge
+- [x] เปลี่ยน Issue #38 เป็น `Done` และปิด Issue หลัง Final evidence PR Merge
