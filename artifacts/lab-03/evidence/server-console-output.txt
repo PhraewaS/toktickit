@@ -1,4 +1,5 @@
-===== Lab 3 server verification =====
+===== Lab 3 server verification — Final main `bc8cee9` =====
+Run date: 2026-09-14 (Asia/Bangkok)
 DATABASE: 127.0.0.1:5433/toktickit_lab3_e2e (credentials omitted)
 ===== npm run prisma:deploy =====
 
