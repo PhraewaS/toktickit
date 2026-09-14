@@ -1,0 +1,35 @@
+VERIFY-01 — Final main test verification
+Repository: PhraewaS/toktickit
+Branch: main
+Final main Commit SHA: bc8cee95e54bb90017900611ff84e7c45d7b3709
+PR: #45 (lab3-staging → main)
+Run date: 2026-09-14 (Asia/Bangkok)
+Database: PostgreSQL 127.0.0.1:5433/toktickit_lab3_e2e (credentials omitted)
+
+Command: npm run prisma:deploy
+Working directory: server
+Result: PASS — 3 migrations found; no pending migrations.
+
+Command: npm run prisma:seed
+Working directory: server
+Result: PASS — 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+
+Command: npm test -- --run --pool=threads --poolOptions.threads.singleThread
+Working directory: server
+Result: PASS — 22 test files, 104 tests.
+Complete output: ../evidence/server-console-output.txt
+
+Command: npm test -- --run
+Working directory: client
+Result: PASS — 16 test files, 65 tests.
+Complete output: ../evidence/client-console-output.txt
+
+Command: npm exec --prefix e2e playwright test -- --config e2e/playwright.lab3.config.ts
+Working directory: repository root
+Result: PASS — 42 tests total; 26 passed, 16 skipped, 0 failed.
+Complete output: ../evidence/playwright-console-output.txt
+Report: ../evidence/playwright-report/index.html
+
+The 16 skipped tests are intentional: state-mutating authentication, requester, staff, and administrator flows run only in the desktop project. Responsive and evidence coverage runs across desktop, tablet, and mobile.
+
+VERIFY-01 result: PASS — Final main verification completed without test failures.

@@ -1,3 +1,8 @@
+===== Lab 3 Playwright verification — Final main `bc8cee9` =====
+Run date: 2026-09-14 (Asia/Bangkok)
+Command: npm exec --prefix e2e playwright test -- --config e2e/playwright.lab3.config.ts
+Database: 127.0.0.1:5433/toktickit_lab3_e2e (credentials omitted)
+
 [WebServer] (node:46768) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
 [WebServer] (node:47392) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.

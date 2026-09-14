@@ -1,6 +1,6 @@
-# หลักฐานการตรวจสอบ Lab 3
+# หลักฐานการตรวจสอบ Lab 3 — Final `main`
 
-ผลการรันจริงชุดนี้เกิดขึ้นบน revision ปัจจุบันของ PR #45 หลังแก้ E2E database guard, Staff Queue assertions และ E2E-08 แล้ว คำสั่งทั้งหมดรันในเครื่องด้วย PostgreSQL ที่ `127.0.0.1:5433` และฐานข้อมูลเฉพาะ `toktickit_lab3_e2e` โดยใช้ `LAB3_E2E_DATABASE=true` และ `LAB3_E2E_RESET_PASSWORDS=true` เท่านั้น รหัสผ่าน seed ส่งผ่าน environment ภายในเครื่อง ไม่ได้บันทึกหรือ commit ลง repository
+ผลการรันจริงชุดนี้ตรวจจาก Final `main` หลัง PR #45 ถูก Merge ด้วย commit [`bc8cee9`](https://github.com/PhraewaS/toktickit/commit/bc8cee95e54bb90017900611ff84e7c45d7b3709) เมื่อวันที่ 14 กันยายน 2026 คำสั่งทั้งหมดรันในเครื่องด้วย PostgreSQL ที่ `127.0.0.1:5433` และฐานข้อมูลเฉพาะ `toktickit_lab3_e2e` โดยใช้ `LAB3_E2E_DATABASE=true` และ `LAB3_E2E_RESET_PASSWORDS=true` เท่านั้น รหัสผ่าน seed ส่งผ่าน environment ภายในเครื่อง ไม่ได้บันทึกหรือ commit ลง repository
 
 ไฟล์ด้านล่างเป็น complete console output ที่เก็บจากการรันจริง ไม่ใช่เพียงสรุปจำนวน test
 
@@ -56,6 +56,8 @@
 
 ## Complete console output
 
+- [Final main test record](../test-results/final-tests.txt)
+- [Final main build record](../test-results/final-builds.txt)
 - [Server: migration, seed, full test suite และ build](./server-console-output.txt)
 - [Client: test suite และ build](./client-console-output.txt)
 - [Playwright: full console output ของ 42 tests](./playwright-console-output.txt)

@@ -21,13 +21,13 @@
 | [Administrator User Management](https://github.com/PhraewaS/toktickit/issues/35) | `feature/lab3-admin-users` | [#42](https://github.com/PhraewaS/toktickit/pull/42) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | [`d1625ee`](https://github.com/PhraewaS/toktickit/commit/d1625ee729ebb1e745023fa714d1b5820d70d282) |
 | [Role-specific client navigation and screens](https://github.com/PhraewaS/toktickit/issues/36) | `feature/lab3-role-client` | [#43](https://github.com/PhraewaS/toktickit/pull/43) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | [`b3c9ba4`](https://github.com/PhraewaS/toktickit/commit/b3c9ba4da5955139b16811a2b0bb523fa1da34e1) |
 | [Automated verification, responsive evidence, and E2E flows](https://github.com/PhraewaS/toktickit/issues/37) | `feature/lab3-verification-evidence` | [#44](https://github.com/PhraewaS/toktickit/pull/44) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | [`cbbeeaf`](https://github.com/PhraewaS/toktickit/commit/cbbeeafd48d6d3526a7d025cdbf4b104b9837502) |
-| [Staging integration, peer review, and final submission](https://github.com/PhraewaS/toktickit/issues/38) | `lab3-staging` → `main` | [#45](https://github.com/PhraewaS/toktickit/pull/45) | [@guluJa](https://github.com/guluJa) | รอ Peer Review และ Approval | ยังไม่ Merge |
+| [Staging integration, peer review, and final submission](https://github.com/PhraewaS/toktickit/issues/38) | `lab3-staging` → `main` | [#45](https://github.com/PhraewaS/toktickit/pull/45) | [@guluJa](https://github.com/guluJa) | อนุมัติและ Merge (`Approved/Merged`) | [`bc8cee9`](https://github.com/PhraewaS/toktickit/commit/bc8cee95e54bb90017900611ff84e7c45d7b3709) |
 
-หมายเหตุ: PR #39–#44 ผ่าน Peer Review, ได้รับ Approval และถูก Merge เข้า `lab3-staging` แล้ว ส่วน PR #45 เป็น Final Integration PR จาก `lab3-staging` เข้า `main` ซึ่งยังเปิดอยู่และรอการตรวจจากเพื่อน
+หมายเหตุ: PR #39–#44 ผ่าน Peer Review, ได้รับ Approval และถูก Merge เข้า `lab3-staging` แล้ว ส่วน PR #45 เป็น Final Integration PR จาก `lab3-staging` เข้า `main` ซึ่งผ่าน Peer Review/Approval และถูก Merge แล้วด้วย commit [`bc8cee9`](https://github.com/PhraewaS/toktickit/commit/bc8cee95e54bb90017900611ff84e7c45d7b3709)
 
 หมายเหตุ Workflow: PR #39 เป็น Contract PR แรก ส่วน PR #40–#44 ใช้ `lab3-staging` ที่มี Contract และงานก่อนหน้าเป็นฐานตามลำดับ จากนั้น PR #45 จึงรวม `lab3-staging` เข้า `main`
 
-หมายเหตุ Final Evidence: หลักฐานใน PR #44 เป็น Feature/Staging verification ส่วน Final main verification ต้องรันหลัง PR #45 Merge เข้า `main` แล้วจึงบันทึกผลทดสอบ, Review/Approval, Merge commit และ Final evidence ไว้ใน [Issue #38](https://github.com/PhraewaS/toktickit/issues/38)
+หมายเหตุ Final Evidence: หลักฐานใน PR #44 เป็น Feature/Staging verification ส่วน Final main verification ถูกรันหลัง PR #45 Merge เข้า `main` แล้ว โดยผลทดสอบและ complete output อยู่ใน final-evidence PR นี้ และจะเพิ่มลิงก์ Review/Approval, Merge commit และ Final evidence รวมไว้ใน [Issue #38](https://github.com/PhraewaS/toktickit/issues/38)
 
 ---
 
@@ -166,13 +166,42 @@
 
 ### PR #45 — Final Integration จาก `lab3-staging` เข้า `main`
 
-**ข้อความรีวิวจาก `@guluJa`:** รอ Peer Review
+**ข้อความรีวิวจาก `@guluJa`:** ตรวจทิศทาง `lab3-staging → main`, Merge history ของ PR #39–#44, required repository structure, test evidence และ responsive screenshots แล้วขอให้แก้ Playwright database guard, Staff Queue assertions, E2E-08 traceability และ `ai-use.md`
 
-แหล่งที่มา: [PR #45](https://github.com/PhraewaS/toktickit/pull/45)
+แหล่งที่มา: [รีวิว PR #45 — Changes requested](https://github.com/PhraewaS/toktickit/pull/45#pullrequestreview-5197676742)
 
-**การตอบกลับของผู้จัดทำ:** รอข้อเสนอแนะและ Approval จาก Reviewer
+**การตอบกลับของผู้จัดทำ:** แก้ไขตามข้อเสนอแนะแล้ว รวมถึง dedicated E2E database guard, queue filter/sort assertions, authenticated Requester regression และปรับ `ai-use.md` จากนั้นตรวจ Final `main` ต่อใน Evidence PR
 
-**สถานะการ Merge:** PR เปิดอยู่, base คือ `main`, source คือ `lab3-staging`, สถานะ `CLEAN` และ `MERGEABLE` แต่ยังไม่มี Merge commit
+แหล่งที่มา: [ความคิดเห็นใน PR #45](https://github.com/PhraewaS/toktickit/pull/45#issuecomment-5664842187)
+
+**ผลตรวจซ้ำและการอนุมัติ:** ตรวจ revision `ad55427` แล้วไม่พบประเด็นเพิ่มเติม และส่ง Review สถานะ `APPROVED`
+
+แหล่งที่มา: [Approval ของ PR #45](https://github.com/PhraewaS/toktickit/pull/45#pullrequestreview-5198928422)
+
+**สถานะการ Merge:** PR #45 ถูก Merge จาก `lab3-staging` เข้า `main` ด้วย [Merge commit `bc8cee9`](https://github.com/PhraewaS/toktickit/commit/bc8cee95e54bb90017900611ff84e7c45d7b3709)
+
+### Final main verification หลัง PR #45
+
+ตรวจจาก `main` ที่ commit [`bc8cee9`](https://github.com/PhraewaS/toktickit/commit/bc8cee95e54bb90017900611ff84e7c45d7b3709) ด้วย PostgreSQL dedicated E2E ที่ `127.0.0.1:5433/toktickit_lab3_e2e` และส่ง credential ผ่าน environment ภายในเครื่องเท่านั้น
+
+- Migration deploy: ผ่าน ไม่มี migration ค้าง
+- Deterministic seed: ผ่าน
+- Server tests: 22 files, 104 tests ผ่าน
+- Server build: ผ่าน
+- Client tests: 16 files, 65 tests ผ่าน
+- Client build: ผ่าน
+- Playwright: 42 tests, 26 ผ่าน, 16 ข้ามตาม design, 0 ล้มเหลว
+- Responsive/evidence coverage: ผ่านครบ desktop, tablet และ mobile
+
+หลักฐานที่บันทึกใน Final evidence PR:
+
+- [`final-tests.txt`](../../artifacts/lab-03/test-results/final-tests.txt)
+- [`final-builds.txt`](../../artifacts/lab-03/test-results/final-builds.txt)
+- [`verification-output.md`](../../artifacts/lab-03/evidence/verification-output.md)
+- [`server-console-output.txt`](../../artifacts/lab-03/evidence/server-console-output.txt)
+- [`client-console-output.txt`](../../artifacts/lab-03/evidence/client-console-output.txt)
+- [`playwright-console-output.txt`](../../artifacts/lab-03/evidence/playwright-console-output.txt)
+- [`Playwright report`](../../artifacts/lab-03/evidence/playwright-report/index.html)
 
 ---
 
@@ -292,10 +321,11 @@
 - [x] `lab3-staging` รวม PR #39–#44 ครบตาม Required Branch Flow
 - [x] มีหลักฐาน Feature/Staging verification ใน PR #44
 - [x] มีบันทึกการ Review งานเพื่อนใน PR #48 และ PR #57–#62
-- [ ] PR #45 ผ่าน Peer Review และ Approval
-- [ ] PR #45 Merge เข้า `main`
-- [ ] รันและบันทึก Final verification จาก `main`
-- [ ] เพิ่ม Final evidence, Approval link และ Merge commit ของ PR #45 ใน Issue #38
-- [ ] อัปเดต `reviewer.md` revision สุดท้ายบน `main`
+- [x] PR #45 ผ่าน Peer Review และ Approval
+- [x] PR #45 Merge เข้า `main` ด้วย commit [`bc8cee9`](https://github.com/PhraewaS/toktickit/commit/bc8cee95e54bb90017900611ff84e7c45d7b3709)
+- [x] รันและบันทึก Final verification จาก `main`
+- [ ] Final evidence PR จาก `main` ผ่าน Peer Review และ Approval
+- [ ] Merge Final evidence PR เข้า `main`
+- [ ] เพิ่ม Final evidence, Approval link และ Merge commit ของ Final evidence PR ใน Issue #38
 - [ ] จัดทำ Final PDF ตามข้อกำหนด Lab sheet หากยังไม่ได้จัดทำ
-- [ ] เปลี่ยน Issue #38 เป็น `Done` และปิด Issue
+- [ ] เปลี่ยน Issue #38 เป็น `Done` และปิด Issue หลัง Final evidence PR Merge
