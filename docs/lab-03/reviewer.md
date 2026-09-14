@@ -22,6 +22,7 @@
 | [Role-specific client navigation and screens](https://github.com/PhraewaS/toktickit/issues/36) | `feature/lab3-role-client` | [#43](https://github.com/PhraewaS/toktickit/pull/43) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | [`b3c9ba4`](https://github.com/PhraewaS/toktickit/commit/b3c9ba4da5955139b16811a2b0bb523fa1da34e1) |
 | [Automated verification, responsive evidence, and E2E flows](https://github.com/PhraewaS/toktickit/issues/37) | `feature/lab3-verification-evidence` | [#44](https://github.com/PhraewaS/toktickit/pull/44) | [@guluJa](https://github.com/guluJa) | อนุมัติ (`Approved`) | [`cbbeeaf`](https://github.com/PhraewaS/toktickit/commit/cbbeeafd48d6d3526a7d025cdbf4b104b9837502) |
 | [Staging integration, peer review, and final submission](https://github.com/PhraewaS/toktickit/issues/38) | `lab3-staging` → `main` | [#45](https://github.com/PhraewaS/toktickit/pull/45) | [@guluJa](https://github.com/guluJa) | อนุมัติและ Merge (`Approved/Merged`) | [`bc8cee9`](https://github.com/PhraewaS/toktickit/commit/bc8cee95e54bb90017900611ff84e7c45d7b3709) |
+| [Record final main verification evidence](https://github.com/PhraewaS/toktickit/issues/38) | `feature/lab3-final-verification-evidence` | [#46](https://github.com/PhraewaS/toktickit/pull/46) | [@guluJa](https://github.com/guluJa) | รอ Peer Review และ Approval | ยังไม่ Merge |
 
 หมายเหตุ: PR #39–#44 ผ่าน Peer Review, ได้รับ Approval และถูก Merge เข้า `lab3-staging` แล้ว ส่วน PR #45 เป็น Final Integration PR จาก `lab3-staging` เข้า `main` ซึ่งผ่าน Peer Review/Approval และถูก Merge แล้วด้วย commit [`bc8cee9`](https://github.com/PhraewaS/toktickit/commit/bc8cee95e54bb90017900611ff84e7c45d7b3709)
 
@@ -202,6 +203,14 @@
 - [`client-console-output.txt`](../../artifacts/lab-03/evidence/client-console-output.txt)
 - [`playwright-console-output.txt`](../../artifacts/lab-03/evidence/playwright-console-output.txt)
 - [`Playwright report`](../../artifacts/lab-03/evidence/playwright-report/index.html)
+
+### PR #46 — Record final main verification evidence
+
+PR นี้เป็น Evidence-only PR ที่แตกจาก Final `main` หลัง PR #45 Merge แล้วตามรูปแบบเดียวกับ PR #31 ของ Lab 2 โดยไม่มีการเปลี่ยนแปลง Source Code หรือพฤติกรรมของระบบ
+
+แหล่งที่มา: [PR #46](https://github.com/PhraewaS/toktickit/pull/46)
+
+สถานะปัจจุบัน: รอ Peer Review และ Approval จาก `@guluJa` ก่อน Merge กลับเข้า `main`
 
 ---
 
