@@ -62,7 +62,7 @@
 
 ## ไฟล์หลักฐานที่เปิดดูได้จาก GitHub
 
-- [Playwright report — latest 39-test run](./playwright-report/index.html)
+- [Playwright report — latest 42-test run](./playwright-report/index.html)
 - [Login - desktop](../screenshots/authentication/login-desktop.png)
 - [Login - tablet](../screenshots/authentication/login-tablet.png)
 - [Login - mobile](../screenshots/authentication/login-mobile.png)
