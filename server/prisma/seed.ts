@@ -67,6 +67,20 @@ export async function runSeed() {
     const ticket = await prisma.ticket.upsert({ where: { requesterId_submissionKey: { requesterId: requester.id, submissionKey } }, update: { summary, currentStatus: status, requestedPriority: priority, itPriority: priority, ownerId }, create: { ticketNumber: `TKT-20260908-${String(10000000 + i).slice(-8)}`, requesterId: requester.id, categoryId: categoryRows[i % categoryRows.length].id, relatedSystemId: systemRows[i % systemRows.length].id, summary, description: `Seeded local development ticket for ${summary.toLowerCase()}.`, requestedPriority: priority, itPriority: priority, currentStatus: status, ownerId, submissionKey } });
     if (!await prisma.publicComment.findFirst({ where: { ticketId: ticket.id, content: { startsWith: "Seeded public update" } } })) await prisma.publicComment.create({ data: { ticketId: ticket.id, authorId: requester.id, content: "Seeded public update for local development." } });
     if (staffRows[0] && !await prisma.internalNote.findFirst({ where: { ticketId: ticket.id, content: { startsWith: "Seeded internal note" } } })) await prisma.internalNote.create({ data: { ticketId: ticket.id, authorId: staffRows[0].id, content: "Seeded internal note for local development." } });
+    const actionTemplates = i === 0
+      ? [
+          { description: "Reviewed VPN connectivity logs and confirmed the affected account.", result: "The failure was reproduced and the access policy was identified for correction.", followUpRequired: true, followUpNote: "Confirm connectivity with the Requester after the policy refresh.", attachmentNotes: "See the seeded VPN log attachment when available." },
+          { description: "Refreshed the VPN access policy and tested a new connection.", result: "Connection succeeded from the service-desk test device.", followUpRequired: false, followUpNote: null, attachmentNotes: null },
+        ]
+      : i === 1
+        ? [{ description: "Checked the Employee Portal browser console and service health.", result: "The blank page was caused by a stale client bundle; a hard refresh restored the page.", followUpRequired: false, followUpNote: null, attachmentNotes: null }]
+        : [];
+    for (const [actionIndex, action] of actionTemplates.entries()) {
+      const exists = await prisma.actionTaken.findFirst({ where: { ticketId: ticket.id, description: action.description }, select: { id: true } });
+      if (!exists && staffRows[actionIndex % Math.max(staffRows.length, 1)]) {
+        await prisma.actionTaken.create({ data: { ticketId: ticket.id, actionDateTime: new Date(ticket.createdAt.getTime() + (actionIndex + 1) * 60 * 60 * 1000), description: action.description, result: action.result, performedById: staffRows[actionIndex % staffRows.length].id, followUpRequired: action.followUpRequired, followUpNote: action.followUpNote, attachmentNotes: action.attachmentNotes } });
+      }
+    }
   }
   console.log(`Seeded ${categories.length} categories, ${systemRows.length} related systems, ${requesterRows.length} requesters, ${staffRows.length} active IT Staff, and one Administrator.`);
 }
