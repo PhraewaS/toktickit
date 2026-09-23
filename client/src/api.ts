@@ -29,6 +29,30 @@ export interface User {
 
 export interface CommentEntry { id: number; content: string; createdAt: string; author: { id: number; name: string; role: UserRole | string } }
 
+export interface ActionTaken {
+  id: number;
+  ticketId: number;
+  actionDateTime: string;
+  description: string;
+  result: string;
+  performedBy: { id: number; name: string; email?: string; role?: UserRole | string };
+  followUpRequired: boolean;
+  followUpNote: string | null;
+  attachmentNotes: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ActionTakenPayload {
+  actionDateTime: string;
+  description: string;
+  result: string;
+  followUpRequired: boolean;
+  followUpNote?: string;
+  attachmentNotes?: string;
+  updatedAt?: string;
+}
+
 export interface CreateTicketPayload {
   submissionKey: string;
   categoryId: number;
@@ -373,6 +397,7 @@ export interface StaffTicket extends Ticket {
   requesterResolvedAt: string | null;
   publicComments?: CommentEntry[];
   internalNotes?: CommentEntry[];
+  actionsTaken?: ActionTaken[];
 }
 export interface StaffTicketListResult { items: StaffTicket[]; pagination: { page: number; pageSize: 10 | 20 | 50; totalItems: number; totalPages: number } }
 export interface StaffTicketQuery { search?: string; status?: TicketStatus; requestedPriority?: RequestedPriority; itPriority?: RequestedPriority; ownerId?: number | "unassigned"; sortBy?: "ticketNumber" | "summary" | "createdAt" | "updatedAt" | "itPriority" | "currentStatus"; sortOrder?: "asc" | "desc"; page?: number; pageSize?: 10 | 20 | 50 }
@@ -386,6 +411,10 @@ export function updateStaffPriority(ticketId: number, itPriority: RequestedPrior
 export function updateStaffStatus(ticketId: number, status: TicketStatus) { return requestJson<StaffTicket>(`/api/staff/tickets/${ticketId}/status`, { method: "PATCH", body: JSON.stringify({ status }) }); }
 export async function createStaffComment(ticketId: number, content: string) { return (await requestJson<{ comment: CommentEntry }>(`/api/staff/tickets/${ticketId}/comments`, { method: "POST", body: JSON.stringify({ content }) })).comment; }
 export async function createStaffNote(ticketId: number, content: string) { return (await requestJson<{ note: CommentEntry }>(`/api/staff/tickets/${ticketId}/notes`, { method: "POST", body: JSON.stringify({ content }) })).note; }
+export async function fetchRequesterActions(ticketId: number) { return (await requestJson<{ items: ActionTaken[] }>(`/api/tickets/${ticketId}/actions`)).items; }
+export async function fetchStaffActions(ticketId: number) { return (await requestJson<{ items: ActionTaken[] }>(`/api/staff/tickets/${ticketId}/actions`)).items; }
+export function createStaffAction(ticketId: number, payload: ActionTakenPayload) { return requestJson<ActionTaken>(`/api/staff/tickets/${ticketId}/actions`, { method: "POST", body: JSON.stringify(payload) }); }
+export function updateStaffAction(ticketId: number, actionId: number, payload: ActionTakenPayload) { return requestJson<ActionTaken>(`/api/staff/tickets/${ticketId}/actions/${actionId}`, { method: "PATCH", body: JSON.stringify(payload) }); }
 export interface DashboardTicket {
   id: number;
   ticketNumber: string;

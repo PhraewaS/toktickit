@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import { createRequesterComment, DevelopmentRequester, fetchRequesterComments, fetchTicketDetail, markRequesterResolved, Ticket, CommentEntry } from "./api.js";
+import { createRequesterComment, DevelopmentRequester, fetchRequesterActions, fetchRequesterComments, fetchTicketDetail, markRequesterResolved, Ticket, CommentEntry, ActionTaken } from "./api.js";
 import AttachmentSection from "./AttachmentSection.js";
+import ActionsTaken from "./ActionsTaken.js";
 
 function formatDate(value: string) {
   return new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(
@@ -25,6 +26,7 @@ export default function RequesterTicketDetail({
   const [commentFailure, setCommentFailure] = useState("");
   const [comment, setComment] = useState("");
   const [posting, setPosting] = useState(false);
+  const [actions, setActions] = useState<ActionTaken[]>([]);
 
   const loadComments = useCallback(async () => {
     setCommentState("loading");
@@ -45,6 +47,7 @@ export default function RequesterTicketDetail({
       const loaded = await fetchTicketDetail(requester.id, ticketId);
       setTicket(loaded);
       void loadComments();
+      void fetchRequesterActions(ticketId).then(setActions).catch(() => setActions([]));
       setState("ready");
     } catch (error) {
       void error;
@@ -104,6 +107,7 @@ export default function RequesterTicketDetail({
         attachments={ticket.attachments ?? []}
         onChanged={(attachments) => setTicket((current) => current ? { ...current, attachments } : current)}
       />
+      <ActionsTaken ticketId={ticket.id} initialActions={actions} readOnly />
       <section className="form-section comment-panel" aria-labelledby="requester-comments-heading">
         <h2 id="requester-comments-heading">Public Comments</h2>
         <p>Shared with the Requester and IT Staff.</p>
