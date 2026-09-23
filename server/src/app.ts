@@ -8,6 +8,7 @@ import { listRequesterComments, createRequesterComment, markRequesterResolved } 
 import { assignStaffTicket, createStaffComment, createStaffNote, getStaffTicketDetail, listAssignableStaff, listStaffComments, listStaffNotes, listStaffTickets, updateStaffPriority, updateStaffStatus } from "./staff.js";
 import { createUser, listUsers, resetInitialPassword, updateUser } from "./admin.js";
 import { createTicket, listTickets } from "./tickets.js";
+import { createAction, listActions, updateAction } from "./actions.js";
 import {
   attachmentUpload,
   downloadAttachment,
@@ -130,6 +131,7 @@ app.delete("/api/attachments/:attachmentId", requireAuthenticatedOrDevelopmentRe
 app.get("/api/tickets/:ticketId/comments", requireAuthenticatedOrDevelopmentRequester, listRequesterComments);
 app.post("/api/tickets/:ticketId/comments", requireAuthenticatedOrDevelopmentRequester, createRequesterComment);
 app.post("/api/tickets/:ticketId/resolved", requireAuthenticatedOrDevelopmentRequester, markRequesterResolved);
+app.get("/api/tickets/:ticketId/actions", requireAuthenticated, requireRole(UserRole.REQUESTER), listActions);
 
 app.get("/api/staff/tickets", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), listStaffTickets);
 app.get("/api/staff/assignees", requireAuthenticated, requireRole(UserRole.IT_STAFF), listAssignableStaff);
@@ -141,6 +143,9 @@ app.get("/api/staff/tickets/:ticketId/comments", requireAuthenticated, requireRo
 app.post("/api/staff/tickets/:ticketId/comments", requireAuthenticated, requireRole(UserRole.IT_STAFF), createStaffComment);
 app.get("/api/staff/tickets/:ticketId/notes", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), listStaffNotes);
 app.post("/api/staff/tickets/:ticketId/notes", requireAuthenticated, requireRole(UserRole.IT_STAFF), createStaffNote);
+app.get("/api/staff/tickets/:ticketId/actions", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), listActions);
+app.post("/api/staff/tickets/:ticketId/actions", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), createAction);
+app.patch("/api/staff/tickets/:ticketId/actions/:actionId", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), updateAction);
 
 app.get("/api/admin/users", requireAuthenticated, requireRole(UserRole.ADMINISTRATOR), listUsers);
 app.post("/api/admin/users", requireAuthenticated, requireRole(UserRole.ADMINISTRATOR), createUser);
