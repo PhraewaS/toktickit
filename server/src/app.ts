@@ -9,6 +9,7 @@ import { assignStaffTicket, createStaffComment, createStaffNote, getStaffTicketD
 import { createUser, listUsers, resetInitialPassword, updateUser } from "./admin.js";
 import { createTicket, listTickets } from "./tickets.js";
 import { createAction, listActions, updateAction } from "./actions.js";
+import { requesterDashboard, staffDashboard } from "./dashboards.js";
 import {
   attachmentUpload,
   downloadAttachment,
@@ -132,8 +133,10 @@ app.get("/api/tickets/:ticketId/comments", requireAuthenticatedOrDevelopmentRequ
 app.post("/api/tickets/:ticketId/comments", requireAuthenticatedOrDevelopmentRequester, createRequesterComment);
 app.post("/api/tickets/:ticketId/resolved", requireAuthenticatedOrDevelopmentRequester, markRequesterResolved);
 app.get("/api/tickets/:ticketId/actions", requireAuthenticated, requireRole(UserRole.REQUESTER), listActions);
+app.get("/api/dashboard/requester", requireAuthenticated, requireRole(UserRole.REQUESTER), requesterDashboard);
 
 app.get("/api/staff/tickets", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), listStaffTickets);
+app.get("/api/dashboard/staff", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), staffDashboard);
 app.get("/api/staff/assignees", requireAuthenticated, requireRole(UserRole.IT_STAFF), listAssignableStaff);
 app.get("/api/staff/tickets/:ticketId", requireAuthenticated, requireRole(UserRole.IT_STAFF, UserRole.ADMINISTRATOR), getStaffTicketDetail);
 app.post("/api/staff/tickets/:ticketId/assignment", requireAuthenticated, requireRole(UserRole.IT_STAFF), assignStaffTicket);
