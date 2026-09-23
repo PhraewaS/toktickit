@@ -386,6 +386,31 @@ export function updateStaffPriority(ticketId: number, itPriority: RequestedPrior
 export function updateStaffStatus(ticketId: number, status: TicketStatus, expectedCurrentStatus: TicketStatus) { return requestJson<StaffTicket>(`/api/staff/tickets/${ticketId}/status`, { method: "PATCH", body: JSON.stringify({ status, expectedCurrentStatus }) }); }
 export async function createStaffComment(ticketId: number, content: string) { return (await requestJson<{ comment: CommentEntry }>(`/api/staff/tickets/${ticketId}/comments`, { method: "POST", body: JSON.stringify({ content }) })).comment; }
 export async function createStaffNote(ticketId: number, content: string) { return (await requestJson<{ note: CommentEntry }>(`/api/staff/tickets/${ticketId}/notes`, { method: "POST", body: JSON.stringify({ content }) })).note; }
+export interface DashboardTicket {
+  id: number;
+  ticketNumber: string;
+  summary: string;
+  currentStatus: TicketStatus;
+  itPriority: RequestedPriority;
+  updatedAt: string;
+  requester?: ReferenceDataItem;
+  owner?: ReferenceDataItem;
+}
+export interface RequesterDashboard {
+  metrics: { openTickets: number; waitingForRequester: number; recentlyUpdated: number; recentlyResolved: number };
+  recentlyUpdated: DashboardTicket[];
+  recentlyResolved: DashboardTicket[];
+}
+export interface StaffDashboard {
+  metrics: { unassignedTickets: number; ownedTickets: number; actionsTakenByCurrentUser: number; recentlyUpdated: number; urgentTickets: number };
+  byStatus: Partial<Record<TicketStatus, number>>;
+  byPriority: Partial<Record<RequestedPriority, number>>;
+  recentlyUpdated: DashboardTicket[];
+  urgentTickets: DashboardTicket[];
+  recentActions: Array<{ id: number; ticketId: number; ticketNumber: string; summary: string; actionDateTime: string; description: string; result: string }>;
+}
+export function fetchRequesterDashboard() { return requestJson<RequesterDashboard>("/api/dashboard/requester"); }
+export function fetchStaffDashboard() { return requestJson<StaffDashboard>("/api/dashboard/staff"); }
 
 export interface AdminUserPayload { name: string; email: string; role: UserRole; isActive: boolean; initialPassword: string }
 export interface AdminUserQuery { search?: string; role?: UserRole }

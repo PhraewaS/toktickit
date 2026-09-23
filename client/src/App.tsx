@@ -237,13 +237,13 @@ import ChangePassword from "./ChangePassword.js";
 import StaffTicketQueue from "./StaffTicketQueue.js";
 import StaffTicketDetail from "./StaffTicketDetail.js";
 import UserManagement from "./UserManagement.js";
+import RequesterDashboard from "./RequesterDashboard.js";
+import StaffDashboard from "./StaffDashboard.js";
 
-type Lab3View = "create" | "my-tickets" | "requester-detail" | "staff-queue" | "staff-detail" | "users";
+type Lab4View = "dashboard" | "create" | "my-tickets" | "requester-detail" | "staff-queue" | "staff-detail" | "users";
 
-function defaultViewForRole(role: UserRole): Lab3View {
-  if (role === "IT_STAFF") return "staff-queue";
-  if (role === "ADMINISTRATOR") return "users";
-  return "create";
+function defaultViewForRole(_role: UserRole): Lab4View {
+  return "dashboard";
 }
 
 export default function App() {
@@ -253,7 +253,7 @@ export default function App() {
   if (legacyFixture) return <LegacyApp />;
   const [state, setState] = useState<"loading" | "login" | "authenticated" | "session-error">("loading");
   const [user, setUser] = useState<User | null>(null);
-  const [view, setView] = useState<Lab3View>("create");
+  const [view, setView] = useState<Lab4View>("dashboard");
   const [ticketId, setTicketId] = useState<number | null>(null);
   const [sessionFailure, setSessionFailure] = useState("");
   const [logoutFailure, setLogoutFailure] = useState("");
@@ -304,12 +304,13 @@ export default function App() {
       setLogoutBusy(false);
     }
   }
-  function go(next: Lab3View) { setView(next); setTicketId(null); }
+  function go(next: Lab4View) { setView(next); setTicketId(null); }
 
   return <div className="app-frame">
     <header className="app-header"><div className="app-header__content">
-      <a className="brand" href="#home" aria-label="TokTickIT home" onClick={(event) => { event.preventDefault(); go(isStaff ? "staff-queue" : isAdmin ? "users" : "create"); }}><span className="brand__mark" aria-hidden="true">T</span><span><strong>TokTickIT</strong><small>IT Service Desk</small></span></a>
+      <a className="brand" href="#home" aria-label="TokTickIT home" onClick={(event) => { event.preventDefault(); go("dashboard"); }}><span className="brand__mark" aria-hidden="true">T</span><span><strong>TokTickIT</strong><small>IT Service Desk</small></span></a>
       <div className="app-shell-actions"><nav className="app-nav" aria-label="Primary navigation">
+        <a className={`app-nav__link ${view === "dashboard" ? "app-nav__link--active" : ""}`} href="#dashboard" onClick={(e) => { e.preventDefault(); go("dashboard"); }}>Dashboard</a>
         {isRequester && <><a className={`app-nav__link ${view === "my-tickets" ? "app-nav__link--active" : ""}`} href="#my-tickets" onClick={(e) => { e.preventDefault(); go("my-tickets"); }}>My Tickets</a><a className={`app-nav__link ${view === "create" ? "app-nav__link--active" : ""}`} href="#create-ticket" onClick={(e) => { e.preventDefault(); go("create"); }}>Create Ticket</a></>}
         {canOpenStaffWorkspace && <a className={`app-nav__link ${view === "staff-queue" || view === "staff-detail" ? "app-nav__link--active" : ""}`} href="#staff-queue" onClick={(e) => { e.preventDefault(); go("staff-queue"); }}>Ticket Queue</a>}
         {isAdmin && <a className={`app-nav__link ${view === "users" ? "app-nav__link--active" : ""}`} href="#users" onClick={(e) => { e.preventDefault(); go("users"); }}>User Management</a>}
@@ -317,6 +318,8 @@ export default function App() {
     </div></header>
     <main className="page-content">
       {logoutFailure && <div className="state-panel state-panel--error" role="alert"><strong>Logout failed.</strong><span>{logoutFailure}</span></div>}
+      {isRequester && view === "dashboard" && <RequesterDashboard onOpenTicket={(id) => { setTicketId(id); setView("requester-detail"); }} onCreateTicket={() => go("create")} />}
+      {canOpenStaffWorkspace && view === "dashboard" && <StaffDashboard isAdmin={isAdmin} onOpenTicket={(id) => { setTicketId(id); setView("staff-detail"); }} onOpenQueue={() => go("staff-queue")} />}
       {isRequester && view === "create" && <CreateTicket requester={requester} onViewTicket={(id) => { setTicketId(id); setView("requester-detail"); }} onMyTickets={() => go("my-tickets")} />}
       {isRequester && view === "my-tickets" && <MyTickets requester={requester} onCreateTicket={() => go("create")} onOpenTicket={(id) => { setTicketId(id); setView("requester-detail"); }} />}
       {isRequester && view === "requester-detail" && ticketId !== null && <RequesterTicketDetail requester={requester} ticketId={ticketId} onBack={() => go("my-tickets")} />}
