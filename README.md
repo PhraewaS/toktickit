@@ -112,6 +112,17 @@ Uploads accept JPG/JPEG, PNG, WEBP, and PDF files up to 5 MiB each, with at most
 
 The IT Staff Ticket Queue supports search, status/priority/ownership filters, sorting, pagination, assignment, IT Priority, permitted status transitions, Public Comments, and Internal Notes. Administrator User Management supports list/search/role filter, create, basic edit, activation/deactivation, and setting a new initial password. See [`docs/lab-03/specification.md`](docs/lab-03/specification.md), [`docs/lab-03/api-spec.md`](docs/lab-03/api-spec.md), and [`docs/lab-03/ui-spec.md`](docs/lab-03/ui-spec.md).
 
+## Lab 4 actions and dashboards
+
+Lab 4 adds the additive `ActionTaken` record under each Ticket, authenticated performer attribution, Requester read-only visibility, IT Staff/Administrator create and update controls, and a resolution guard requiring at least one Action Taken. Requester and Staff/Administrator dashboards are backed by server-side metrics and drill-down lists. Apply the committed migration and deterministic seed before exercising the new flows:
+
+```bash
+npm --prefix server run prisma:deploy
+npm --prefix server run prisma:seed
+```
+
+The Lab 4 contracts and traceability records are in [`docs/lab-04/specification.md`](docs/lab-04/specification.md), [`docs/lab-04/api-spec.md`](docs/lab-04/api-spec.md), [`docs/lab-04/ui-spec.md`](docs/lab-04/ui-spec.md), [`docs/lab-04/tests.md`](docs/lab-04/tests.md), [`docs/lab-04/reviewer.md`](docs/lab-04/reviewer.md), and [`docs/lab-04/ai-use.md`](docs/lab-04/ai-use.md).
+
 ## Testing
 
 Run tests and builds from the repository root:
