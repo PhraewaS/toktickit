@@ -30,7 +30,7 @@ SLA clocks, escalation/on-call scheduling, external notifications, inventory/pur
 - FR-01: A Ticket may have zero, one, or many Actions Taken.
 - FR-02: An Action Taken contains Action Date/Time, Action Description, Result, authenticated Performed By, Follow-Up Required, conditional Follow-Up Note, and optional Attachment Notes.
 - FR-03: IT Staff and Administrators may create and update Actions Taken on an accessible Ticket. Requesters may not mutate them.
-- FR-04: The backend derives `performedBy` from the session and ignores no client-supplied performer field because the field is not accepted by the contract.
+- FR-04: The backend derives `performedBy` from the session; clients cannot supply or override the performer field.
 - FR-05: Requesters can list Actions Taken only for their own Ticket; Staff and Administrators can list them for Staff-accessible Tickets.
 - FR-06: Action updates accept the last `updatedAt` value and return a safe `409 ACTION_UPDATE_CONFLICT` when another update won the race.
 - FR-07: `RESOLVED` requires a persisted Action Taken. A Requester’s “appears resolved” indication remains advisory and never changes the formal status.
