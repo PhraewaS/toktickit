@@ -1,20 +1,40 @@
 # Lab 4 Reviewer Record
 
-## Review scope
+## Review scope and current workflow state
 
-This record is prepared for the final Lab 4 review of the `codex/lab4-actions-dashboards` implementation branch. Reviewers should compare the implementation with `specification.md`, `api-spec.md`, `ui-spec.md`, and `tests.md`, then verify the final integrated branch and rendered evidence.
+This record is maintained across the Lab 4 feature branches. At the contract-review stage, reviewers check that the scope and testable contracts match the Lab 4 handout. Implementation, database execution, responsive evidence, E2E evidence, and final PDF approval are later gates; they are not claimed by PR #55.
 
-## Review checklist
+| Work item | Branch / target | State | Review purpose |
+| --- | --- | --- | --- |
+| Issue [#48](https://github.com/PhraewaS/toktickit/issues/48) | Contract definition | Open | Traceability and review plan |
+| PR [#55](https://github.com/PhraewaS/toktickit/pull/55) | `feature/lab4-spec-contract` → `lab4-staging` | Open; reviewer requested `@guluJa` | Contract-only review |
+| Issues [#49–#53](https://github.com/PhraewaS/toktickit/issues/49) | One feature branch per issue | Created; PRs sequenced after #55 | Implementation and verification |
+| Issue [#54](https://github.com/PhraewaS/toktickit/issues/54) | `lab4-staging` → `main` and final evidence | Planned | Integration, peer review, and submission |
 
-- [x] The additive migration preserves Lab 1-3 data and has Ticket/performer foreign keys and indexes (static review; database deployment pending).
-- [x] Seed is repeatable and demonstrates zero, one, and multiple Actions Taken (static review; database execution pending).
-- [x] Backend derives `performedBy`, validates conditional follow-up fields, protects Requester ownership, and returns safe errors.
-- [x] Stale action edits return a conflict without overwriting a newer row.
-- [x] Formal resolution requires an Action Taken; Requester indication remains advisory.
-- [x] Dashboard metrics match documented queries and drill-down IDs.
-- [x] UI supports loading, empty, error, forbidden, validation, conflict, responsive, and accessible states (component/build review; browser screenshot run pending).
-- [ ] Lab 1-3 regression suites and final database-backed evidence are attached; see [`artifacts/lab-04/verification.md`](../../artifacts/lab-04/verification.md) for the environment blocker.
+The staging target is deliberate: each feature PR must be reviewed and merged in dependency order before the release PR targets `main`.
+
+## Contract PR #55 checklist
+
+- [ ] Included scope covers Actions Taken, resolution enforcement, dashboards, API/UI contracts, tests, evidence, and required documents.
+- [ ] Excluded scope prevents SLA, escalation, notifications, inventory/purchasing, payroll, BI, multi-tenancy, and unrelated features.
+- [ ] Action fields, performer derivation, Requester read-only access, Staff/Admin mutation, follow-up validation, ordering, and stale-write conflict are testable.
+- [ ] All Lab 4 statuses and the `RESOLVED` Action Taken prerequisite are explicit; the Requester resolved indication remains advisory.
+- [ ] Requester and Staff/Admin dashboard metrics, ownership boundaries, drill-downs, empty states, and authoritative backend calculation are explicit.
+- [ ] Migration, seed, API error, session/origin, responsive, accessibility, regression, E2E, screenshot, and console/diff evidence requirements are explicit.
+- [ ] Required test paths and required `docs/lab-04/*` deliverables match the handout.
+- [ ] The PR contains documentation only; implementation and final test status are not represented as complete here.
+
+## Final implementation and evidence checklist
+
+- [ ] Additive migration preserves Lab 1–3 data and has Ticket/performer foreign keys and indexes.
+- [ ] Seed is repeatable and demonstrates zero, one, and multiple Actions Taken.
+- [ ] Backend derives `performedBy`, validates conditional follow-up fields, protects ownership, and returns safe errors.
+- [ ] Stale action edits return a conflict without overwriting a newer row.
+- [ ] Formal resolution requires an Action Taken; Requester indication remains advisory.
+- [ ] Dashboard metrics match documented queries and drill-down IDs.
+- [ ] UI supports loading, empty, error, forbidden, validation, conflict, responsive, and accessible states.
+- [ ] Lab 1–3 regression suites, final database-backed evidence, and the required Answer Part 1–9 PDF are attached before release.
 
 ## Review comments and responses
 
-No external reviewer comments have been recorded yet. This section is intentionally kept as a release artifact for the feature-branch review and must be updated with reviewer identity, PR link, comments, responses, and approval before final integration.
+No external reviewer comments or approvals have been recorded yet. Add each comment, response, reviewer identity, PR link, and approval result here after peer review; do not mark the final checklist complete until the corresponding evidence is attached.

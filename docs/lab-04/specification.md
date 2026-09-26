@@ -77,7 +77,9 @@ See [api-spec.md](api-spec.md). Primary additions are `GET /api/tickets/:ticketI
 - AC-06: Dashboard and Actions Taken UI works at desktop, tablet, and mobile widths without page-level horizontal scrolling.
 - AC-07: All Lab 1-3 tests and builds remain passing in the configured environment, and the Lab 4 suite covers unit/API/integration/UI/responsive/E2E/regression paths.
 
-## 10. Definition of Done
+## 10. Final Implementation Definition of Done
+
+The following checklist is intentionally not claimed by the contract PR. It is the completion gate for the later feature branches, staging integration, and final evidence record.
 
 - [ ] Specification, API, UI, test plan, reviewer, and AI-use documents are committed before the final integration record.
 - [ ] Migration is additive, deployable, reversible by documented recovery, and seed is repeatable.
