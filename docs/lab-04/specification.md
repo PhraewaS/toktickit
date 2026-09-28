@@ -122,7 +122,7 @@ See [api-spec.md](api-spec.md). Primary additions are `GET /api/tickets/:ticketI
 - AC-04: Formal resolution without an Action Taken returns `409 RESOLUTION_ACTION_REQUIRED`; resolution with an Action Taken succeeds through the existing permitted transition.
 - AC-05: Requester Dashboard data contains only the authenticated Requester’s Tickets; Staff Dashboard data contains authoritative operational counts and drill-down summaries.
 - AC-06: Dashboard and Actions Taken UI works at desktop, tablet, and mobile widths without page-level horizontal scrolling.
-- AC-07: All Lab 1-3 tests and builds remain passing in the configured environment, and the Lab 4 suite covers unit/API/integration/UI/responsive/E2E/regression paths.
+- AC-07: All Lab 1-3 tests and builds remain passing in the configured environment, and the Lab 4 suite covers unit/API/integration/UI/responsive/performance-smoke/E2E/regression paths.
 
 ## 11. Final Implementation Definition of Done
 
@@ -132,7 +132,7 @@ The following checklist is intentionally not claimed by the contract PR. It is t
 - [ ] Migration is additive, deployable, reversible by documented recovery, and seed is repeatable.
 - [ ] Backend authorization and validation enforce every write rule.
 - [ ] Actions Taken and both dashboards have loading, empty, error, and success behavior.
-- [ ] Unit/API/UI/E2E/responsive/regression checks run from the final integrated branch.
+- [ ] Unit/API/UI/E2E/responsive/performance-smoke/regression checks run from the final integrated branch.
 - [ ] Build, diff, console, accessibility, and responsive evidence are recorded.
 - [ ] Final PDF contains exactly Answer Part 1 through Answer Part 9 and working repository/evidence links.
 
