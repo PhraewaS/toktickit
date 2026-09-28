@@ -18,10 +18,12 @@ The staging target is deliberate: each feature PR must be reviewed and merged in
 - [ ] Included scope covers Actions Taken, resolution enforcement, dashboards, API/UI contracts, tests, evidence, and required documents.
 - [ ] Excluded scope prevents SLA, escalation, notifications, inventory/purchasing, payroll, BI, multi-tenancy, and unrelated features.
 - [ ] Action fields, performer derivation, Requester read-only access, Staff/Admin mutation, follow-up validation, ordering, and stale-write conflict are testable.
-- [ ] All Lab 4 statuses and the `RESOLVED` Action Taken prerequisite are explicit; the Requester resolved indication remains advisory.
-- [ ] Requester and Staff/Admin dashboard metrics, ownership boundaries, drill-downs, empty states, and authoritative backend calculation are explicit.
+- [ ] All Lab 4 statuses, the complete permitted transition matrix, and the `RESOLVED` Action Taken prerequisite are explicit; the Requester resolved indication remains advisory.
+- [ ] Requester and Staff/Admin dashboard metric formulas, UTC/date boundaries, response shapes, ownership boundaries, drill-downs, empty states, and authoritative backend calculation are explicit.
+- [ ] API success/error envelopes include documented response fields, status codes, authorization failures, validation failures, conflict codes, and safe unexpected failures.
 - [ ] Migration, seed, API error, session/origin, responsive, accessibility, regression, E2E, screenshot, and console/diff evidence requirements are explicit.
-- [ ] Required test paths and required `docs/lab-04/*` deliverables match the handout.
+- [ ] Required test paths, performance-smoke coverage, and required `docs/lab-04/*` deliverables match the handout.
+- [ ] Dashboard UI feedback distinguishes loading, success, empty, failure, forbidden, and retry/refresh states.
 - [ ] The PR contains documentation only; implementation and final test status are not represented as complete here.
 
 ## Final implementation and evidence checklist
@@ -37,4 +39,15 @@ The staging target is deliberate: each feature PR must be reviewed and merged in
 
 ## Review comments and responses
 
-No external reviewer comments or approvals have been recorded yet. Add each comment, response, reviewer identity, PR link, and approval result here after peer review; do not mark the final checklist complete until the corresponding evidence is attached.
+### `@guluJa` — PR #55 review, 2026-09-27 — Changes requested
+
+Feedback requested four Labsheet-aligned contract clarifications: complete Status Transition Matrix; explicit Dashboard calculations and API response/error shapes; a performance-smoke test with Labsheet-matching test paths; and separate Dashboard loading, empty, failure, forbidden, and retry feedback states.
+
+Response in this revision:
+
+- Added the complete transition matrix to `specification.md` and repeated the API-enforced matrix in `api-spec.md`.
+- Added exact Requester and Staff/Admin dashboard formulas, UTC 30-day boundary, list limits/order, drill-down fields, success envelopes, and error envelopes.
+- Added `PERF-04` and `server/tests/lab-04/performance-smoke.test.ts`, corrected required server/client/E2E paths, and clearly marked all results as planned for later feature branches.
+- Added the Dashboard feedback-state contract to `ui-spec.md`.
+
+The implementation and performance results remain intentionally open because PR #55 is documentation-only. Do not mark the final checklist complete until the corresponding feature PRs and evidence are attached.

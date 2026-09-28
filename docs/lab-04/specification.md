@@ -55,19 +55,66 @@ SLA clocks, escalation/on-call scheduling, external notifications, inventory/pur
 - BR-11: A Requester’s resolved indication is advisory and does not set formal `RESOLVED` or `CLOSED` status.
 - BR-12: Staff status transitions remain the Lab 3 permitted transition matrix; a transition to `RESOLVED` additionally requires at least one Action Taken.
 
-## 6. UI Specification Summary
+### Final Ticket status transition matrix
+
+The backend is authoritative. The status control shows only the permitted next statuses below. Any no-op or unlisted transition returns `409 STATUS_TRANSITION_NOT_ALLOWED`. Requesters cannot perform formal transitions, and Administrators retain Lab 3 read/IT-Priority behavior but do not perform Staff status transitions.
+
+| Current status | Permitted next status | Authorized actor | Additional rule |
+| --- | --- | --- | --- |
+| `NEW` | `OPEN` | IT Staff | — |
+| `OPEN` | `IN_PROGRESS`, `WAITING_FOR_REQUESTER`, `CANCELLED` | IT Staff | — |
+| `IN_PROGRESS` | `WAITING_FOR_REQUESTER`, `RESOLVED`, `CANCELLED` | IT Staff | `RESOLVED` requires at least one persisted Action Taken |
+| `WAITING_FOR_REQUESTER` | `IN_PROGRESS`, `RESOLVED`, `CANCELLED` | IT Staff | `RESOLVED` requires at least one persisted Action Taken |
+| `RESOLVED` | `CLOSED`, `REOPENED` | IT Staff | — |
+| `CLOSED` | `REOPENED` | IT Staff | — |
+| `REOPENED` | none | IT Staff | No transition is permitted by the Lab 3 matrix |
+| `CANCELLED` | none | IT Staff | No transition is permitted by the Lab 3 matrix |
+
+The Requester `POST /api/tickets/:ticketId/resolved` operation remains an idempotent advisory indication. It may record the Requester indication, but it never changes the formal status or bypasses the matrix.
+
+## 6. Dashboard calculation contract
+
+All dashboard calculations run in the backend against authoritative database queries. The server captures one `now` value per request and defines `recentCutoff = now - 30 days` in UTC. Counts and lists use the same cutoff and ownership scope. List results are concise summaries with ticket/action IDs for drill-down; they are not replacement Ticket Detail responses.
+
+### Requester Dashboard
+
+For the authenticated Requester’s Ticket set only:
+
+- `openTickets`: count of Tickets whose status is `NEW`, `OPEN`, `IN_PROGRESS`, `WAITING_FOR_REQUESTER`, or `REOPENED`.
+- `waitingForRequester`: count of Tickets with status `WAITING_FOR_REQUESTER`.
+- `recentlyUpdated`: up to 10 Tickets with `updatedAt >= recentCutoff`, ordered by `updatedAt DESC, id DESC`.
+- `recentlyResolved`: up to 10 Tickets with status `RESOLVED` or `CLOSED` and `updatedAt >= recentCutoff`, ordered by `updatedAt DESC, id DESC`.
+
+Each list item includes `id`, `ticketNumber`, `summary`, `currentStatus`, and `updatedAt`; its destination is the existing read-only Ticket Detail.
+
+### IT Staff / Administrator Dashboard
+
+For Tickets visible to the authenticated IT Staff or Administrator:
+
+- `unassignedActive`: count of active Tickets with `ownerId IS NULL`.
+- `myActive`: count of active Tickets with `ownerId = authenticatedUser.id`.
+- `myActionsTaken`: count of persisted Actions Taken with `performedById = authenticatedUser.id`.
+- `byStatus`: counts grouped by status for the visible Ticket set.
+- `byPriority`: counts grouped by IT Priority for the visible Ticket set.
+- `recentlyUpdated`: up to 10 visible Tickets with `updatedAt >= recentCutoff`, ordered by `updatedAt DESC, id DESC`.
+- `urgentTickets`: up to 10 active visible Tickets with `itPriority = HIGH`, ordered by `updatedAt DESC, id DESC`.
+- `recentActions`: up to 10 Actions Taken performed by the authenticated user with `actionDateTime >= recentCutoff`, ordered by `actionDateTime DESC, id DESC`.
+
+`active` means status `NEW`, `OPEN`, `IN_PROGRESS`, `WAITING_FOR_REQUESTER`, or `REOPENED`. Ticket list items drill down to Staff Ticket Detail or the appropriate filtered Queue; Action items drill down to Staff Ticket Detail.
+
+## 7. UI Specification Summary
 
 Each authenticated role has a Dashboard navigation item. Requesters see their own metrics, recent updates, recent resolutions, and Create Ticket shortcut. IT Staff and Administrators see unassigned/owned/urgent metrics, status and priority breakdowns, recent Tickets, and recent Actions Taken. Ticket Detail includes an Actions Taken list; Staff and Administrators receive the create/edit form, while Requesters receive read-only entries. Empty, loading, forbidden, validation, conflict, and safe-failure states use the established Zen Green patterns, visible focus, semantic labels, non-color status cues, and responsive stacked cards.
 
-## 7. Data Changes and Decisions
+## 8. Data Changes and Decisions
 
 `ActionTaken` is additive with `ticketId`, `actionDateTime`, `description`, `result`, `performedById`, `followUpRequired`, `followUpNote`, `attachmentNotes`, `createdAt`, and `updatedAt`. Indexes support Ticket chronology and performer chronology. `onDelete: Restrict` preserves audit history. `updatedAt` plus conditional `updateMany` provides stale-write detection without overwriting another actor’s edit. Existing Ticket, User, Attachment, PublicComment, InternalNote, and Session records are not rewritten.
 
-## 8. API Contract
+## 9. API Contract
 
 See [api-spec.md](api-spec.md). Primary additions are `GET /api/tickets/:ticketId/actions`, `GET/POST /api/staff/tickets/:ticketId/actions`, `PATCH /api/staff/tickets/:ticketId/actions/:actionId`, `GET /api/dashboard/requester`, and `GET /api/dashboard/staff`.
 
-## 9. Acceptance Criteria
+## 10. Acceptance Criteria
 
 - AC-01: Valid Staff/Admin Action Taken creates under the requested Ticket with the authenticated actor and returns the complete response shape.
 - AC-02: Follow-up validation, invalid fields, missing Tickets, Requester ownership, role restrictions, and safe failures return documented codes.
@@ -77,7 +124,7 @@ See [api-spec.md](api-spec.md). Primary additions are `GET /api/tickets/:ticketI
 - AC-06: Dashboard and Actions Taken UI works at desktop, tablet, and mobile widths without page-level horizontal scrolling.
 - AC-07: All Lab 1-3 tests and builds remain passing in the configured environment, and the Lab 4 suite covers unit/API/integration/UI/responsive/E2E/regression paths.
 
-## 10. Final Implementation Definition of Done
+## 11. Final Implementation Definition of Done
 
 The following checklist is intentionally not claimed by the contract PR. It is the completion gate for the later feature branches, staging integration, and final evidence record.
 
@@ -89,6 +136,6 @@ The following checklist is intentionally not claimed by the contract PR. It is t
 - [ ] Build, diff, console, accessibility, and responsive evidence are recorded.
 - [ ] Final PDF contains exactly Answer Part 1 through Answer Part 9 and working repository/evidence links.
 
-## 11. Assumptions and Decisions
+## 12. Assumptions and Decisions
 
 The 30-day dashboard window is a stable, testable interpretation of “recent.” Administrators can perform Actions Taken because the Lab 4 role table explicitly grants IT Staff behavior for this capability; the Lab 3 Administrator restrictions on assignment/status/comments/notes remain unchanged. Attachment Notes describe related evidence and do not create a second attachment relationship. Recovery is through the normal database backup/restore plus re-deploying the previous migration set; no destructive rollback is run against a shared database.
