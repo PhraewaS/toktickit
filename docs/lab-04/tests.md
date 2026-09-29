@@ -10,9 +10,9 @@
 | UI-04 | component | AC-01/02/06 | Action list, create/edit modes, follow-up field, read-only Requester mode | `client/tests/lab-04/ActionsTaken.test.tsx` | Planned; execute on feature branch |
 | UI-05 | component | AC-05/06 | dashboard loading, success, empty, failure, forbidden, retry, drill-down, role navigation states | `client/tests/lab-04/RequesterDashboard.test.tsx`, `client/tests/lab-04/StaffDashboard.test.tsx` | Planned; execute on feature branch |
 | UI-06 | component | AC-04/07 | resolution prerequisite and permitted transition feedback | `client/tests/lab-04/TicketWorkflow.test.tsx` | Planned; execute on feature branch |
-| E2E-04 | E2E | AC-01-06 | Staff/Admin action lifecycle, Requester read-only visibility, dashboard drill-down | `e2e/lab-04/actions-taken-flow.spec.ts`, `e2e/lab-04/dashboards.spec.ts`, `e2e/lab-04/ticket-resolution.spec.ts` | Requires seeded PostgreSQL run |
+| E2E-04 | E2E | AC-01-06 | Staff/Admin action lifecycle, Requester read-only visibility, dashboard drill-down | `e2e/lab-04/actions-taken-flow.spec.ts`, `e2e/lab-04/dashboards.spec.ts`, `e2e/lab-04/ticket-resolution.spec.ts` | Planned/Pending; run on the integrated Feature/Final Integration branch |
 | RESP-04 | responsive/accessibility | AC-06 | desktop/tablet/mobile dashboard and Actions Taken layout, focus, labels, no page overflow | `e2e/lab-04/responsive.spec.ts` | Planned |
-| REG-04 | regression | AC-07 | all Lab 1-3 server/client suites, migration/seed, build, existing E2E | existing Lab 1-3 files and final verification record | Affected Lab 2/3 suites passing; full DB suite requires local PostgreSQL |
+| REG-04 | regression | AC-07 | all Lab 1-3 server/client suites, migration/seed, build, existing E2E | existing Lab 1-3 files and final verification record | Planned/Pending; run and record evidence in Feature/Final Integration |
 
 Required final evidence includes passing output from unit/API/integration/UI/E2E/responsive/regression checks, rendered Spec DD documents, migration and seed output, screenshots at desktop/tablet/mobile widths, and a console/diff scan showing no unfinished controls or unsafe error leakage.
 
