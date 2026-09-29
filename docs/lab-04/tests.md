@@ -14,7 +14,7 @@
 | RESP-04 | responsive/accessibility | AC-06 | desktop/tablet/mobile dashboard and Actions Taken layout, focus, labels, no page overflow | `e2e/lab-04/responsive.spec.ts` | Planned |
 | REG-04 | regression | AC-07 | all Lab 1-3 server/client suites, migration/seed, build, existing E2E | existing Lab 1-3 files and final verification record | Planned/Pending; run and record evidence in Feature/Final Integration |
 
-Required final evidence includes passing output from unit/API/integration/UI/E2E/responsive/regression checks, rendered Spec DD documents, migration and seed output, screenshots at desktop/tablet/mobile widths, and a console/diff scan showing no unfinished controls or unsafe error leakage.
+Required final evidence includes passing output from unit/API/integration/UI/E2E/responsive/performance-smoke/regression checks, rendered Spec DD documents, migration and seed output, screenshots at desktop/tablet/mobile widths, and a console/diff scan showing no unfinished controls or unsafe error leakage.
 
 ## Performance-smoke definition
 

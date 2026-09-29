@@ -51,3 +51,7 @@ Response in this revision:
 - Added the Dashboard feedback-state contract to `ui-spec.md`.
 
 The implementation and performance results remain intentionally open because PR #55 is documentation-only. Do not mark the final checklist complete until the corresponding feature PRs and evidence are attached.
+
+### `@guluJa` — follow-up review — evidence status clarification addressed
+
+The follow-up review requested that `E2E-04` and `REG-04` not imply completed execution in this documentation-only PR. `tests.md` now marks both as `Planned/Pending` and states that they will be run and recorded on the integrated Feature/Final Integration branch. No E2E or regression result is claimed by PR #55.

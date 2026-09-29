@@ -50,7 +50,7 @@ A foreign or missing Ticket returns `404 TICKET_NOT_FOUND`.
 
 ### `GET /api/staff/tickets/:ticketId/actions`
 
-Authenticated IT Staff or Administrator. Returns the same response shape and ordering for any existing Ticket. Requesters cannot use this Staff route.
+Authenticated IT Staff or Administrator. Returns the same response shape and ordering for any existing Staff-accessible Ticket. A missing or out-of-scope Ticket returns `404 TICKET_NOT_FOUND`; Requesters cannot use this Staff route.
 
 ### `POST /api/staff/tickets/:ticketId/actions`
 
