@@ -47,6 +47,7 @@ export async function runSeed() {
       prisma.publicComment.deleteMany(),
       prisma.internalNote.deleteMany(),
       prisma.attachment.deleteMany(),
+      prisma.actionTaken.deleteMany(),
       prisma.session.deleteMany(),
       prisma.ticket.deleteMany(),
       prisma.requesterUser.deleteMany({ where: { email: { notIn: seedEmails } } }),

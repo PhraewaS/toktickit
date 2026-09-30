@@ -108,7 +108,7 @@ export const createAction: RequestHandler = async (req, res) => {
     const ticket = await getPrisma().ticket.findUnique({ where: { id: ticketId }, select: { id: true } });
     if (!ticket) { error(res, 404, "TICKET_NOT_FOUND", "Ticket was not found."); return; }
     const created = await getPrisma().actionTaken.create({ data: { ticketId, actionDateTime: parsed.value.actionDateTime, description: parsed.value.description, result: parsed.value.result, followUpRequired: parsed.value.followUpRequired, followUpNote: parsed.value.followUpNote, attachmentNotes: parsed.value.attachmentNotes, performedById: user.id }, include: actionInclude });
-    res.status(201).json({ data: serializeAction(created) });
+    res.status(201).json({ data: { item: serializeAction(created) } });
   } catch (caught) { console.error("Unable to create Action Taken:", caught); error(res, 500, "INTERNAL_ERROR", "TokTickIT could not save the Action Taken. Please try again."); }
 };
 
@@ -129,7 +129,7 @@ export const updateAction: RequestHandler = async (req, res) => {
       await getPrisma().actionTaken.update({ where: { id: actionId }, data });
     }
     const saved = await getPrisma().actionTaken.findUniqueOrThrow({ where: { id: actionId }, include: actionInclude });
-    res.status(200).json({ data: serializeAction(saved) });
+    res.status(200).json({ data: { item: serializeAction(saved) } });
   } catch (caught) { console.error("Unable to update Action Taken:", caught); error(res, 500, "INTERNAL_ERROR", "TokTickIT could not update the Action Taken. Please try again."); }
 };
 
