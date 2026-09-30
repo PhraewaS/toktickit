@@ -65,7 +65,7 @@ function parsePayload(body: unknown, update: boolean) {
   const attachmentNotes = typeof body.attachmentNotes === "string" ? body.attachmentNotes.trim() : "";
   if (attachmentNotes.length > MAX_ATTACHMENT_NOTES) fields.attachmentNotes = "Attachment Notes must not exceed 2,000 characters.";
   const expectedUpdatedAt = body.updatedAt;
-  if (update && expectedUpdatedAt !== undefined && (typeof expectedUpdatedAt !== "string" || Number.isNaN(Date.parse(expectedUpdatedAt)))) fields.updatedAt = "Updated timestamp is invalid.";
+  if (update && (typeof expectedUpdatedAt !== "string" || Number.isNaN(Date.parse(expectedUpdatedAt)))) fields.updatedAt = "Submit the Action Taken updatedAt value returned by the latest read.";
   if (Object.keys(fields).length > 0) return { error: { code: "VALIDATION_ERROR", message: "Review the highlighted Action Taken fields and try again.", fields } } as const;
   return {
     value: {
@@ -122,12 +122,8 @@ export const updateAction: RequestHandler = async (req, res) => {
     const existing = await getPrisma().actionTaken.findFirst({ where: { id: actionId, ticketId }, select: { id: true, updatedAt: true } });
     if (!existing) { error(res, 404, "ACTION_NOT_FOUND", "Action Taken was not found for this Ticket."); return; }
     const data = { actionDateTime: parsed.value.actionDateTime, description: parsed.value.description, result: parsed.value.result, followUpRequired: parsed.value.followUpRequired, followUpNote: parsed.value.followUpNote, attachmentNotes: parsed.value.attachmentNotes };
-    if (parsed.value.expectedUpdatedAt) {
-      const updated = await getPrisma().actionTaken.updateMany({ where: { id: actionId, ticketId, updatedAt: parsed.value.expectedUpdatedAt }, data });
-      if (updated.count !== 1) { error(res, 409, "ACTION_UPDATE_CONFLICT", "This Action Taken changed after it was loaded. Refresh and try again."); return; }
-    } else {
-      await getPrisma().actionTaken.update({ where: { id: actionId }, data });
-    }
+    const updated = await getPrisma().actionTaken.updateMany({ where: { id: actionId, ticketId, updatedAt: parsed.value.expectedUpdatedAt! }, data });
+    if (updated.count !== 1) { error(res, 409, "ACTION_UPDATE_CONFLICT", "This Action Taken changed after it was loaded. Refresh and try again."); return; }
     const saved = await getPrisma().actionTaken.findUniqueOrThrow({ where: { id: actionId }, include: actionInclude });
     res.status(200).json({ data: { item: serializeAction(saved) } });
   } catch (caught) { console.error("Unable to update Action Taken:", caught); error(res, 500, "INTERNAL_ERROR", "TokTickIT could not update the Action Taken. Please try again."); }

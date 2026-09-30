@@ -32,7 +32,7 @@ SLA clocks, escalation/on-call scheduling, external notifications, inventory/pur
 - FR-03: IT Staff and Administrators may create and update Actions Taken on an accessible Ticket. Requesters may not mutate them.
 - FR-04: The backend derives `performedBy` from the session; clients cannot supply or override the performer field.
 - FR-05: Requesters can list Actions Taken only for their own Ticket; Staff and Administrators can list them for Staff-accessible Tickets.
-- FR-06: Action updates accept the last `updatedAt` value and return a safe `409 ACTION_UPDATE_CONFLICT` when another update won the race.
+- FR-06: Action updates require the last `updatedAt` value; missing/invalid versions return `400 VALIDATION_ERROR`, and a stale version returns a safe `409 ACTION_UPDATE_CONFLICT` without overwriting the newer row.
 - FR-07: `RESOLVED` requires a persisted Action Taken. A Requester’s “appears resolved” indication remains advisory and never changes the formal status.
 - FR-08: Requester Dashboard metrics are `openTickets`, `waitingForRequester`, `recentlyUpdated`, and `recentlyResolved`; each list item drills into the existing Ticket Detail.
 - FR-09: IT Staff Dashboard metrics are unassigned active Tickets, active Tickets owned by the current user, Actions Taken by the current user, recently updated Tickets, and urgent high-priority Tickets. Status and priority breakdowns and recent Actions Taken are included.
@@ -108,7 +108,7 @@ Each authenticated role has a Dashboard navigation item. Requesters see their ow
 
 ## 8. Data Changes and Decisions
 
-`ActionTaken` is additive with `ticketId`, `actionDateTime`, `description`, `result`, `performedById`, `followUpRequired`, `followUpNote`, `attachmentNotes`, `createdAt`, and `updatedAt`. Indexes support Ticket chronology and performer chronology. `onDelete: Restrict` preserves audit history. `updatedAt` plus conditional `updateMany` provides stale-write detection without overwriting another actor’s edit. Existing Ticket, User, Attachment, PublicComment, InternalNote, and Session records are not rewritten.
+`ActionTaken` is additive with `ticketId`, `actionDateTime`, `description`, `result`, `performedById`, `followUpRequired`, `followUpNote`, `attachmentNotes`, `createdAt`, and `updatedAt`. Indexes support Ticket chronology and performer chronology. `onDelete: Restrict` preserves audit history. Every update requires the current `updatedAt` token and uses conditional `updateMany`; missing tokens are rejected and stale tokens cannot overwrite another actor’s edit. Existing Ticket, User, Attachment, PublicComment, InternalNote, and Session records are not rewritten.
 
 ## 9. API Contract
 
@@ -118,7 +118,7 @@ See [api-spec.md](api-spec.md). Primary additions are `GET /api/tickets/:ticketI
 
 - AC-01: Valid Staff/Admin Action Taken creates under the requested Ticket with the authenticated actor and returns the complete response shape.
 - AC-02: Follow-up validation, invalid fields, missing Tickets, Requester ownership, role restrictions, and safe failures return documented codes.
-- AC-03: An Action Taken can be edited with a matching version and stale edits return `409 ACTION_UPDATE_CONFLICT` without overwriting the newer row.
+- AC-03: An Action Taken update without a valid version is rejected; an update with the current `updatedAt` succeeds, while a stale version returns `409 ACTION_UPDATE_CONFLICT` without overwriting the newer row.
 - AC-04: Formal resolution without an Action Taken returns `409 RESOLUTION_ACTION_REQUIRED`; resolution with an Action Taken succeeds through the existing permitted transition.
 - AC-05: Requester Dashboard data contains only the authenticated Requester’s Tickets; Staff Dashboard data contains authoritative operational counts and drill-down summaries.
 - AC-06: Dashboard and Actions Taken UI works at desktop, tablet, and mobile widths without page-level horizontal scrolling.
