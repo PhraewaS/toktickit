@@ -6,7 +6,7 @@ import { getPrisma } from "./prisma.js";
 const MAX_TEXT = 5000;
 const MAX_ATTACHMENT_NOTES = 2000;
 const actionInclude = {
-  performedBy: { select: { id: true, name: true, email: true, role: true } },
+  performedBy: { select: { id: true, name: true } },
 } satisfies Prisma.ActionTakenInclude;
 
 type ActionRecord = Prisma.ActionTakenGetPayload<{ include: typeof actionInclude }>;
@@ -32,7 +32,7 @@ function serializeAction(action: ActionRecord) {
     actionDateTime: action.actionDateTime.toISOString(),
     description: action.description,
     result: action.result,
-    performedBy: action.performedBy,
+    performedBy: { id: action.performedBy.id, name: action.performedBy.name },
     followUpRequired: action.followUpRequired,
     followUpNote: action.followUpNote,
     attachmentNotes: action.attachmentNotes,
