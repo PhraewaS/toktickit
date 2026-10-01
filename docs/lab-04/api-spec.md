@@ -71,7 +71,7 @@ Authenticated IT Staff or Administrator. Body:
 
 ### `PATCH /api/staff/tickets/:ticketId/actions/:actionId`
 
-Authenticated IT Staff or Administrator. Accepts the editable fields above and optional `updatedAt`. When supplied, the timestamp must match the current row; a stale timestamp returns `409 ACTION_UPDATE_CONFLICT`. The performer is immutable. Success returns `200` with `{data:{item: ActionTaken}}`.
+Authenticated IT Staff or Administrator. Accepts the editable fields above and requires `updatedAt` set to the timestamp from the latest Action Taken response. A missing or invalid timestamp returns `400 VALIDATION_ERROR`; a timestamp that no longer matches the current row returns `409 ACTION_UPDATE_CONFLICT` without changing the row. Every update uses a conditional write, so stale-write protection cannot be bypassed. The performer is immutable. Success returns `200` with `{data:{item: ActionTaken}}`.
 
 ## Dashboards
 

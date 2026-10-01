@@ -34,21 +34,22 @@ enum TicketStatus {
 }
 
 model RequesterUser {
-  id        Int      @id @default(autoincrement())
-  name      String   @db.VarChar(150)
-  email     String   @unique @db.VarChar(254)
-  isActive  Boolean  @default(true)
-  passwordHash       String   @db.VarChar(255)
-  role      UserRole @default(REQUESTER)
-  mustChangePassword Boolean  @default(true)
-  lastLoginAt DateTime? @db.Timestamptz(3)
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime @updatedAt @db.Timestamptz(3)
-  tickets   Ticket[]
-  ownedTickets Ticket[] @relation("TicketOwner")
-  sessions  Session[]
-  publicComments PublicComment[]
-  internalNotes InternalNote[]
+  id                 Int             @id @default(autoincrement())
+  name               String          @db.VarChar(150)
+  email              String          @unique @db.VarChar(254)
+  isActive           Boolean         @default(true)
+  passwordHash       String          @db.VarChar(255)
+  role               UserRole        @default(REQUESTER)
+  mustChangePassword Boolean         @default(true)
+  lastLoginAt        DateTime?       @db.Timestamptz(3)
+  createdAt          DateTime        @default(now()) @db.Timestamptz(3)
+  updatedAt          DateTime        @updatedAt @db.Timestamptz(3)
+  tickets            Ticket[]
+  ownedTickets       Ticket[]        @relation("TicketOwner")
+  sessions           Session[]
+  publicComments     PublicComment[]
+  internalNotes      InternalNote[]
+  actionsPerformed   ActionTaken[]   @relation("ActionPerformedBy")
 
   @@index([isActive, name, id], map: "requester_users_active_name_idx")
   @@index([role, isActive, name, id], map: "requester_users_role_active_name_idx")
@@ -80,28 +81,29 @@ model RelatedSystem {
 }
 
 model Ticket {
-  id                Int               @id @default(autoincrement())
-  ticketNumber      String            @unique @db.VarChar(21)
-  requesterId       Int
-  categoryId        Int
-  relatedSystemId   Int
-  summary           String            @db.VarChar(150)
-  requestedPriority RequestedPriority
-  description       String
-  currentStatus     TicketStatus      @default(NEW)
-  itPriority        RequestedPriority @default(MEDIUM)
-  ownerId           Int?
-  requesterResolvedAt DateTime?       @db.Timestamptz(3)
-  submissionKey     String            @db.Uuid
-  createdAt         DateTime          @default(now()) @db.Timestamptz(3)
-  updatedAt         DateTime          @updatedAt @db.Timestamptz(3)
-  requester         RequesterUser     @relation(fields: [requesterId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  owner             RequesterUser?    @relation("TicketOwner", fields: [ownerId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  category          Category          @relation(fields: [categoryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  relatedSystem     RelatedSystem     @relation(fields: [relatedSystemId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  attachments       Attachment[]
-  publicComments    PublicComment[]
-  internalNotes     InternalNote[]
+  id                  Int               @id @default(autoincrement())
+  ticketNumber        String            @unique @db.VarChar(21)
+  requesterId         Int
+  categoryId          Int
+  relatedSystemId     Int
+  summary             String            @db.VarChar(150)
+  requestedPriority   RequestedPriority
+  description         String
+  currentStatus       TicketStatus      @default(NEW)
+  itPriority          RequestedPriority @default(MEDIUM)
+  ownerId             Int?
+  requesterResolvedAt DateTime?         @db.Timestamptz(3)
+  submissionKey       String            @db.Uuid
+  createdAt           DateTime          @default(now()) @db.Timestamptz(3)
+  updatedAt           DateTime          @updatedAt @db.Timestamptz(3)
+  requester           RequesterUser     @relation(fields: [requesterId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  owner               RequesterUser?    @relation("TicketOwner", fields: [ownerId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  category            Category          @relation(fields: [categoryId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  relatedSystem       RelatedSystem     @relation(fields: [relatedSystemId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  attachments         Attachment[]
+  publicComments      PublicComment[]
+  internalNotes       InternalNote[]
+  actionsTaken        ActionTaken[]
 
   @@unique([requesterId, submissionKey], map: "tickets_requester_submission_key")
   @@index([requesterId, createdAt, id], map: "tickets_requester_created_idx")
@@ -132,11 +134,11 @@ model Attachment {
 }
 
 model Session {
-  id        Int      @id @default(autoincrement())
-  tokenHash String   @unique @db.VarChar(128)
+  id        Int           @id @default(autoincrement())
+  tokenHash String        @unique @db.VarChar(128)
   userId    Int
-  expiresAt DateTime @db.Timestamptz(3)
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  expiresAt DateTime      @db.Timestamptz(3)
+  createdAt DateTime      @default(now()) @db.Timestamptz(3)
   user      RequesterUser @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   @@index([userId, expiresAt], map: "sessions_user_expiry_idx")
@@ -145,11 +147,11 @@ model Session {
 }
 
 model PublicComment {
-  id        Int      @id @default(autoincrement())
+  id        Int           @id @default(autoincrement())
   ticketId  Int
   authorId  Int
-  content   String   @db.VarChar(5000)
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  content   String        @db.VarChar(5000)
+  createdAt DateTime      @default(now()) @db.Timestamptz(3)
   ticket    Ticket        @relation(fields: [ticketId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   author    RequesterUser @relation(fields: [authorId], references: [id], onDelete: Restrict, onUpdate: Cascade)
 
@@ -158,14 +160,34 @@ model PublicComment {
 }
 
 model InternalNote {
-  id        Int      @id @default(autoincrement())
+  id        Int           @id @default(autoincrement())
   ticketId  Int
   authorId  Int
-  content   String   @db.VarChar(5000)
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  content   String        @db.VarChar(5000)
+  createdAt DateTime      @default(now()) @db.Timestamptz(3)
   ticket    Ticket        @relation(fields: [ticketId], references: [id], onDelete: Restrict, onUpdate: Cascade)
   author    RequesterUser @relation(fields: [authorId], references: [id], onDelete: Restrict, onUpdate: Cascade)
 
   @@index([ticketId, createdAt, id], map: "internal_notes_ticket_created_idx")
   @@map("internal_notes")
+}
+
+model ActionTaken {
+  id               Int           @id @default(autoincrement())
+  ticketId         Int
+  actionDateTime   DateTime      @db.Timestamptz(3)
+  description      String        @db.VarChar(5000)
+  result           String        @db.VarChar(5000)
+  performedById    Int
+  followUpRequired Boolean       @default(false)
+  followUpNote     String?       @db.VarChar(5000)
+  attachmentNotes  String?       @db.VarChar(2000)
+  createdAt        DateTime      @default(now()) @db.Timestamptz(3)
+  updatedAt        DateTime      @updatedAt @db.Timestamptz(3)
+  ticket           Ticket        @relation(fields: [ticketId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  performedBy      RequesterUser @relation("ActionPerformedBy", fields: [performedById], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@index([ticketId, actionDateTime, id], map: "actions_taken_ticket_datetime_idx")
+  @@index([performedById, actionDateTime, id], map: "actions_taken_performer_datetime_idx")
+  @@map("actions_taken")
 }
