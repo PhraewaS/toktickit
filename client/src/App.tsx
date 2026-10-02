@@ -318,7 +318,7 @@ export default function App() {
     </div></header>
     <main className="page-content">
       {logoutFailure && <div className="state-panel state-panel--error" role="alert"><strong>Logout failed.</strong><span>{logoutFailure}</span></div>}
-      {isRequester && view === "dashboard" && <RequesterDashboard onOpenTicket={(id) => { setTicketId(id); setView("requester-detail"); }} onCreateTicket={() => go("create")} />}
+      {isRequester && view === "dashboard" && <RequesterDashboard onOpenTicket={(id) => { setTicketId(id); setView("requester-detail"); }} onCreateTicket={() => go("create")} onOpenMyTickets={() => go("my-tickets")} />}
       {canOpenStaffWorkspace && view === "dashboard" && <StaffDashboard isAdmin={isAdmin} onOpenTicket={(id) => { setTicketId(id); setView("staff-detail"); }} onOpenQueue={() => go("staff-queue")} />}
       {isRequester && view === "create" && <CreateTicket requester={requester} onViewTicket={(id) => { setTicketId(id); setView("requester-detail"); }} onMyTickets={() => go("my-tickets")} />}
       {isRequester && view === "my-tickets" && <MyTickets requester={requester} onCreateTicket={() => go("create")} onOpenTicket={(id) => { setTicketId(id); setView("requester-detail"); }} />}

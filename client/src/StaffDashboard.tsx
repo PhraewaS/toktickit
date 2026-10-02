@@ -1,23 +1,58 @@
 import { useEffect, useState } from "react";
-import { DashboardTicket, fetchStaffDashboard, StaffDashboard as StaffDashboardData } from "./api.js";
+import { ApiError, DashboardTicket, fetchStaffDashboard, StaffDashboard as StaffDashboardData } from "./api.js";
 
 function label(value: string) { return value.replaceAll("_", " "); }
 function formatDate(value: string) { return new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(value)); }
-function TicketList({ title, tickets, onOpen }: { title: string; tickets: DashboardTicket[]; onOpen: (id: number) => void }) { return <section className="dashboard-list" aria-labelledby={`${title.toLowerCase().replaceAll(" ", "-")}-heading`}><div className="section-heading"><h2 id={`${title.toLowerCase().replaceAll(" ", "-")}-heading`}>{title}</h2></div>{tickets.length === 0 ? <p className="state-panel" role="status">No matching Tickets.</p> : <ul className="dashboard-ticket-list">{tickets.map((ticket) => <li key={ticket.id}><div><button className="ticket-link" type="button" onClick={() => onOpen(ticket.id)}>{ticket.ticketNumber}</button><strong>{ticket.summary}</strong><span>{ticket.requester?.name ?? "Requester"} · {formatDate(ticket.updatedAt)}</span></div><span className="badge badge--priority">{ticket.itPriority}</span></li>)}</ul>}</section>; }
+
+function TicketList({ title, tickets, onOpen }: { title: string; tickets: DashboardTicket[]; onOpen: (id: number) => void }) {
+  return <section className="dashboard-list" aria-labelledby={`${title.toLowerCase().replaceAll(" ", "-")}-heading`}>
+    <div className="section-heading"><h2 id={`${title.toLowerCase().replaceAll(" ", "-")}-heading`}>{title}</h2></div>
+    {tickets.length === 0 ? <p className="state-panel" role="status">No matching Tickets.</p> : <ul className="dashboard-ticket-list">{tickets.map((ticket) => <li key={ticket.id}>
+      <div><button className="ticket-link" type="button" onClick={() => onOpen(ticket.id)}>{ticket.ticketNumber}</button><strong>{ticket.summary}</strong><span>{ticket.requester?.name ?? "Requester"} · {formatDate(ticket.updatedAt)}</span></div>
+      <span className="badge badge--priority">{ticket.itPriority}</span>
+    </li>)}</ul>}
+  </section>;
+}
 
 export default function StaffDashboard({ onOpenTicket, onOpenQueue, isAdmin }: { onOpenTicket: (id: number) => void; onOpenQueue: () => void; isAdmin: boolean }) {
-  const [state, setState] = useState<"loading" | "ready" | "error">("loading");
+  const [state, setState] = useState<"loading" | "ready" | "error" | "forbidden">("loading");
   const [dashboard, setDashboard] = useState<StaffDashboardData | null>(null);
-  const [failure, setFailure] = useState("");
-  async function load() { setState("loading"); setFailure(""); try { setDashboard(await fetchStaffDashboard()); setState("ready"); } catch { setState("error"); setFailure("TokTickIT could not load the IT Staff Dashboard. Please try again."); } }
+
+  async function load() {
+    setDashboard(null);
+    setState("loading");
+    try {
+      setDashboard(await fetchStaffDashboard());
+      setState("ready");
+    } catch (error) {
+      setState(error instanceof ApiError && error.code === "ROLE_FORBIDDEN" ? "forbidden" : "error");
+    }
+  }
+
   useEffect(() => { void load(); }, []);
-  return <section className="ticket-page dashboard-page" aria-labelledby="staff-dashboard-heading"><div className="page-heading"><div><span className="eyebrow">{isAdmin ? "Administrator oversight" : "IT Staff workspace"}</span><h1 id="staff-dashboard-heading">Dashboard</h1><p className="lead-copy">Prioritize urgent work, see your current ownership, and open the detailed queue.</p></div><button className="button button--primary" type="button" onClick={onOpenQueue}>Open Ticket Queue</button></div>
+
+  return <section className="ticket-page dashboard-page" aria-labelledby="staff-dashboard-heading" aria-busy={state === "loading"}>
+    <div className="page-heading"><div><span className="eyebrow">{isAdmin ? "Administrator oversight" : "IT Staff workspace"}</span><h1 id="staff-dashboard-heading">Dashboard</h1><p className="lead-copy">Prioritize urgent work, see your current ownership, and open the detailed queue.</p></div><button className="button button--primary" type="button" onClick={onOpenQueue}>Open Ticket Queue</button></div>
     {state === "loading" && <div className="state-panel" role="status" aria-live="polite"><span className="spinner" aria-hidden="true" />Loading IT Staff Dashboard…</div>}
-    {state === "error" && <><div className="state-panel state-panel--error" role="status"><strong>Could not load Dashboard.</strong><span>{failure}</span><button className="button button--secondary" type="button" onClick={() => void load()}>Try again</button></div><section className="dashboard-quick-actions" aria-labelledby="staff-fallback-heading"><h2 id="staff-fallback-heading">{isAdmin ? "User Management" : "Ticket Queue"}</h2><p>Use the existing operational workspace while Dashboard data is temporarily unavailable.</p><button className="button button--primary" type="button" onClick={onOpenQueue}>{isAdmin ? "Open Staff Queue" : "Open Ticket Queue"}</button></section></>}
+    {state === "forbidden" && <div className="state-panel state-panel--error" role="alert"><strong>Dashboard access is unavailable for this account.</strong><span>No protected Dashboard information is being shown.</span><button className="button button--secondary" type="button" onClick={onOpenQueue}>Back to Ticket Queue</button></div>}
+    {state === "error" && <div className="state-panel state-panel--error" role="alert"><strong>Could not load Dashboard.</strong><span>TokTickIT could not load the IT Staff Dashboard. Please try again.</span><button className="button button--secondary" type="button" onClick={() => void load()}>Try again</button></div>}
     {state === "ready" && dashboard && <>
-      <div className="metric-grid" aria-label="IT Staff Dashboard metrics"><article className="metric-card"><span>Unassigned Tickets</span><strong>{dashboard.metrics.unassignedTickets}</strong><button type="button" className="dashboard-link" onClick={onOpenQueue}>Open Queue</button></article><article className="metric-card"><span>My Active Tickets</span><strong>{dashboard.metrics.ownedTickets}</strong><button type="button" className="dashboard-link" onClick={onOpenQueue}>View My Queue</button></article><article className="metric-card"><span>My Actions Taken</span><strong>{dashboard.metrics.actionsTakenByCurrentUser}</strong><span className="metric-help">Recorded by your account</span></article><article className="metric-card"><span>Urgent Tickets</span><strong>{dashboard.metrics.urgentTickets}</strong><button type="button" className="dashboard-link" onClick={onOpenQueue}>Review High Priority</button></article></div>
-      <div className="dashboard-breakdown"><section className="dashboard-list" aria-labelledby="staff-status-heading"><h2 id="staff-status-heading">Tickets by Status</h2><div className="breakdown-list">{Object.entries(dashboard.byStatus).map(([status, count]) => <div key={status}><span>{label(status)}</span><strong>{count}</strong></div>)}</div></section><section className="dashboard-list" aria-labelledby="staff-priority-heading"><h2 id="staff-priority-heading">Tickets by IT Priority</h2><div className="breakdown-list">{["HIGH", "MEDIUM", "LOW"].map((priority) => <div key={priority}><span>{priority}</span><strong>{dashboard.byPriority[priority as keyof typeof dashboard.byPriority] ?? 0}</strong></div>)}</div></section></div>
-      <div className="dashboard-grid"><TicketList title="Urgent Tickets" tickets={dashboard.urgentTickets} onOpen={onOpenTicket} /><TicketList title="Recently Updated Tickets" tickets={dashboard.recentlyUpdated} onOpen={onOpenTicket} /><section className="dashboard-list" aria-labelledby="staff-actions-heading"><h2 id="staff-actions-heading">My Recent Actions Taken</h2>{dashboard.recentActions.length === 0 ? <p className="state-panel" role="status">No Actions Taken recorded by your account.</p> : <ul className="dashboard-ticket-list">{dashboard.recentActions.map((action) => <li key={action.id}><div><button className="ticket-link" type="button" onClick={() => onOpenTicket(action.ticketId)}>{action.ticketNumber}</button><strong>{action.description}</strong><span>{formatDate(action.actionDateTime)} · {action.result}</span></div></li>)}</ul>}</section><section className="dashboard-quick-actions" aria-labelledby="staff-queue-heading"><h2 id="staff-queue-heading">Ticket Queue</h2><p>Open the full searchable list for assignment, workflow, and Actions Taken operations.</p><button className="button button--primary" type="button" onClick={onOpenQueue}>Open Ticket Queue</button></section></div>
+      <div className="metric-grid" aria-label="IT Staff Dashboard metrics">
+        <article className="metric-card"><span>Unassigned Tickets</span><strong>{dashboard.metrics.unassignedActive}</strong><button type="button" className="dashboard-link" onClick={onOpenQueue}>Open Queue</button></article>
+        <article className="metric-card"><span>My Active Tickets</span><strong>{dashboard.metrics.myActive}</strong><button type="button" className="dashboard-link" onClick={onOpenQueue}>View My Queue</button></article>
+        <article className="metric-card"><span>My Actions Taken</span><strong>{dashboard.metrics.myActionsTaken}</strong><span className="metric-help">Recorded by your account</span></article>
+        <article className="metric-card"><span>Urgent Tickets</span><strong>{dashboard.metrics.urgentTickets}</strong><button type="button" className="dashboard-link" onClick={onOpenQueue}>Review High Priority</button></article>
+      </div>
+      <div className="dashboard-breakdown">
+        <section className="dashboard-list" aria-labelledby="staff-status-heading"><h2 id="staff-status-heading">Tickets by Status</h2><div className="breakdown-list">{Object.entries(dashboard.byStatus).map(([status, count]) => <div key={status}><span>{label(status)}</span><strong>{count}</strong></div>)}</div></section>
+        <section className="dashboard-list" aria-labelledby="staff-priority-heading"><h2 id="staff-priority-heading">Tickets by IT Priority</h2><div className="breakdown-list">{Object.entries(dashboard.byPriority).map(([priority, count]) => <div key={priority}><span>{priority}</span><strong>{count}</strong></div>)}</div></section>
+      </div>
+      <div className="dashboard-grid">
+        <TicketList title="Urgent Tickets" tickets={dashboard.urgentTickets} onOpen={onOpenTicket} />
+        <TicketList title="Recently Updated Tickets" tickets={dashboard.recentlyUpdated} onOpen={onOpenTicket} />
+        <section className="dashboard-list" aria-labelledby="staff-actions-heading"><h2 id="staff-actions-heading">My Recent Actions Taken</h2>{dashboard.recentActions.length === 0 ? <p className="state-panel" role="status">No Actions Taken recorded by your account in the recent period.</p> : <ul className="dashboard-ticket-list">{dashboard.recentActions.map((action) => <li key={action.id}><div><button className="ticket-link" type="button" onClick={() => onOpenTicket(action.ticketId)}>{action.ticketNumber}</button><strong>{action.description}</strong><span>{formatDate(action.actionDateTime)} · {action.result}</span></div></li>)}</ul>}</section>
+        <section className="dashboard-quick-actions" aria-labelledby="staff-queue-heading"><h2 id="staff-queue-heading">Ticket Queue</h2><p>Open the full searchable list for assignment, workflow, and Actions Taken operations.</p><button className="button button--primary" type="button" onClick={onOpenQueue}>Open Ticket Queue</button></section>
+      </div>
     </>}
   </section>;
 }

@@ -89,7 +89,7 @@ Requester only. The server calculates the metrics from the authenticated Request
 }
 ```
 
-`openTickets` counts `NEW`, `OPEN`, `IN_PROGRESS`, `WAITING_FOR_REQUESTER`, and `REOPENED`. `waitingForRequester` counts `WAITING_FOR_REQUESTER`. The two recent lists use `updatedAt >= recentCutoff`, are ordered by `updatedAt DESC, id DESC`, and contain at most 10 concise items with `id`, `ticketNumber`, `summary`, `currentStatus`, and `updatedAt`. Only the authenticated Requester’s Ticket IDs may be present.
+`openTickets` counts `NEW`, `OPEN`, `IN_PROGRESS`, `WAITING_FOR_REQUESTER`, and `REOPENED`. `waitingForRequester` counts `WAITING_FOR_REQUESTER`. The `recentlyUpdated` metric is the total owned Ticket count with `updatedAt >= recentCutoff`; `recentlyResolved` is the total owned Ticket count in `RESOLVED` or `CLOSED` with that same cutoff. These metric counts are not capped by list size. The corresponding recent lists use the same filters, are ordered by `updatedAt DESC, id DESC`, and contain at most 10 concise items with `id`, `ticketNumber`, `summary`, `currentStatus`, and `updatedAt`. Only the authenticated Requester’s Ticket IDs may be present.
 
 ### `GET /api/dashboard/staff`
 
@@ -113,7 +113,7 @@ IT Staff or Administrator. The server calculates the following from the visible 
 }
 ```
 
-`active` means `NEW`, `OPEN`, `IN_PROGRESS`, `WAITING_FOR_REQUESTER`, or `REOPENED`. `unassignedActive` counts active Tickets with no owner; `myActive` counts active Tickets owned by the current user; `myActionsTaken` counts persisted Actions Taken performed by the current user; `urgentTickets` lists active visible Tickets with `itPriority=HIGH`; and `recentActions` lists the current user’s Actions Taken within the same 30-day UTC window. Grouped counts use the visible Ticket set. Lists are ordered deterministically, limited to 10, and contain concise summaries with drill-down IDs rather than full Ticket records.
+`active` means `NEW`, `OPEN`, `IN_PROGRESS`, `WAITING_FOR_REQUESTER`, or `REOPENED`. `unassignedActive` counts active Tickets with no owner; `myActive` counts active Tickets owned by the current user; `myActionsTaken` counts all persisted Actions Taken performed by the current user; and the `urgentTickets` metric counts active visible Tickets with `itPriority=HIGH`. The `byStatus` and `byPriority` breakdowns count the complete visible Ticket set, including resolved, closed, and cancelled Tickets, and include zero-valued enum entries. `recentlyUpdated` lists at most 10 visible Tickets with `updatedAt >= recentCutoff`; `urgentTickets` lists at most 10 active high-priority Tickets; and `recentActions` lists at most 10 Actions Taken by the current user with `actionDateTime >= recentCutoff`. All lists are ordered deterministically and contain concise summaries with drill-down IDs rather than full Ticket records.
 
 ## Workflow contract
 

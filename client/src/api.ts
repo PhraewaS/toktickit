@@ -391,8 +391,8 @@ export interface DashboardTicket {
   ticketNumber: string;
   summary: string;
   currentStatus: TicketStatus;
-  itPriority: RequestedPriority;
   updatedAt: string;
+  itPriority?: RequestedPriority;
   requester?: ReferenceDataItem;
   owner?: ReferenceDataItem;
 }
@@ -402,9 +402,9 @@ export interface RequesterDashboard {
   recentlyResolved: DashboardTicket[];
 }
 export interface StaffDashboard {
-  metrics: { unassignedTickets: number; ownedTickets: number; actionsTakenByCurrentUser: number; recentlyUpdated: number; urgentTickets: number };
-  byStatus: Partial<Record<TicketStatus, number>>;
-  byPriority: Partial<Record<RequestedPriority, number>>;
+  metrics: { unassignedActive: number; myActive: number; myActionsTaken: number; urgentTickets: number };
+  byStatus: Record<TicketStatus, number>;
+  byPriority: Record<RequestedPriority, number>;
   recentlyUpdated: DashboardTicket[];
   urgentTickets: DashboardTicket[];
   recentActions: Array<{ id: number; ticketId: number; ticketNumber: string; summary: string; actionDateTime: string; description: string; result: string }>;
