@@ -304,7 +304,7 @@ describe("Lab 3 staff operations production routes", () => {
     prismaMocks.ticketUpdateMany.mockResolvedValue({ count: 1 });
 
     const assignment = await request(app).post("/api/staff/tickets/42/assignment").set("Cookie", cookie).send({ ownerId: 9 });
-    const status = await request(app).patch("/api/staff/tickets/42/status").set("Cookie", cookie).send({ status: "OPEN" });
+    const status = await request(app).patch("/api/staff/tickets/42/status").set("Cookie", cookie).send({ status: "OPEN", expectedCurrentStatus: "NEW" });
 
     expect(assignment.status).toBe(200);
     expect(status.status).toBe(200);

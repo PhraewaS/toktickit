@@ -383,7 +383,7 @@ export function fetchStaffTicketDetail(ticketId: number) { return requestJson<St
 export function fetchAssignableStaff() { return requestJson<User[]>("/api/staff/assignees"); }
 export function assignStaffTicket(ticketId: number, ownerId: number | null) { return requestJson<StaffTicket>(`/api/staff/tickets/${ticketId}/assignment`, { method: "POST", body: JSON.stringify({ ownerId }) }); }
 export function updateStaffPriority(ticketId: number, itPriority: RequestedPriority) { return requestJson<StaffTicket>(`/api/staff/tickets/${ticketId}/priority`, { method: "PATCH", body: JSON.stringify({ itPriority }) }); }
-export function updateStaffStatus(ticketId: number, status: TicketStatus) { return requestJson<StaffTicket>(`/api/staff/tickets/${ticketId}/status`, { method: "PATCH", body: JSON.stringify({ status }) }); }
+export function updateStaffStatus(ticketId: number, status: TicketStatus, expectedCurrentStatus: TicketStatus) { return requestJson<StaffTicket>(`/api/staff/tickets/${ticketId}/status`, { method: "PATCH", body: JSON.stringify({ status, expectedCurrentStatus }) }); }
 export async function createStaffComment(ticketId: number, content: string) { return (await requestJson<{ comment: CommentEntry }>(`/api/staff/tickets/${ticketId}/comments`, { method: "POST", body: JSON.stringify({ content }) })).comment; }
 export async function createStaffNote(ticketId: number, content: string) { return (await requestJson<{ note: CommentEntry }>(`/api/staff/tickets/${ticketId}/notes`, { method: "POST", body: JSON.stringify({ content }) })).note; }
 

@@ -24,7 +24,7 @@ describe("Lab 4 Ticket resolution feedback", () => {
     expect(await screen.findByRole("alert")).toHaveTextContent("Record at least one Action Taken before resolving a Ticket.");
     expect(status).toHaveValue("");
     expect(screen.getByText("IN PROGRESS")).toBeInTheDocument();
-    expect(api.updateStaffStatus).toHaveBeenCalledWith(42, "RESOLVED");
+    expect(api.updateStaffStatus).toHaveBeenCalledWith(42, "RESOLVED", "IN_PROGRESS");
   });
 
   it("offers a refresh when another Staff member changed the Ticket status first", async () => {
@@ -37,6 +37,7 @@ describe("Lab 4 Ticket resolution feedback", () => {
     await screen.findByRole("heading", { name: ticket.ticketNumber });
     await user.selectOptions(screen.getByLabelText(/Move status from IN PROGRESS/i), "RESOLVED");
 
+    expect(api.updateStaffStatus).toHaveBeenCalledWith(42, "RESOLVED", "IN_PROGRESS");
     expect(await screen.findByRole("alert")).toHaveTextContent("Ticket status changed after it was loaded.");
     const callsBeforeRefresh = vi.mocked(api.fetchStaffTicketDetail).mock.calls.length;
     await user.click(screen.getByRole("button", { name: "Refresh Ticket" }));

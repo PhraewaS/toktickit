@@ -59,7 +59,7 @@ describe("Lab 4 Ticket workflow API", () => {
     mocks.ticketFindUnique.mockResolvedValue({ id: 42, currentStatus });
     mocks.actionCount.mockResolvedValue(0);
 
-    const response = await request(app).patch("/api/staff/tickets/42/status").set("Cookie", cookie).send({ status: TicketStatus.RESOLVED });
+    const response = await request(app).patch("/api/staff/tickets/42/status").set("Cookie", cookie).send({ status: TicketStatus.RESOLVED, expectedCurrentStatus: currentStatus });
 
     expect(response.status).toBe(409);
     expect(response.body.error).toMatchObject({ code: "RESOLUTION_ACTION_REQUIRED", message: expect.any(String) });
@@ -73,7 +73,7 @@ describe("Lab 4 Ticket workflow API", () => {
     mocks.actionCount.mockResolvedValue(1);
     mocks.ticketUpdateMany.mockResolvedValue({ count: 1 });
 
-    const response = await request(app).patch("/api/staff/tickets/42/status").set("Cookie", cookie).send({ status: TicketStatus.RESOLVED });
+    const response = await request(app).patch("/api/staff/tickets/42/status").set("Cookie", cookie).send({ status: TicketStatus.RESOLVED, expectedCurrentStatus: TicketStatus.IN_PROGRESS });
 
     expect(response.status).toBe(200);
     expect(response.body.data.currentStatus).toBe(TicketStatus.RESOLVED);
@@ -87,7 +87,7 @@ describe("Lab 4 Ticket workflow API", () => {
     // Another Staff member changes OPEN to IN_PROGRESS after this request reads OPEN.
     mocks.ticketUpdateMany.mockResolvedValue({ count: 0 });
 
-    const response = await request(app).patch("/api/staff/tickets/42/status").set("Cookie", cookie).send({ status: TicketStatus.WAITING_FOR_REQUESTER });
+    const response = await request(app).patch("/api/staff/tickets/42/status").set("Cookie", cookie).send({ status: TicketStatus.WAITING_FOR_REQUESTER, expectedCurrentStatus: TicketStatus.OPEN });
 
     expect(response.status).toBe(409);
     expect(response.body.error).toMatchObject({ code: "STATUS_UPDATE_CONFLICT", message: expect.stringContaining("Refresh the Ticket") });
@@ -95,11 +95,35 @@ describe("Lab 4 Ticket workflow API", () => {
     expect(mocks.ticketFindUnique).toHaveBeenCalledTimes(1);
   });
 
+  it("rejects a status that became stale while the Ticket page was open", async () => {
+    const cookie = signIn(UserRole.IT_STAFF);
+    // The page loaded IN_PROGRESS, but another Staff member changed it before this request began.
+    mocks.ticketFindUnique.mockResolvedValue({ id: 42, currentStatus: TicketStatus.WAITING_FOR_REQUESTER });
+
+    const response = await request(app).patch("/api/staff/tickets/42/status").set("Cookie", cookie).send({ status: TicketStatus.RESOLVED, expectedCurrentStatus: TicketStatus.IN_PROGRESS });
+
+    expect(response.status).toBe(409);
+    expect(response.body.error.code).toBe("STATUS_UPDATE_CONFLICT");
+    expect(mocks.actionCount).not.toHaveBeenCalled();
+    expect(mocks.ticketUpdateMany).not.toHaveBeenCalled();
+  });
+
+  it("requires the current status observed by the Client", async () => {
+    const cookie = signIn(UserRole.IT_STAFF);
+
+    const response = await request(app).patch("/api/staff/tickets/42/status").set("Cookie", cookie).send({ status: TicketStatus.OPEN });
+
+    expect(response.status).toBe(400);
+    expect(response.body.error.code).toBe("VALIDATION_ERROR");
+    expect(response.body.error.fields).toHaveProperty("expectedCurrentStatus");
+    expect(mocks.ticketFindUnique).not.toHaveBeenCalled();
+  });
+
   it("rejects unlisted transitions before checking for Actions Taken", async () => {
     const cookie = signIn(UserRole.IT_STAFF);
     mocks.ticketFindUnique.mockResolvedValue({ id: 42, currentStatus: TicketStatus.IN_PROGRESS });
 
-    const response = await request(app).patch("/api/staff/tickets/42/status").set("Cookie", cookie).send({ status: TicketStatus.CLOSED });
+    const response = await request(app).patch("/api/staff/tickets/42/status").set("Cookie", cookie).send({ status: TicketStatus.CLOSED, expectedCurrentStatus: TicketStatus.IN_PROGRESS });
 
     expect(response.status).toBe(409);
     expect(response.body.error.code).toBe("STATUS_TRANSITION_NOT_ALLOWED");
@@ -110,7 +134,7 @@ describe("Lab 4 Ticket workflow API", () => {
   it("keeps status changes IT Staff-only", async () => {
     const cookie = signIn(UserRole.ADMINISTRATOR, 3);
 
-    const response = await request(app).patch("/api/staff/tickets/42/status").set("Cookie", cookie).send({ status: TicketStatus.OPEN });
+    const response = await request(app).patch("/api/staff/tickets/42/status").set("Cookie", cookie).send({ status: TicketStatus.OPEN, expectedCurrentStatus: TicketStatus.NEW });
 
     expect(response.status).toBe(403);
     expect(response.body.error.code).toBe("ROLE_FORBIDDEN");

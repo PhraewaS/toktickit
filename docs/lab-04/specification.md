@@ -57,7 +57,7 @@ SLA clocks, escalation/on-call scheduling, external notifications, inventory/pur
 
 ### Final Ticket status transition matrix
 
-The backend is authoritative. The status control shows only the permitted next statuses below. Any no-op or unlisted transition returns `409 STATUS_TRANSITION_NOT_ALLOWED`. Status writes compare the Ticket's status observed at request start as part of the atomic database update; if another Staff member changes it first, the request returns `409 STATUS_UPDATE_CONFLICT` without overwriting that newer status. The Staff member must refresh the Ticket before retrying. Requesters cannot perform formal transitions, and Administrators retain Lab 3 read/IT-Priority behavior but do not perform Staff status transitions.
+The backend is authoritative. The status control shows only the permitted next statuses below. Any no-op or unlisted transition returns `409 STATUS_TRANSITION_NOT_ALLOWED`. Each status request includes the `expectedCurrentStatus` shown when the Ticket was loaded. If another Staff member changed the Ticket while the page was open, the request returns `409 STATUS_UPDATE_CONFLICT` without applying the stale transition. The atomic database update also protects the interval between the Server's read and write. The Staff member must refresh the Ticket before retrying. Requesters cannot perform formal transitions, and Administrators retain Lab 3 read/IT-Priority behavior but do not perform Staff status transitions.
 
 | Current status | Permitted next status | Authorized actor | Additional rule |
 | --- | --- | --- | --- |

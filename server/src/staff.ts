@@ -91,13 +91,15 @@ export function isAllowedStaffStatusTransition(current: TicketStatus, next: Tick
 }
 
 export const updateStaffStatus: RequestHandler = async (req, res) => {
-  const ticketId = parseId(req.params.ticketId); const nextStatus = req.body?.status as TicketStatus;
+  const ticketId = parseId(req.params.ticketId); const nextStatus = req.body?.status as TicketStatus; const expectedCurrentStatus = req.body?.expectedCurrentStatus as TicketStatus;
   if (ticketId === null) { error(res, 400, "INVALID_TICKET_ID", "Ticket ID must be a positive integer."); return; }
   if (!statuses.has(nextStatus)) { error(res, 400, "VALIDATION_ERROR", "Choose a permitted Ticket status.", { status: "Status is invalid." }); return; }
+  if (!statuses.has(expectedCurrentStatus)) { error(res, 400, "VALIDATION_ERROR", "Refresh the Ticket and submit the status currently shown.", { expectedCurrentStatus: "A valid current Ticket status is required." }); return; }
   try {
     const prisma = getPrisma();
     const current = await prisma.ticket.findUnique({ where: { id: ticketId }, select: { currentStatus: true } });
     if (!current) { ticketNotFound(res); return; }
+    if (current.currentStatus !== expectedCurrentStatus) { error(res, 409, "STATUS_UPDATE_CONFLICT", "Ticket status changed after it was loaded. Refresh the Ticket and try again."); return; }
     if (!isAllowedStaffStatusTransition(current.currentStatus, nextStatus)) { error(res, 409, "STATUS_TRANSITION_NOT_ALLOWED", `A Ticket cannot move from ${current.currentStatus} to ${nextStatus}.`); return; }
     if (nextStatus === TicketStatus.RESOLVED) {
       const actionCount = await prisma.actionTaken.count({ where: { ticketId } });
