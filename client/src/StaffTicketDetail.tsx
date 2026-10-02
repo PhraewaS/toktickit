@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { assignStaffTicket, createStaffComment, createStaffNote, downloadStaffAttachment, fetchAssignableStaff, fetchStaffTicketDetail, StaffTicket, TicketStatus, updateStaffPriority, updateStaffStatus, User } from "./api.js";
+import { ApiError, assignStaffTicket, createStaffComment, createStaffNote, downloadStaffAttachment, fetchAssignableStaff, fetchStaffTicketDetail, StaffTicket, TicketStatus, updateStaffPriority, updateStaffStatus, User } from "./api.js";
 
 const allowedTransitions: Readonly<Record<TicketStatus, readonly TicketStatus[]>> = { NEW: ["OPEN"], OPEN: ["IN_PROGRESS", "WAITING_FOR_REQUESTER", "CANCELLED"], IN_PROGRESS: ["WAITING_FOR_REQUESTER", "RESOLVED", "CANCELLED"], WAITING_FOR_REQUESTER: ["IN_PROGRESS", "RESOLVED", "CANCELLED"], RESOLVED: ["CLOSED", "REOPENED"], CLOSED: ["REOPENED"], REOPENED: [], CANCELLED: [] };
 
@@ -11,6 +11,7 @@ export default function StaffTicketDetail({ ticketId, onBack, currentUser }: { t
   const [ticket, setTicket] = useState<StaffTicket | null>(null);
   const [state, setState] = useState<"loading" | "ready" | "error">("loading");
   const [failure, setFailure] = useState("");
+  const [statusConflict, setStatusConflict] = useState(false);
   const [content, setContent] = useState("");
   const [note, setNote] = useState("");
   const [owners, setOwners] = useState<User[]>([]);
@@ -23,6 +24,7 @@ export default function StaffTicketDetail({ ticketId, onBack, currentUser }: { t
   async function load() {
     setState("loading");
     setFailure("");
+    setStatusConflict(false);
     try {
       const loaded = await fetchStaffTicketDetail(ticketId);
       const assignees = isStaff ? await fetchAssignableStaff() : [];
@@ -42,10 +44,12 @@ export default function StaffTicketDetail({ ticketId, onBack, currentUser }: { t
   async function operation(action: () => Promise<StaffTicket>) {
     setSaving(true);
     setFailure("");
+    setStatusConflict(false);
     try {
       setTicket(await action());
     } catch (error) {
       setFailure(error instanceof Error ? error.message : "The Ticket could not be updated.");
+      setStatusConflict(error instanceof ApiError && error.code === "STATUS_UPDATE_CONFLICT");
     } finally {
       setSaving(false);
     }
@@ -81,7 +85,7 @@ export default function StaffTicketDetail({ ticketId, onBack, currentUser }: { t
   return <section className="ticket-page ticket-detail-page" aria-labelledby="staff-detail-heading">
     <button className="button button--tertiary back-link" type="button" onClick={onBack}>← Back to Queue</button>
     <div className="page-heading"><div><span className="eyebrow">{isAdmin ? "Administrator ticket oversight" : "IT Staff ticket detail"}</span><h1 id="staff-detail-heading">{ticket.ticketNumber}</h1><p className="lead-copy">Operational controls are server-authorized and append-only communication is preserved.</p></div><div className="detail-badges"><span className="badge badge--status">{label(ticket.currentStatus)}</span><span className="badge badge--priority">Requested {ticket.requestedPriority}</span><span className="badge badge--priority">IT {ticket.itPriority}</span></div></div>
-    {failure && <div className="state-panel state-panel--error" role="alert">{failure}</div>}
+    {failure && <div className="state-panel state-panel--error" role="alert">{failure}{statusConflict && <button className="button button--secondary" type="button" onClick={() => void load()}>Refresh Ticket</button>}</div>}
     <div className="detail-grid">
       <fieldset className="form-section" disabled><legend>Ticket information</legend><div className="form-grid form-grid--three"><div className="field-group"><label htmlFor="staff-detail-number">Ticket Number</label><input id="staff-detail-number" value={ticket.ticketNumber} readOnly /></div><div className="field-group"><label htmlFor="staff-detail-requester">Requester</label><input id="staff-detail-requester" value={ticket.requester.name} readOnly /></div><div className="field-group"><label htmlFor="staff-detail-category">Category</label><input id="staff-detail-category" value={ticket.category.name} readOnly /></div></div><div className="field-group"><label htmlFor="staff-detail-summary">Summary</label><input id="staff-detail-summary" value={ticket.summary} readOnly /></div><div className="field-group"><label htmlFor="staff-detail-description">Description</label><textarea id="staff-detail-description" value={ticket.description} rows={5} readOnly /></div></fieldset>
       <fieldset className="form-section"><legend>Operational controls</legend><div className="form-grid form-grid--three">

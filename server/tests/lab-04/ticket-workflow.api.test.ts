@@ -2,8 +2,8 @@ import request from "supertest";
 import { TicketStatus, UserRole } from "@prisma/client";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const mocks = vi.hoisted(() => ({ sessionFindUnique: vi.fn(), ticketFindUnique: vi.fn(), ticketFindFirst: vi.fn(), actionCount: vi.fn(), ticketUpdate: vi.fn() }));
-vi.mock("../../src/prisma.js", () => ({ getPrisma: () => ({ session: { findUnique: mocks.sessionFindUnique }, ticket: { findUnique: mocks.ticketFindUnique, findFirst: mocks.ticketFindFirst, update: mocks.ticketUpdate }, actionTaken: { count: mocks.actionCount } }) }));
+const mocks = vi.hoisted(() => ({ sessionFindUnique: vi.fn(), ticketFindUnique: vi.fn(), ticketFindFirst: vi.fn(), actionCount: vi.fn(), ticketUpdate: vi.fn(), ticketUpdateMany: vi.fn() }));
+vi.mock("../../src/prisma.js", () => ({ getPrisma: () => ({ session: { findUnique: mocks.sessionFindUnique }, ticket: { findUnique: mocks.ticketFindUnique, findFirst: mocks.ticketFindFirst, update: mocks.ticketUpdate, updateMany: mocks.ticketUpdateMany }, actionTaken: { count: mocks.actionCount } }) }));
 import { app } from "../../src/app.js";
 import { allowedStaffStatusTransitions, isAllowedStaffStatusTransition } from "../../src/staff.js";
 
@@ -64,20 +64,35 @@ describe("Lab 4 Ticket workflow API", () => {
     expect(response.status).toBe(409);
     expect(response.body.error).toMatchObject({ code: "RESOLUTION_ACTION_REQUIRED", message: expect.any(String) });
     expect(mocks.actionCount).toHaveBeenCalledWith({ where: { ticketId: 42 } });
-    expect(mocks.ticketUpdate).not.toHaveBeenCalled();
+    expect(mocks.ticketUpdateMany).not.toHaveBeenCalled();
   });
 
   it("allows resolution after an Action Taken has been persisted", async () => {
     const cookie = signIn(UserRole.IT_STAFF);
-    mocks.ticketFindUnique.mockResolvedValue({ id: 42, currentStatus: TicketStatus.IN_PROGRESS });
+    mocks.ticketFindUnique.mockResolvedValueOnce({ id: 42, currentStatus: TicketStatus.IN_PROGRESS }).mockResolvedValueOnce(staffTicket);
     mocks.actionCount.mockResolvedValue(1);
-    mocks.ticketUpdate.mockResolvedValue(staffTicket);
+    mocks.ticketUpdateMany.mockResolvedValue({ count: 1 });
 
     const response = await request(app).patch("/api/staff/tickets/42/status").set("Cookie", cookie).send({ status: TicketStatus.RESOLVED });
 
     expect(response.status).toBe(200);
     expect(response.body.data.currentStatus).toBe(TicketStatus.RESOLVED);
-    expect(mocks.ticketUpdate).toHaveBeenCalledWith(expect.objectContaining({ where: { id: 42 }, data: { currentStatus: TicketStatus.RESOLVED } }));
+    expect(mocks.ticketUpdateMany).toHaveBeenCalledWith({ where: { id: 42, currentStatus: TicketStatus.IN_PROGRESS }, data: { currentStatus: TicketStatus.RESOLVED } });
+    expect(mocks.ticketFindUnique).toHaveBeenLastCalledWith(expect.objectContaining({ where: { id: 42 }, include: expect.any(Object) }));
+  });
+
+  it("rejects a stale concurrent status update without overwriting the newer status", async () => {
+    const cookie = signIn(UserRole.IT_STAFF);
+    mocks.ticketFindUnique.mockResolvedValue({ id: 42, currentStatus: TicketStatus.OPEN });
+    // Another Staff member changes OPEN to IN_PROGRESS after this request reads OPEN.
+    mocks.ticketUpdateMany.mockResolvedValue({ count: 0 });
+
+    const response = await request(app).patch("/api/staff/tickets/42/status").set("Cookie", cookie).send({ status: TicketStatus.WAITING_FOR_REQUESTER });
+
+    expect(response.status).toBe(409);
+    expect(response.body.error).toMatchObject({ code: "STATUS_UPDATE_CONFLICT", message: expect.stringContaining("Refresh the Ticket") });
+    expect(mocks.ticketUpdateMany).toHaveBeenCalledWith({ where: { id: 42, currentStatus: TicketStatus.OPEN }, data: { currentStatus: TicketStatus.WAITING_FOR_REQUESTER } });
+    expect(mocks.ticketFindUnique).toHaveBeenCalledTimes(1);
   });
 
   it("rejects unlisted transitions before checking for Actions Taken", async () => {
@@ -89,7 +104,7 @@ describe("Lab 4 Ticket workflow API", () => {
     expect(response.status).toBe(409);
     expect(response.body.error.code).toBe("STATUS_TRANSITION_NOT_ALLOWED");
     expect(mocks.actionCount).not.toHaveBeenCalled();
-    expect(mocks.ticketUpdate).not.toHaveBeenCalled();
+    expect(mocks.ticketUpdateMany).not.toHaveBeenCalled();
   });
 
   it("keeps status changes IT Staff-only", async () => {
@@ -100,7 +115,7 @@ describe("Lab 4 Ticket workflow API", () => {
     expect(response.status).toBe(403);
     expect(response.body.error.code).toBe("ROLE_FORBIDDEN");
     expect(mocks.ticketFindUnique).not.toHaveBeenCalled();
-    expect(mocks.ticketUpdate).not.toHaveBeenCalled();
+    expect(mocks.ticketUpdateMany).not.toHaveBeenCalled();
   });
 
   it("keeps the Requester resolution indication advisory", async () => {

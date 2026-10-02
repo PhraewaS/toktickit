@@ -9,6 +9,7 @@ const prismaMocks = vi.hoisted(() => ({
   ticketFindUnique: vi.fn(),
   ticketFindFirst: vi.fn(),
   ticketUpdate: vi.fn(),
+  ticketUpdateMany: vi.fn(),
   requesterFindFirst: vi.fn(),
   publicCommentFindMany: vi.fn(),
   publicCommentCreate: vi.fn(),
@@ -25,6 +26,7 @@ vi.mock("../../src/prisma.js", () => ({
       findUnique: prismaMocks.ticketFindUnique,
       findFirst: prismaMocks.ticketFindFirst,
       update: prismaMocks.ticketUpdate,
+      updateMany: prismaMocks.ticketUpdateMany,
     },
     requesterUser: { findFirst: prismaMocks.requesterFindFirst },
     publicComment: {
@@ -295,9 +297,11 @@ describe("Lab 3 staff operations production routes", () => {
     const cookie = authenticate(UserRole.IT_STAFF);
     prismaMocks.ticketFindUnique
       .mockResolvedValueOnce({ id: 42 })
-      .mockResolvedValueOnce({ currentStatus: "NEW" });
+      .mockResolvedValueOnce({ currentStatus: "NEW" })
+      .mockResolvedValueOnce({ ...staffTicket, currentStatus: "OPEN" });
     prismaMocks.requesterFindFirst.mockResolvedValue({ id: 9 });
     prismaMocks.ticketUpdate.mockResolvedValue(staffTicket);
+    prismaMocks.ticketUpdateMany.mockResolvedValue({ count: 1 });
 
     const assignment = await request(app).post("/api/staff/tickets/42/assignment").set("Cookie", cookie).send({ ownerId: 9 });
     const status = await request(app).patch("/api/staff/tickets/42/status").set("Cookie", cookie).send({ status: "OPEN" });
@@ -305,7 +309,8 @@ describe("Lab 3 staff operations production routes", () => {
     expect(assignment.status).toBe(200);
     expect(status.status).toBe(200);
     expect(prismaMocks.requesterFindFirst).toHaveBeenCalled();
-    expect(prismaMocks.ticketUpdate).toHaveBeenCalledTimes(2);
+    expect(prismaMocks.ticketUpdate).toHaveBeenCalledTimes(1);
+    expect(prismaMocks.ticketUpdateMany).toHaveBeenCalledWith({ where: { id: 42, currentStatus: "NEW" }, data: { currentStatus: "OPEN" } });
   });
 
   it("rejects inactive or invalid assignment owners", async () => {

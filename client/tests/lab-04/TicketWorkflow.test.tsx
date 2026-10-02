@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import StaffTicketDetail from "../../src/StaffTicketDetail.js";
@@ -25,5 +25,21 @@ describe("Lab 4 Ticket resolution feedback", () => {
     expect(status).toHaveValue("");
     expect(screen.getByText("IN PROGRESS")).toBeInTheDocument();
     expect(api.updateStaffStatus).toHaveBeenCalledWith(42, "RESOLVED");
+  });
+
+  it("offers a refresh when another Staff member changed the Ticket status first", async () => {
+    const user = userEvent.setup();
+    vi.mocked(api.fetchStaffTicketDetail).mockResolvedValue(ticket);
+    vi.mocked(api.fetchAssignableStaff).mockResolvedValue([actor]);
+    vi.mocked(api.updateStaffStatus).mockRejectedValue(new api.ApiError("Ticket status changed after it was loaded. Refresh the Ticket and try again.", undefined, "STATUS_UPDATE_CONFLICT"));
+
+    render(<StaffTicketDetail ticketId={42} currentUser={actor} onBack={vi.fn()} />);
+    await screen.findByRole("heading", { name: ticket.ticketNumber });
+    await user.selectOptions(screen.getByLabelText(/Move status from IN PROGRESS/i), "RESOLVED");
+
+    expect(await screen.findByRole("alert")).toHaveTextContent("Ticket status changed after it was loaded.");
+    const callsBeforeRefresh = vi.mocked(api.fetchStaffTicketDetail).mock.calls.length;
+    await user.click(screen.getByRole("button", { name: "Refresh Ticket" }));
+    await waitFor(() => expect(api.fetchStaffTicketDetail).toHaveBeenCalledTimes(callsBeforeRefresh + 1));
   });
 });

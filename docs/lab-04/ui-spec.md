@@ -29,7 +29,7 @@ These states must remain distinguishable without color alone and must work at de
 
 Ticket Detail shows an ordered list with Action Date/Time, Description, Result, Performed By, Follow-Up Required, Follow-Up Note, and Attachment Notes. Staff/Admin see Add Action Taken and Edit controls. The form labels every field, marks required fields, reveals Follow-Up Note only when required, and shows saving/validation/conflict feedback. Requesters see entries read-only and never see mutation controls.
 
-IT Staff status controls show only transitions allowed by the status matrix. If a resolution attempt returns `409 RESOLUTION_ACTION_REQUIRED`, keep the formal status unchanged, reset the selector to its neutral prompt, and show a safe message explaining that an Action Taken must be recorded first.
+IT Staff status controls show only transitions allowed by the status matrix. If a resolution attempt returns `409 RESOLUTION_ACTION_REQUIRED`, keep the formal status unchanged, reset the selector to its neutral prompt, and show a safe message explaining that an Action Taken must be recorded first. If a concurrent Staff status change returns `409 STATUS_UPDATE_CONFLICT`, keep the stale detail unchanged, show the safe conflict message, and provide a `Refresh Ticket` action before the Staff member retries.
 
 ## Accessibility and responsive behavior
 
