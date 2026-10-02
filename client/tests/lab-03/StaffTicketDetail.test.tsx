@@ -38,7 +38,7 @@ describe("Administrator ticket oversight", () => {
     expect(screen.queryByRole("option", { name: "CANCELLED" })).not.toBeInTheDocument();
     expect(screen.getByText(/Requester marked this problem as appears resolved/i)).toBeInTheDocument();
     await user.selectOptions(status, "CLOSED");
-    expect(api.updateStaffStatus).toHaveBeenCalledWith(42, "CLOSED");
+    expect(api.updateStaffStatus).toHaveBeenCalledWith(42, "CLOSED", "RESOLVED");
   });
 });
 
