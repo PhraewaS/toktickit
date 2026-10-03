@@ -13,6 +13,8 @@ test("E2E-05 authenticated Requester regression: create, own detail, comment, an
   await page.getByLabel("New password", { exact: true }).fill("Requester-Regression2!");
   await page.getByLabel("Confirm new password", { exact: true }).fill("Requester-Regression2!");
   await page.getByRole("button", { name: "Save password" }).click();
+  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
+  await page.getByRole("link", { name: "Create Ticket" }).click();
   await expect(page.getByRole("heading", { name: "Create Ticket" })).toBeVisible();
 
   await page.getByLabel("Category").selectOption({ index: 1 });
@@ -46,8 +48,10 @@ test("E2E-08 authenticated Requester regression replaces the legacy Lab 2 select
   await page.getByLabel("New password", { exact: true }).fill("Requester-E2E08-Changed2!");
   await page.getByLabel("Confirm new password", { exact: true }).fill("Requester-E2E08-Changed2!");
   await page.getByRole("button", { name: "Save password" }).click();
-  await expect(page.getByRole("heading", { name: "Create Ticket" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
   await expect(page.locator("#development-requester")).toHaveCount(0);
+  await page.getByRole("link", { name: "Create Ticket" }).click();
+  await expect(page.getByRole("heading", { name: "Create Ticket" })).toBeVisible();
   await page.getByRole("link", { name: "My Tickets" }).click();
   await expect(page.getByRole("heading", { name: "My Tickets" })).toBeVisible();
 });

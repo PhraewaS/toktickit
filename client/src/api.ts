@@ -89,7 +89,8 @@ export interface TicketListQuery {
   categoryId?: number;
   relatedSystemId?: number;
   requestedPriority?: RequestedPriority;
-  currentStatus?: "NEW";
+  currentStatus?: TicketStatus;
+  activeOnly?: boolean;
   sortBy?: "ticketNumber" | "summary" | "createdAt" | "updatedAt";
   sortOrder?: "asc" | "desc";
   page?: number;
@@ -375,7 +376,7 @@ export interface StaffTicket extends Ticket {
   internalNotes?: CommentEntry[];
 }
 export interface StaffTicketListResult { items: StaffTicket[]; pagination: { page: number; pageSize: 10 | 20 | 50; totalItems: number; totalPages: number } }
-export interface StaffTicketQuery { search?: string; status?: TicketStatus; requestedPriority?: RequestedPriority; itPriority?: RequestedPriority; ownerId?: number | "unassigned"; sortBy?: "ticketNumber" | "summary" | "createdAt" | "updatedAt" | "itPriority" | "currentStatus"; sortOrder?: "asc" | "desc"; page?: number; pageSize?: 10 | 20 | 50 }
+export interface StaffTicketQuery { search?: string; status?: TicketStatus; requestedPriority?: RequestedPriority; itPriority?: RequestedPriority; ownerId?: number | "unassigned"; activeOnly?: boolean; sortBy?: "ticketNumber" | "summary" | "createdAt" | "updatedAt" | "itPriority" | "currentStatus"; sortOrder?: "asc" | "desc"; page?: number; pageSize?: 10 | 20 | 50 }
 
 function queryString(query: object) { const params = new URLSearchParams(); for (const [key, value] of Object.entries(query)) if (value !== undefined && value !== "") params.set(key, String(value)); return params.toString() ? `?${params.toString()}` : ""; }
 export function fetchStaffTickets(query: StaffTicketQuery = {}) { return requestJson<StaffTicketListResult>(`/api/staff/tickets${queryString(query)}`); }
@@ -386,6 +387,31 @@ export function updateStaffPriority(ticketId: number, itPriority: RequestedPrior
 export function updateStaffStatus(ticketId: number, status: TicketStatus, expectedCurrentStatus: TicketStatus) { return requestJson<StaffTicket>(`/api/staff/tickets/${ticketId}/status`, { method: "PATCH", body: JSON.stringify({ status, expectedCurrentStatus }) }); }
 export async function createStaffComment(ticketId: number, content: string) { return (await requestJson<{ comment: CommentEntry }>(`/api/staff/tickets/${ticketId}/comments`, { method: "POST", body: JSON.stringify({ content }) })).comment; }
 export async function createStaffNote(ticketId: number, content: string) { return (await requestJson<{ note: CommentEntry }>(`/api/staff/tickets/${ticketId}/notes`, { method: "POST", body: JSON.stringify({ content }) })).note; }
+export interface DashboardTicket {
+  id: number;
+  ticketNumber: string;
+  summary: string;
+  currentStatus: TicketStatus;
+  updatedAt: string;
+  itPriority?: RequestedPriority;
+  requester?: ReferenceDataItem;
+  owner?: ReferenceDataItem;
+}
+export interface RequesterDashboard {
+  metrics: { openTickets: number; waitingForRequester: number; recentlyUpdated: number; recentlyResolved: number };
+  recentlyUpdated: DashboardTicket[];
+  recentlyResolved: DashboardTicket[];
+}
+export interface StaffDashboard {
+  metrics: { unassignedActive: number; myActive: number; myActionsTaken: number; urgentTickets: number };
+  byStatus: Record<TicketStatus, number>;
+  byPriority: Record<RequestedPriority, number>;
+  recentlyUpdated: DashboardTicket[];
+  urgentTickets: DashboardTicket[];
+  recentActions: Array<{ id: number; ticketId: number; ticketNumber: string; summary: string; actionDateTime: string; description: string; result: string }>;
+}
+export function fetchRequesterDashboard() { return requestJson<RequesterDashboard>("/api/dashboard/requester"); }
+export function fetchStaffDashboard() { return requestJson<StaffDashboard>("/api/dashboard/staff"); }
 
 export interface AdminUserPayload { name: string; email: string; role: UserRole; isActive: boolean; initialPassword: string }
 export interface AdminUserQuery { search?: string; role?: UserRole }

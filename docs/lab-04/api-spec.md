@@ -89,7 +89,7 @@ Requester only. The server calculates the metrics from the authenticated Request
 }
 ```
 
-`openTickets` counts `NEW`, `OPEN`, `IN_PROGRESS`, `WAITING_FOR_REQUESTER`, and `REOPENED`. `waitingForRequester` counts `WAITING_FOR_REQUESTER`. The two recent lists use `updatedAt >= recentCutoff`, are ordered by `updatedAt DESC, id DESC`, and contain at most 10 concise items with `id`, `ticketNumber`, `summary`, `currentStatus`, and `updatedAt`. Only the authenticated Requester’s Ticket IDs may be present.
+`openTickets` counts `NEW`, `OPEN`, `IN_PROGRESS`, `WAITING_FOR_REQUESTER`, and `REOPENED`. `waitingForRequester` counts `WAITING_FOR_REQUESTER`. The `recentlyUpdated` metric is the total owned Ticket count with `updatedAt >= recentCutoff`; `recentlyResolved` is the total owned Ticket count in `RESOLVED` or `CLOSED` with that same cutoff. These metric counts are not capped by list size. The corresponding recent lists use the same filters, are ordered by `updatedAt DESC, id DESC`, and contain at most 10 concise items with `id`, `ticketNumber`, `summary`, `currentStatus`, and ISO-8601 `updatedAt`. Only the authenticated Requester’s Ticket IDs may be present. The open-count shortcut opens My Tickets with `activeOnly=true`; the Waiting for Requester shortcut uses `currentStatus=WAITING_FOR_REQUESTER`. Both list filters are enforced by the Requester ticket-list API, and the selected filter is shown in the Current Status control. Recent-list items open the existing Requester Ticket Detail by `id`.
 
 ### `GET /api/dashboard/staff`
 
@@ -100,20 +100,61 @@ IT Staff or Administrator. The server calculates the following from the visible 
   "data": {
     "metrics": {
       "unassignedActive": 0,
-      "myActive": 0,
-      "myActionsTaken": 0,
-      "urgentTickets": 0
+      "myActive": 1,
+      "myActionsTaken": 1,
+      "urgentTickets": 1
     },
-    "byStatus": {},
-    "byPriority": {},
-    "recentlyUpdated": [],
-    "urgentTickets": [],
-    "recentActions": []
+    "byStatus": {
+      "NEW": 0, "OPEN": 1, "IN_PROGRESS": 0, "WAITING_FOR_REQUESTER": 0,
+      "RESOLVED": 0, "CLOSED": 0, "REOPENED": 0, "CANCELLED": 0
+    },
+    "byPriority": { "LOW": 0, "MEDIUM": 0, "HIGH": 1 },
+    "recentlyUpdated": [
+      {
+        "id": 42,
+        "ticketNumber": "TKT-20261003-00000042",
+        "summary": "VPN access is unavailable",
+        "currentStatus": "OPEN",
+        "updatedAt": "2026-10-03T08:00:00.000Z",
+        "itPriority": "HIGH",
+        "requester": { "id": 8, "name": "Jennifer Requester" },
+        "owner": { "id": 7, "name": "Mali Staff" }
+      }
+    ],
+    "urgentTickets": [
+      {
+        "id": 42,
+        "ticketNumber": "TKT-20261003-00000042",
+        "summary": "VPN access is unavailable",
+        "currentStatus": "OPEN",
+        "updatedAt": "2026-10-03T08:00:00.000Z",
+        "itPriority": "HIGH",
+        "requester": { "id": 8, "name": "Jennifer Requester" },
+        "owner": { "id": 7, "name": "Mali Staff" }
+      }
+    ],
+    "recentActions": [
+      {
+        "id": 9,
+        "ticketId": 42,
+        "ticketNumber": "TKT-20261003-00000042",
+        "summary": "VPN access is unavailable",
+        "actionDateTime": "2026-10-03T07:30:00.000Z",
+        "description": "Reviewed VPN logs",
+        "result": "Authentication failure confirmed"
+      }
+    ]
   }
 }
 ```
 
-`active` means `NEW`, `OPEN`, `IN_PROGRESS`, `WAITING_FOR_REQUESTER`, or `REOPENED`. `unassignedActive` counts active Tickets with no owner; `myActive` counts active Tickets owned by the current user; `myActionsTaken` counts persisted Actions Taken performed by the current user; `urgentTickets` lists active visible Tickets with `itPriority=HIGH`; and `recentActions` lists the current user’s Actions Taken within the same 30-day UTC window. Grouped counts use the visible Ticket set. Lists are ordered deterministically, limited to 10, and contain concise summaries with drill-down IDs rather than full Ticket records.
+`active` means `NEW`, `OPEN`, `IN_PROGRESS`, `WAITING_FOR_REQUESTER`, or `REOPENED`. `unassignedActive` counts active Tickets with no owner; `myActive` counts active Tickets owned by the current user; `myActionsTaken` counts all persisted Actions Taken performed by the current user; and the `urgentTickets` metric counts active visible Tickets with `itPriority=HIGH`. The `byStatus` and `byPriority` breakdowns count the complete visible Ticket set, including resolved, closed, and cancelled Tickets, and include zero-valued enum entries.
+
+Staff Ticket summary objects contain exactly the fields shown in the `recentlyUpdated`/`urgentTickets` example: `id`, `ticketNumber`, `summary`, `currentStatus`, ISO-8601 `updatedAt`, `itPriority`, `requester: {id,name}`, and nullable `owner: {id,name}`. `recentlyUpdated` contains at most 10 visible Tickets with `updatedAt >= recentCutoff`, ordered by `updatedAt DESC, id DESC`. `urgentTickets` contains at most 10 active high-priority Tickets with the same deterministic order. Each summary opens Staff Ticket Detail using `id`.
+
+Each Recent Action item contains exactly `id`, `ticketId`, `ticketNumber`, `summary`, ISO-8601 `actionDateTime`, `description`, and `result`. `recentActions` contains at most 10 Actions Taken by the current user with `actionDateTime >= recentCutoff`, ordered by `actionDateTime DESC, id DESC`; its ticket button opens Staff Ticket Detail using `ticketId`. The `myActionsTaken` metric is the all-time count and is intentionally distinct from the bounded 30-day `recentActions` list.
+
+Queue drill-downs preserve the calculation scope: Unassigned Active uses `ownerId=unassigned&activeOnly=true`; My Active uses `ownerId=<authenticatedUserId>&activeOnly=true`; High Priority uses `itPriority=HIGH&activeOnly=true`; each status breakdown entry uses `status=<TicketStatus>`; and each priority breakdown entry uses `itPriority=<RequestedPriority>` without `activeOnly`, because the breakdowns include every visible Ticket status. The queue API validates `activeOnly` as a boolean query value and applies the five active statuses defined above. Filters are applied before loading the queue and are visible in its controls.
 
 ## Workflow contract
 

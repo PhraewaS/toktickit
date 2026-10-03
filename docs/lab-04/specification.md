@@ -87,6 +87,8 @@ For the authenticated Requester’s Ticket set only:
 
 Each list item includes `id`, `ticketNumber`, `summary`, `currentStatus`, and `updatedAt`; its destination is the existing read-only Ticket Detail.
 
+Dashboard metric and breakdown controls must open the corresponding filtered list, not the unfiltered Queue: Requester Open Tickets uses `activeOnly=true`, Waiting for Requester uses `currentStatus=WAITING_FOR_REQUESTER`, Staff Unassigned Active uses `ownerId=unassigned&activeOnly=true`, My Active uses `ownerId=<authenticatedUserId>&activeOnly=true`, and High Priority uses `itPriority=HIGH&activeOnly=true`. Staff status breakdowns filter by one exact status; IT Priority breakdowns filter by one exact IT Priority across all statuses. The filter is applied to the first list request and remains visible in its control.
+
 ### IT Staff / Administrator Dashboard
 
 For Tickets visible to the authenticated IT Staff or Administrator:
@@ -100,7 +102,7 @@ For Tickets visible to the authenticated IT Staff or Administrator:
 - `urgentTickets`: up to 10 active visible Tickets with `itPriority = HIGH`, ordered by `updatedAt DESC, id DESC`.
 - `recentActions`: up to 10 Actions Taken performed by the authenticated user with `actionDateTime >= recentCutoff`, ordered by `actionDateTime DESC, id DESC`.
 
-`active` means status `NEW`, `OPEN`, `IN_PROGRESS`, `WAITING_FOR_REQUESTER`, or `REOPENED`. Ticket list items drill down to Staff Ticket Detail or the appropriate filtered Queue; Action items drill down to Staff Ticket Detail.
+`active` means status `NEW`, `OPEN`, `IN_PROGRESS`, `WAITING_FOR_REQUESTER`, or `REOPENED`. Ticket list items drill down to Staff Ticket Detail or the appropriate filtered Queue; Action items drill down to Staff Ticket Detail. Recent Ticket summaries include `id`, `ticketNumber`, `summary`, `currentStatus`, `updatedAt`, `itPriority`, `requester {id,name}`, and nullable `owner {id,name}`. Recent Action summaries include `id`, `ticketId`, `ticketNumber`, `summary`, `actionDateTime`, `description`, and `result`; they open Staff Ticket Detail by `ticketId`.
 
 ## 7. UI Specification Summary
 
