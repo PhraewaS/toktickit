@@ -100,15 +100,15 @@ IT Staff or Administrator. The server calculates the following from the visible 
   "data": {
     "metrics": {
       "unassignedActive": 0,
-      "myActive": 0,
-      "myActionsTaken": 0,
-      "urgentTickets": 0
+      "myActive": 1,
+      "myActionsTaken": 1,
+      "urgentTickets": 1
     },
     "byStatus": {
-      "NEW": 0, "OPEN": 0, "IN_PROGRESS": 0, "WAITING_FOR_REQUESTER": 0,
+      "NEW": 0, "OPEN": 1, "IN_PROGRESS": 0, "WAITING_FOR_REQUESTER": 0,
       "RESOLVED": 0, "CLOSED": 0, "REOPENED": 0, "CANCELLED": 0
     },
-    "byPriority": { "LOW": 0, "MEDIUM": 0, "HIGH": 0 },
+    "byPriority": { "LOW": 0, "MEDIUM": 0, "HIGH": 1 },
     "recentlyUpdated": [
       {
         "id": 42,
@@ -130,7 +130,7 @@ IT Staff or Administrator. The server calculates the following from the visible 
         "updatedAt": "2026-10-03T08:00:00.000Z",
         "itPriority": "HIGH",
         "requester": { "id": 8, "name": "Jennifer Requester" },
-        "owner": null
+        "owner": { "id": 7, "name": "Mali Staff" }
       }
     ],
     "recentActions": [
