@@ -29,6 +29,31 @@ export interface User {
 
 export interface CommentEntry { id: number; content: string; createdAt: string; author: { id: number; name: string; role: UserRole | string } }
 
+export interface ActionTaken {
+  id: number;
+  ticketId: number;
+  actionDateTime: string;
+  description: string;
+  result: string;
+  performedBy: { id: number; name: string };
+  followUpRequired: boolean;
+  followUpNote: string | null;
+  attachmentNotes: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ActionTakenPayload {
+  actionDateTime: string;
+  description: string;
+  result: string;
+  followUpRequired: boolean;
+  followUpNote?: string;
+  attachmentNotes?: string;
+}
+
+export type UpdateActionTakenPayload = ActionTakenPayload & { updatedAt: string };
+
 export interface CreateTicketPayload {
   submissionKey: string;
   categoryId: number;
@@ -374,6 +399,7 @@ export interface StaffTicket extends Ticket {
   requesterResolvedAt: string | null;
   publicComments?: CommentEntry[];
   internalNotes?: CommentEntry[];
+  actionsTaken?: ActionTaken[];
 }
 export interface StaffTicketListResult { items: StaffTicket[]; pagination: { page: number; pageSize: 10 | 20 | 50; totalItems: number; totalPages: number } }
 export interface StaffTicketQuery { search?: string; status?: TicketStatus; requestedPriority?: RequestedPriority; itPriority?: RequestedPriority; ownerId?: number | "unassigned"; activeOnly?: boolean; sortBy?: "ticketNumber" | "summary" | "createdAt" | "updatedAt" | "itPriority" | "currentStatus"; sortOrder?: "asc" | "desc"; page?: number; pageSize?: 10 | 20 | 50 }
@@ -422,3 +448,7 @@ export async function resetAdminPassword(userId: number, initialPassword: string
 export async function fetchRequesterComments(ticketId: number) { return (await requestJson<{ items: CommentEntry[] }>(`/api/tickets/${ticketId}/comments`)).items; }
 export async function createRequesterComment(ticketId: number, content: string) { return (await requestJson<{ comment: CommentEntry }>(`/api/tickets/${ticketId}/comments`, { method: "POST", body: JSON.stringify({ content }) })).comment; }
 export function markRequesterResolved(ticketId: number) { return requestJson<{ ticketId: number; requesterResolvedAt: string | null }>(`/api/tickets/${ticketId}/resolved`, { method: "POST", body: JSON.stringify({}) }); }
+export async function fetchRequesterActions(ticketId: number) { return (await requestJson<{ items: ActionTaken[] }>(`/api/tickets/${ticketId}/actions`)).items; }
+export async function fetchStaffActions(ticketId: number) { return (await requestJson<{ items: ActionTaken[] }>(`/api/staff/tickets/${ticketId}/actions`)).items; }
+export async function createStaffAction(ticketId: number, payload: ActionTakenPayload) { return (await requestJson<{ item: ActionTaken }>(`/api/staff/tickets/${ticketId}/actions`, { method: "POST", body: JSON.stringify(payload) })).item; }
+export async function updateStaffAction(ticketId: number, actionId: number, payload: UpdateActionTakenPayload) { return (await requestJson<{ item: ActionTaken }>(`/api/staff/tickets/${ticketId}/actions/${actionId}`, { method: "PATCH", body: JSON.stringify(payload) })).item; }
