@@ -48,13 +48,14 @@ describe("Lab 4 Actions Taken UI", () => {
     await user.type(screen.getByLabelText(/Follow-Up Note/), "Confirm with Requester.");
     await user.click(screen.getByRole("button", { name: "Save Action Taken" }));
 
-    await waitFor(() => expect(api.createStaffAction).toHaveBeenCalledWith(42, expect.objectContaining({ followUpRequired: true, followUpNote: "Confirm with Requester." })));
+    await waitFor(() => expect(api.createStaffAction).toHaveBeenCalledWith(42, expect.objectContaining({ followUpRequired: true, followUpNote: "Confirm with Requester." }), expect.any(String)));
     expect(await screen.findByText("Confirm with Requester.")).toBeInTheDocument();
   });
 
   it("sends the loaded updatedAt token when editing", async () => {
     const user = userEvent.setup();
-    vi.mocked(api.fetchStaffActions).mockResolvedValue([action]);
+    const preciseAction = { ...action, actionDateTime: "2026-09-22T09:30:47.000Z" };
+    vi.mocked(api.fetchStaffActions).mockResolvedValue([preciseAction]);
     vi.mocked(api.updateStaffAction).mockResolvedValue({ ...action, result: "Verified after repair." });
     render(<ActionsTaken ticketId={42} />);
 
@@ -64,7 +65,7 @@ describe("Lab 4 Actions Taken UI", () => {
     await user.type(within(form).getByLabelText(/^Result/), "Verified after repair.");
     await user.click(within(form).getByRole("button", { name: "Save Changes" }));
 
-    await waitFor(() => expect(api.updateStaffAction).toHaveBeenCalledWith(42, 9, expect.objectContaining({ updatedAt: action.updatedAt, result: "Verified after repair." })));
+    await waitFor(() => expect(api.updateStaffAction).toHaveBeenCalledWith(42, 9, expect.objectContaining({ actionDateTime: preciseAction.actionDateTime, updatedAt: action.updatedAt, result: "Verified after repair." })));
     expect(await screen.findByText("Verified after repair.")).toBeInTheDocument();
   });
 
@@ -86,17 +87,65 @@ describe("Lab 4 Actions Taken UI", () => {
 
   it("shows a stale-update conflict and refreshes the Action list", async () => {
     const user = userEvent.setup();
-    vi.mocked(api.fetchStaffActions).mockResolvedValueOnce([action]).mockResolvedValueOnce([{ ...action, result: "Changed by another staff member." }]);
+    vi.mocked(api.fetchStaffActions).mockResolvedValueOnce([action]).mockRejectedValueOnce(new Error("Temporary refresh failure")).mockResolvedValueOnce([{ ...action, result: "Changed by another staff member." }]);
     vi.mocked(api.updateStaffAction).mockRejectedValue(new api.ApiError("This Action Taken changed after it was loaded. Refresh and try again.", undefined, "ACTION_UPDATE_CONFLICT"));
     render(<ActionsTaken ticketId={42} />);
 
     await user.click(await screen.findByRole("button", { name: /^Edit Action Taken/ }));
+    const draftResult = screen.getByLabelText(/^Result/);
+    await user.clear(draftResult);
+    await user.type(draftResult, "My unsaved notes to keep.");
     await user.click(screen.getByRole("button", { name: "Save Changes" }));
     expect(await screen.findByText("This Action Taken changed after it was loaded. Refresh and try again.")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Refresh Actions Taken" }));
+    expect(await screen.findByText("Temporary refresh failure")).toBeInTheDocument();
+    expect(screen.getByLabelText(/^Result/)).toHaveValue("My unsaved notes to keep.");
+    await user.click(screen.getByRole("button", { name: "Try again" }));
 
     expect(await screen.findByText("Changed by another staff member.")).toBeInTheDocument();
+    expect(screen.getByLabelText(/^Result/)).toHaveValue("My unsaved notes to keep.");
+    expect(api.fetchStaffActions).toHaveBeenCalledTimes(3);
+  });
+
+  it("reuses the same idempotency key when retrying a create after an uncertain response", async () => {
+    const user = userEvent.setup();
+    vi.mocked(api.createStaffAction).mockRejectedValueOnce(new api.ApiError("TokTickIT could not complete the request. Please try again."))
+      .mockResolvedValueOnce({ ...action, id: 10 });
+    render(<ActionsTaken ticketId={42} />);
+
+    await user.click(await screen.findByRole("button", { name: "Add Action Taken" }));
+    await user.type(screen.getByLabelText(/Action Description/), "Checked logs.");
+    await user.type(screen.getByLabelText(/^Result/), "Failure reproduced.");
+    await user.click(screen.getByRole("button", { name: "Save Action Taken" }));
+    expect(await screen.findByText("TokTickIT could not complete the request. Please try again.")).toBeInTheDocument();
+    expect(await screen.findByText(/save result may be unknown/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Action Description/)).toBeDisabled();
+    await user.click(screen.getByRole("button", { name: "Save Action Taken" }));
+
+    await waitFor(() => expect(api.createStaffAction).toHaveBeenCalledTimes(2));
+    const firstKey = vi.mocked(api.createStaffAction).mock.calls[0][2];
+    const retryKey = vi.mocked(api.createStaffAction).mock.calls[1][2];
+    expect(firstKey).toMatch(/^[0-9a-f-]{36}$/i);
+    expect(retryKey).toBe(firstKey);
+    expect(screen.getAllByText("Checked logs.")).toHaveLength(1);
+  });
+
+  it("reconciles the action list before allowing another create after discarding an uncertain draft", async () => {
+    const user = userEvent.setup();
+    vi.mocked(api.fetchStaffActions).mockResolvedValueOnce([]).mockResolvedValueOnce([{ ...action, id: 10 }]);
+    vi.mocked(api.createStaffAction).mockRejectedValueOnce(new api.ApiError("TokTickIT could not complete the request. Please try again."));
+    render(<ActionsTaken ticketId={42} />);
+
+    await user.click(await screen.findByRole("button", { name: "Add Action Taken" }));
+    await user.type(screen.getByLabelText(/Action Description/), "Checked logs.");
+    await user.type(screen.getByLabelText(/^Result/), "Failure reproduced.");
+    await user.click(screen.getByRole("button", { name: "Save Action Taken" }));
+    expect(await screen.findByText(/save result may be unknown/i)).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Discard draft" }));
+
+    expect(await screen.findByText("Checked logs.")).toBeInTheDocument();
     expect(api.fetchStaffActions).toHaveBeenCalledTimes(2);
+    expect(screen.queryByRole("form", { name: "Create Action Taken" })).not.toBeInTheDocument();
   });
 
   it("shows forbidden access without exposing a mutation form", async () => {

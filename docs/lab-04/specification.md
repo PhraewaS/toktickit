@@ -121,6 +121,7 @@ See [api-spec.md](api-spec.md). Primary additions are `GET /api/tickets/:ticketI
 - AC-01: Valid Staff/Admin Action Taken creates under the requested Ticket with the authenticated actor and returns the complete response shape.
 - AC-02: Follow-up validation, invalid fields, missing Tickets, Requester ownership, role restrictions, and safe failures return documented codes.
 - AC-03: An Action Taken update without a valid version is rejected; an update with the current `updatedAt` succeeds, while a stale version returns `409 ACTION_UPDATE_CONFLICT` without overwriting the newer row.
+- AC-08: Refreshing after a stale edit preserves the user's draft through load failures and retries; creating an Action Taken with the same idempotency key after an uncertain response returns the original record without duplication; editing other fields preserves the exact Action Date/Time including seconds.
 - AC-04: Formal resolution without an Action Taken returns `409 RESOLUTION_ACTION_REQUIRED`; resolution with an Action Taken succeeds through the existing permitted transition.
 - AC-05: Requester Dashboard data contains only the authenticated Requester’s Tickets; Staff Dashboard data contains authoritative operational counts and drill-down summaries.
 - AC-06: Dashboard and Actions Taken UI works at desktop, tablet, and mobile widths without page-level horizontal scrolling.
