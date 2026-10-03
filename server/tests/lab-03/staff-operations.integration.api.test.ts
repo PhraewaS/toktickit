@@ -127,6 +127,24 @@ describe("Lab 3 staff operations production routes", () => {
     ] });
   });
 
+  it("applies active-only together with dashboard owner and urgency drill-down filters", async () => {
+    const cookie = authenticate(UserRole.IT_STAFF);
+    prismaMocks.ticketCount.mockResolvedValue(2);
+    prismaMocks.ticketFindMany.mockResolvedValue([staffTicket]);
+
+    const response = await request(app)
+      .get("/api/staff/tickets?ownerId=unassigned&activeOnly=true&itPriority=HIGH&page=1&pageSize=10")
+      .set("Cookie", cookie);
+
+    expect(response.status).toBe(200);
+    const query = prismaMocks.ticketFindMany.mock.calls[0][0];
+    expect(query.where.AND).toEqual(expect.arrayContaining([
+      { ownerId: null },
+      { itPriority: "HIGH" },
+      { currentStatus: { in: ["NEW", "OPEN", "IN_PROGRESS", "WAITING_FOR_REQUESTER", "REOPENED"] } },
+    ]));
+  });
+
   it("rejects invalid sortOrder and unknown queue query parameters", async () => {
     const cookie = authenticate(UserRole.IT_STAFF);
 
@@ -139,6 +157,9 @@ describe("Lab 3 staff operations production routes", () => {
     const repeatedQuery = await request(app)
       .get("/api/staff/tickets?sortOrder=asc&sortOrder=desc")
       .set("Cookie", cookie);
+    const invalidActiveOnly = await request(app)
+      .get("/api/staff/tickets?activeOnly=yes")
+      .set("Cookie", cookie);
 
     expect(invalidSort.status).toBe(400);
     expect(invalidSort.body.error.code).toBe("INVALID_QUERY");
@@ -146,6 +167,8 @@ describe("Lab 3 staff operations production routes", () => {
     expect(unknownQuery.body.error.code).toBe("INVALID_QUERY");
     expect(repeatedQuery.status).toBe(400);
     expect(repeatedQuery.body.error.code).toBe("INVALID_QUERY");
+    expect(invalidActiveOnly.status).toBe(400);
+    expect(invalidActiveOnly.body.error.code).toBe("INVALID_QUERY");
     expect(prismaMocks.ticketCount).not.toHaveBeenCalled();
   });
 

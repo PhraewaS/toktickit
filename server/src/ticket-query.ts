@@ -16,6 +16,7 @@ export interface TicketListQuery {
   relatedSystemId?: number;
   requestedPriority?: RequestedPriority;
   currentStatus?: TicketStatus;
+  activeOnly?: boolean;
   sortBy: ListSortField;
   sortOrder: ListSortOrder;
   page: number;
@@ -65,7 +66,11 @@ export function parseTicketListQuery(query: unknown): TicketQueryResult {
 
   const rawStatus = read("currentStatus");
   const currentStatus = rawStatus as TicketStatus | undefined;
-  if (rawStatus && rawStatus !== "NEW") fields.currentStatus = "Current Status must be NEW.";
+  if (rawStatus && !Object.values(TicketStatus).includes(currentStatus!)) fields.currentStatus = "Current Status is invalid.";
+
+  const rawActiveOnly = read("activeOnly");
+  if (rawActiveOnly && rawActiveOnly !== "true" && rawActiveOnly !== "false") fields.activeOnly = "Active-only filter must be true or false.";
+  const activeOnly = rawActiveOnly === "true";
 
   const rawSortBy = read("sortBy");
   const sortBy = (rawSortBy || "createdAt") as ListSortField;
@@ -100,6 +105,7 @@ export function parseTicketListQuery(query: unknown): TicketQueryResult {
       ...(relatedSystemId === undefined ? {} : { relatedSystemId }),
       ...(rawPriority ? { requestedPriority } : {}),
       ...(rawStatus ? { currentStatus } : {}),
+      ...(activeOnly ? { activeOnly } : {}),
       sortBy,
       sortOrder,
       page: page as number,

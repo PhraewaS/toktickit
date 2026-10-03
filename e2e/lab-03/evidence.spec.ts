@@ -18,6 +18,7 @@ async function signInAndChangePassword(page: Page, email: string, changedPasswor
   await page.getByRole("button", { name: "Save password" }).click();
   await expect(page.getByRole("heading", { name: "Change your password" })).toBeHidden();
   await page.reload();
+  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
 }
 
 async function capture(page: Page, testInfo: TestInfo, filename: string) {
@@ -50,6 +51,7 @@ test("EVIDENCE-00 Login and Change Password screenshots", async ({ page }, testI
 test("EVIDENCE-01 Staff Queue screenshot", async ({ page }, testInfo) => {
   resetLocalSeed();
   await signInAndChangePassword(page, "somchai.staff@example.test", "Evidence-Staff-Queue2!");
+  await page.getByRole("link", { name: "Ticket Queue" }).click();
   await expect(page.getByRole("heading", { name: "Ticket Queue" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Apply filters" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Open detail" }).first()).toBeVisible();
@@ -64,6 +66,7 @@ test("EVIDENCE-01 Staff Queue screenshot", async ({ page }, testInfo) => {
 test("EVIDENCE-02 Staff Ticket Detail screenshot", async ({ page }, testInfo) => {
   resetLocalSeed();
   await signInAndChangePassword(page, "somchai.staff@example.test", "Evidence-Staff-Detail2!");
+  await page.getByRole("link", { name: "Ticket Queue" }).click();
   await page.getByRole("heading", { name: "Ticket Queue" }).waitFor();
   await page.getByRole("button", { name: "Open detail" }).first().click();
   await expect(page.getByRole("heading", { name: /TKT-/ })).toBeVisible();
@@ -74,6 +77,7 @@ test("EVIDENCE-02 Staff Ticket Detail screenshot", async ({ page }, testInfo) =>
 test("EVIDENCE-03 Administrator User Management screenshot", async ({ page }, testInfo) => {
   resetLocalSeed();
   await signInAndChangePassword(page, "admin@example.test", "Evidence-Admin-Users2!");
+  await page.getByRole("link", { name: "User Management" }).click();
   await expect(page.getByRole("heading", { name: "User Management" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Create user" }).first()).toBeVisible();
   await expect(page.getByText("admin@example.test")).toBeVisible();

@@ -67,6 +67,20 @@ describe("My Tickets screen", () => {
     await waitFor(() => expect(apiMocks.fetchMyTickets).toHaveBeenLastCalledWith(1, expect.objectContaining({ search: "battery", page: 1 })));
   });
 
+  it("opens with a dashboard status filter already applied to the API request", async () => {
+    render(<MyTickets requester={requester} onCreateTicket={vi.fn()} initialFilters={{ currentStatus: "WAITING_FOR_REQUESTER" }} />);
+    expect(await screen.findByText(ticket.ticketNumber)).toBeInTheDocument();
+    expect(screen.getByLabelText("Current Status")).toHaveValue("WAITING_FOR_REQUESTER");
+    expect(apiMocks.fetchMyTickets).toHaveBeenLastCalledWith(1, expect.objectContaining({ currentStatus: "WAITING_FOR_REQUESTER" }));
+  });
+
+  it("opens with the active-only dashboard filter applied and represented in the control", async () => {
+    render(<MyTickets requester={requester} onCreateTicket={vi.fn()} initialFilters={{ activeOnly: true }} />);
+    expect(await screen.findByText(ticket.ticketNumber)).toBeInTheDocument();
+    expect(screen.getByLabelText("Current Status")).toHaveValue("ACTIVE");
+    expect(apiMocks.fetchMyTickets).toHaveBeenLastCalledWith(1, expect.objectContaining({ activeOnly: true }));
+  });
+
   it("clears search and filters while keeping the visible sort controls in sync", async () => {
     const user = userEvent.setup();
     render(<MyTickets requester={requester} onCreateTicket={vi.fn()} />);

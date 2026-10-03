@@ -30,7 +30,7 @@ function serializeTicket(ticket: Prisma.TicketGetPayload<{ include: typeof staff
 
 export const listStaffTickets: RequestHandler = async (req, res) => {
   const q = req.query;
-  const allowedQueryKeys = new Set(["search", "status", "requestedPriority", "itPriority", "ownerId", "sortBy", "sortOrder", "page", "pageSize"]);
+  const allowedQueryKeys = new Set(["search", "status", "requestedPriority", "itPriority", "ownerId", "activeOnly", "sortBy", "sortOrder", "page", "pageSize"]);
   if (Object.keys(q).some((key) => !allowedQueryKeys.has(key))) { error(res, 400, "INVALID_QUERY", "Review the Ticket queue filters and try again."); return; }
   if (Object.values(q).some((value) => typeof value !== "string")) { error(res, 400, "INVALID_QUERY", "Review the Ticket queue filters and try again."); return; }
   const search = q.search === undefined ? "" : typeof q.search === "string" ? q.search.trim() : null;
@@ -43,6 +43,10 @@ export const listStaffTickets: RequestHandler = async (req, res) => {
   const filters: Prisma.TicketWhereInput[] = [];
   if (search) filters.push({ OR: [{ ticketNumber: { contains: search, mode: "insensitive" } }, { summary: { contains: search, mode: "insensitive" } }] });
   if (typeof q.status === "string") { if (!statuses.has(q.status)) { error(res, 400, "INVALID_QUERY", "Status filter is invalid."); return; } filters.push({ currentStatus: q.status as TicketStatus }); }
+  if (q.activeOnly !== undefined) {
+    if (q.activeOnly !== "true" && q.activeOnly !== "false") { error(res, 400, "INVALID_QUERY", "Active-only filter is invalid."); return; }
+    if (q.activeOnly === "true") filters.push({ currentStatus: { in: [TicketStatus.NEW, TicketStatus.OPEN, TicketStatus.IN_PROGRESS, TicketStatus.WAITING_FOR_REQUESTER, TicketStatus.REOPENED] } });
+  }
   if (typeof q.requestedPriority === "string") { if (!priorities.has(q.requestedPriority)) { error(res, 400, "INVALID_QUERY", "Requested Priority filter is invalid."); return; } filters.push({ requestedPriority: q.requestedPriority as RequestedPriority }); }
   if (typeof q.itPriority === "string") { if (!priorities.has(q.itPriority)) { error(res, 400, "INVALID_QUERY", "IT Priority filter is invalid."); return; } filters.push({ itPriority: q.itPriority as RequestedPriority }); }
   if (q.ownerId !== undefined) { if (q.ownerId !== "unassigned" && parseId(String(q.ownerId)) === null) { error(res, 400, "INVALID_QUERY", "Owner filter is invalid."); return; } filters.push(q.ownerId === "unassigned" ? { ownerId: null } : { ownerId: Number(q.ownerId) }); }

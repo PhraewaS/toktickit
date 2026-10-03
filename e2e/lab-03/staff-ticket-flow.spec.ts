@@ -15,7 +15,10 @@ test("E2E-02 IT Staff queue and detail workflow", async ({ page }, testInfo) => 
   await page.getByLabel("Confirm new password", { exact: true }).fill("Staff-Changed2!");
   await page.getByRole("button", { name: "Save password" }).click();
   await expect(page.getByRole("heading", { name: "Change your password" })).toBeHidden();
+  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
   await page.reload();
+  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
+  await page.getByRole("link", { name: "Ticket Queue" }).click();
   await expect(page.getByRole("heading", { name: "Ticket Queue" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Apply filters" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Open detail" }).first()).toBeVisible();

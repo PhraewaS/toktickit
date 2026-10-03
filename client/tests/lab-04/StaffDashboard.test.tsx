@@ -15,7 +15,7 @@ const dashboard = {
   urgentTickets: [ticket],
   recentActions: [{ id: 9, ticketId: 42, ticketNumber: ticket.ticketNumber, summary: ticket.summary, actionDateTime: ticket.updatedAt, description: "Reviewed VPN logs", result: "Authentication failure confirmed" }],
 };
-const props = { onOpenTicket: vi.fn(), onOpenQueue: vi.fn(), isAdmin: false };
+const props = { onOpenTicket: vi.fn(), onOpenQueue: vi.fn(), isAdmin: false, currentUserId: 7 };
 
 describe("Lab 4 Staff Dashboard", () => {
   beforeEach(() => { vi.clearAllMocks(); });
@@ -38,6 +38,28 @@ describe("Lab 4 Staff Dashboard", () => {
     expect(props.onOpenTicket).toHaveBeenCalledWith(42);
     await user.click(screen.getAllByRole("button", { name: "Open Ticket Queue" })[0]);
     expect(props.onOpenQueue).toHaveBeenCalledOnce();
+  });
+
+  it("drills each metric and breakdown into the matching queue filters", async () => {
+    const user = userEvent.setup();
+    vi.mocked(api.fetchStaffDashboard).mockResolvedValue(dashboard);
+    render(<StaffDashboard {...props} />);
+
+    await screen.findByRole("heading", { name: "Dashboard" });
+    await user.click(screen.getByRole("button", { name: "Open Queue" }));
+    expect(props.onOpenQueue).toHaveBeenLastCalledWith({ ownerId: "unassigned", activeOnly: true });
+
+    await user.click(screen.getByRole("button", { name: "View My Queue" }));
+    expect(props.onOpenQueue).toHaveBeenLastCalledWith({ ownerId: 7, activeOnly: true });
+
+    await user.click(screen.getByRole("button", { name: "Review High Priority" }));
+    expect(props.onOpenQueue).toHaveBeenLastCalledWith({ itPriority: "HIGH", activeOnly: true });
+
+    await user.click(screen.getByRole("button", { name: "Filter queue by status OPEN" }));
+    expect(props.onOpenQueue).toHaveBeenLastCalledWith({ status: "OPEN" });
+
+    await user.click(screen.getByRole("button", { name: "Filter queue by IT priority HIGH" }));
+    expect(props.onOpenQueue).toHaveBeenLastCalledWith({ itPriority: "HIGH" });
   });
 
   it("shows an empty Action Taken state separately from successful zero metrics", async () => {

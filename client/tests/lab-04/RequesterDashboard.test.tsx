@@ -21,12 +21,22 @@ describe("Lab 4 Requester Dashboard", () => {
     expect(await screen.findByRole("heading", { name: "Dashboard" })).toBeInTheDocument();
     expect(screen.getByText("18")).toBeInTheDocument();
     expect(screen.getByText("6")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "View My Tickets" }));
+    expect(props.onOpenMyTickets).toHaveBeenCalledWith({ activeOnly: true });
     await user.click(screen.getAllByRole("button", { name: ticket.ticketNumber })[0]);
     expect(props.onOpenTicket).toHaveBeenCalledWith(42);
-    await user.click(screen.getByRole("button", { name: "View My Tickets" }));
-    expect(props.onOpenMyTickets).toHaveBeenCalledOnce();
     await user.click(screen.getByRole("button", { name: "Create a Ticket" }));
     expect(props.onCreateTicket).toHaveBeenCalledOnce();
+  });
+
+  it("opens My Tickets with the Waiting for Requester status filter", async () => {
+    const user = userEvent.setup();
+    vi.mocked(api.fetchRequesterDashboard).mockResolvedValue(dashboard);
+    render(<RequesterDashboard {...props} />);
+
+    await screen.findByRole("heading", { name: "Dashboard" });
+    await user.click(screen.getByRole("button", { name: "Review My Tickets" }));
+    expect(props.onOpenMyTickets).toHaveBeenCalledWith({ currentStatus: "WAITING_FOR_REQUESTER" });
   });
 
   it("shows loading and distinct empty states with zero metric values", async () => {

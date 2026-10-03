@@ -156,7 +156,8 @@ Error Cases:
 | `categoryId` | Optional Positive Integer |
 | `relatedSystemId` | Optional Positive Integer |
 | `requestedPriority` | `LOW`, `MEDIUM`, `HIGH` |
-| `currentStatus` | Lab 2 รองรับ `NEW` |
+| `currentStatus` | ใน Lab 2 มีเฉพาะ `NEW`; ตั้งแต่ Lab 4 เป็นต้นไป รองรับค่า TicketStatus ทั้งหมดเพื่อให้ Dashboard เปิดรายการที่กรองตามสถานะได้ |
+| `activeOnly` | Lab 4 เพิ่มค่า Boolean `true` สำหรับแสดงสถานะที่ยัง active (`NEW`, `OPEN`, `IN_PROGRESS`, `WAITING_FOR_REQUESTER`, `REOPENED`) |
 | `sortBy` | `ticketNumber`, `summary`, `createdAt`, `updatedAt`; Default `createdAt` |
 | `sortOrder` | `asc`, `desc`; Default `desc` |
 | `page` | Positive Integer; Default 1 |

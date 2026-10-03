@@ -89,7 +89,8 @@ export interface TicketListQuery {
   categoryId?: number;
   relatedSystemId?: number;
   requestedPriority?: RequestedPriority;
-  currentStatus?: "NEW";
+  currentStatus?: TicketStatus;
+  activeOnly?: boolean;
   sortBy?: "ticketNumber" | "summary" | "createdAt" | "updatedAt";
   sortOrder?: "asc" | "desc";
   page?: number;
@@ -375,7 +376,7 @@ export interface StaffTicket extends Ticket {
   internalNotes?: CommentEntry[];
 }
 export interface StaffTicketListResult { items: StaffTicket[]; pagination: { page: number; pageSize: 10 | 20 | 50; totalItems: number; totalPages: number } }
-export interface StaffTicketQuery { search?: string; status?: TicketStatus; requestedPriority?: RequestedPriority; itPriority?: RequestedPriority; ownerId?: number | "unassigned"; sortBy?: "ticketNumber" | "summary" | "createdAt" | "updatedAt" | "itPriority" | "currentStatus"; sortOrder?: "asc" | "desc"; page?: number; pageSize?: 10 | 20 | 50 }
+export interface StaffTicketQuery { search?: string; status?: TicketStatus; requestedPriority?: RequestedPriority; itPriority?: RequestedPriority; ownerId?: number | "unassigned"; activeOnly?: boolean; sortBy?: "ticketNumber" | "summary" | "createdAt" | "updatedAt" | "itPriority" | "currentStatus"; sortOrder?: "asc" | "desc"; page?: number; pageSize?: 10 | 20 | 50 }
 
 function queryString(query: object) { const params = new URLSearchParams(); for (const [key, value] of Object.entries(query)) if (value !== undefined && value !== "") params.set(key, String(value)); return params.toString() ? `?${params.toString()}` : ""; }
 export function fetchStaffTickets(query: StaffTicketQuery = {}) { return requestJson<StaffTicketListResult>(`/api/staff/tickets${queryString(query)}`); }

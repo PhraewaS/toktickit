@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ApiError, DashboardTicket, fetchRequesterDashboard, RequesterDashboard as RequesterDashboardData } from "./api.js";
+import { ApiError, DashboardTicket, fetchRequesterDashboard, RequesterDashboard as RequesterDashboardData, TicketListQuery } from "./api.js";
 
 function label(value: string) { return value.replaceAll("_", " "); }
 function formatDate(value: string) { return new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date(value)); }
@@ -14,7 +14,7 @@ function TicketList({ title, tickets, onOpen }: { title: string; tickets: Dashbo
   </section>;
 }
 
-export default function RequesterDashboard({ onOpenTicket, onCreateTicket, onOpenMyTickets }: { onOpenTicket: (id: number) => void; onCreateTicket: () => void; onOpenMyTickets: () => void }) {
+export default function RequesterDashboard({ onOpenTicket, onCreateTicket, onOpenMyTickets }: { onOpenTicket: (id: number) => void; onCreateTicket: () => void; onOpenMyTickets: (filters?: TicketListQuery) => void }) {
   const [state, setState] = useState<"loading" | "ready" | "error" | "forbidden">("loading");
   const [dashboard, setDashboard] = useState<RequesterDashboardData | null>(null);
 
@@ -34,12 +34,12 @@ export default function RequesterDashboard({ onOpenTicket, onCreateTicket, onOpe
   return <section className="ticket-page dashboard-page" aria-labelledby="requester-dashboard-heading" aria-busy={state === "loading"}>
     <div className="page-heading"><div><span className="eyebrow">Requester workspace</span><h1 id="requester-dashboard-heading">Dashboard</h1><p className="lead-copy">A concise view of your Tickets that need attention and recent updates.</p></div><button className="button button--primary" type="button" onClick={onCreateTicket}>Create Ticket</button></div>
     {state === "loading" && <div className="state-panel" role="status" aria-live="polite"><span className="spinner" aria-hidden="true" />Loading Requester Dashboard…</div>}
-    {state === "forbidden" && <div className="state-panel state-panel--error" role="alert"><strong>Dashboard access is unavailable for this account.</strong><span>No protected Dashboard information is being shown.</span><button className="button button--secondary" type="button" onClick={onOpenMyTickets}>Go to My Tickets</button></div>}
+    {state === "forbidden" && <div className="state-panel state-panel--error" role="alert"><strong>Dashboard access is unavailable for this account.</strong><span>No protected Dashboard information is being shown.</span><button className="button button--secondary" type="button" onClick={() => onOpenMyTickets()}>Go to My Tickets</button></div>}
     {state === "error" && <div className="state-panel state-panel--error" role="alert"><strong>Could not load Dashboard.</strong><span>TokTickIT could not load your Dashboard. Please try again.</span><button className="button button--secondary" type="button" onClick={() => void load()}>Try again</button></div>}
     {state === "ready" && dashboard && <>
       <div className="metric-grid" aria-label="Requester Dashboard metrics">
-        <article className="metric-card"><span>Open Tickets</span><strong>{dashboard.metrics.openTickets}</strong><button type="button" className="dashboard-link" onClick={onOpenMyTickets}>View My Tickets</button></article>
-        <article className="metric-card"><span>Waiting for Requester</span><strong>{dashboard.metrics.waitingForRequester}</strong><button type="button" className="dashboard-link" onClick={onOpenMyTickets}>Review My Tickets</button></article>
+        <article className="metric-card"><span>Open Tickets</span><strong>{dashboard.metrics.openTickets}</strong><button type="button" className="dashboard-link" onClick={() => onOpenMyTickets({ activeOnly: true })}>View My Tickets</button></article>
+        <article className="metric-card"><span>Waiting for Requester</span><strong>{dashboard.metrics.waitingForRequester}</strong><button type="button" className="dashboard-link" onClick={() => onOpenMyTickets({ currentStatus: "WAITING_FOR_REQUESTER" })}>Review My Tickets</button></article>
         <article className="metric-card"><span>Recently Updated</span><strong>{dashboard.metrics.recentlyUpdated}</strong><span className="metric-help">Last 30 days</span></article>
         <article className="metric-card"><span>Recently Resolved</span><strong>{dashboard.metrics.recentlyResolved}</strong><span className="metric-help">Last 30 days</span></article>
       </div>

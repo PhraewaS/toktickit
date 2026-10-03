@@ -1161,7 +1161,9 @@ fieldset:disabled textarea {
 .dashboard-quick-actions p { color: var(--muted); line-height: 1.55; }
 .dashboard-breakdown { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 1rem; }
 .breakdown-list { display: grid; gap: .5rem; margin-top: 1rem; }
-.breakdown-list div { display: flex; justify-content: space-between; gap: 1rem; padding: .55rem .7rem; border-radius: 8px; background: var(--green-50); }
+.breakdown-list > div, .breakdown-list > .breakdown-filter { display: flex; justify-content: space-between; gap: 1rem; padding: .55rem .7rem; border-radius: 8px; background: var(--green-50); }
+.breakdown-filter { width: 100%; border: 0; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.breakdown-filter:hover { background: var(--green-100); }
 .breakdown-list strong { color: var(--green-950); }
 .action-list { display: grid; gap: .85rem; padding: 0; margin: 1rem 0 0; list-style: none; }
 .action-card { padding: 1rem; border: 1px solid var(--border); border-radius: 12px; background: #fbfdfb; }
