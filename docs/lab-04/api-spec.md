@@ -67,11 +67,11 @@ Authenticated IT Staff or Administrator. Body:
 }
 ```
 
-`performedBy` is derived from the session. Returns `201` with `{data:{item: ActionTaken}}`. Invalid or unknown fields return `400 VALIDATION_ERROR`; missing Ticket returns `404 TICKET_NOT_FOUND`.
+`performedBy` is derived from the session. The client must send an `Idempotency-Key` header containing a UUID that is stable for retries of the same draft. The server stores the key under a unique constraint with a SHA-256 fingerprint of the normalized request. Repeating the same request with the same key, performer, and Ticket returns the original Action Taken with `200`, including when the original response was lost; the server does not create a duplicate. Reusing the key for a different request, performer, or Ticket returns `409 IDEMPOTENCY_KEY_REUSED` so edits are never silently discarded. Invalid/missing keys or invalid/unknown body fields return `400 VALIDATION_ERROR`; missing Ticket returns `404 TICKET_NOT_FOUND`. Keys are retained with Action Taken records; requests with a different key create a distinct action.
 
 ### `PATCH /api/staff/tickets/:ticketId/actions/:actionId`
 
-Authenticated IT Staff or Administrator. Accepts the editable fields above and requires `updatedAt` set to the timestamp from the latest Action Taken response. A missing or invalid timestamp returns `400 VALIDATION_ERROR`; a timestamp that no longer matches the current row returns `409 ACTION_UPDATE_CONFLICT` without changing the row. Every update uses a conditional write, so stale-write protection cannot be bypassed. The performer is immutable. Success returns `200` with `{data:{item: ActionTaken}}`.
+Authenticated IT Staff or Administrator. Accepts the editable fields above and requires `updatedAt` set to the timestamp from the latest Action Taken response. A missing or invalid timestamp returns `400 VALIDATION_ERROR`; a timestamp that no longer matches the current row returns `409 ACTION_UPDATE_CONFLICT` without changing the row. Every update uses a conditional write, so stale-write protection cannot be bypassed. The performer is immutable. If the Action Date/Time field is not changed in the UI, the exact stored timestamp (including seconds) is retained. Success returns `200` with `{data:{item: ActionTaken}}`.
 
 ## Dashboards
 

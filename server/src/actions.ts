@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { Prisma, UserRole } from "@prisma/client";
 import { RequestHandler, Response } from "express";
 import { AuthenticatedRequest } from "./auth.js";
@@ -101,14 +102,39 @@ export const listActions: RequestHandler = async (req, res) => {
 export const createAction: RequestHandler = async (req, res) => {
   const ticketId = parseId(req.params.ticketId);
   if (ticketId === null) { error(res, 400, "INVALID_TICKET_ID", "Ticket ID must be a positive integer."); return; }
+  const idempotencyKey = req.get("Idempotency-Key");
+  if (!idempotencyKey || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(idempotencyKey)) {
+    error(res, 400, "VALIDATION_ERROR", "A valid Idempotency-Key UUID is required to create an Action Taken.");
+    return;
+  }
   const parsed = parsePayload(req.body, false);
   if ("error" in parsed) { const issue = parsed.error!; error(res, 400, issue.code, issue.message, "fields" in issue ? issue.fields : undefined); return; }
   const user = authUser(req);
   try {
     const ticket = await getPrisma().ticket.findUnique({ where: { id: ticketId }, select: { id: true } });
     if (!ticket) { error(res, 404, "TICKET_NOT_FOUND", "Ticket was not found."); return; }
-    const created = await getPrisma().actionTaken.create({ data: { ticketId, actionDateTime: parsed.value.actionDateTime, description: parsed.value.description, result: parsed.value.result, followUpRequired: parsed.value.followUpRequired, followUpNote: parsed.value.followUpNote, attachmentNotes: parsed.value.attachmentNotes, performedById: user.id }, include: actionInclude });
-    res.status(201).json({ data: { item: serializeAction(created) } });
+    const prisma = getPrisma();
+    const fingerprint = createHash("sha256").update(JSON.stringify({ ticketId, performerId: user.id, ...parsed.value })).digest("hex");
+    const existing = await prisma.actionTaken.findUnique({ where: { idempotencyKey }, include: actionInclude });
+    if (existing) {
+      if (existing.ticketId !== ticketId || existing.performedById !== user.id || existing.idempotencyFingerprint !== fingerprint) { error(res, 409, "IDEMPOTENCY_KEY_REUSED", "This idempotency key was already used for a different Action Taken request."); return; }
+      res.status(200).json({ data: { item: serializeAction(existing) } });
+      return;
+    }
+    const data = { idempotencyKey, idempotencyFingerprint: fingerprint, ticketId, actionDateTime: parsed.value.actionDateTime, description: parsed.value.description, result: parsed.value.result, followUpRequired: parsed.value.followUpRequired, followUpNote: parsed.value.followUpNote, attachmentNotes: parsed.value.attachmentNotes, performedById: user.id };
+    try {
+      const created = await prisma.actionTaken.create({ data, include: actionInclude });
+      res.status(201).json({ data: { item: serializeAction(created) } });
+    } catch (caught) {
+      // Concurrent retries can race between the lookup and insert. The unique key
+      // makes one insert authoritative; return that record for the retry.
+      if (caught instanceof Prisma.PrismaClientKnownRequestError && caught.code === "P2002") {
+        const saved = await prisma.actionTaken.findUnique({ where: { idempotencyKey }, include: actionInclude });
+        if (saved && saved.ticketId === ticketId && saved.performedById === user.id && saved.idempotencyFingerprint === fingerprint) { res.status(200).json({ data: { item: serializeAction(saved) } }); return; }
+        if (saved) { error(res, 409, "IDEMPOTENCY_KEY_REUSED", "This idempotency key was already used for a different Action Taken."); return; }
+      }
+      throw caught;
+    }
   } catch (caught) { console.error("Unable to create Action Taken:", caught); error(res, 500, "INTERNAL_ERROR", "TokTickIT could not save the Action Taken. Please try again."); }
 };
 
