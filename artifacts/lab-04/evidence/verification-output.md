@@ -17,6 +17,7 @@
 | Server production build | `npm run build` from `server/` | Passed; TypeScript compilation completed |
 | PERF-04 guard behavior | `npm test -- tests/lab-04/performance-smoke.test.ts` from `server/` | Exited successfully with the single PERF-04 test skipped as designed because no dedicated Lab 4 database/seed credential was configured; this is not performance evidence. |
 | Lab 4 Playwright discovery | `npx playwright test --config playwright.lab4.config.ts --list` from `e2e/` | Passed discovery only: 21 tests in 5 files across desktop/tablet/mobile projects. No browser, web server, migration, seed, or database test was run. |
+| Lab 3 Playwright regression discovery | `npx playwright test --config playwright.lab3.config.ts --list` from `e2e/` | Passed discovery only: 42 tests in 6 files across desktop/tablet/mobile projects. This validates the shared guard/config loads; no browser, web server, migration, seed, or database test was run. |
 
 ## Not run — completion gates
 
