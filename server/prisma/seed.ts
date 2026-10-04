@@ -26,16 +26,20 @@ export async function runSeed() {
   const passwordError = validatePassword(seedPassword);
   if (passwordError) throw new Error(`LAB3_SEED_PASSWORD is required and invalid: ${passwordError}`);
   const prisma = getPrisma();
-  const resetE2eFixture = process.env.LAB3_E2E_RESET_PASSWORDS === "true";
+  const resetLab3Fixture = process.env.LAB3_E2E_RESET_PASSWORDS === "true";
+  const resetLab4Fixture = process.env.LAB4_E2E_RESET_PASSWORDS === "true";
+  const resetE2eFixture = resetLab3Fixture || resetLab4Fixture;
   if (resetE2eFixture) {
     const databaseUrl = process.env.DATABASE_URL;
-    if (!databaseUrl || process.env.LAB3_E2E_DATABASE !== "true") {
-      throw new Error("LAB3_E2E_RESET_PASSWORDS requires LAB3_E2E_DATABASE=true and a dedicated local E2E database.");
+    if (!databaseUrl || resetLab3Fixture === resetLab4Fixture || (resetLab3Fixture && process.env.LAB3_E2E_DATABASE !== "true") || (resetLab4Fixture && process.env.LAB4_E2E_DATABASE !== "true")) {
+      throw new Error("Exactly one Lab E2E reset flag must be paired with its matching database flag and a dedicated local E2E database.");
     }
     const database = new URL(databaseUrl);
     const databaseName = decodeURIComponent(database.pathname.replace(/^\//, "").split("?")[0]);
-    if (!['localhost', '127.0.0.1'].includes(database.hostname) || !/^toktickit_(lab3_)?e2e$/.test(databaseName)) {
-      throw new Error("Refusing E2E fixture reset: DATABASE_URL must point to localhost database toktickit_lab3_e2e or toktickit_e2e.");
+    const allowedDatabaseName = resetLab4Fixture ? /^toktickit_lab4_e2e$/ : /^toktickit_(lab3_)?e2e$/;
+    if (!['localhost', '127.0.0.1'].includes(database.hostname) || !allowedDatabaseName.test(databaseName)) {
+      const allowedNames = resetLab4Fixture ? "toktickit_lab4_e2e" : "toktickit_lab3_e2e or toktickit_e2e";
+      throw new Error(`Refusing E2E fixture reset: DATABASE_URL must point to localhost database ${allowedNames}.`);
     }
   }
   for (const name of categories) await prisma.category.upsert({ where: { name }, update: { isActive: true }, create: { name, isActive: true } });

@@ -8,10 +8,13 @@ This record is maintained across the Lab 4 feature branches. At the contract-rev
 | --- | --- | --- | --- |
 | Issue [#48](https://github.com/PhraewaS/toktickit/issues/48) | Contract definition | Open | Traceability and review plan |
 | PR [#55](https://github.com/PhraewaS/toktickit/pull/55) | `feature/lab4-spec-contract` → `lab4-staging` | Open; reviewer requested `@guluJa` | Contract-only review |
-| [#49](https://github.com/PhraewaS/toktickit/issues/49), [#50](https://github.com/PhraewaS/toktickit/issues/50), [#51](https://github.com/PhraewaS/toktickit/issues/51), [#52](https://github.com/PhraewaS/toktickit/issues/52), [#53](https://github.com/PhraewaS/toktickit/issues/53) | One feature branch per issue | Created; PRs sequenced after #55 | Implementation and verification |
+| [#49](https://github.com/PhraewaS/toktickit/issues/49), [#50](https://github.com/PhraewaS/toktickit/issues/50), [#51](https://github.com/PhraewaS/toktickit/issues/51), [#52](https://github.com/PhraewaS/toktickit/issues/52) | One feature branch per issue | Implemented and merged to `lab4-staging` | Feature implementation and verification |
+| Issue [#53](https://github.com/PhraewaS/toktickit/issues/53) | `feature/lab4-verification-evidence-53` → `lab4-staging` | Started; local checks recorded; database-backed evidence pending | Migration/seed, E2E, responsive screenshots, performance-smoke, and regression evidence |
 | Issue [#54](https://github.com/PhraewaS/toktickit/issues/54) | `lab4-staging` → `main` and final evidence | Planned | Integration, peer review, and submission |
 
 The staging target is deliberate: each feature PR must be reviewed and merged in dependency order before the release PR targets `main`.
+
+Issue #53 current revision evidence is recorded in `artifacts/lab-04/evidence/verification-output.md`. It distinguishes passing local Client/build checks from the Server regression blocked by the missing `DATABASE_URL` and from Lab 4 database-backed checks that have not run. Do not treat test discovery or skipped suites as execution evidence, and do not mark Issue #53 complete until the pending database and screenshot gates pass.
 
 ## Contract PR #55 checklist
 

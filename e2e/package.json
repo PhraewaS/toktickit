@@ -2,6 +2,10 @@
   "name": "toktickit-e2e",
   "private": true,
   "type": "module",
+  "scripts": {
+    "test:lab3": "playwright test --config playwright.lab3.config.ts",
+    "test:lab4": "playwright test --config playwright.lab4.config.ts"
+  },
   "devDependencies": {
     "@playwright/test": "^1.62.1"
   }
