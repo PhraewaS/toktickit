@@ -9,7 +9,7 @@ This record is maintained across the Lab 4 feature branches. At the contract-rev
 | Issue [#48](https://github.com/PhraewaS/toktickit/issues/48) | Contract definition | Open | Traceability and review plan |
 | PR [#55](https://github.com/PhraewaS/toktickit/pull/55) | `feature/lab4-spec-contract` → `lab4-staging` | Open; reviewer requested `@guluJa` | Contract-only review |
 | [#49](https://github.com/PhraewaS/toktickit/issues/49), [#50](https://github.com/PhraewaS/toktickit/issues/50), [#51](https://github.com/PhraewaS/toktickit/issues/51), [#52](https://github.com/PhraewaS/toktickit/issues/52) | One feature branch per issue | Implemented and merged to `lab4-staging` | Feature implementation and verification |
-| Issue [#53](https://github.com/PhraewaS/toktickit/issues/53) | `feature/lab4-verification-evidence-53` → `lab4-staging` | Started; local checks recorded; database-backed evidence pending | Migration/seed, E2E, responsive screenshots, performance-smoke, and regression evidence |
+| Issue [#53](https://github.com/PhraewaS/toktickit/issues/53) / [PR #60](https://github.com/PhraewaS/toktickit/pull/60) | `feature/lab4-verification-evidence-53` → `lab4-staging` | Draft PR; issue remains Started; database-backed evidence pending | Migration/seed, E2E, responsive screenshots, performance-smoke, and regression evidence |
 | Issue [#54](https://github.com/PhraewaS/toktickit/issues/54) | `lab4-staging` → `main` and final evidence | Planned | Integration, peer review, and submission |
 
 The staging target is deliberate: each feature PR must be reviewed and merged in dependency order before the release PR targets `main`.
