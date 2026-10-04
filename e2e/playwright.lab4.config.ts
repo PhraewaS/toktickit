@@ -40,6 +40,7 @@ export default defineConfig({
       command: "npm.cmd run dev -- --host 127.0.0.1",
       cwd: path.join(repositoryRoot, "client"),
       url: "http://127.0.0.1:5173",
+      env: { ...process.env, VITE_API_URL: "http://127.0.0.1:3000" },
       reuseExistingServer: false,
       timeout: 120_000,
     },
