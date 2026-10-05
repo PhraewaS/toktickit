@@ -4,7 +4,7 @@
 
 - Branch: `feature/lab4-verification-evidence-53`
 - Target: `lab4-staging` through PR #60
-- Tested source/test revision: `3214177` (this final evidence-record correction is documentation-only)
+- Tested source/test revision: `07ac8b8` (the final report and complete suite were generated from this revision)
 - Verification dates: 2026-10-04 to 2026-10-05 (Asia/Bangkok); final complete E2E rerun: 2026-10-05
 - PostgreSQL: local instance on `127.0.0.1:5433`; separate guarded databases `toktickit_lab4_e2e` and `toktickit_lab3_e2e`
 - Credentials were read from the user's local environment file and never printed, copied into repository files, or included in reports. Disposable seed passwords were generated in-memory for test runs.
