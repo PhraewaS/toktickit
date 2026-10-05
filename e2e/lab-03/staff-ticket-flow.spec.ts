@@ -91,7 +91,7 @@ test("E2E-06 IT Staff queue query and ticket operations use production API route
 
   const priority = await request.patch(`${process.env.E2E_API_URL ?? "http://127.0.0.1:3000"}/api/staff/tickets/${ticket.id}/priority`, { data: { itPriority: "HIGH" } });
   expect(priority.status()).toBe(200);
-  const status = await request.patch(`${process.env.E2E_API_URL ?? "http://127.0.0.1:3000"}/api/staff/tickets/${ticket.id}/status`, { data: { status: "OPEN" } });
+  const status = await request.patch(`${process.env.E2E_API_URL ?? "http://127.0.0.1:3000"}/api/staff/tickets/${ticket.id}/status`, { data: { status: "OPEN", expectedCurrentStatus: ticket.currentStatus } });
   expect(status.status()).toBe(200);
 
   const emptyComment = await postJson(request, `/api/staff/tickets/${ticket.id}/comments`, { content: " " });
@@ -122,7 +122,7 @@ test("E2E-06 IT Staff queue query and ticket operations use production API route
     await signInAndChangePassword(administrator, "admin@example.test", seedPassword, "Admin-Staff-Flow2!");
     const adminQueue = await getJson(administrator, "/api/staff/tickets?page=1&pageSize=10");
     expect(adminQueue.status()).toBe(200);
-    const adminQueueBody = await adminQueue.json() as { data: { items: Array<{ id: number }> } };
+    const adminQueueBody = await adminQueue.json() as { data: { items: Array<{ id: number; currentStatus: string }> } };
     const adminTicketId = adminQueueBody.data.items[0].id;
     expect(adminTicketId).toBeTruthy();
     expect((await getJson(administrator, `/api/staff/tickets/${adminTicketId}`)).status()).toBe(200);
@@ -137,7 +137,7 @@ test("E2E-06 IT Staff queue query and ticket operations use production API route
     expect(await errorCode(assignAdministrator)).toBe("ROLE_FORBIDDEN");
 
     for (const [path, method, body] of [
-      [`/api/staff/tickets/${adminTicketId}/status`, "patch", { status: "OPEN" }],
+      [`/api/staff/tickets/${adminTicketId}/status`, "patch", { status: "OPEN", expectedCurrentStatus: adminQueueBody.data.items[0].currentStatus }],
       [`/api/staff/tickets/${adminTicketId}/comments`, "post", { content: "Administrator must not post." }],
       [`/api/staff/tickets/${adminTicketId}/notes`, "post", { content: "Administrator must not post." }],
     ] as const) {

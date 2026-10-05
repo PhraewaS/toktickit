@@ -14,6 +14,7 @@ OpenAI Codex, GPT-5-based coding agent in the Codex desktop workspace.
 6. Build a Test DD that maps each requirement to unit, API, UI, responsive, E2E, migration, and regression coverage.
 7. Review the implementation for accidental Lab 3 regressions, unknown fields, client-controlled performer identity, and stale overwrites.
 8. Verify build/test output, diff hygiene, migration behavior, and final evidence against the handout’s nine answer parts.
+9. For Issue #53, prepare a separately guarded Lab 4 database workflow, migration/seed repeatability check, role-based E2E scenarios, responsive screenshots, and a bounded performance-smoke test; report only checks that actually ran.
 
 ## My Reflection
 
