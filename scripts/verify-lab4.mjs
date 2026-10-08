@@ -132,7 +132,8 @@ try {
     await npm('server-tests', ['test', '--', '--no-file-parallelism'], 'server');
     await npm('server-build', ['run', 'build'], 'server');
   } else if (mode === 'client') {
-    await npm('client-tests', ['test', '--', '--run'], 'client');
+    // Avoid CPU contention causing unrelated jsdom/user-event timing failures.
+    await npm('client-tests', ['test', '--', '--run', '--no-file-parallelism'], 'client');
     await npm('client-build', ['run', 'build'], 'client');
   } else {
     await npm(mode + '-e2e', ['run', 'test:' + mode], 'e2e');
