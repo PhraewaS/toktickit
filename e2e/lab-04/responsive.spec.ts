@@ -18,7 +18,8 @@ async function assertResponsive(page: Page) {
 
 async function capture(page: Page, testInfo: TestInfo, filename: string, focus?: Locator) {
   await assertResponsive(page);
-  const target = path.join(repositoryRoot, "artifacts/lab-04/screenshots", `${filename}-${testInfo.project.name}.png`);
+  const group = filename === "staff-dashboard" ? "staff-dashboard" : filename === "requester-dashboard" ? "requester-dashboard" : "actions-taken";
+  const target = path.join(repositoryRoot, "artifacts/lab-04/screenshots", group, `${filename}-${testInfo.project.name}.png`);
   fs.mkdirSync(path.dirname(target), { recursive: true });
   if (focus) await focus.screenshot({ path: target });
   else await page.screenshot({ path: target, fullPage: false });
