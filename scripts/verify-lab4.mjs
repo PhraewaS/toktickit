@@ -126,7 +126,10 @@ try {
       if (fs.existsSync(dumpFile)) fs.unlinkSync(dumpFile);
     }
   } else if (mode === 'server') {
-    await npm('server-tests', ['test'], 'server');
+    // Each invocation uses a new disposable password. Seed in this process before
+    // login tests, and serialize files that reset credentials in the shared seed.
+    await npm('server-seed', ['run', 'prisma:seed'], 'server');
+    await npm('server-tests', ['test', '--', '--no-file-parallelism'], 'server');
     await npm('server-build', ['run', 'build'], 'server');
   } else if (mode === 'client') {
     await npm('client-tests', ['test', '--', '--run'], 'client');
