@@ -162,7 +162,7 @@ After installing the locked server, client, and E2E dependencies and Playwright 
 
 ```powershell
 node scripts/verify-lab4.mjs prepare --env-file server/.env
-node scripts/verify-lab4.mjs recovery --env-file server/.env --pg-bin "C:/Program Files/PostgreSQL/17/bin"
+node scripts/verify-lab4.mjs recovery --env-file server/.env
 node scripts/verify-lab4.mjs server --env-file server/.env
 node scripts/verify-lab4.mjs client --env-file server/.env
 node scripts/verify-lab4.mjs lab4 --env-file server/.env
@@ -174,5 +174,7 @@ The runner validates localhost port `5433`, uses only the dedicated `toktickit_l
 Lab 4 responsive screenshots are generated in `artifacts/lab-04/screenshots/staff-dashboard/`, `requester-dashboard/`, and `actions-taken/`. Playwright reports distinguish intentional viewport skips from passing tests. See `docs/lab-04/integration.md` for review/release gates and the Answer Parts 1-9 submission map.
 
 ## Security
+
+The recovery phase detects the connected PostgreSQL server major version and uses matching installed tools on Windows. Supply `--pg-bin` only if they are installed elsewhere. It restores a backup into a uniquely created temporary database, compares table counts and data fingerprints, then removes only that temporary database and dump. The source E2E database remains intact.
 
 Do not commit `.env`, database credentials, tokens, or `node_modules`.

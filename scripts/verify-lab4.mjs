@@ -88,7 +88,16 @@ try {
     const dumpFile = path.join(repository, 'tmp', recoveryName + '.dump');
     fs.mkdirSync(path.dirname(dumpFile), { recursive: true });
     const pgEnvironment = { PGHOST: target.hostname, PGPORT: '5433', PGUSER: decodeURIComponent(target.username), PGPASSWORD: decodeURIComponent(target.password) };
-    const pgCommand = name => option('--pg-bin') ? path.join(option('--pg-bin'), name + (process.platform === 'win32' ? '.exe' : '')) : name;
+    let serverVersion;
+    try { serverVersion = await source.$queryRawUnsafe("SELECT current_setting('server_version_num')::int AS version"); }
+    finally { await source.$disconnect(); }
+    const serverMajor = Math.floor(serverVersion[0].version / 10000);
+    const installedBin = process.platform === 'win32' ? path.join(process.env.ProgramFiles || 'C:/Program Files', 'PostgreSQL', String(serverMajor), 'bin') : undefined;
+    const pgBin = option('--pg-bin') || (installedBin && fs.existsSync(installedBin) ? installedBin : undefined);
+    const pgCommand = name => pgBin ? path.join(pgBin, name + (process.platform === 'win32' ? '.exe' : '')) : name;
+    const dumpVersion = execFileSync(pgCommand('pg_dump'), ['--version'], { encoding: 'utf8' });
+    if (Number(dumpVersion.match(/PostgreSQL\) (\d+)/)?.[1]) !== serverMajor) throw new Error('Use pg_dump/pg_restore tools matching PostgreSQL server major ' + serverMajor);
+    console.log('RECOVERY-ENVIRONMENT ' + JSON.stringify({ serverMajor, dumpVersion: dumpVersion.trim() }));
     const snapshot = async client => {
       const rows = [];
       for (const model of Prisma.dmmf.datamodel.models) {
