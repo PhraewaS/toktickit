@@ -1,60 +1,44 @@
 # Lab 4 Reviewer Record
 
-## Review scope and current workflow state
+## Scope and current workflow
 
-This record is maintained across the Lab 4 feature branches. At the contract-review stage, reviewers check that the scope and testable contracts match the Lab 4 handout. Implementation, database execution, responsive evidence, E2E evidence, and final PDF approval are later gates; they are not claimed by PR #55.
+Peer reviewer: **guluJa** (GitHub collaborator). Author: **PhraewaS**. The author does not approve their own PR. Feature PRs target `lab4-staging`; release and final-main evidence require separate approvals. PR #55's documentation-only contract predates implementation and did not claim executed tests.
 
-| Work item | Branch / target | State | Review purpose |
+| Issue / PR | Head branch -> target | Verified state |
+| --- | --- | --- |
+| [#48](https://github.com/PhraewaS/toktickit/issues/48) / [#55](https://github.com/PhraewaS/toktickit/pull/55) | `feature/lab4-spec-contract` -> `lab4-staging` | guluJa approved; merged 2026-09-29; Issue closed |
+| [#49](https://github.com/PhraewaS/toktickit/issues/49) / [#56](https://github.com/PhraewaS/toktickit/pull/56) | `feature/lab4-actions-backend` -> `lab4-staging` | guluJa approved; merged 2026-10-01; Issue closed |
+| [#50](https://github.com/PhraewaS/toktickit/issues/50) / [#57](https://github.com/PhraewaS/toktickit/pull/57) | `feature/lab4-ticket-workflow` -> `lab4-staging` | guluJa approved; merged 2026-10-02; Issue closed |
+| [#51](https://github.com/PhraewaS/toktickit/issues/51) / [#58](https://github.com/PhraewaS/toktickit/pull/58) | `feature/lab4-dashboards` -> `lab4-staging` | guluJa approved; merged 2026-10-03; Issue closed |
+| [#52](https://github.com/PhraewaS/toktickit/issues/52) / [#59](https://github.com/PhraewaS/toktickit/pull/59) | `feature/lab4-actions-ui-52` -> `lab4-staging` | guluJa approved; merged 2026-10-04; Issue closed |
+| [#53](https://github.com/PhraewaS/toktickit/issues/53) / [#60](https://github.com/PhraewaS/toktickit/pull/60) | `feature/lab4-verification-evidence-53` -> `lab4-staging` | guluJa approved; merged 2026-10-05; Issue closed |
+| [#54](https://github.com/PhraewaS/toktickit/issues/54) / [#61](https://github.com/PhraewaS/toktickit/pull/61) integration preparation | `feature/lab4-staging-integration-54` -> `lab4-staging` | Integration verification recorded; peer approval pending |
+| #54 release | `lab4-staging` -> `main` | Pending integration approval/merge and a separate reviewed release PR |
+| #54 final-main evidence | New branch from released `main` -> `main` | Pending actual final-main tests and final PDF review |
+
+Dates are UTC merge dates. Issues #48-53 are Done on the Project. #54 stays open: Started during preparation, PR Review once ready, Fixing for requested changes, and Done only after final-main evidence/submission. Keep the Issue card, not a duplicate PR card.
+
+## Peer feedback, author responses and approvals
+
+All links below are actual GitHub records. Approval is a human review, not a test result. Complete conversations and subsequent revisions remain on each PR.
+
+| PR | Feedback and correction | Author response | Final approval by guluJa |
 | --- | --- | --- | --- |
-| Issue [#48](https://github.com/PhraewaS/toktickit/issues/48) | Contract definition | Open | Traceability and review plan |
-| PR [#55](https://github.com/PhraewaS/toktickit/pull/55) | `feature/lab4-spec-contract` → `lab4-staging` | Open; reviewer requested `@guluJa` | Contract-only review |
-| [#49](https://github.com/PhraewaS/toktickit/issues/49), [#50](https://github.com/PhraewaS/toktickit/issues/50), [#51](https://github.com/PhraewaS/toktickit/issues/51), [#52](https://github.com/PhraewaS/toktickit/issues/52) | One feature branch per issue | Implemented and merged to `lab4-staging` | Feature implementation and verification |
-| Issue [#53](https://github.com/PhraewaS/toktickit/issues/53) / [PR #60](https://github.com/PhraewaS/toktickit/pull/60) | `feature/lab4-verification-evidence-53` → `lab4-staging` | Verification complete; ready for peer review (PR Review) | Actual migration/seed, E2E, responsive screenshots, browser-console, performance-smoke, build, and regression evidence recorded |
-| Issue [#54](https://github.com/PhraewaS/toktickit/issues/54) | `lab4-staging` → `main` and final evidence | Planned | Integration, peer review, and submission |
+| #55 | [Review](https://github.com/PhraewaS/toktickit/pull/55#pullrequestreview-5330909297): status matrix, formulas/API shapes, paths/performance, feedback states and Planned/Pending evidence | [Response](https://github.com/PhraewaS/toktickit/pull/55#issuecomment-5890879984) | [Approval](https://github.com/PhraewaS/toktickit/pull/55#pullrequestreview-5353383942) |
+| #56 | [Review](https://github.com/PhraewaS/toktickit/pull/56#pullrequestreview-5364520356): performer shape, route/role coverage, database suite and required update token | [Response](https://github.com/PhraewaS/toktickit/pull/56#issuecomment-5915584385) | [Approval](https://github.com/PhraewaS/toktickit/pull/56#pullrequestreview-5376979695) |
+| #57 | [Review](https://github.com/PhraewaS/toktickit/pull/57#pullrequestreview-5380944006): atomic status update, loaded-status precondition and stale-page test | [Response](https://github.com/PhraewaS/toktickit/pull/57#issuecomment-5956322865) | [Approval](https://github.com/PhraewaS/toktickit/pull/57#pullrequestreview-5394091080) |
+| #58 | [Review](https://github.com/PhraewaS/toktickit/pull/58#pullrequestreview-5395944922): matching filters, legacy E2E navigation, response/order and consistent example counts/owners | [Response](https://github.com/PhraewaS/toktickit/pull/58#issuecomment-5970915235) | [Approval](https://github.com/PhraewaS/toktickit/pull/58#pullrequestreview-5401602058) |
+| #59 | [Review](https://github.com/PhraewaS/toktickit/pull/59#pullrequestreview-5401954695): draft retention, safe uncertain-result retry and unchanged seconds | [Response](https://github.com/PhraewaS/toktickit/pull/59#issuecomment-5980061216) | [Approval](https://github.com/PhraewaS/toktickit/pull/59#pullrequestreview-5406206920) |
+| #60 | [Review](https://github.com/PhraewaS/toktickit/pull/60#pullrequestreview-5407138143): DB/API/UI metrics, full editor, keyboard/focus, passing report and guarded Prisma URL | [Response](https://github.com/PhraewaS/toktickit/pull/60#issuecomment-5992419165) | [Approval](https://github.com/PhraewaS/toktickit/pull/60#pullrequestreview-5413091909) |
 
-The staging target is deliberate: each feature PR must be reviewed and merged in dependency order before the release PR targets `main`.
+No integration, release or final-evidence approval is claimed yet.
 
-Issue #53's tested revision and actual results are recorded in `artifacts/lab-04/evidence/verification-output.md`, with responsive screenshots and a review PDF under `artifacts/lab-04/`. The expected project-specific Playwright skips are listed separately from failures; they are not represented as passing executions. Peer review and merge remain open workflow gates, and the final integrated Answer Parts 1-9 submission remains in Issue #54.
+## Integration reviewer checklist
 
-## Contract PR #55 checklist
+- [ ] Review compatible production dependency patches and the remaining development-tool audit limitation.
+- [ ] Verify guarded port-5433 migration/seed and backup/restore fingerprints/cleanup.
+- [ ] Check exact tested revisions, full suites/builds and intentional E2E skips.
+- [ ] Inspect close/cancel lifecycle tests, metric attachments and screenshots in required directories.
+- [ ] Review Parts 1-9 mapping and pending final-main/PDF gates before approving integration.
 
-- [ ] Included scope covers Actions Taken, resolution enforcement, dashboards, API/UI contracts, tests, evidence, and required documents.
-- [ ] Excluded scope prevents SLA, escalation, notifications, inventory/purchasing, payroll, BI, multi-tenancy, and unrelated features.
-- [ ] Action fields, performer derivation, Requester read-only access, Staff/Admin mutation, follow-up validation, ordering, and stale-write conflict are testable.
-- [ ] All Lab 4 statuses, the complete permitted transition matrix, and the `RESOLVED` Action Taken prerequisite are explicit; the Requester resolved indication remains advisory.
-- [ ] Requester and Staff/Admin dashboard metric formulas, UTC/date boundaries, response shapes, ownership boundaries, drill-downs, empty states, and authoritative backend calculation are explicit.
-- [ ] API success/error envelopes include documented response fields, status codes, authorization failures, validation failures, conflict codes, and safe unexpected failures.
-- [ ] Migration, seed, API error, session/origin, responsive, accessibility, regression, E2E, screenshot, and console/diff evidence requirements are explicit.
-- [ ] Required test paths, performance-smoke coverage, and required `docs/lab-04/*` deliverables match the handout.
-- [ ] Dashboard UI feedback distinguishes loading, success, empty, failure, forbidden, and retry/refresh states.
-- [ ] The PR contains documentation only; implementation and final test status are not represented as complete here.
-
-## Final implementation and evidence checklist
-
-- [ ] Additive migration preserves Lab 1–3 data and has Ticket/performer foreign keys and indexes.
-- [ ] Seed is repeatable and demonstrates zero, one, and multiple Actions Taken.
-- [ ] Backend derives `performedBy`, validates conditional follow-up fields, protects ownership, and returns safe errors.
-- [ ] Stale action edits return a conflict without overwriting a newer row.
-- [ ] Formal resolution requires an Action Taken; Requester indication remains advisory.
-- [ ] Dashboard metrics match documented queries and drill-down IDs.
-- [ ] UI supports loading, empty, error, forbidden, validation, conflict, responsive, and accessible states.
-- [ ] Lab 1–3 regression suites, final database-backed evidence, and the required Answer Part 1–9 PDF are attached before release.
-
-## Review comments and responses
-
-### `@guluJa` — PR #55 review, 2026-09-27 — Changes requested
-
-Feedback requested four Labsheet-aligned contract clarifications: complete Status Transition Matrix; explicit Dashboard calculations and API response/error shapes; a performance-smoke test with Labsheet-matching test paths; and separate Dashboard loading, empty, failure, forbidden, and retry feedback states.
-
-Response in this revision:
-
-- Added the complete transition matrix to `specification.md` and repeated the API-enforced matrix in `api-spec.md`.
-- Added exact Requester and Staff/Admin dashboard formulas, UTC 30-day boundary, list limits/order, drill-down fields, success envelopes, and error envelopes.
-- Added `PERF-04` and `server/tests/lab-04/performance-smoke.test.ts`, corrected required server/client/E2E paths, and clearly marked all results as planned for later feature branches.
-- Added the Dashboard feedback-state contract to `ui-spec.md`.
-
-The implementation and performance results remain intentionally open because PR #55 is documentation-only. Do not mark the final checklist complete until the corresponding feature PRs and evidence are attached.
-
-### `@guluJa` — follow-up review — evidence status clarification addressed
-
-The follow-up review requested that `E2E-04` and `REG-04` not imply completed execution in this documentation-only PR. `tests.md` now marks both as `Planned/Pending` and states that they will be run and recorded on the integrated Feature/Final Integration branch. No E2E or regression result is claimed by PR #55.
+See [integration.md](integration.md). Historical #53 evidence remains in `artifacts/lab-04/evidence/verification-output.md`; fresh integration evidence is separate in `artifacts/lab-04/evidence/staging-integration/`.

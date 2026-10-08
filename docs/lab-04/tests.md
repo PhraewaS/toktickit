@@ -1,6 +1,6 @@
 # Lab 4 Test DD and Traceability
 
-| Test ID | Type | Requirement | Planned/actual coverage | Automated file | Final |
+| Test ID | Type | Requirement | Planned/actual coverage | Automated file | Recorded feature evidence (not final-main) |
 | --- | --- | --- | --- | --- | --- |
 | UNIT-04 | unit/API | BR-04-07 | Action validation, conditional follow-up, deterministic ordering, transition gate | `server/tests/lab-04/actions-taken.api.test.ts` | Covered by focused Actions Taken API suite: 20 passed, 0 failed |
 | API-04 | API/security | AC-01-04/08 | create/list/update, performer derivation, Requester ownership, role boundary, stale conflict, exact idempotent replay, concurrent retry race, and changed-request key rejection | `server/tests/lab-04/actions-taken.api.test.ts` | Focused Actions Taken API suite: 20 passed, 0 failed; Server build passed |
@@ -25,8 +25,18 @@ Issue #53 verification output, actual test totals, database/API/UI metric compar
 
 ## Labsheet-required paths
 
-The following paths intentionally match the Lab 4 handout and must be created or renamed on the later feature branches:
+The following implemented paths match the Lab 4 handout:
 
 - Server: `actions-taken.api.test.ts`, `ticket-workflow.api.test.ts`, `requester-dashboard.api.test.ts`, and `staff-dashboard.api.test.ts`.
 - Client: `StaffDashboard.test.tsx`, `RequesterDashboard.test.tsx`, `ActionsTaken.test.tsx`, and `TicketWorkflow.test.tsx`.
 - E2E: `actions-taken-flow.spec.ts`, `ticket-resolution.spec.ts`, `dashboards.spec.ts`, and the responsive evidence suite.
+
+## Issue #54 integration and final-main gate
+
+The table above preserves feature/Issue #53 evidence. Fresh integration results, exact source SHA, commands and intentional skips are recorded separately in [`../../artifacts/lab-04/evidence/staging-integration/summary.md`](../../artifacts/lab-04/evidence/staging-integration/summary.md). They are not final-main results. After the approved release merge, repeat the full run on the released main SHA and record it in `artifacts/lab-04/evidence/final-main/` before completing #54.
+
+| Test ID | Additional integration coverage | Runner / automated file | Evidence |
+| --- | --- | --- | --- |
+| RECOVERY-04 | Matching PostgreSQL tools; isolated backup/restore; nine-table count and data-fingerprint comparison; temporary database cleanup | `node scripts/verify-lab4.mjs recovery` | `recovery-results.json` and `recovery-*.txt` in staging-integration; empty attachment-table/physical-byte limitation is explicit in `integration.md` |
+| E2E-07 extension | Persist an Action, resolve and close; cancel a separate OPEN Ticket, in addition to the existing resolution rejection | `e2e/lab-04/ticket-resolution.spec.ts` | Current integration Playwright report and `lab4-e2e.txt` |
+| REG-04 integration | Full seeded Server and full Client suites, both builds, complete Lab 4/legacy Lab 3 E2E, responsive/focus/console checks and performance-smoke | Six `scripts/verify-lab4.mjs` phases documented in README | Per-phase JSON/logs and staging summary; final-main repeat remains Pending |

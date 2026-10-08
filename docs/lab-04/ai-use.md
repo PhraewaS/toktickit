@@ -15,6 +15,7 @@ OpenAI Codex, GPT-5-based coding agent in the Codex desktop workspace.
 7. Review the implementation for accidental Lab 3 regressions, unknown fields, client-controlled performer identity, and stale overwrites.
 8. Verify build/test output, diff hygiene, migration behavior, and final evidence against the handout’s nine answer parts.
 9. For Issue #53, prepare a separately guarded Lab 4 database workflow, migration/seed repeatability check, role-based E2E scenarios, responsive screenshots, and a bounded performance-smoke test; report only checks that actually ran.
+10. Integrate Issue #54 using the established peer-review workflow, verify isolated backup/restore on port 5433, rerun actual suites, correct evidence and keep release/final-main/PDF gates pending until approved.
 
 ## My Reflection
 

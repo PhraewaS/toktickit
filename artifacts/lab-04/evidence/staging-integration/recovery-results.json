@@ -1,0 +1,81 @@
+{
+  "mode": "recovery",
+  "revision": "4e532887835770b0f4ec851e34e1bb92fab7c685",
+  "startedAt": "2026-10-08T15:17:01.550Z",
+  "database": "toktickit_lab4_e2e",
+  "databasePort": 5433,
+  "steps": [
+    {
+      "label": "recovery-backup",
+      "exitCode": 0,
+      "elapsedMs": 391
+    },
+    {
+      "label": "recovery-create",
+      "exitCode": 0,
+      "elapsedMs": 574
+    },
+    {
+      "label": "recovery-restore",
+      "exitCode": 0,
+      "elapsedMs": 599
+    },
+    {
+      "label": "recovery-cleanup",
+      "exitCode": 0,
+      "elapsedMs": 631
+    }
+  ],
+  "recovery": {
+    "matched": true,
+    "tables": [
+      {
+        "table": "requester_users",
+        "count": 10,
+        "checksum": "92c900226adcc29486d492914ede38cd"
+      },
+      {
+        "table": "categories",
+        "count": 4,
+        "checksum": "c22574bff0b2281df8425165bdd5eaf3"
+      },
+      {
+        "table": "related_systems",
+        "count": 6,
+        "checksum": "7197758607dd0257321e9bd406166922"
+      },
+      {
+        "table": "tickets",
+        "count": 6,
+        "checksum": "9e8f903bbb283115753d134ed036cc8e"
+      },
+      {
+        "table": "attachments",
+        "count": 0,
+        "checksum": "d41d8cd98f00b204e9800998ecf8427e"
+      },
+      {
+        "table": "sessions",
+        "count": 0,
+        "checksum": "d41d8cd98f00b204e9800998ecf8427e"
+      },
+      {
+        "table": "public_comments",
+        "count": 6,
+        "checksum": "45524077baedad243f7b45d7c5499910"
+      },
+      {
+        "table": "internal_notes",
+        "count": 6,
+        "checksum": "210ca1c1c92444fd0dda9c0aecbc38ad"
+      },
+      {
+        "table": "actions_taken",
+        "count": 3,
+        "checksum": "bf49edbdaca55f60b5bd6039147c24ff"
+      }
+    ],
+    "recoveryDatabase": "toktickit_lab4_recovery_10060_1791472621575"
+  },
+  "completedAt": "2026-10-08T15:17:04.423Z"
+}
