@@ -19,7 +19,7 @@ describe("Lab 4 Requester Dashboard", () => {
     render(<RequesterDashboard {...props} />);
 
     expect(await screen.findByRole("heading", { name: "Dashboard" })).toBeInTheDocument();
-    expect(screen.getByText("18")).toBeInTheDocument();
+    expect(await screen.findByText("18")).toBeInTheDocument();
     expect(screen.getByText("6")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "View My Tickets" }));
     expect(props.onOpenMyTickets).toHaveBeenCalledWith({ activeOnly: true });
@@ -35,7 +35,7 @@ describe("Lab 4 Requester Dashboard", () => {
     render(<RequesterDashboard {...props} />);
 
     await screen.findByRole("heading", { name: "Dashboard" });
-    await user.click(screen.getByRole("button", { name: "Review My Tickets" }));
+    await user.click(await screen.findByRole("button", { name: "Review My Tickets" }));
     expect(props.onOpenMyTickets).toHaveBeenCalledWith({ currentStatus: "WAITING_FOR_REQUESTER" });
   });
 

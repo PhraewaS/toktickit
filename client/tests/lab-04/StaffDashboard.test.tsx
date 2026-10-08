@@ -26,7 +26,7 @@ describe("Lab 4 Staff Dashboard", () => {
     render(<StaffDashboard {...props} />);
 
     expect(await screen.findByRole("heading", { name: "Dashboard" })).toBeInTheDocument();
-    expect(screen.getByText("14")).toBeInTheDocument();
+    expect(await screen.findByText("14")).toBeInTheDocument();
     expect(screen.getByText("Tickets by Status")).toBeInTheDocument();
     expect(screen.getByText("Tickets by IT Priority")).toBeInTheDocument();
     expect(screen.getByText("CANCELLED")).toBeInTheDocument();
@@ -46,7 +46,7 @@ describe("Lab 4 Staff Dashboard", () => {
     render(<StaffDashboard {...props} />);
 
     await screen.findByRole("heading", { name: "Dashboard" });
-    await user.click(screen.getByRole("button", { name: "Open Queue" }));
+    await user.click(await screen.findByRole("button", { name: "Open Queue" }));
     expect(props.onOpenQueue).toHaveBeenLastCalledWith({ ownerId: "unassigned", activeOnly: true });
 
     await user.click(screen.getByRole("button", { name: "View My Queue" }));
