@@ -129,14 +129,15 @@ See [api-spec.md](api-spec.md). Primary additions are `GET /api/tickets/:ticketI
 
 ## 11. Final Implementation Definition of Done
 
-The following checklist is intentionally not claimed by the contract PR. It is the completion gate for the later feature branches, staging integration, and final evidence record.
+PR #55 did not claim implementation completion. The current ticks below refer only to verified feature/integration work at source `4e532887835770b0f4ec851e34e1bb92fab7c685`; they do not claim release, final-main results or peer approval of #61. See `reviewer.md` and `integration.md` for independent final submission gates.
 
-- [ ] Specification, API, UI, test plan, reviewer, and AI-use documents are committed before the final integration record.
-- [ ] Migration is additive, deployable, reversible by documented recovery, and seed is repeatable.
-- [ ] Backend authorization and validation enforce every write rule.
-- [ ] Actions Taken and both dashboards have loading, empty, error, and success behavior.
-- [ ] Unit/API/UI/E2E/responsive/performance-smoke/regression checks run from the final integrated branch.
-- [ ] Build, diff, console, accessibility, and responsive evidence are recorded.
+- [x] Specification, API, UI, test plan, reviewer, and AI-use documents are committed before the final integration record.
+- [x] Migration is additive/deployable, isolated backup/restore recovery is tested, and seed is repeatable (limitations documented).
+- [x] Backend authorization and validation rules are covered by the passing integration suites.
+- [x] Actions Taken and both dashboards have tested loading, empty, error, and success behavior.
+- [x] Unit/API/UI/E2E/responsive/performance-smoke/regression checks run from the integration feature branch with its exact source revision recorded.
+- [x] Build, diff, console, targeted accessibility, and responsive evidence are recorded.
+- [ ] Repeat verification on released final main and record its exact product revision separately.
 - [ ] Final PDF contains exactly Answer Part 1 through Answer Part 9 and working repository/evidence links.
 
 ## 12. Assumptions and Decisions
