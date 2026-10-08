@@ -4,6 +4,7 @@ import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import { spawn, execFileSync } from 'node:child_process';
+import { sanitizePlaywrightReport } from './playwright-report-hygiene.mjs';
 
 const repository = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const mode = process.argv[2];
@@ -137,6 +138,10 @@ try {
     await npm('client-build', ['run', 'build'], 'client');
   } else {
     await npm(mode + '-e2e', ['run', 'test:' + mode], 'e2e');
+    const reportSource = path.join(repository, 'artifacts', mode === 'lab4' ? 'lab-04' : 'lab-03', 'evidence/playwright-report');
+    const reportDestination = mode === 'lab4' ? reportSource : path.join(evidenceDirectory, 'lab3-playwright-report');
+    result.report = await sanitizePlaywrightReport(reportSource, reportDestination, secrets, mode === 'lab4');
+    console.log('REPORT-CHECK ' + JSON.stringify(result.report));
   }
   result.completedAt = new Date().toISOString();
   fs.writeFileSync(path.join(evidenceDirectory, mode + '-results.json'), JSON.stringify(result, null, 2));
