@@ -38,9 +38,11 @@ npm --prefix server run prisma:seed
 npm --prefix server run dev
 ```
 
+The local PostgreSQL instance used for this project listens on port `5433`. Use that port in development and isolated test URLs; keep credentials in the untracked environment file.
+
 The Prisma commands will:
 
-- `npm --prefix server run prisma:deploy` — apply the committed Lab 1, Lab 2, and Lab 3 migrations without creating a new migration.
+- `npm --prefix server run prisma:deploy` — apply the committed Lab 1-4 migrations without creating a new migration.
 - `npm --prefix server run prisma:migrate` — create/apply a migration during intentional local schema development only.
 - `npm --prefix server run prisma:seed` — idempotently seed reference data, 4 active Requesters plus 1 inactive Requester, 3 active IT Staff plus 1 inactive IT Staff, 1 active Administrator, realistic Tickets, Public Comments, and Internal Notes.
 
@@ -154,6 +156,25 @@ npm --prefix e2e exec playwright test -- --config e2e/playwright.lab3.config.ts
 
 This writes the Lab 3 HTML report and responsive evidence under `artifacts/lab-03/`.
 
+### Integrated Lab 4 verification
+
+After installing the locked server, client, and E2E dependencies and Playwright Chromium, run these phases in order from the repository root. Replace the environment-file path with your existing local file; the runner reads credentials without copying or printing them.
+
+```powershell
+node scripts/verify-lab4.mjs prepare --env-file server/.env
+node scripts/verify-lab4.mjs recovery --env-file server/.env
+node scripts/verify-lab4.mjs server --env-file server/.env
+node scripts/verify-lab4.mjs client --env-file server/.env
+node scripts/verify-lab4.mjs lab4 --env-file server/.env
+node scripts/verify-lab4.mjs lab3 --env-file server/.env
+```
+
+The runner validates localhost port `5433`, uses only the dedicated `toktickit_lab4_e2e` / `toktickit_lab3_e2e` databases, and generates disposable seed passwords in memory. It never seeds the application database named in the supplied URL. It records the tested Git revision and sanitized outputs in `artifacts/lab-04/evidence/staging-integration/`. Pass `--output-dir artifacts/lab-04/evidence/final-main` when repeating the phases on released `main`; staging results do not replace final-main verification.
+
+Lab 4 responsive screenshots are generated in `artifacts/lab-04/screenshots/staff-dashboard/`, `requester-dashboard/`, and `actions-taken/`. Playwright reports distinguish intentional viewport skips from passing tests. See `docs/lab-04/integration.md` for review/release gates and the Answer Parts 1-9 submission map.
+
 ## Security
+
+The recovery phase detects the connected PostgreSQL server major version and uses matching installed tools on Windows. Supply `--pg-bin` only if they are installed elsewhere. It restores a backup into a uniquely created temporary database, compares table counts and data fingerprints, then removes only that temporary database and dump. The source E2E database remains intact.
 
 Do not commit `.env`, database credentials, tokens, or `node_modules`.

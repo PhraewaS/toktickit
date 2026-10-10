@@ -1,0 +1,462 @@
+{
+  "retrievedAt": "2026-10-08 16:06:40 UTC",
+  "repository": "PhraewaS/toktickit",
+  "scope": "Lab 4 PRs #55-#61",
+  "endpoints": [
+    "/repos/PhraewaS/toktickit/issues/{number}/comments (paginated)",
+    "/repos/PhraewaS/toktickit/pulls/{number}/reviews (paginated)",
+    "/repos/PhraewaS/toktickit/pulls/{number}/comments (paginated)"
+  ],
+  "pullRequests": [
+    {
+      "number": 55,
+      "title": "[Lab 4] Engineering Contract and Test Plan",
+      "state": "closed",
+      "merged": true,
+      "mergedAt": "2026-09-29T13:37:51Z",
+      "mergeCommit": "ae4144877cc8a699b83c4d92d09aa06abdcc1509",
+      "head": "feature/lab4-spec-contract",
+      "headSha": "0580fc17b2a1e5a6a84d1548aa91e450fbebc88a",
+      "base": "lab4-staging",
+      "comments": [
+        {
+          "id": 5868772847,
+          "url": "https://github.com/PhraewaS/toktickit/pull/55#issuecomment-5868772847",
+          "author": "PhraewaS",
+          "date": "2026-09-28T11:16:01Z",
+          "updated": "2026-09-28T11:16:01Z",
+          "body": "> ได้ตรวจ PR #55 เแล้วค่ะ ขอบเขต Documentation-only และเอกสารหลักโดยรวมถูกต้อง แต่ขอให้ปรับเฉพาะ 4 จุดที่ Labsheet กำหนด ได้แก่ เพิ่ม Status Transition Matrix ให้ครบ, ระบุ Dashboard calculation และ API response/error shape ให้ชัดเจน, เพิ่ม Performance-smoke Test พร้อมแก้ Test path ให้ตรงกับ Labsheet และแยก UI feedback states ของ Dashboard ให้ครบค่ะ หลังแก้จุดเหล่านี้แล้ว จะพร้อมสำหรับใช้เป็น Contract ของ Feature Issues ถัดไปค่ะ\r\n\r\nขอบคุณสำหรับคำแนะนำค่ะ ปรับแก้ PR #55 ตาม Labsheet ครบทั้ง 4 จุดแล้วใน commit ล่าสุด 9588245\r\n- เพิ่ม Status Transition Matrix ครบทุกสถานะ พร้อม role ที่อนุญาตและ error สำหรับ transition ที่ไม่ถูกต้อง\r\n- เพิ่ม Dashboard calculation rules, ownership scope, UTC 30-day boundary, ordering และ drill-down fields\r\n- เพิ่ม API success response shape และ common error envelope/status codes\r\n- เพิ่ม PERF-04 Performance-smoke Test พร้อม path server/tests/lab-04/performance-smoke.test.ts และแก้ test paths ให้ตรงกับ Labsheet\r\n- แยก Dashboard UI feedback states เป็น Loading, Success, Empty, Failure, Forbidden และ Retry/Refresh\r\n- อัปเดต reviewer.md และ PR description เพื่อบันทึกการตอบกลับ feedback\r\nPR ยังคงเป็น Documentation-only ตามขอบเขตเดิม และผลการรัน implementation/performance tests จะดำเนินการใน Feature และ Verification PR ถัดไปค่ะ\r\n\r\nรบกวนช่วย review PR #55 อีกครั้งหลังการแก้ไขด้วยนะคะ ขอบคุณมากค่ะ"
+        },
+        {
+          "id": 5875391590,
+          "url": "https://github.com/PhraewaS/toktickit/pull/55#issuecomment-5875391590",
+          "author": "guluJa",
+          "date": "2026-09-28T17:43:26Z",
+          "updated": "2026-09-28T17:43:26Z",
+          "body": "ตรวจการแก้ไขล่าสุดแล้วค่ะ การแก้ไขทั้ง 4 จุด ตาม Feedback และขอบเขต Documentation-only ถูกต้องแล้วค่ะ\r\n\r\nแต่มีบางส่วนที่ขอให้ปรับใน docs/lab-04/tests.md อีก 2 จุด เพื่อให้สถานะ Evidence ชัดเจน:\r\n\r\n1. E2E-04 ควรระบุ Final เป็น Planned/Pending แทน “Requires seeded PostgreSQL run”\r\n2. REG-04 ไม่ควรใช้คำว่า “passing” เพราะ PR นี้ยังไม่มีผลรันจริง ให้เปลี่ยนเป็น Planned และระบุว่าจะรันใน Feature/Final Integration ภายหลัง\r\n\r\nหลังแก้สองจุดนี้แล้ว สามารถทักมาให้ตรวจสอบเพิ่มเติมได้เลยนะคะ"
+        },
+        {
+          "id": 5887066518,
+          "url": "https://github.com/PhraewaS/toktickit/pull/55#issuecomment-5887066518",
+          "author": "PhraewaS",
+          "date": "2026-09-29T09:03:20Z",
+          "updated": "2026-09-29T09:03:20Z",
+          "body": "> ตรวจการแก้ไขล่าสุดแล้วค่ะ การแก้ไขทั้ง 4 จุด ตาม Feedback และขอบเขต Documentation-only ถูกต้องแล้วค่ะ\r\n> \r\n> แต่มีบางส่วนที่ขอให้ปรับใน docs/lab-04/tests.md อีก 2 จุด เพื่อให้สถานะ Evidence ชัดเจน:\r\n> \r\n> 1. E2E-04 ควรระบุ Final เป็น Planned/Pending แทน “Requires seeded PostgreSQL run”\r\n> 2. REG-04 ไม่ควรใช้คำว่า “passing” เพราะ PR นี้ยังไม่มีผลรันจริง ให้เปลี่ยนเป็น Planned และระบุว่าจะรันใน Feature/Final Integration ภายหลัง\r\n> \r\n> หลังแก้สองจุดนี้แล้ว สามารถทักมาให้ตรวจสอบเพิ่มเติมได้เลยนะคะ\r\n\r\nขอบคุณสำหรับคำแนะนำและการตรวจสอบอย่างละเอียดนะคะ\r\nปรับแก้ตาม feedback ล่าสุดเรียบร้อยแล้วค่ะ โดยตรวจทานเอกสารทั้งหมดกับ Labsheet อีกครั้ง\r\n- E2E-04 เปลี่ยนเป็น Planned/Pending และระบุว่าจะรันใน integrated Feature/Final Integration branch\r\n- REG-04 เปลี่ยนเป็น Planned/Pending พร้อมระบุว่าจะรันและบันทึกหลักฐานภายหลัง\r\n- เพิ่ม performance-smoke ใน final evidence requirements\r\n- ปรับ API contract และ reviewer record ให้สะท้อนสถานะ Evidence ที่ยังไม่ได้รันใน PR นี้\r\nPR #55 ยังคงเป็น Documentation-only และไม่มีการอ้างว่า E2E, Regression หรือ Performance tests ผ่านแล้วค่ะ\r\n\r\nการแก้ไขล่าสุดถูก push แล้วใน commit 0580fc1 และ git diff --check ผ่านเรียบร้อยแล้ว\r\nหากไม่มีประเด็นเพิ่มเติม รบกวนช่วย review PR #55 อีกครั้งเพื่อพิจารณา approve ได้เลยนะคะ ขอบคุณมากค่ะ"
+        },
+        {
+          "id": 5889638030,
+          "url": "https://github.com/PhraewaS/toktickit/pull/55#issuecomment-5889638030",
+          "author": "guluJa",
+          "date": "2026-09-29T11:48:01Z",
+          "updated": "2026-09-29T11:48:01Z",
+          "body": "> > ตรวจการแก้ไขล่าสุดแล้วค่ะ การแก้ไขทั้ง 4 จุด ตาม Feedback และขอบเขต Documentation-only ถูกต้องแล้วค่ะ\r\n> > แต่มีบางส่วนที่ขอให้ปรับใน docs/lab-04/tests.md อีก 2 จุด เพื่อให้สถานะ Evidence ชัดเจน:\r\n> > \r\n> > 1. E2E-04 ควรระบุ Final เป็น Planned/Pending แทน “Requires seeded PostgreSQL run”\r\n> > 2. REG-04 ไม่ควรใช้คำว่า “passing” เพราะ PR นี้ยังไม่มีผลรันจริง ให้เปลี่ยนเป็น Planned และระบุว่าจะรันใน Feature/Final Integration ภายหลัง\r\n> > \r\n> > หลังแก้สองจุดนี้แล้ว สามารถทักมาให้ตรวจสอบเพิ่มเติมได้เลยนะคะ\r\n> \r\n> ขอบคุณสำหรับคำแนะนำและการตรวจสอบอย่างละเอียดนะคะ ปรับแก้ตาม feedback ล่าสุดเรียบร้อยแล้วค่ะ โดยตรวจทานเอกสารทั้งหมดกับ Labsheet อีกครั้ง\r\n> \r\n> * E2E-04 เปลี่ยนเป็น Planned/Pending และระบุว่าจะรันใน integrated Feature/Final Integration branch\r\n> * REG-04 เปลี่ยนเป็น Planned/Pending พร้อมระบุว่าจะรันและบันทึกหลักฐานภายหลัง\r\n> * เพิ่ม performance-smoke ใน final evidence requirements\r\n> * ปรับ API contract และ reviewer record ให้สะท้อนสถานะ Evidence ที่ยังไม่ได้รันใน PR นี้\r\n>   PR [[Lab 4] Engineering Contract and Test Plan #55](https://github.com/PhraewaS/toktickit/pull/55) ยังคงเป็น Documentation-only และไม่มีการอ้างว่า E2E, Regression หรือ Performance tests ผ่านแล้วค่ะ\r\n> \r\n> การแก้ไขล่าสุดถูก push แล้วใน commit [0580fc1](https://github.com/PhraewaS/toktickit/commit/0580fc17b2a1e5a6a84d1548aa91e450fbebc88a) และ git diff --check ผ่านเรียบร้อยแล้ว หากไม่มีประเด็นเพิ่มเติม รบกวนช่วย review PR #55 อีกครั้งเพื่อพิจารณา approve ได้เลยนะคะ ขอบคุณมากค่ะ\r\n\r\nPR #55 ผ่านในขอบเขต Engineering Contract และ Test Plan แล้วค่ะ จากที่ฉันตรวจสอบไม่พบจุดจำเป็นที่ต้องแก้เพิ่มเติมค่ะ"
+        },
+        {
+          "id": 5890879984,
+          "url": "https://github.com/PhraewaS/toktickit/pull/55#issuecomment-5890879984",
+          "author": "PhraewaS",
+          "date": "2026-09-29T13:04:27Z",
+          "updated": "2026-09-29T13:04:27Z",
+          "body": "> ขอบคุณสำหรับคำแนะนำและการตรวจสอบอย่างละเอียดนะคะ\r\n\r\n\r\n\r\n> > > ตรวจการแก้ไขล่าสุดแล้วค่ะ การแก้ไขทั้ง 4 จุด ตาม Feedback และขอบเขต Documentation-only ถูกต้องแล้วค่ะ\r\n> > > แต่มีบางส่วนที่ขอให้ปรับใน docs/lab-04/tests.md อีก 2 จุด เพื่อให้สถานะ Evidence ชัดเจน:\r\n> > > \r\n> > > 1. E2E-04 ควรระบุ Final เป็น Planned/Pending แทน “Requires seeded PostgreSQL run”\r\n> > > 2. REG-04 ไม่ควรใช้คำว่า “passing” เพราะ PR นี้ยังไม่มีผลรันจริง ให้เปลี่ยนเป็น Planned และระบุว่าจะรันใน Feature/Final Integration ภายหลัง\r\n> > > \r\n> > > หลังแก้สองจุดนี้แล้ว สามารถทักมาให้ตรวจสอบเพิ่มเติมได้เลยนะคะ\r\n> > \r\n> > \r\n> > ขอบคุณสำหรับคำแนะนำและการตรวจสอบอย่างละเอียดนะคะ ปรับแก้ตาม feedback ล่าสุดเรียบร้อยแล้วค่ะ โดยตรวจทานเอกสารทั้งหมดกับ Labsheet อีกครั้ง\r\n> > \r\n> > * E2E-04 เปลี่ยนเป็น Planned/Pending และระบุว่าจะรันใน integrated Feature/Final Integration branch\r\n> > * REG-04 เปลี่ยนเป็น Planned/Pending พร้อมระบุว่าจะรันและบันทึกหลักฐานภายหลัง\r\n> > * เพิ่ม performance-smoke ใน final evidence requirements\r\n> > * ปรับ API contract และ reviewer record ให้สะท้อนสถานะ Evidence ที่ยังไม่ได้รันใน PR นี้\r\n> >   PR [[Lab 4] Engineering Contract and Test Plan #55](https://github.com/PhraewaS/toktickit/pull/55) ยังคงเป็น Documentation-only และไม่มีการอ้างว่า E2E, Regression หรือ Performance tests ผ่านแล้วค่ะ\r\n> > \r\n> > การแก้ไขล่าสุดถูก push แล้วใน commit [0580fc1](https://github.com/PhraewaS/toktickit/commit/0580fc17b2a1e5a6a84d1548aa91e450fbebc88a) และ git diff --check ผ่านเรียบร้อยแล้ว หากไม่มีประเด็นเพิ่มเติม รบกวนช่วย review PR #55 อีกครั้งเพื่อพิจารณา approve ได้เลยนะคะ ขอบคุณมากค่ะ\r\n> \r\n> PR #55 ผ่านในขอบเขต Engineering Contract และ Test Plan แล้วค่ะ จากที่ฉันตรวจสอบไม่พบจุดจำเป็นที่ต้องแก้เพิ่มเติมค่ะ\r\n\r\nขอบคุณสำหรับคำแนะนำและการตรวจสอบอย่างละเอียดนะคะ"
+        }
+      ],
+      "reviews": [
+        {
+          "id": 5330909297,
+          "url": "https://github.com/PhraewaS/toktickit/pull/55#pullrequestreview-5330909297",
+          "author": "guluJa",
+          "date": "2026-09-27T15:28:03Z",
+          "state": "CHANGES_REQUESTED",
+          "commit": "eef14be79b7d41dde8fc8a45cc2e385cff7fb473",
+          "body": "ได้ตรวจ PR #55 เแล้วค่ะ ขอบเขต Documentation-only และเอกสารหลักโดยรวมถูกต้อง แต่ขอให้ปรับเฉพาะ 4 จุดที่ Labsheet กำหนด ได้แก่ เพิ่ม Status Transition Matrix ให้ครบ, ระบุ Dashboard calculation และ API response/error shape ให้ชัดเจน, เพิ่ม Performance-smoke Test พร้อมแก้ Test path ให้ตรงกับ Labsheet และแยก UI feedback states ของ Dashboard ให้ครบค่ะ หลังแก้จุดเหล่านี้แล้ว จะพร้อมสำหรับใช้เป็น Contract ของ Feature Issues ถัดไปค่ะ"
+        },
+        {
+          "id": 5353383942,
+          "url": "https://github.com/PhraewaS/toktickit/pull/55#pullrequestreview-5353383942",
+          "author": "guluJa",
+          "date": "2026-09-29T13:37:40Z",
+          "state": "APPROVED",
+          "commit": "0580fc17b2a1e5a6a84d1548aa91e450fbebc88a",
+          "body": ""
+        }
+      ],
+      "inline": []
+    },
+    {
+      "number": 56,
+      "title": "[Lab 4] Actions Taken data model and backend API",
+      "state": "closed",
+      "merged": true,
+      "mergedAt": "2026-10-01T08:45:58Z",
+      "mergeCommit": "70f8c45a328d34b51946773f76e8a03262f12ab4",
+      "head": "feature/lab4-actions-backend",
+      "headSha": "eb9ae0acc70f49cc0e18a9bd3182f8f6d3d90761",
+      "base": "lab4-staging",
+      "comments": [
+        {
+          "id": 5911257519,
+          "url": "https://github.com/PhraewaS/toktickit/pull/56#issuecomment-5911257519",
+          "author": "PhraewaS",
+          "date": "2026-09-30T12:25:22Z",
+          "updated": "2026-09-30T12:25:22Z",
+          "body": "> ตรวจ PR ล่าสุดแล้วค่ะ ภาพรวมการทำงานตรงกับ Scope ของ Issue #49 แต่มี 2 จุดที่อยากให้ตรวจสอบเพิ่มเติมนะคะ\r\n> \r\n> 1. Response ของ performedBy ตอนนี้มี email และ role เพิ่มจากที่ระบุไว้ใน Contract ซึ่งตัวอย่างกำหนดข้อมูลหลักไว้เพียง id และ name ค่ะ รบกวนตรวจให้ Response กับ Contract ตรงกัน\r\n> 2. Test ฝั่ง Server ตอนนี้ครอบคลุมบางส่วนแล้ว แต่อยากให้เช็กเพิ่มในส่วน Staff list route และกรณี Administrator list/create/update รวมถึง missing resource และ invalid ID เพื่อให้ครอบคลุมตาม Role/Route Matrix ของ Issue ค่ะ\r\n>    นอกเหนือจากนี้ยังไม่พบประเด็นที่ขัดกับ Scope หลักของงานค่ะ\r\n\r\nขอบคุณสำหรับคำแนะนำค่ะ แก้ไขตาม feedback ทั้ง 2 จุดและอัปเดต PR #56 แล้วนะคะ โดยปรับ performedBy ให้ตรงกับ Contract และเพิ่ม test สำหรับ Staff/Admin routes, กรณีไม่พบ resource และ invalid ID เรียบร้อยแล้วค่ะ รบกวนช่วยตรวจ PR เวอร์ชันล่าสุดให้อีกครั้งได้ไหมคะ?"
+        },
+        {
+          "id": 5912150052,
+          "url": "https://github.com/PhraewaS/toktickit/pull/56#issuecomment-5912150052",
+          "author": "guluJa",
+          "date": "2026-09-30T13:20:51Z",
+          "updated": "2026-09-30T13:20:51Z",
+          "body": "> > ตรวจ PR ล่าสุดแล้วค่ะ ภาพรวมการทำงานตรงกับ Scope ของ Issue #49 แต่มี 2 จุดที่อยากให้ตรวจสอบเพิ่มเติมนะคะ\r\n> > \r\n> > 1. Response ของ performedBy ตอนนี้มี email และ role เพิ่มจากที่ระบุไว้ใน Contract ซึ่งตัวอย่างกำหนดข้อมูลหลักไว้เพียง id และ name ค่ะ รบกวนตรวจให้ Response กับ Contract ตรงกัน\r\n> > 2. Test ฝั่ง Server ตอนนี้ครอบคลุมบางส่วนแล้ว แต่อยากให้เช็กเพิ่มในส่วน Staff list route และกรณี Administrator list/create/update รวมถึง missing resource และ invalid ID เพื่อให้ครอบคลุมตาม Role/Route Matrix ของ Issue ค่ะ\r\n> >    นอกเหนือจากนี้ยังไม่พบประเด็นที่ขัดกับ Scope หลักของงานค่ะ\r\n> \r\n> ขอบคุณสำหรับคำแนะนำค่ะ แก้ไขตาม feedback ทั้ง 2 จุดและอัปเดต PR #56 แล้วนะคะ โดยปรับ performedBy ให้ตรงกับ Contract และเพิ่ม test สำหรับ Staff/Admin routes, กรณีไม่พบ resource และ invalid ID เรียบร้อยแล้วค่ะ รบกวนช่วยตรวจ PR เวอร์ชันล่าสุดให้อีกครั้งได้ไหมคะ?\r\n\r\nตรวจการแก้ไขล่าสุดแล้วค่ะ ภาพรวมตรงกับ Scope ของ Issue #49 และแก้เรื่อง performedBy กับ Test coverage ตาม Feedback เดิมแล้ว  แต่มีบางจุดที่ขอให้ตรวจเพิ่มเติมค่ะ\r\n1. Full Server suite ยังมี 1 test failed เนื่องจากไม่มี DATABASE_URL รบกวนรันซ้ำบน Environment ที่มี Database และบันทึกผลล่าสุด\r\n2. PATCH Action ยังสามารถแก้ไขได้โดยไม่ส่ง updatedAt ทำให้ stale-update protection ถูกข้ามได้ รบกวนกำหนดให้ชัดว่าจะบังคับส่ง timestamp หรือระบุพฤติกรรมนี้ใน Contract พร้อมเพิ่ม Test ค่ะ"
+        },
+        {
+          "id": 5914162675,
+          "url": "https://github.com/PhraewaS/toktickit/pull/56#issuecomment-5914162675",
+          "author": "PhraewaS",
+          "date": "2026-09-30T15:15:05Z",
+          "updated": "2026-09-30T15:15:05Z",
+          "body": "> > > ตรวจ PR ล่าสุดแล้วค่ะ ภาพรวมการทำงานตรงกับ Scope ของ Issue #49 แต่มี 2 จุดที่อยากให้ตรวจสอบเพิ่มเติมนะคะ\r\n> > > \r\n> > > 1. Response ของ performedBy ตอนนี้มี email และ role เพิ่มจากที่ระบุไว้ใน Contract ซึ่งตัวอย่างกำหนดข้อมูลหลักไว้เพียง id และ name ค่ะ รบกวนตรวจให้ Response กับ Contract ตรงกัน\r\n> > > 2. Test ฝั่ง Server ตอนนี้ครอบคลุมบางส่วนแล้ว แต่อยากให้เช็กเพิ่มในส่วน Staff list route และกรณี Administrator list/create/update รวมถึง missing resource และ invalid ID เพื่อให้ครอบคลุมตาม Role/Route Matrix ของ Issue ค่ะ\r\n> > >    นอกเหนือจากนี้ยังไม่พบประเด็นที่ขัดกับ Scope หลักของงานค่ะ\r\n> > \r\n> > \r\n> > ขอบคุณสำหรับคำแนะนำค่ะ แก้ไขตาม feedback ทั้ง 2 จุดและอัปเดต PR #56 แล้วนะคะ โดยปรับ performedBy ให้ตรงกับ Contract และเพิ่ม test สำหรับ Staff/Admin routes, กรณีไม่พบ resource และ invalid ID เรียบร้อยแล้วค่ะ รบกวนช่วยตรวจ PR เวอร์ชันล่าสุดให้อีกครั้งได้ไหมคะ?\r\n> \r\n> ตรวจการแก้ไขล่าสุดแล้วค่ะ ภาพรวมตรงกับ Scope ของ Issue #49 และแก้เรื่อง performedBy กับ Test coverage ตาม Feedback เดิมแล้ว แต่มีบางจุดที่ขอให้ตรวจเพิ่มเติมค่ะ\r\n> \r\n> 1. Full Server suite ยังมี 1 test failed เนื่องจากไม่มี DATABASE_URL รบกวนรันซ้ำบน Environment ที่มี Database และบันทึกผลล่าสุด\r\n> 2. PATCH Action ยังสามารถแก้ไขได้โดยไม่ส่ง updatedAt ทำให้ stale-update protection ถูกข้ามได้ รบกวนกำหนดให้ชัดว่าจะบังคับส่ง timestamp หรือระบุพฤติกรรมนี้ใน Contract พร้อมเพิ่ม Test ค่ะ\r\n\r\nขอบคุณสำหรับคำแนะนำค่ะ แก้ไขแล้วโดยกำหนดให้ PATCH ต้องส่ง updatedAt จากข้อมูลล่าสุดทุกครั้ง และเพิ่ม test สำหรับกรณีไม่มี timestamp, timestamp ไม่ถูกต้อง, version ปัจจุบัน และ version เก่าค่ะ นอกจากนี้รัน Full Server suite บน PostgreSQL แล้ว ได้ 134 passed, 2 skipped, 0 failed โดยสองเคสที่ข้ามต้องใช้ LAB3_SEED_PASSWORD ซึ่งไม่มีใน environment นี้ และบันทึกผลไว้ใน PR #56 แล้วค่ะ รบกวนช่วยตรวจ commit ล่าสุด eb9ae0a อีกครั้งนะคะ"
+        },
+        {
+          "id": 5914512872,
+          "url": "https://github.com/PhraewaS/toktickit/pull/56#issuecomment-5914512872",
+          "author": "guluJa",
+          "date": "2026-09-30T15:34:49Z",
+          "updated": "2026-09-30T15:34:49Z",
+          "body": "> > > > ตรวจ PR ล่าสุดแล้วค่ะ ภาพรวมการทำงานตรงกับ Scope ของ Issue #49 แต่มี 2 จุดที่อยากให้ตรวจสอบเพิ่มเติมนะคะ\r\n> > > > \r\n> > > > 1. Response ของ performedBy ตอนนี้มี email และ role เพิ่มจากที่ระบุไว้ใน Contract ซึ่งตัวอย่างกำหนดข้อมูลหลักไว้เพียง id และ name ค่ะ รบกวนตรวจให้ Response กับ Contract ตรงกัน\r\n> > > > 2. Test ฝั่ง Server ตอนนี้ครอบคลุมบางส่วนแล้ว แต่อยากให้เช็กเพิ่มในส่วน Staff list route และกรณี Administrator list/create/update รวมถึง missing resource และ invalid ID เพื่อให้ครอบคลุมตาม Role/Route Matrix ของ Issue ค่ะ\r\n> > > >    นอกเหนือจากนี้ยังไม่พบประเด็นที่ขัดกับ Scope หลักของงานค่ะ\r\n> > > \r\n> > > \r\n> > > ขอบคุณสำหรับคำแนะนำค่ะ แก้ไขตาม feedback ทั้ง 2 จุดและอัปเดต PR #56 แล้วนะคะ โดยปรับ performedBy ให้ตรงกับ Contract และเพิ่ม test สำหรับ Staff/Admin routes, กรณีไม่พบ resource และ invalid ID เรียบร้อยแล้วค่ะ รบกวนช่วยตรวจ PR เวอร์ชันล่าสุดให้อีกครั้งได้ไหมคะ?\r\n> > \r\n> > \r\n> > ตรวจการแก้ไขล่าสุดแล้วค่ะ ภาพรวมตรงกับ Scope ของ Issue #49 และแก้เรื่อง performedBy กับ Test coverage ตาม Feedback เดิมแล้ว แต่มีบางจุดที่ขอให้ตรวจเพิ่มเติมค่ะ\r\n> > \r\n> > 1. Full Server suite ยังมี 1 test failed เนื่องจากไม่มี DATABASE_URL รบกวนรันซ้ำบน Environment ที่มี Database และบันทึกผลล่าสุด\r\n> > 2. PATCH Action ยังสามารถแก้ไขได้โดยไม่ส่ง updatedAt ทำให้ stale-update protection ถูกข้ามได้ รบกวนกำหนดให้ชัดว่าจะบังคับส่ง timestamp หรือระบุพฤติกรรมนี้ใน Contract พร้อมเพิ่ม Test ค่ะ\r\n> \r\n> ขอบคุณสำหรับคำแนะนำค่ะ แก้ไขแล้วโดยกำหนดให้ PATCH ต้องส่ง updatedAt จากข้อมูลล่าสุดทุกครั้ง และเพิ่ม test สำหรับกรณีไม่มี timestamp, timestamp ไม่ถูกต้อง, version ปัจจุบัน และ version เก่าค่ะ นอกจากนี้รัน Full Server suite บน PostgreSQL แล้ว ได้ 134 passed, 2 skipped, 0 failed โดยสองเคสที่ข้ามต้องใช้ LAB3_SEED_PASSWORD ซึ่งไม่มีใน environment นี้ และบันทึกผลไว้ใน PR #56 แล้วค่ะ รบกวนช่วยตรวจ commit ล่าสุด [eb9ae0a](https://github.com/PhraewaS/toktickit/commit/eb9ae0acc70f49cc0e18a9bd3182f8f6d3d90761) อีกครั้งนะคะ\r\n\r\nตรวจ revision eb9ae0a แล้วค่ะ จุดที่เคยเสนอแนะได้รับการแก้ครบแล้ว ทั้ง performedBy, authorization tests และ stale update ที่บังคับใช้ updatedAt พร้อมตอบ 409 ACTION_UPDATE_CONFLICT เมื่อข้อมูลไม่ตรงกัน  \r\nผลทดสอบล่าสุด Server ผ่าน 134 tests และไม่มี test fail ส่วนที่ skip 2 รายการมีการระบุสาเหตุจาก LAB3_SEED_PASSWORD ไว้ชัดเจนแล้วค่ะ โดยรวม PR ตรงตาม Scope ของ Issue และยังไม่พบจุดที่ต้องแก้ไขเพิ่มเติม"
+        },
+        {
+          "id": 5915584385,
+          "url": "https://github.com/PhraewaS/toktickit/pull/56#issuecomment-5915584385",
+          "author": "PhraewaS",
+          "date": "2026-09-30T16:40:19Z",
+          "updated": "2026-10-01T04:02:57Z",
+          "body": "> ขอบคุณสำหรับคำแนะนำค่ะ\r\n\r\n\r\n\r\n> > > > > ตรวจ PR ล่าสุดแล้วค่ะ ภาพรวมการทำงานตรงกับ Scope ของ Issue #49 แต่มี 2 จุดที่อยากให้ตรวจสอบเพิ่มเติมนะคะ\r\n> > > > > \r\n> > > > > 1. Response ของ performedBy ตอนนี้มี email และ role เพิ่มจากที่ระบุไว้ใน Contract ซึ่งตัวอย่างกำหนดข้อมูลหลักไว้เพียง id และ name ค่ะ รบกวนตรวจให้ Response กับ Contract ตรงกัน\r\n> > > > > 2. Test ฝั่ง Server ตอนนี้ครอบคลุมบางส่วนแล้ว แต่อยากให้เช็กเพิ่มในส่วน Staff list route และกรณี Administrator list/create/update รวมถึง missing resource และ invalid ID เพื่อให้ครอบคลุมตาม Role/Route Matrix ของ Issue ค่ะ\r\n> > > > >    นอกเหนือจากนี้ยังไม่พบประเด็นที่ขัดกับ Scope หลักของงานค่ะ\r\n> > > > \r\n> > > > \r\n> > > > ขอบคุณสำหรับคำแนะนำค่ะ แก้ไขตาม feedback ทั้ง 2 จุดและอัปเดต PR #56 แล้วนะคะ โดยปรับ performedBy ให้ตรงกับ Contract และเพิ่ม test สำหรับ Staff/Admin routes, กรณีไม่พบ resource และ invalid ID เรียบร้อยแล้วค่ะ รบกวนช่วยตรวจ PR เวอร์ชันล่าสุดให้อีกครั้งได้ไหมคะ?\r\n> > > \r\n> > > \r\n> > > ตรวจการแก้ไขล่าสุดแล้วค่ะ ภาพรวมตรงกับ Scope ของ Issue #49 และแก้เรื่อง performedBy กับ Test coverage ตาม Feedback เดิมแล้ว แต่มีบางจุดที่ขอให้ตรวจเพิ่มเติมค่ะ\r\n> > > \r\n> > > 1. Full Server suite ยังมี 1 test failed เนื่องจากไม่มี DATABASE_URL รบกวนรันซ้ำบน Environment ที่มี Database และบันทึกผลล่าสุด\r\n> > > 2. PATCH Action ยังสามารถแก้ไขได้โดยไม่ส่ง updatedAt ทำให้ stale-update protection ถูกข้ามได้ รบกวนกำหนดให้ชัดว่าจะบังคับส่ง timestamp หรือระบุพฤติกรรมนี้ใน Contract พร้อมเพิ่ม Test ค่ะ\r\n> > \r\n> > \r\n> > ขอบคุณสำหรับคำแนะนำค่ะ แก้ไขแล้วโดยกำหนดให้ PATCH ต้องส่ง updatedAt จากข้อมูลล่าสุดทุกครั้ง และเพิ่ม test สำหรับกรณีไม่มี timestamp, timestamp ไม่ถูกต้อง, version ปัจจุบัน และ version เก่าค่ะ นอกจากนี้รัน Full Server suite บน PostgreSQL แล้ว ได้ 134 passed, 2 skipped, 0 failed โดยสองเคสที่ข้ามต้องใช้ LAB3_SEED_PASSWORD ซึ่งไม่มีใน environment นี้ และบันทึกผลไว้ใน PR #56 แล้วค่ะ รบกวนช่วยตรวจ commit ล่าสุด [eb9ae0a](https://github.com/PhraewaS/toktickit/commit/eb9ae0acc70f49cc0e18a9bd3182f8f6d3d90761) อีกครั้งนะคะ\r\n> \r\n> ตรวจ revision [eb9ae0a](https://github.com/PhraewaS/toktickit/commit/eb9ae0acc70f49cc0e18a9bd3182f8f6d3d90761) แล้วค่ะ จุดที่เคยเสนอแนะได้รับการแก้ครบแล้ว ทั้ง performedBy, authorization tests และ stale update ที่บังคับใช้ updatedAt พร้อมตอบ 409 ACTION_UPDATE_CONFLICT เมื่อข้อมูลไม่ตรงกัน ผลทดสอบล่าสุด Server ผ่าน 134 tests และไม่มี test fail ส่วนที่ skip 2 รายการมีการระบุสาเหตุจาก LAB3_SEED_PASSWORD ไว้ชัดเจนแล้วค่ะ โดยรวม PR ตรงตาม Scope ของ Issue และยังไม่พบจุดที่ต้องแก้ไขเพิ่มเติม\r\n\r\nขอบคุณสำหรับคำแนะนำและเวลาในการมาตรวจซ้ำให้กันนะคะ"
+        },
+        {
+          "id": 5927937468,
+          "url": "https://github.com/PhraewaS/toktickit/pull/56#issuecomment-5927937468",
+          "author": "guluJa",
+          "date": "2026-10-01T08:45:34Z",
+          "updated": "2026-10-01T08:45:34Z",
+          "body": "> > ขอบคุณสำหรับคำแนะนำค่ะ\r\n> \r\n> > > > > > ตรวจ PR ล่าสุดแล้วค่ะ ภาพรวมการทำงานตรงกับ Scope ของ Issue #49 แต่มี 2 จุดที่อยากให้ตรวจสอบเพิ่มเติมนะคะ\r\n> > > > > > \r\n> > > > > > 1. Response ของ performedBy ตอนนี้มี email และ role เพิ่มจากที่ระบุไว้ใน Contract ซึ่งตัวอย่างกำหนดข้อมูลหลักไว้เพียง id และ name ค่ะ รบกวนตรวจให้ Response กับ Contract ตรงกัน\r\n> > > > > > 2. Test ฝั่ง Server ตอนนี้ครอบคลุมบางส่วนแล้ว แต่อยากให้เช็กเพิ่มในส่วน Staff list route และกรณี Administrator list/create/update รวมถึง missing resource และ invalid ID เพื่อให้ครอบคลุมตาม Role/Route Matrix ของ Issue ค่ะ\r\n> > > > > >    นอกเหนือจากนี้ยังไม่พบประเด็นที่ขัดกับ Scope หลักของงานค่ะ\r\n> > > > > \r\n> > > > > \r\n> > > > > ขอบคุณสำหรับคำแนะนำค่ะ แก้ไขตาม feedback ทั้ง 2 จุดและอัปเดต PR #56 แล้วนะคะ โดยปรับ performedBy ให้ตรงกับ Contract และเพิ่ม test สำหรับ Staff/Admin routes, กรณีไม่พบ resource และ invalid ID เรียบร้อยแล้วค่ะ รบกวนช่วยตรวจ PR เวอร์ชันล่าสุดให้อีกครั้งได้ไหมคะ?\r\n> > > > \r\n> > > > \r\n> > > > ตรวจการแก้ไขล่าสุดแล้วค่ะ ภาพรวมตรงกับ Scope ของ Issue #49 และแก้เรื่อง performedBy กับ Test coverage ตาม Feedback เดิมแล้ว แต่มีบางจุดที่ขอให้ตรวจเพิ่มเติมค่ะ\r\n> > > > \r\n> > > > 1. Full Server suite ยังมี 1 test failed เนื่องจากไม่มี DATABASE_URL รบกวนรันซ้ำบน Environment ที่มี Database และบันทึกผลล่าสุด\r\n> > > > 2. PATCH Action ยังสามารถแก้ไขได้โดยไม่ส่ง updatedAt ทำให้ stale-update protection ถูกข้ามได้ รบกวนกำหนดให้ชัดว่าจะบังคับส่ง timestamp หรือระบุพฤติกรรมนี้ใน Contract พร้อมเพิ่ม Test ค่ะ\r\n> > > \r\n> > > \r\n> > > ขอบคุณสำหรับคำแนะนำค่ะ แก้ไขแล้วโดยกำหนดให้ PATCH ต้องส่ง updatedAt จากข้อมูลล่าสุดทุกครั้ง และเพิ่ม test สำหรับกรณีไม่มี timestamp, timestamp ไม่ถูกต้อง, version ปัจจุบัน และ version เก่าค่ะ นอกจากนี้รัน Full Server suite บน PostgreSQL แล้ว ได้ 134 passed, 2 skipped, 0 failed โดยสองเคสที่ข้ามต้องใช้ LAB3_SEED_PASSWORD ซึ่งไม่มีใน environment นี้ และบันทึกผลไว้ใน PR #56 แล้วค่ะ รบกวนช่วยตรวจ commit ล่าสุด [eb9ae0a](https://github.com/PhraewaS/toktickit/commit/eb9ae0acc70f49cc0e18a9bd3182f8f6d3d90761) อีกครั้งนะคะ\r\n> > \r\n> > \r\n> > ตรวจ revision [eb9ae0a](https://github.com/PhraewaS/toktickit/commit/eb9ae0acc70f49cc0e18a9bd3182f8f6d3d90761) แล้วค่ะ จุดที่เคยเสนอแนะได้รับการแก้ครบแล้ว ทั้ง performedBy, authorization tests และ stale update ที่บังคับใช้ updatedAt พร้อมตอบ 409 ACTION_UPDATE_CONFLICT เมื่อข้อมูลไม่ตรงกัน ผลทดสอบล่าสุด Server ผ่าน 134 tests และไม่มี test fail ส่วนที่ skip 2 รายการมีการระบุสาเหตุจาก LAB3_SEED_PASSWORD ไว้ชัดเจนแล้วค่ะ โดยรวม PR ตรงตาม Scope ของ Issue และยังไม่พบจุดที่ต้องแก้ไขเพิ่มเติม\r\n> \r\n> ขอบคุณสำหรับคำแนะนำและเวลาในการมาตรวจซ้ำให้กันนะคะ\r\n\r\nไม่เป็นไรเลยค่ะ "
+        }
+      ],
+      "reviews": [
+        {
+          "id": 5364520356,
+          "url": "https://github.com/PhraewaS/toktickit/pull/56#pullrequestreview-5364520356",
+          "author": "guluJa",
+          "date": "2026-09-30T09:47:13Z",
+          "state": "CHANGES_REQUESTED",
+          "commit": "466ab237c90cc3e992d9dab675ef7ede01826029",
+          "body": "ตรวจ PR ล่าสุดแล้วค่ะ ภาพรวมการทำงานตรงกับ Scope ของ Issue #49 แต่มี 2 จุดที่อยากให้ตรวจสอบเพิ่มเติมนะคะ  \n1. Response ของ performedBy ตอนนี้มี email และ role เพิ่มจากที่ระบุไว้ใน Contract ซึ่งตัวอย่างกำหนดข้อมูลหลักไว้เพียง id และ name ค่ะ รบกวนตรวจให้ Response กับ Contract ตรงกัน\n2. Test ฝั่ง Server ตอนนี้ครอบคลุมบางส่วนแล้ว แต่อยากให้เช็กเพิ่มในส่วน Staff list route และกรณี Administrator list/create/update รวมถึง missing resource และ invalid ID เพื่อให้ครอบคลุมตาม Role/Route Matrix ของ Issue ค่ะ\nนอกเหนือจากนี้ยังไม่พบประเด็นที่ขัดกับ Scope หลักของงานค่ะ"
+        },
+        {
+          "id": 5376979695,
+          "url": "https://github.com/PhraewaS/toktickit/pull/56#pullrequestreview-5376979695",
+          "author": "guluJa",
+          "date": "2026-10-01T08:45:45Z",
+          "state": "APPROVED",
+          "commit": "eb9ae0acc70f49cc0e18a9bd3182f8f6d3d90761",
+          "body": ""
+        }
+      ],
+      "inline": []
+    },
+    {
+      "number": 57,
+      "title": "[Lab 4] Ticket workflow and resolution enforcement",
+      "state": "closed",
+      "merged": true,
+      "mergedAt": "2026-10-02T16:15:04Z",
+      "mergeCommit": "5e974d3b253a7cd572053ad0f7fc5744c3aa5c2a",
+      "head": "feature/lab4-ticket-workflow",
+      "headSha": "df882a180a10f3a6cb55a1fb35fe9a2552bf9391",
+      "base": "lab4-staging",
+      "comments": [
+        {
+          "id": 5947923541,
+          "url": "https://github.com/PhraewaS/toktickit/pull/57#issuecomment-5947923541",
+          "author": "PhraewaS",
+          "date": "2026-10-02T08:09:25Z",
+          "updated": "2026-10-02T08:09:25Z",
+          "body": "> ตรวจ PR #57 แล้วค่ะ ส่วน resolution gate, สิทธิ์การเปลี่ยนสถานะ และการแสดงข้อผิดพลาดในหน้า Ticket Detail ตรงตาม Issue #50 แล้วนะคะ เหลือจุดหนึ่งที่อยากให้ตรวจสอบแก้ไข คือ การเปลี่ยนสถานะยังอ่านค่าเดิมก่อน แล้วอัปเดตด้วย Ticket ID อย่างเดียว หากมี Staff สองคนแก้ Ticket เดียวกัน คำขอหลังอาจเขียนทับสถานะที่เพิ่งเปลี่ยนไป รบกวนเพิ่มการตรวจข้อมูลล่าสุดตอนบันทึกและ Test กรณี stale/concurrent update ให้หน่อยค่ะ\r\n\r\nขอบคุณที่ช่วยตรวจและให้คำแนะนำนะคะ แก้กรณีการเปลี่ยนสถานะ Ticket ที่ข้อมูลอาจล้าสมัยแล้วค่ะ ตอนนี้ระบบจะตรวจสอบสถานะเดิมขณะบันทึก หากมีการเปลี่ยนแปลงก่อนแล้ว จะไม่เขียนทับ แต่แจ้ง conflict ให้รีเฟรช Ticket ก่อนลองอีกครั้ง พร้อมเพิ่ม Test สำหรับกรณีนี้และอัปเดตเอกสารที่เกี่ยวข้องแล้วค่ะ\r\nอัปเดตไว้ใน [PR #57](https://github.com/PhraewaS/toktickit/pull/57) และส่งขอรีวิวรอบใหม่แล้วนะคะ รบกวนช่วยตรวจสอบอีกครั้งได้เลยค่ะ"
+        },
+        {
+          "id": 5955336655,
+          "url": "https://github.com/PhraewaS/toktickit/pull/57#issuecomment-5955336655",
+          "author": "guluJa",
+          "date": "2026-10-02T15:09:31Z",
+          "updated": "2026-10-02T15:09:31Z",
+          "body": "> > ตรวจ PR #57 แล้วค่ะ ส่วน resolution gate, สิทธิ์การเปลี่ยนสถานะ และการแสดงข้อผิดพลาดในหน้า Ticket Detail ตรงตาม Issue #50 แล้วนะคะ เหลือจุดหนึ่งที่อยากให้ตรวจสอบแก้ไข คือ การเปลี่ยนสถานะยังอ่านค่าเดิมก่อน แล้วอัปเดตด้วย Ticket ID อย่างเดียว หากมี Staff สองคนแก้ Ticket เดียวกัน คำขอหลังอาจเขียนทับสถานะที่เพิ่งเปลี่ยนไป รบกวนเพิ่มการตรวจข้อมูลล่าสุดตอนบันทึกและ Test กรณี stale/concurrent update ให้หน่อยค่ะ\r\n> \r\n> ขอบคุณที่ช่วยตรวจและให้คำแนะนำนะคะ แก้กรณีการเปลี่ยนสถานะ Ticket ที่ข้อมูลอาจล้าสมัยแล้วค่ะ ตอนนี้ระบบจะตรวจสอบสถานะเดิมขณะบันทึก หากมีการเปลี่ยนแปลงก่อนแล้ว จะไม่เขียนทับ แต่แจ้ง conflict ให้รีเฟรช Ticket ก่อนลองอีกครั้ง พร้อมเพิ่ม Test สำหรับกรณีนี้และอัปเดตเอกสารที่เกี่ยวข้องแล้วค่ะ อัปเดตไว้ใน [PR #57](https://github.com/PhraewaS/toktickit/pull/57) และส่งขอรีวิวรอบใหม่แล้วนะคะ รบกวนช่วยตรวจสอบอีกครั้งได้เลยค่ะ\r\n\r\nเราได้ตรวจดูที่แก้ล่าสุด จุดที่สถานะเปลี่ยนระหว่าง server อ่านกับเขียนแก้ได้แล้ว และ UI มีข้อความกับปุ่ม Refresh ด้วยค่ะ ยังติดอีกกรณีเดียว: ถ้าเราเปิดหน้า Ticket ค้างไว้ แล้วอีกคนเปลี่ยนสถานะไป ก่อนที่เราจะกดบันทึก คำขอปัจจุบันไม่ได้ส่งสถานะหรือ version ที่หน้าเราเห็นไปให้ server เทียบ จึงยังอาจเปลี่ยนต่อจากข้อมูลเก่าโดยไม่ขึ้น conflict ได้ รบกวนช่วยตรวจกรณีนี้และเพิ่ม test ที่จำลองลำดับดังกล่าวอีกทีนะคะ"
+        },
+        {
+          "id": 5955588269,
+          "url": "https://github.com/PhraewaS/toktickit/pull/57#issuecomment-5955588269",
+          "author": "PhraewaS",
+          "date": "2026-10-02T15:24:54Z",
+          "updated": "2026-10-02T15:24:54Z",
+          "body": "> > > ตรวจ PR #57 แล้วค่ะ ส่วน resolution gate, สิทธิ์การเปลี่ยนสถานะ และการแสดงข้อผิดพลาดในหน้า Ticket Detail ตรงตาม Issue #50 แล้วนะคะ เหลือจุดหนึ่งที่อยากให้ตรวจสอบแก้ไข คือ การเปลี่ยนสถานะยังอ่านค่าเดิมก่อน แล้วอัปเดตด้วย Ticket ID อย่างเดียว หากมี Staff สองคนแก้ Ticket เดียวกัน คำขอหลังอาจเขียนทับสถานะที่เพิ่งเปลี่ยนไป รบกวนเพิ่มการตรวจข้อมูลล่าสุดตอนบันทึกและ Test กรณี stale/concurrent update ให้หน่อยค่ะ\r\n> > \r\n> > \r\n> > ขอบคุณที่ช่วยตรวจและให้คำแนะนำนะคะ แก้กรณีการเปลี่ยนสถานะ Ticket ที่ข้อมูลอาจล้าสมัยแล้วค่ะ ตอนนี้ระบบจะตรวจสอบสถานะเดิมขณะบันทึก หากมีการเปลี่ยนแปลงก่อนแล้ว จะไม่เขียนทับ แต่แจ้ง conflict ให้รีเฟรช Ticket ก่อนลองอีกครั้ง พร้อมเพิ่ม Test สำหรับกรณีนี้และอัปเดตเอกสารที่เกี่ยวข้องแล้วค่ะ อัปเดตไว้ใน [PR #57](https://github.com/PhraewaS/toktickit/pull/57) และส่งขอรีวิวรอบใหม่แล้วนะคะ รบกวนช่วยตรวจสอบอีกครั้งได้เลยค่ะ\r\n> \r\n> เราได้ตรวจดูที่แก้ล่าสุด จุดที่สถานะเปลี่ยนระหว่าง server อ่านกับเขียนแก้ได้แล้ว และ UI มีข้อความกับปุ่ม Refresh ด้วยค่ะ ยังติดอีกกรณีเดียว: ถ้าเราเปิดหน้า Ticket ค้างไว้ แล้วอีกคนเปลี่ยนสถานะไป ก่อนที่เราจะกดบันทึก คำขอปัจจุบันไม่ได้ส่งสถานะหรือ version ที่หน้าเราเห็นไปให้ server เทียบ จึงยังอาจเปลี่ยนต่อจากข้อมูลเก่าโดยไม่ขึ้น conflict ได้ รบกวนช่วยตรวจกรณีนี้และเพิ่ม test ที่จำลองลำดับดังกล่าวอีกทีนะคะ\r\n\r\nขอบคุณที่ช่วยตรวจเพิ่มเติมนะคะ พบว่ากรณีเปิดหน้า Ticket ค้างไว้ยังไม่ได้ส่งสถานะเดิมที่หน้าเห็นไปให้ Server เทียบ ตอนนี้แก้แล้วค่ะ โดย Client จะส่ง expectedCurrentStatus ไปพร้อมคำขอ และถ้าสถานะเปลี่ยนไปก่อนกดบันทึก ระบบจะแจ้ง conflict พร้อมให้รีเฟรช โดยไม่เขียนทับสถานะล่าสุด\r\nเพิ่ม Test สำหรับจำลองกรณีนี้และกรณีไม่ส่งสถานะเดิมแล้วค่ะ อัปเดตไว้ใน [PR #57](https://github.com/PhraewaS/toktickit/pull/57) รบกวนช่วยตรวจสอบอีกครั้งได้เลยนะคะ"
+        },
+        {
+          "id": 5956146265,
+          "url": "https://github.com/PhraewaS/toktickit/pull/57#issuecomment-5956146265",
+          "author": "guluJa",
+          "date": "2026-10-02T15:56:42Z",
+          "updated": "2026-10-02T15:56:42Z",
+          "body": "> > > > ตรวจ PR #57 แล้วค่ะ ส่วน resolution gate, สิทธิ์การเปลี่ยนสถานะ และการแสดงข้อผิดพลาดในหน้า Ticket Detail ตรงตาม Issue #50 แล้วนะคะ เหลือจุดหนึ่งที่อยากให้ตรวจสอบแก้ไข คือ การเปลี่ยนสถานะยังอ่านค่าเดิมก่อน แล้วอัปเดตด้วย Ticket ID อย่างเดียว หากมี Staff สองคนแก้ Ticket เดียวกัน คำขอหลังอาจเขียนทับสถานะที่เพิ่งเปลี่ยนไป รบกวนเพิ่มการตรวจข้อมูลล่าสุดตอนบันทึกและ Test กรณี stale/concurrent update ให้หน่อยค่ะ\r\n> > > \r\n> > > \r\n> > > ขอบคุณที่ช่วยตรวจและให้คำแนะนำนะคะ แก้กรณีการเปลี่ยนสถานะ Ticket ที่ข้อมูลอาจล้าสมัยแล้วค่ะ ตอนนี้ระบบจะตรวจสอบสถานะเดิมขณะบันทึก หากมีการเปลี่ยนแปลงก่อนแล้ว จะไม่เขียนทับ แต่แจ้ง conflict ให้รีเฟรช Ticket ก่อนลองอีกครั้ง พร้อมเพิ่ม Test สำหรับกรณีนี้และอัปเดตเอกสารที่เกี่ยวข้องแล้วค่ะ อัปเดตไว้ใน [PR #57](https://github.com/PhraewaS/toktickit/pull/57) และส่งขอรีวิวรอบใหม่แล้วนะคะ รบกวนช่วยตรวจสอบอีกครั้งได้เลยค่ะ\r\n> > \r\n> > \r\n> > เราได้ตรวจดูที่แก้ล่าสุด จุดที่สถานะเปลี่ยนระหว่าง server อ่านกับเขียนแก้ได้แล้ว และ UI มีข้อความกับปุ่ม Refresh ด้วยค่ะ ยังติดอีกกรณีเดียว: ถ้าเราเปิดหน้า Ticket ค้างไว้ แล้วอีกคนเปลี่ยนสถานะไป ก่อนที่เราจะกดบันทึก คำขอปัจจุบันไม่ได้ส่งสถานะหรือ version ที่หน้าเราเห็นไปให้ server เทียบ จึงยังอาจเปลี่ยนต่อจากข้อมูลเก่าโดยไม่ขึ้น conflict ได้ รบกวนช่วยตรวจกรณีนี้และเพิ่ม test ที่จำลองลำดับดังกล่าวอีกทีนะคะ\r\n> \r\n> ขอบคุณที่ช่วยตรวจเพิ่มเติมนะคะ พบว่ากรณีเปิดหน้า Ticket ค้างไว้ยังไม่ได้ส่งสถานะเดิมที่หน้าเห็นไปให้ Server เทียบ ตอนนี้แก้แล้วค่ะ โดย Client จะส่ง expectedCurrentStatus ไปพร้อมคำขอ และถ้าสถานะเปลี่ยนไปก่อนกดบันทึก ระบบจะแจ้ง conflict พร้อมให้รีเฟรช โดยไม่เขียนทับสถานะล่าสุด เพิ่ม Test สำหรับจำลองกรณีนี้และกรณีไม่ส่งสถานะเดิมแล้วค่ะ อัปเดตไว้ใน [PR #57](https://github.com/PhraewaS/toktickit/pull/57) รบกวนช่วยตรวจสอบอีกครั้งได้เลยนะคะ\r\n\r\nตรวจ revision ล่าสุดแล้วค่ะ รอบนี้ส่งสถานะที่หน้า Ticket เห็นไปให้ Server เทียบแล้ว และยังป้องกันการเปลี่ยนสถานะระหว่าง Server อ่านกับเขียนด้วย เทสต์สองกรณีที่เคยทักก็เพิ่มครบแล้ว ดังนั้นในส่วน Issue นี้ไม่มีจุดให้แก้เพิ่มแล้วค่ะ"
+        },
+        {
+          "id": 5956322865,
+          "url": "https://github.com/PhraewaS/toktickit/pull/57#issuecomment-5956322865",
+          "author": "PhraewaS",
+          "date": "2026-10-02T16:07:39Z",
+          "updated": "2026-10-02T16:07:39Z",
+          "body": "> > > > > ตรวจ PR #57 แล้วค่ะ ส่วน resolution gate, สิทธิ์การเปลี่ยนสถานะ และการแสดงข้อผิดพลาดในหน้า Ticket Detail ตรงตาม Issue #50 แล้วนะคะ เหลือจุดหนึ่งที่อยากให้ตรวจสอบแก้ไข คือ การเปลี่ยนสถานะยังอ่านค่าเดิมก่อน แล้วอัปเดตด้วย Ticket ID อย่างเดียว หากมี Staff สองคนแก้ Ticket เดียวกัน คำขอหลังอาจเขียนทับสถานะที่เพิ่งเปลี่ยนไป รบกวนเพิ่มการตรวจข้อมูลล่าสุดตอนบันทึกและ Test กรณี stale/concurrent update ให้หน่อยค่ะ\r\n> > > > \r\n> > > > \r\n> > > > ขอบคุณที่ช่วยตรวจและให้คำแนะนำนะคะ แก้กรณีการเปลี่ยนสถานะ Ticket ที่ข้อมูลอาจล้าสมัยแล้วค่ะ ตอนนี้ระบบจะตรวจสอบสถานะเดิมขณะบันทึก หากมีการเปลี่ยนแปลงก่อนแล้ว จะไม่เขียนทับ แต่แจ้ง conflict ให้รีเฟรช Ticket ก่อนลองอีกครั้ง พร้อมเพิ่ม Test สำหรับกรณีนี้และอัปเดตเอกสารที่เกี่ยวข้องแล้วค่ะ อัปเดตไว้ใน [PR #57](https://github.com/PhraewaS/toktickit/pull/57) และส่งขอรีวิวรอบใหม่แล้วนะคะ รบกวนช่วยตรวจสอบอีกครั้งได้เลยค่ะ\r\n> > > \r\n> > > \r\n> > > เราได้ตรวจดูที่แก้ล่าสุด จุดที่สถานะเปลี่ยนระหว่าง server อ่านกับเขียนแก้ได้แล้ว และ UI มีข้อความกับปุ่ม Refresh ด้วยค่ะ ยังติดอีกกรณีเดียว: ถ้าเราเปิดหน้า Ticket ค้างไว้ แล้วอีกคนเปลี่ยนสถานะไป ก่อนที่เราจะกดบันทึก คำขอปัจจุบันไม่ได้ส่งสถานะหรือ version ที่หน้าเราเห็นไปให้ server เทียบ จึงยังอาจเปลี่ยนต่อจากข้อมูลเก่าโดยไม่ขึ้น conflict ได้ รบกวนช่วยตรวจกรณีนี้และเพิ่ม test ที่จำลองลำดับดังกล่าวอีกทีนะคะ\r\n> > \r\n> > \r\n> > ขอบคุณที่ช่วยตรวจเพิ่มเติมนะคะ พบว่ากรณีเปิดหน้า Ticket ค้างไว้ยังไม่ได้ส่งสถานะเดิมที่หน้าเห็นไปให้ Server เทียบ ตอนนี้แก้แล้วค่ะ โดย Client จะส่ง expectedCurrentStatus ไปพร้อมคำขอ และถ้าสถานะเปลี่ยนไปก่อนกดบันทึก ระบบจะแจ้ง conflict พร้อมให้รีเฟรช โดยไม่เขียนทับสถานะล่าสุด เพิ่ม Test สำหรับจำลองกรณีนี้และกรณีไม่ส่งสถานะเดิมแล้วค่ะ อัปเดตไว้ใน [PR #57](https://github.com/PhraewaS/toktickit/pull/57) รบกวนช่วยตรวจสอบอีกครั้งได้เลยนะคะ\r\n> \r\n> ตรวจ revision ล่าสุดแล้วค่ะ รอบนี้ส่งสถานะที่หน้า Ticket เห็นไปให้ Server เทียบแล้ว และยังป้องกันการเปลี่ยนสถานะระหว่าง Server อ่านกับเขียนด้วย เทสต์สองกรณีที่เคยทักก็เพิ่มครบแล้ว ดังนั้นในส่วน Issue นี้ไม่มีจุดให้แก้เพิ่มแล้วค่ะ\r\n\r\nขอบคุณมากนะคะที่ช่วยตรวจ revision ล่าสุดและให้คำแนะนำอย่างละเอียด และ ช่วยยืนยันว่า Issue นี้ไม่มีจุดที่ต้องแก้เพิ่มเติมนะคะ"
+        }
+      ],
+      "reviews": [
+        {
+          "id": 5380944006,
+          "url": "https://github.com/PhraewaS/toktickit/pull/57#pullrequestreview-5380944006",
+          "author": "guluJa",
+          "date": "2026-10-01T14:45:10Z",
+          "state": "CHANGES_REQUESTED",
+          "commit": "c09ff83b82555dd9c3fc15244098bd06537cad7f",
+          "body": "ตรวจ PR #57 แล้วค่ะ ส่วน resolution gate, สิทธิ์การเปลี่ยนสถานะ และการแสดงข้อผิดพลาดในหน้า Ticket Detail ตรงตาม Issue #50 แล้วนะคะ เหลือจุดหนึ่งที่อยากให้ตรวจสอบแก้ไข คือ การเปลี่ยนสถานะยังอ่านค่าเดิมก่อน แล้วอัปเดตด้วย Ticket ID อย่างเดียว หากมี Staff สองคนแก้ Ticket เดียวกัน คำขอหลังอาจเขียนทับสถานะที่เพิ่งเปลี่ยนไป รบกวนเพิ่มการตรวจข้อมูลล่าสุดตอนบันทึกและ Test กรณี stale/concurrent update ให้หน่อยค่ะ"
+        },
+        {
+          "id": 5394091080,
+          "url": "https://github.com/PhraewaS/toktickit/pull/57#pullrequestreview-5394091080",
+          "author": "guluJa",
+          "date": "2026-10-02T16:14:38Z",
+          "state": "APPROVED",
+          "commit": "df882a180a10f3a6cb55a1fb35fe9a2552bf9391",
+          "body": ""
+        }
+      ],
+      "inline": []
+    },
+    {
+      "number": 58,
+      "title": "[Lab 4] Requester and Staff dashboards",
+      "state": "closed",
+      "merged": true,
+      "mergedAt": "2026-10-03T16:13:16Z",
+      "mergeCommit": "514f9b61d0653febcadb3967384dff8327bf79ed",
+      "head": "feature/lab4-dashboards",
+      "headSha": "6a07364854ce986b894f358445eea402844eef56",
+      "base": "lab4-staging",
+      "comments": [
+        {
+          "id": 5969346212,
+          "url": "https://github.com/PhraewaS/toktickit/pull/58#issuecomment-5969346212",
+          "author": "PhraewaS",
+          "date": "2026-10-03T12:52:06Z",
+          "updated": "2026-10-03T12:52:06Z",
+          "body": "> ตรวจ revision [2a4f9e4](https://github.com/PhraewaS/toktickit/commit/2a4f9e43f12c31c624d22121a6f7df18ae48188a) แล้วนะ โดยรวม API, สิทธิ์, สูตรนับและ feedback states ทำได้ตรง Contract แล้วค่ะ ลองรัน Client 75 tests กับ Dashboard API 6 tests และ Build ก็ผ่าน ยังมีจุดขอให้ปรับนิดนึงค่ะ\r\n> \r\n> 1. ปุ่ม Unassigned/My Active/High Priority ตอนนี้เปิด Queue รวมเหมือนกัน อยากให้ส่ง filters ไปหน้าปลายทางให้ตรงกับยอดบนการ์ด รวมถึงกำหนด drill-down ของ breakdown และ Waiting for Requester พร้อม test ว่าใช้ filters จริงค่ะ\r\n> 2. E2E Lab 3 ยังรอหน้าเริ่มต้นเดิมหลัง Login/เปลี่ยนรหัสผ่าน รบกวนปรับให้ผ่าน Dashboard แล้วกดไปหน้าที่ทดสอบ โดยคงการตรวจฟีเจอร์เดิมไว้ค่ะ\r\n> 3. ขอเพิ่ม fields และตัวอย่าง Staff Ticket/Recent Action ใน api-spec พร้อมลำดับและปลายทาง drill-down ให้ตรงโค้ดค่ะ\r\n>    ส่วน Full E2E, responsive และ performance ที่วางไว้ขั้นรวมงานยังคง Planned ได้ตามแผนค่ะ\r\n\r\nขอบคุณมากนะคะสำหรับการตรวจและคำแนะนำ รอบนี้ปรับตาม feedback ครบแล้วค่ะ ทั้งการส่ง filters จาก Dashboard ไปยัง Queue/My Tickets พร้อมเพิ่ม tests ตรวจการใช้งานจริง, ปรับ E2E Lab 3 ให้เริ่มจาก Dashboard แล้วไปยังหน้าที่ทดสอบ และเพิ่มตัวอย่าง Staff Ticket/Recent Action พร้อมลำดับและปลายทาง drill-down ใน API spec แล้วค่ะ\r\nผลตรวจล่าสุด Server ผ่าน 153 tests (ข้าม 2 tests), Client ผ่าน 80 tests และ builds ผ่านทั้งสองฝั่ง ส่วน Full E2E, responsive และ performance-smoke ยังคง Planned ไว้ทำในขั้น integration ตาม Labsheet ค่ะ อัปเดต PR #58 แล้ว รบกวนช่วยตรวจ revision ล่าสุดให้อีกครั้งนะคะ"
+        },
+        {
+          "id": 5970525582,
+          "url": "https://github.com/PhraewaS/toktickit/pull/58#issuecomment-5970525582",
+          "author": "guluJa",
+          "date": "2026-10-03T15:21:35Z",
+          "updated": "2026-10-03T15:21:35Z",
+          "body": "> > ตรวจ revision [2a4f9e4](https://github.com/PhraewaS/toktickit/commit/2a4f9e43f12c31c624d22121a6f7df18ae48188a) แล้วนะ โดยรวม API, สิทธิ์, สูตรนับและ feedback states ทำได้ตรง Contract แล้วค่ะ ลองรัน Client 75 tests กับ Dashboard API 6 tests และ Build ก็ผ่าน ยังมีจุดขอให้ปรับนิดนึงค่ะ\r\n> > \r\n> > 1. ปุ่ม Unassigned/My Active/High Priority ตอนนี้เปิด Queue รวมเหมือนกัน อยากให้ส่ง filters ไปหน้าปลายทางให้ตรงกับยอดบนการ์ด รวมถึงกำหนด drill-down ของ breakdown และ Waiting for Requester พร้อม test ว่าใช้ filters จริงค่ะ\r\n> > 2. E2E Lab 3 ยังรอหน้าเริ่มต้นเดิมหลัง Login/เปลี่ยนรหัสผ่าน รบกวนปรับให้ผ่าน Dashboard แล้วกดไปหน้าที่ทดสอบ โดยคงการตรวจฟีเจอร์เดิมไว้ค่ะ\r\n> > 3. ขอเพิ่ม fields และตัวอย่าง Staff Ticket/Recent Action ใน api-spec พร้อมลำดับและปลายทาง drill-down ให้ตรงโค้ดค่ะ\r\n> >    ส่วน Full E2E, responsive และ performance ที่วางไว้ขั้นรวมงานยังคง Planned ได้ตามแผนค่ะ\r\n> \r\n> ขอบคุณมากนะคะสำหรับการตรวจและคำแนะนำ รอบนี้ปรับตาม feedback ครบแล้วค่ะ ทั้งการส่ง filters จาก Dashboard ไปยัง Queue/My Tickets พร้อมเพิ่ม tests ตรวจการใช้งานจริง, ปรับ E2E Lab 3 ให้เริ่มจาก Dashboard แล้วไปยังหน้าที่ทดสอบ และเพิ่มตัวอย่าง Staff Ticket/Recent Action พร้อมลำดับและปลายทาง drill-down ใน API spec แล้วค่ะ ผลตรวจล่าสุด Server ผ่าน 153 tests (ข้าม 2 tests), Client ผ่าน 80 tests และ builds ผ่านทั้งสองฝั่ง ส่วน Full E2E, responsive และ performance-smoke ยังคง Planned ไว้ทำในขั้น integration ตาม Labsheet ค่ะ อัปเดต PR #58 แล้ว รบกวนช่วยตรวจ revision ล่าสุดให้อีกครั้งนะคะ\r\n\r\nตรวจ revision 9835924 แล้วนะคะ จุดที่แจ้งรอบก่อนแก้ครบแล้ว ทั้ง filters จาก Dashboard ไปหน้ารายการ การปรับ E2E เดิมให้ผ่าน Dashboard และรายละเอียด API contract ค่ะ ลองรัน Client 80 tests, Dashboard/filter API 30 tests และ builds ผ่านทั้งคู่ด้วยค่ะ  \r\nมีรายละเอียดเอกสารเล็กน้อยที่ปรับได้คือใน JSON ตัวอย่าง Staff Dashboard รบกวนปรับ counts และ Owner ของ Ticket ID เดียวกันให้สอดคล้องกันค่ะ ส่วน Full E2E/responsive/performance ที่ยัง Planned ทำต่อในขั้น Integration ตามแผนได้ค่ะ"
+        },
+        {
+          "id": 5970795467,
+          "url": "https://github.com/PhraewaS/toktickit/pull/58#issuecomment-5970795467",
+          "author": "PhraewaS",
+          "date": "2026-10-03T15:54:29Z",
+          "updated": "2026-10-03T15:54:29Z",
+          "body": "> > > ตรวจ revision [2a4f9e4](https://github.com/PhraewaS/toktickit/commit/2a4f9e43f12c31c624d22121a6f7df18ae48188a) แล้วนะ โดยรวม API, สิทธิ์, สูตรนับและ feedback states ทำได้ตรง Contract แล้วค่ะ ลองรัน Client 75 tests กับ Dashboard API 6 tests และ Build ก็ผ่าน ยังมีจุดขอให้ปรับนิดนึงค่ะ\r\n> > > \r\n> > > 1. ปุ่ม Unassigned/My Active/High Priority ตอนนี้เปิด Queue รวมเหมือนกัน อยากให้ส่ง filters ไปหน้าปลายทางให้ตรงกับยอดบนการ์ด รวมถึงกำหนด drill-down ของ breakdown และ Waiting for Requester พร้อม test ว่าใช้ filters จริงค่ะ\r\n> > > 2. E2E Lab 3 ยังรอหน้าเริ่มต้นเดิมหลัง Login/เปลี่ยนรหัสผ่าน รบกวนปรับให้ผ่าน Dashboard แล้วกดไปหน้าที่ทดสอบ โดยคงการตรวจฟีเจอร์เดิมไว้ค่ะ\r\n> > > 3. ขอเพิ่ม fields และตัวอย่าง Staff Ticket/Recent Action ใน api-spec พร้อมลำดับและปลายทาง drill-down ให้ตรงโค้ดค่ะ\r\n> > >    ส่วน Full E2E, responsive และ performance ที่วางไว้ขั้นรวมงานยังคง Planned ได้ตามแผนค่ะ\r\n> > \r\n> > \r\n> > ขอบคุณมากนะคะสำหรับการตรวจและคำแนะนำ รอบนี้ปรับตาม feedback ครบแล้วค่ะ ทั้งการส่ง filters จาก Dashboard ไปยัง Queue/My Tickets พร้อมเพิ่ม tests ตรวจการใช้งานจริง, ปรับ E2E Lab 3 ให้เริ่มจาก Dashboard แล้วไปยังหน้าที่ทดสอบ และเพิ่มตัวอย่าง Staff Ticket/Recent Action พร้อมลำดับและปลายทาง drill-down ใน API spec แล้วค่ะ ผลตรวจล่าสุด Server ผ่าน 153 tests (ข้าม 2 tests), Client ผ่าน 80 tests และ builds ผ่านทั้งสองฝั่ง ส่วน Full E2E, responsive และ performance-smoke ยังคง Planned ไว้ทำในขั้น integration ตาม Labsheet ค่ะ อัปเดต PR #58 แล้ว รบกวนช่วยตรวจ revision ล่าสุดให้อีกครั้งนะคะ\r\n> \r\n> ตรวจ revision [9835924](https://github.com/PhraewaS/toktickit/commit/9835924b6a35b8fe7c04e0752c9ab6473cb004dd) แล้วนะคะ จุดที่แจ้งรอบก่อนแก้ครบแล้ว ทั้ง filters จาก Dashboard ไปหน้ารายการ การปรับ E2E เดิมให้ผ่าน Dashboard และรายละเอียด API contract ค่ะ ลองรัน Client 80 tests, Dashboard/filter API 30 tests และ builds ผ่านทั้งคู่ด้วยค่ะ มีรายละเอียดเอกสารเล็กน้อยที่ปรับได้คือใน JSON ตัวอย่าง Staff Dashboard รบกวนปรับ counts และ Owner ของ Ticket ID เดียวกันให้สอดคล้องกันค่ะ ส่วน Full E2E/responsive/performance ที่ยัง Planned ทำต่อในขั้น Integration ตามแผนได้ค่ะ\r\n\r\nขอบคุณที่ช่วยตรวจและชี้จุดในตัวอย่าง Staff Dashboard นะคะ แก้ไขให้ counts ของ Ticket #42 สอดคล้องกับสถานะและ Priority แล้ว และปรับ Owner ให้ตรงกันทั้งใน recentlyUpdated และ urgentTickets เรียบร้อยค่ะ อัปเดตไว้ใน PR #58 แล้วที่ commit 6a07364 รบกวนช่วยตรวจ revision ล่าสุดอีกครั้งนะคะ ส่วน Full E2E, responsive และ performance-smoke ยังคง Planned สำหรับขั้น Integration ตามแผนค่ะ"
+        },
+        {
+          "id": 5970886239,
+          "url": "https://github.com/PhraewaS/toktickit/pull/58#issuecomment-5970886239",
+          "author": "guluJa",
+          "date": "2026-10-03T16:05:52Z",
+          "updated": "2026-10-03T16:05:52Z",
+          "body": "> > > > ตรวจ revision [2a4f9e4](https://github.com/PhraewaS/toktickit/commit/2a4f9e43f12c31c624d22121a6f7df18ae48188a) แล้วนะ โดยรวม API, สิทธิ์, สูตรนับและ feedback states ทำได้ตรง Contract แล้วค่ะ ลองรัน Client 75 tests กับ Dashboard API 6 tests และ Build ก็ผ่าน ยังมีจุดขอให้ปรับนิดนึงค่ะ\r\n> > > > \r\n> > > > 1. ปุ่ม Unassigned/My Active/High Priority ตอนนี้เปิด Queue รวมเหมือนกัน อยากให้ส่ง filters ไปหน้าปลายทางให้ตรงกับยอดบนการ์ด รวมถึงกำหนด drill-down ของ breakdown และ Waiting for Requester พร้อม test ว่าใช้ filters จริงค่ะ\r\n> > > > 2. E2E Lab 3 ยังรอหน้าเริ่มต้นเดิมหลัง Login/เปลี่ยนรหัสผ่าน รบกวนปรับให้ผ่าน Dashboard แล้วกดไปหน้าที่ทดสอบ โดยคงการตรวจฟีเจอร์เดิมไว้ค่ะ\r\n> > > > 3. ขอเพิ่ม fields และตัวอย่าง Staff Ticket/Recent Action ใน api-spec พร้อมลำดับและปลายทาง drill-down ให้ตรงโค้ดค่ะ\r\n> > > >    ส่วน Full E2E, responsive และ performance ที่วางไว้ขั้นรวมงานยังคง Planned ได้ตามแผนค่ะ\r\n> > > \r\n> > > \r\n> > > ขอบคุณมากนะคะสำหรับการตรวจและคำแนะนำ รอบนี้ปรับตาม feedback ครบแล้วค่ะ ทั้งการส่ง filters จาก Dashboard ไปยัง Queue/My Tickets พร้อมเพิ่ม tests ตรวจการใช้งานจริง, ปรับ E2E Lab 3 ให้เริ่มจาก Dashboard แล้วไปยังหน้าที่ทดสอบ และเพิ่มตัวอย่าง Staff Ticket/Recent Action พร้อมลำดับและปลายทาง drill-down ใน API spec แล้วค่ะ ผลตรวจล่าสุด Server ผ่าน 153 tests (ข้าม 2 tests), Client ผ่าน 80 tests และ builds ผ่านทั้งสองฝั่ง ส่วน Full E2E, responsive และ performance-smoke ยังคง Planned ไว้ทำในขั้น integration ตาม Labsheet ค่ะ อัปเดต PR #58 แล้ว รบกวนช่วยตรวจ revision ล่าสุดให้อีกครั้งนะคะ\r\n> > \r\n> > \r\n> > ตรวจ revision [9835924](https://github.com/PhraewaS/toktickit/commit/9835924b6a35b8fe7c04e0752c9ab6473cb004dd) แล้วนะคะ จุดที่แจ้งรอบก่อนแก้ครบแล้ว ทั้ง filters จาก Dashboard ไปหน้ารายการ การปรับ E2E เดิมให้ผ่าน Dashboard และรายละเอียด API contract ค่ะ ลองรัน Client 80 tests, Dashboard/filter API 30 tests และ builds ผ่านทั้งคู่ด้วยค่ะ มีรายละเอียดเอกสารเล็กน้อยที่ปรับได้คือใน JSON ตัวอย่าง Staff Dashboard รบกวนปรับ counts และ Owner ของ Ticket ID เดียวกันให้สอดคล้องกันค่ะ ส่วน Full E2E/responsive/performance ที่ยัง Planned ทำต่อในขั้น Integration ตามแผนได้ค่ะ\r\n> \r\n> ขอบคุณที่ช่วยตรวจและชี้จุดในตัวอย่าง Staff Dashboard นะคะ แก้ไขให้ counts ของ Ticket #42 สอดคล้องกับสถานะและ Priority แล้ว และปรับ Owner ให้ตรงกันทั้งใน recentlyUpdated และ urgentTickets เรียบร้อยค่ะ อัปเดตไว้ใน PR #58 แล้วที่ commit [6a07364](https://github.com/PhraewaS/toktickit/commit/6a07364854ce986b894f358445eea402844eef56) รบกวนช่วยตรวจ revision ล่าสุดอีกครั้งนะคะ ส่วน Full E2E, responsive และ performance-smoke ยังคง Planned สำหรับขั้น Integration ตามแผนค่ะ\r\n\r\nตรวจ revision 6a07364 แล้วนะคะ ตัวอย่าง counts และ Owner สอดคล้องกันแล้ว จุดที่แจ้งไว้แก้ครบค่ะ รอบนี้ไม่พบประเด็นที่ต้องแก้เพิ่มเติมในขอบเขต Dashboard ค่ะ"
+        },
+        {
+          "id": 5970915235,
+          "url": "https://github.com/PhraewaS/toktickit/pull/58#issuecomment-5970915235",
+          "author": "PhraewaS",
+          "date": "2026-10-03T16:09:16Z",
+          "updated": "2026-10-03T16:09:16Z",
+          "body": "> > > > > ตรวจ revision [2a4f9e4](https://github.com/PhraewaS/toktickit/commit/2a4f9e43f12c31c624d22121a6f7df18ae48188a) แล้วนะ โดยรวม API, สิทธิ์, สูตรนับและ feedback states ทำได้ตรง Contract แล้วค่ะ ลองรัน Client 75 tests กับ Dashboard API 6 tests และ Build ก็ผ่าน ยังมีจุดขอให้ปรับนิดนึงค่ะ\r\n> > > > > \r\n> > > > > 1. ปุ่ม Unassigned/My Active/High Priority ตอนนี้เปิด Queue รวมเหมือนกัน อยากให้ส่ง filters ไปหน้าปลายทางให้ตรงกับยอดบนการ์ด รวมถึงกำหนด drill-down ของ breakdown และ Waiting for Requester พร้อม test ว่าใช้ filters จริงค่ะ\r\n> > > > > 2. E2E Lab 3 ยังรอหน้าเริ่มต้นเดิมหลัง Login/เปลี่ยนรหัสผ่าน รบกวนปรับให้ผ่าน Dashboard แล้วกดไปหน้าที่ทดสอบ โดยคงการตรวจฟีเจอร์เดิมไว้ค่ะ\r\n> > > > > 3. ขอเพิ่ม fields และตัวอย่าง Staff Ticket/Recent Action ใน api-spec พร้อมลำดับและปลายทาง drill-down ให้ตรงโค้ดค่ะ\r\n> > > > >    ส่วน Full E2E, responsive และ performance ที่วางไว้ขั้นรวมงานยังคง Planned ได้ตามแผนค่ะ\r\n> > > > \r\n> > > > \r\n> > > > ขอบคุณมากนะคะสำหรับการตรวจและคำแนะนำ รอบนี้ปรับตาม feedback ครบแล้วค่ะ ทั้งการส่ง filters จาก Dashboard ไปยัง Queue/My Tickets พร้อมเพิ่ม tests ตรวจการใช้งานจริง, ปรับ E2E Lab 3 ให้เริ่มจาก Dashboard แล้วไปยังหน้าที่ทดสอบ และเพิ่มตัวอย่าง Staff Ticket/Recent Action พร้อมลำดับและปลายทาง drill-down ใน API spec แล้วค่ะ ผลตรวจล่าสุด Server ผ่าน 153 tests (ข้าม 2 tests), Client ผ่าน 80 tests และ builds ผ่านทั้งสองฝั่ง ส่วน Full E2E, responsive และ performance-smoke ยังคง Planned ไว้ทำในขั้น integration ตาม Labsheet ค่ะ อัปเดต PR #58 แล้ว รบกวนช่วยตรวจ revision ล่าสุดให้อีกครั้งนะคะ\r\n> > > \r\n> > > \r\n> > > ตรวจ revision [9835924](https://github.com/PhraewaS/toktickit/commit/9835924b6a35b8fe7c04e0752c9ab6473cb004dd) แล้วนะคะ จุดที่แจ้งรอบก่อนแก้ครบแล้ว ทั้ง filters จาก Dashboard ไปหน้ารายการ การปรับ E2E เดิมให้ผ่าน Dashboard และรายละเอียด API contract ค่ะ ลองรัน Client 80 tests, Dashboard/filter API 30 tests และ builds ผ่านทั้งคู่ด้วยค่ะ มีรายละเอียดเอกสารเล็กน้อยที่ปรับได้คือใน JSON ตัวอย่าง Staff Dashboard รบกวนปรับ counts และ Owner ของ Ticket ID เดียวกันให้สอดคล้องกันค่ะ ส่วน Full E2E/responsive/performance ที่ยัง Planned ทำต่อในขั้น Integration ตามแผนได้ค่ะ\r\n> > \r\n> > \r\n> > ขอบคุณที่ช่วยตรวจและชี้จุดในตัวอย่าง Staff Dashboard นะคะ แก้ไขให้ counts ของ Ticket #42 สอดคล้องกับสถานะและ Priority แล้ว และปรับ Owner ให้ตรงกันทั้งใน recentlyUpdated และ urgentTickets เรียบร้อยค่ะ อัปเดตไว้ใน PR #58 แล้วที่ commit [6a07364](https://github.com/PhraewaS/toktickit/commit/6a07364854ce986b894f358445eea402844eef56) รบกวนช่วยตรวจ revision ล่าสุดอีกครั้งนะคะ ส่วน Full E2E, responsive และ performance-smoke ยังคง Planned สำหรับขั้น Integration ตามแผนค่ะ\r\n> \r\n> ตรวจ revision [6a07364](https://github.com/PhraewaS/toktickit/commit/6a07364854ce986b894f358445eea402844eef56) แล้วนะคะ ตัวอย่าง counts และ Owner สอดคล้องกันแล้ว จุดที่แจ้งไว้แก้ครบค่ะ รอบนี้ไม่พบประเด็นที่ต้องแก้เพิ่มเติมในขอบเขต Dashboard ค่ะ\r\n\r\nขอบคุณที่ช่วยตรวจและชี้จุดที่ควรแก้ไขให้นะคะ"
+        }
+      ],
+      "reviews": [
+        {
+          "id": 5395944922,
+          "url": "https://github.com/PhraewaS/toktickit/pull/58#pullrequestreview-5395944922",
+          "author": "guluJa",
+          "date": "2026-10-02T19:29:15Z",
+          "state": "CHANGES_REQUESTED",
+          "commit": "2a4f9e43f12c31c624d22121a6f7df18ae48188a",
+          "body": "ตรวจ revision 2a4f9e4 แล้วนะ โดยรวม API, สิทธิ์, สูตรนับและ feedback states ทำได้ตรง Contract แล้วค่ะ ลองรัน Client 75 tests กับ Dashboard API 6 tests และ Build ก็ผ่าน  \nยังมีจุดขอให้ปรับนิดนึงค่ะ  \n1. ปุ่ม Unassigned/My Active/High Priority ตอนนี้เปิด Queue รวมเหมือนกัน อยากให้ส่ง filters ไปหน้าปลายทางให้ตรงกับยอดบนการ์ด รวมถึงกำหนด drill-down ของ breakdown และ Waiting for Requester พร้อม test ว่าใช้ filters จริงค่ะ\n2. E2E Lab 3 ยังรอหน้าเริ่มต้นเดิมหลัง Login/เปลี่ยนรหัสผ่าน รบกวนปรับให้ผ่าน Dashboard แล้วกดไปหน้าที่ทดสอบ โดยคงการตรวจฟีเจอร์เดิมไว้ค่ะ\n3. ขอเพิ่ม fields และตัวอย่าง Staff Ticket/Recent Action ใน api-spec พร้อมลำดับและปลายทาง drill-down ให้ตรงโค้ดค่ะ\nส่วน Full E2E, responsive และ performance ที่วางไว้ขั้นรวมงานยังคง Planned ได้ตามแผนค่ะ"
+        },
+        {
+          "id": 5401602058,
+          "url": "https://github.com/PhraewaS/toktickit/pull/58#pullrequestreview-5401602058",
+          "author": "guluJa",
+          "date": "2026-10-03T16:13:08Z",
+          "state": "APPROVED",
+          "commit": "6a07364854ce986b894f358445eea402844eef56",
+          "body": ""
+        }
+      ],
+      "inline": []
+    },
+    {
+      "number": 59,
+      "title": "[Lab 4] Actions Taken in Ticket Detail",
+      "state": "closed",
+      "merged": true,
+      "mergedAt": "2026-10-04T12:46:46Z",
+      "mergeCommit": "c9b4f46118c469b75471ad7eed04e831aa674e8e",
+      "head": "feature/lab4-actions-ui-52",
+      "headSha": "b4e6315bfbda4d40c3fb6dead027929303366f4c",
+      "base": "lab4-staging",
+      "comments": [
+        {
+          "id": 5973555055,
+          "url": "https://github.com/PhraewaS/toktickit/pull/59#issuecomment-5973555055",
+          "author": "PhraewaS",
+          "date": "2026-10-03T21:15:49Z",
+          "updated": "2026-10-03T21:15:49Z",
+          "body": "> ตรวจ revision [f397f8f](https://github.com/PhraewaS/toktickit/commit/f397f8fd02f105d7e4fceb77c84790e4c3307bb9) แล้วนะคะ ส่วนหลักของ Actions Taken ทำครบตาม Scope และ Client tests/build ผ่านค่ะ แต่เจอ 3 กรณีที่อยากรบกวนปรับเพิ่มค่ะ\r\n> \r\n> 1. ตอนเกิด conflict แล้วกด Refresh ระบบ reset ฟอร์มก่อนโหลดข้อมูลใหม่ ทำให้ข้อความที่แก้ไว้หาย แม้ Refresh จะล้มเหลว รบกวนเก็บ draft ระหว่าง refresh/retry และให้ผู้ใช้เลือกก่อนทิ้งข้อความค่ะ\r\n> 2. ถ้า Server บันทึก Action แล้วแต่ response ขาดหาย ตอนกด Save ซ้ำยังมีโอกาสสร้างรายการซ้ำ รบกวนเพิ่มการจัดการผลบันทึกที่ไม่แน่ชัดอย่างปลอดภัย พร้อม test ค่ะ ไม่จำเป็นต้องใช้วิธีใดวิธีหนึ่งเป็นพิเศษ\r\n> 3. ตอนแก้เฉพาะ Result ค่า Action Date/Time ที่มีวินาทีถูกตัดเป็น :00 แล้วส่งกลับไปด้วย รบกวนรักษาเวลาเดิมเมื่อไม่ได้แก้ช่องเวลา และเพิ่ม test ค่ะ\r\n>    ลองทดสอบจำลองแล้วพบทั้ง 3 กรณีค่ะ ส่วนนี้เกี่ยวกับการรักษาข้อมูลและ safe retry ตาม Lab 4 ไม่ใช่เรื่องรูปแบบหน้าจอนะคะ ถ้าแก้ไขแล้วหรือมีความเห็นสมควรยังไงแจ้งได้เลยนะคะ\r\n\r\nขอบคุณที่ช่วยตรวจและแจ้งทั้ง 3 กรณีอย่างละเอียดนะคะ แก้ไขและ push ขึ้น PR #59 แล้วค่ะ โดยปรับให้เก็บ draft ระหว่าง refresh/retry, ป้องกันการสร้าง Action ซ้ำเมื่อผลบันทึกไม่แน่ชัด และรักษาวินาทีเดิมของ Action Date/Time เมื่อแก้เฉพาะข้อมูลส่วนอื่นค่ะ\r\nเพิ่ม regression tests ครอบคลุมกรณีเหล่านี้แล้ว ผลทดสอบ Client ผ่าน 89/89 tests และ Actions Taken API ผ่าน 20/20 tests รวมถึง Client/Server build ผ่านค่ะ อัปเดตรายละเอียดและผลตรวจไว้ใน PR แล้ว รบกวนช่วยตรวจ revision ล่าสุดให้อีกครั้งนะคะ"
+        },
+        {
+          "id": 5978684410,
+          "url": "https://github.com/PhraewaS/toktickit/pull/59#issuecomment-5978684410",
+          "author": "guluJa",
+          "date": "2026-10-04T09:51:13Z",
+          "updated": "2026-10-04T09:51:13Z",
+          "body": "ตรวจ revision b4e6315 แล้วนะคะ ทั้ง 3 จุดที่แจ้งรอบก่อนแก้ครบแล้วค่ะ ทั้งการเก็บ draft ระหว่าง refresh/retry การป้องกัน Action ซ้ำ และการรักษาเวลาเดิมเมื่อแก้ข้อมูลส่วนอื่น  \r\nลองรันตรวจแล้ว Client 89 tests, Actions API 20 tests และ Client/Server build ผ่านค่ะ รอบนี้ไม่พบจุดที่ต้องแก้เพิ่มเติมใน Scope ของ PR นี้แล้วค่ะ"
+        },
+        {
+          "id": 5980061216,
+          "url": "https://github.com/PhraewaS/toktickit/pull/59#issuecomment-5980061216",
+          "author": "PhraewaS",
+          "date": "2026-10-04T12:45:03Z",
+          "updated": "2026-10-04T12:45:03Z",
+          "body": "> ตรวจ revision [b4e6315](https://github.com/PhraewaS/toktickit/commit/b4e6315bfbda4d40c3fb6dead027929303366f4c) แล้วนะคะ ทั้ง 3 จุดที่แจ้งรอบก่อนแก้ครบแล้วค่ะ ทั้งการเก็บ draft ระหว่าง refresh/retry การป้องกัน Action ซ้ำ และการรักษาเวลาเดิมเมื่อแก้ข้อมูลส่วนอื่น ลองรันตรวจแล้ว Client 89 tests, Actions API 20 tests และ Client/Server build ผ่านค่ะ รอบนี้ไม่พบจุดที่ต้องแก้เพิ่มเติมใน Scope ของ PR นี้แล้วค่ะ\r\n\r\nขอบคุณที่ช่วยตรวจและแจ้งรายละเอียดนะคะ"
+        }
+      ],
+      "reviews": [
+        {
+          "id": 5401954695,
+          "url": "https://github.com/PhraewaS/toktickit/pull/59#pullrequestreview-5401954695",
+          "author": "guluJa",
+          "date": "2026-10-03T17:53:38Z",
+          "state": "CHANGES_REQUESTED",
+          "commit": "f397f8fd02f105d7e4fceb77c84790e4c3307bb9",
+          "body": "ตรวจ revision f397f8f แล้วนะคะ ส่วนหลักของ Actions Taken ทำครบตาม Scope และ Client tests/build ผ่านค่ะ แต่เจอ 3 กรณีที่อยากรบกวนปรับเพิ่มค่ะ  \n1. ตอนเกิด conflict แล้วกด Refresh ระบบ reset ฟอร์มก่อนโหลดข้อมูลใหม่ ทำให้ข้อความที่แก้ไว้หาย แม้ Refresh จะล้มเหลว รบกวนเก็บ draft ระหว่าง refresh/retry และให้ผู้ใช้เลือกก่อนทิ้งข้อความค่ะ\n2. ถ้า Server บันทึก Action แล้วแต่ response ขาดหาย ตอนกด Save ซ้ำยังมีโอกาสสร้างรายการซ้ำ รบกวนเพิ่มการจัดการผลบันทึกที่ไม่แน่ชัดอย่างปลอดภัย พร้อม test ค่ะ ไม่จำเป็นต้องใช้วิธีใดวิธีหนึ่งเป็นพิเศษ\n3. ตอนแก้เฉพาะ Result ค่า Action Date/Time ที่มีวินาทีถูกตัดเป็น :00 แล้วส่งกลับไปด้วย รบกวนรักษาเวลาเดิมเมื่อไม่ได้แก้ช่องเวลา และเพิ่ม test ค่ะ\nลองทดสอบจำลองแล้วพบทั้ง 3 กรณีค่ะ ส่วนนี้เกี่ยวกับการรักษาข้อมูลและ safe retry ตาม Lab 4 ไม่ใช่เรื่องรูปแบบหน้าจอนะคะ ถ้าแก้ไขแล้วหรือมีความเห็นสมควรยังไงแจ้งได้เลยนะคะ"
+        },
+        {
+          "id": 5406206920,
+          "url": "https://github.com/PhraewaS/toktickit/pull/59#pullrequestreview-5406206920",
+          "author": "guluJa",
+          "date": "2026-10-04T12:46:39Z",
+          "state": "APPROVED",
+          "commit": "b4e6315bfbda4d40c3fb6dead027929303366f4c",
+          "body": ""
+        }
+      ],
+      "inline": []
+    },
+    {
+      "number": 60,
+      "title": "Lab 4 verification and E2E evidence (#53)",
+      "state": "closed",
+      "merged": true,
+      "mergedAt": "2026-10-05T10:26:56Z",
+      "mergeCommit": "2741c4b7cb957f0b6ffda8dce902a13eb05e490b",
+      "head": "feature/lab4-verification-evidence-53",
+      "headSha": "2f980e096e77a27865e25a130a05a92122573e06",
+      "base": "lab4-staging",
+      "comments": [
+        {
+          "id": 5982418047,
+          "url": "https://github.com/PhraewaS/toktickit/pull/60#issuecomment-5982418047",
+          "author": "PhraewaS",
+          "date": "2026-10-04T17:09:14Z",
+          "updated": "2026-10-04T17:09:14Z",
+          "body": "> ตรวจ revision [8e35a41](https://github.com/PhraewaS/toktickit/commit/8e35a41639ea643c2880cf34073ec5aece2d8c6f) แล้วนะคะ Client tests/build ผ่าน และจำนวนผลใน Playwright report ตรงกับที่แจ้งค่ะ แต่ยังมีหลักฐานที่อยากรบกวนเติม 3 จุดค่ะ\r\n> \r\n> 1. Dashboard E2E ยังตรวจชื่อ metric กับ drill-down แต่ไม่ได้เทียบตัวเลขกับฐานข้อมูลจริง รบกวนเพิ่มหลักฐาน selected metrics ของ Requester/Staff ให้ตรงกันระหว่าง query, API และ UI ค่ะ\r\n> 2. ภาพ staff-actions-editor-mobile.png ยังเห็นรายการ Action เดิม แต่ไม่เห็นฟอร์ม editor รบกวนถ่าย editor ให้เห็นช่องกรอกและปุ่มใช้งานจริง รวม Follow-Up Note ที่แต่ละ viewport ค่ะ\r\n> 3. RESP-04 ตรวจ overflow แล้ว แต่ยังไม่มี keyboard/focus verification สำหรับ Dashboard และ Actions Taken รบกวนเพิ่ม checks และบันทึก checklist ตามผลจริงค่ะ\r\n>    ส่วนการ skip mutation flow บน tablet/mobile มีเหตุผลและมี responsive suite แยกแล้ว ไม่ต้องแก้เพียงเพื่อให้จำนวน skipped เป็นศูนย์ค่ะ\r\n\r\nขอบคุณที่ช่วยตรวจและให้คำแนะนำนะคะ แก้ไขครบทั้ง 3 จุดแล้วค่ะ ได้แก่ เพิ่มการเทียบค่า Dashboard ระหว่างฐานข้อมูล, API และ UI; ปรับภาพ Actions Taken ให้เห็นฟอร์มและ Follow-Up Note ชัดเจนในทุก viewport; และเพิ่ม keyboard/focus checks พร้อม checklist ค่ะ\r\nรันทดสอบซ้ำแล้ว ผลผ่านตามที่บันทึกไว้ โดยยังคง intentional skips สำหรับ mutation flow บน tablet/mobile ตามแผน และอัปเดต PR #60 พร้อมขอให้ช่วยรีวิว revision ล่าสุดอีกครั้งนะคะ"
+        },
+        {
+          "id": 5982609241,
+          "url": "https://github.com/PhraewaS/toktickit/pull/60#issuecomment-5982609241",
+          "author": "guluJa",
+          "date": "2026-10-04T17:32:37Z",
+          "updated": "2026-10-04T17:32:37Z",
+          "body": "> > ตรวจ revision [8e35a41](https://github.com/PhraewaS/toktickit/commit/8e35a41639ea643c2880cf34073ec5aece2d8c6f) แล้วนะคะ Client tests/build ผ่าน และจำนวนผลใน Playwright report ตรงกับที่แจ้งค่ะ แต่ยังมีหลักฐานที่อยากรบกวนเติม 3 จุดค่ะ\r\n> > \r\n> > 1. Dashboard E2E ยังตรวจชื่อ metric กับ drill-down แต่ไม่ได้เทียบตัวเลขกับฐานข้อมูลจริง รบกวนเพิ่มหลักฐาน selected metrics ของ Requester/Staff ให้ตรงกันระหว่าง query, API และ UI ค่ะ\r\n> > 2. ภาพ staff-actions-editor-mobile.png ยังเห็นรายการ Action เดิม แต่ไม่เห็นฟอร์ม editor รบกวนถ่าย editor ให้เห็นช่องกรอกและปุ่มใช้งานจริง รวม Follow-Up Note ที่แต่ละ viewport ค่ะ\r\n> > 3. RESP-04 ตรวจ overflow แล้ว แต่ยังไม่มี keyboard/focus verification สำหรับ Dashboard และ Actions Taken รบกวนเพิ่ม checks และบันทึก checklist ตามผลจริงค่ะ\r\n> >    ส่วนการ skip mutation flow บน tablet/mobile มีเหตุผลและมี responsive suite แยกแล้ว ไม่ต้องแก้เพียงเพื่อให้จำนวน skipped เป็นศูนย์ค่ะ\r\n> \r\n> ขอบคุณที่ช่วยตรวจและให้คำแนะนำนะคะ แก้ไขครบทั้ง 3 จุดแล้วค่ะ ได้แก่ เพิ่มการเทียบค่า Dashboard ระหว่างฐานข้อมูล, API และ UI; ปรับภาพ Actions Taken ให้เห็นฟอร์มและ Follow-Up Note ชัดเจนในทุก viewport; และเพิ่ม keyboard/focus checks พร้อม checklist ค่ะ รันทดสอบซ้ำแล้ว ผลผ่านตามที่บันทึกไว้ โดยยังคง intentional skips สำหรับ mutation flow บน tablet/mobile ตามแผน และอัปเดต PR #60 พร้อมขอให้ช่วยรีวิว revision ล่าสุดอีกครั้งนะคะ\r\n\r\nตรวจ revision a17df67 แล้วนะคะ ภาพ editor และ keyboard checks แก้แล้วค่ะ ส่วน metric comparison เพิ่มครบแล้ว แต่ยังเจอ 2 จุดที่รบกวนปรับค่ะ  \r\n1. HTML report ที่ Push ตอนนี้มี 0 tests และ error จาก prisma:seed ใน global setup ไม่ตรงกับผลผ่านในเอกสาร รบกวนเปลี่ยนเป็น report ของรอบผ่านจริง และตรวจว่ามี metric logs ตามที่อ้างค่ะ\r\n2. DB comparison ตรวจ guard แล้ว แต่ getPrisma() ยังใช้ DATABASE_URL เดิม ซึ่งอาจต่างจาก E2E_DATABASE_URL ที่ guard ตรวจ รบกวนผูก Prisma comparison กับ guarded URL โดยตรง เพื่อให้ query, API และ UI เทียบฐานเดียวกันแน่นอนค่ะ\r\nส่วนภาพและ keyboard checks รอบนี้ไม่ติดประเด็นเดิมแล้วค่ะ"
+        },
+        {
+          "id": 5988670426,
+          "url": "https://github.com/PhraewaS/toktickit/pull/60#issuecomment-5988670426",
+          "author": "PhraewaS",
+          "date": "2026-10-05T05:28:07Z",
+          "updated": "2026-10-05T05:28:07Z",
+          "body": "> > > ตรวจ revision [8e35a41](https://github.com/PhraewaS/toktickit/commit/8e35a41639ea643c2880cf34073ec5aece2d8c6f) แล้วนะคะ Client tests/build ผ่าน และจำนวนผลใน Playwright report ตรงกับที่แจ้งค่ะ แต่ยังมีหลักฐานที่อยากรบกวนเติม 3 จุดค่ะ\r\n> > > \r\n> > > 1. Dashboard E2E ยังตรวจชื่อ metric กับ drill-down แต่ไม่ได้เทียบตัวเลขกับฐานข้อมูลจริง รบกวนเพิ่มหลักฐาน selected metrics ของ Requester/Staff ให้ตรงกันระหว่าง query, API และ UI ค่ะ\r\n> > > 2. ภาพ staff-actions-editor-mobile.png ยังเห็นรายการ Action เดิม แต่ไม่เห็นฟอร์ม editor รบกวนถ่าย editor ให้เห็นช่องกรอกและปุ่มใช้งานจริง รวม Follow-Up Note ที่แต่ละ viewport ค่ะ\r\n> > > 3. RESP-04 ตรวจ overflow แล้ว แต่ยังไม่มี keyboard/focus verification สำหรับ Dashboard และ Actions Taken รบกวนเพิ่ม checks และบันทึก checklist ตามผลจริงค่ะ\r\n> > >    ส่วนการ skip mutation flow บน tablet/mobile มีเหตุผลและมี responsive suite แยกแล้ว ไม่ต้องแก้เพียงเพื่อให้จำนวน skipped เป็นศูนย์ค่ะ\r\n> > \r\n> > \r\n> > ขอบคุณที่ช่วยตรวจและให้คำแนะนำนะคะ แก้ไขครบทั้ง 3 จุดแล้วค่ะ ได้แก่ เพิ่มการเทียบค่า Dashboard ระหว่างฐานข้อมูล, API และ UI; ปรับภาพ Actions Taken ให้เห็นฟอร์มและ Follow-Up Note ชัดเจนในทุก viewport; และเพิ่ม keyboard/focus checks พร้อม checklist ค่ะ รันทดสอบซ้ำแล้ว ผลผ่านตามที่บันทึกไว้ โดยยังคง intentional skips สำหรับ mutation flow บน tablet/mobile ตามแผน และอัปเดต PR #60 พร้อมขอให้ช่วยรีวิว revision ล่าสุดอีกครั้งนะคะ\r\n> \r\n> ตรวจ revision [a17df67](https://github.com/PhraewaS/toktickit/commit/a17df67c5b628aad4de19593505fbbc5e010e8c6) แล้วนะคะ ภาพ editor และ keyboard checks แก้แล้วค่ะ ส่วน metric comparison เพิ่มครบแล้ว แต่ยังเจอ 2 จุดที่รบกวนปรับค่ะ\r\n> \r\n> 1. HTML report ที่ Push ตอนนี้มี 0 tests และ error จาก prisma:seed ใน global setup ไม่ตรงกับผลผ่านในเอกสาร รบกวนเปลี่ยนเป็น report ของรอบผ่านจริง และตรวจว่ามี metric logs ตามที่อ้างค่ะ\r\n> 2. DB comparison ตรวจ guard แล้ว แต่ getPrisma() ยังใช้ DATABASE_URL เดิม ซึ่งอาจต่างจาก E2E_DATABASE_URL ที่ guard ตรวจ รบกวนผูก Prisma comparison กับ guarded URL โดยตรง เพื่อให้ query, API และ UI เทียบฐานเดียวกันแน่นอนค่ะ\r\n>    ส่วนภาพและ keyboard checks รอบนี้ไม่ติดประเด็นเดิมแล้วค่ะ\r\n\r\nขอบคุณที่ช่วยตรวจและแจ้งสองจุดนี้นะคะ แก้ไขแล้วค่ะ โดยรันชุดทดสอบใหม่ด้วย HTML reporter ที่ตั้งค่าไว้ และตรวจยืนยันว่า report แสดงผลจากรอบที่ผ่านจริง พร้อม metric JSON attachments แล้วค่ะ\r\nส่วน DB comparison ปรับให้ Prisma ใช้ URL เดียวกับที่ database guard ตรวจผ่าน และ API ก็ใช้ URL เดียวกันค่ะ Full Playwright ผ่าน 11 tests, มี intentional skips 10 รายการ และไม่มี test ล้มเหลว อัปเดต PR #60 แล้ว รบกวนช่วยตรวจ revision ล่าสุดอีกครั้งนะคะ"
+        },
+        {
+          "id": 5990464006,
+          "url": "https://github.com/PhraewaS/toktickit/pull/60#issuecomment-5990464006",
+          "author": "guluJa",
+          "date": "2026-10-05T08:00:22Z",
+          "updated": "2026-10-05T08:00:22Z",
+          "body": "> > > > ตรวจ revision [8e35a41](https://github.com/PhraewaS/toktickit/commit/8e35a41639ea643c2880cf34073ec5aece2d8c6f) แล้วนะคะ Client tests/build ผ่าน และจำนวนผลใน Playwright report ตรงกับที่แจ้งค่ะ แต่ยังมีหลักฐานที่อยากรบกวนเติม 3 จุดค่ะ\r\n> > > > \r\n> > > > 1. Dashboard E2E ยังตรวจชื่อ metric กับ drill-down แต่ไม่ได้เทียบตัวเลขกับฐานข้อมูลจริง รบกวนเพิ่มหลักฐาน selected metrics ของ Requester/Staff ให้ตรงกันระหว่าง query, API และ UI ค่ะ\r\n> > > > 2. ภาพ staff-actions-editor-mobile.png ยังเห็นรายการ Action เดิม แต่ไม่เห็นฟอร์ม editor รบกวนถ่าย editor ให้เห็นช่องกรอกและปุ่มใช้งานจริง รวม Follow-Up Note ที่แต่ละ viewport ค่ะ\r\n> > > > 3. RESP-04 ตรวจ overflow แล้ว แต่ยังไม่มี keyboard/focus verification สำหรับ Dashboard และ Actions Taken รบกวนเพิ่ม checks และบันทึก checklist ตามผลจริงค่ะ\r\n> > > >    ส่วนการ skip mutation flow บน tablet/mobile มีเหตุผลและมี responsive suite แยกแล้ว ไม่ต้องแก้เพียงเพื่อให้จำนวน skipped เป็นศูนย์ค่ะ\r\n> > > \r\n> > > \r\n> > > ขอบคุณที่ช่วยตรวจและให้คำแนะนำนะคะ แก้ไขครบทั้ง 3 จุดแล้วค่ะ ได้แก่ เพิ่มการเทียบค่า Dashboard ระหว่างฐานข้อมูล, API และ UI; ปรับภาพ Actions Taken ให้เห็นฟอร์มและ Follow-Up Note ชัดเจนในทุก viewport; และเพิ่ม keyboard/focus checks พร้อม checklist ค่ะ รันทดสอบซ้ำแล้ว ผลผ่านตามที่บันทึกไว้ โดยยังคง intentional skips สำหรับ mutation flow บน tablet/mobile ตามแผน และอัปเดต PR #60 พร้อมขอให้ช่วยรีวิว revision ล่าสุดอีกครั้งนะคะ\r\n> > \r\n> > \r\n> > ตรวจ revision [a17df67](https://github.com/PhraewaS/toktickit/commit/a17df67c5b628aad4de19593505fbbc5e010e8c6) แล้วนะคะ ภาพ editor และ keyboard checks แก้แล้วค่ะ ส่วน metric comparison เพิ่มครบแล้ว แต่ยังเจอ 2 จุดที่รบกวนปรับค่ะ\r\n> > \r\n> > 1. HTML report ที่ Push ตอนนี้มี 0 tests และ error จาก prisma:seed ใน global setup ไม่ตรงกับผลผ่านในเอกสาร รบกวนเปลี่ยนเป็น report ของรอบผ่านจริง และตรวจว่ามี metric logs ตามที่อ้างค่ะ\r\n> > 2. DB comparison ตรวจ guard แล้ว แต่ getPrisma() ยังใช้ DATABASE_URL เดิม ซึ่งอาจต่างจาก E2E_DATABASE_URL ที่ guard ตรวจ รบกวนผูก Prisma comparison กับ guarded URL โดยตรง เพื่อให้ query, API และ UI เทียบฐานเดียวกันแน่นอนค่ะ\r\n> >    ส่วนภาพและ keyboard checks รอบนี้ไม่ติดประเด็นเดิมแล้วค่ะ\r\n> \r\n> ขอบคุณที่ช่วยตรวจและแจ้งสองจุดนี้นะคะ แก้ไขแล้วค่ะ โดยรันชุดทดสอบใหม่ด้วย HTML reporter ที่ตั้งค่าไว้ และตรวจยืนยันว่า report แสดงผลจากรอบที่ผ่านจริง พร้อม metric JSON attachments แล้วค่ะ ส่วน DB comparison ปรับให้ Prisma ใช้ URL เดียวกับที่ database guard ตรวจผ่าน และ API ก็ใช้ URL เดียวกันค่ะ Full Playwright ผ่าน 11 tests, มี intentional skips 10 รายการ และไม่มี test ล้มเหลว อัปเดต PR #60 แล้ว รบกวนช่วยตรวจ revision ล่าสุดอีกครั้งนะคะ\r\n\r\nตรวจ revision 2f980e0 แล้วนะคะ สองจุดที่แจ้งรอบก่อนแก้ครบแล้วค่ะ Report เป็นรอบผ่านจริง มี metric attachments ที่ DB/API/UI ตรงกัน และ Prisma comparison ใช้ guarded URL โดยตรงแล้ว  \r\nลองรัน Server build กับ focused API tests 26 tests ผ่านค่ะ รอบนี้ไม่พบจุดที่ต้องแก้เพิ่มเติมใน Scope ของ PR นี้แล้วค่ะ"
+        },
+        {
+          "id": 5992419165,
+          "url": "https://github.com/PhraewaS/toktickit/pull/60#issuecomment-5992419165",
+          "author": "PhraewaS",
+          "date": "2026-10-05T10:12:44Z",
+          "updated": "2026-10-05T10:12:44Z",
+          "body": "> > > > > ตรวจ revision [8e35a41](https://github.com/PhraewaS/toktickit/commit/8e35a41639ea643c2880cf34073ec5aece2d8c6f) แล้วนะคะ Client tests/build ผ่าน และจำนวนผลใน Playwright report ตรงกับที่แจ้งค่ะ แต่ยังมีหลักฐานที่อยากรบกวนเติม 3 จุดค่ะ\r\n> > > > > \r\n> > > > > 1. Dashboard E2E ยังตรวจชื่อ metric กับ drill-down แต่ไม่ได้เทียบตัวเลขกับฐานข้อมูลจริง รบกวนเพิ่มหลักฐาน selected metrics ของ Requester/Staff ให้ตรงกันระหว่าง query, API และ UI ค่ะ\r\n> > > > > 2. ภาพ staff-actions-editor-mobile.png ยังเห็นรายการ Action เดิม แต่ไม่เห็นฟอร์ม editor รบกวนถ่าย editor ให้เห็นช่องกรอกและปุ่มใช้งานจริง รวม Follow-Up Note ที่แต่ละ viewport ค่ะ\r\n> > > > > 3. RESP-04 ตรวจ overflow แล้ว แต่ยังไม่มี keyboard/focus verification สำหรับ Dashboard และ Actions Taken รบกวนเพิ่ม checks และบันทึก checklist ตามผลจริงค่ะ\r\n> > > > >    ส่วนการ skip mutation flow บน tablet/mobile มีเหตุผลและมี responsive suite แยกแล้ว ไม่ต้องแก้เพียงเพื่อให้จำนวน skipped เป็นศูนย์ค่ะ\r\n> > > > \r\n> > > > \r\n> > > > ขอบคุณที่ช่วยตรวจและให้คำแนะนำนะคะ แก้ไขครบทั้ง 3 จุดแล้วค่ะ ได้แก่ เพิ่มการเทียบค่า Dashboard ระหว่างฐานข้อมูล, API และ UI; ปรับภาพ Actions Taken ให้เห็นฟอร์มและ Follow-Up Note ชัดเจนในทุก viewport; และเพิ่ม keyboard/focus checks พร้อม checklist ค่ะ รันทดสอบซ้ำแล้ว ผลผ่านตามที่บันทึกไว้ โดยยังคง intentional skips สำหรับ mutation flow บน tablet/mobile ตามแผน และอัปเดต PR #60 พร้อมขอให้ช่วยรีวิว revision ล่าสุดอีกครั้งนะคะ\r\n> > > \r\n> > > \r\n> > > ตรวจ revision [a17df67](https://github.com/PhraewaS/toktickit/commit/a17df67c5b628aad4de19593505fbbc5e010e8c6) แล้วนะคะ ภาพ editor และ keyboard checks แก้แล้วค่ะ ส่วน metric comparison เพิ่มครบแล้ว แต่ยังเจอ 2 จุดที่รบกวนปรับค่ะ\r\n> > > \r\n> > > 1. HTML report ที่ Push ตอนนี้มี 0 tests และ error จาก prisma:seed ใน global setup ไม่ตรงกับผลผ่านในเอกสาร รบกวนเปลี่ยนเป็น report ของรอบผ่านจริง และตรวจว่ามี metric logs ตามที่อ้างค่ะ\r\n> > > 2. DB comparison ตรวจ guard แล้ว แต่ getPrisma() ยังใช้ DATABASE_URL เดิม ซึ่งอาจต่างจาก E2E_DATABASE_URL ที่ guard ตรวจ รบกวนผูก Prisma comparison กับ guarded URL โดยตรง เพื่อให้ query, API และ UI เทียบฐานเดียวกันแน่นอนค่ะ\r\n> > >    ส่วนภาพและ keyboard checks รอบนี้ไม่ติดประเด็นเดิมแล้วค่ะ\r\n> > \r\n> > \r\n> > ขอบคุณที่ช่วยตรวจและแจ้งสองจุดนี้นะคะ แก้ไขแล้วค่ะ โดยรันชุดทดสอบใหม่ด้วย HTML reporter ที่ตั้งค่าไว้ และตรวจยืนยันว่า report แสดงผลจากรอบที่ผ่านจริง พร้อม metric JSON attachments แล้วค่ะ ส่วน DB comparison ปรับให้ Prisma ใช้ URL เดียวกับที่ database guard ตรวจผ่าน และ API ก็ใช้ URL เดียวกันค่ะ Full Playwright ผ่าน 11 tests, มี intentional skips 10 รายการ และไม่มี test ล้มเหลว อัปเดต PR #60 แล้ว รบกวนช่วยตรวจ revision ล่าสุดอีกครั้งนะคะ\r\n> \r\n> ตรวจ revision [2f980e0](https://github.com/PhraewaS/toktickit/commit/2f980e096e77a27865e25a130a05a92122573e06) แล้วนะคะ สองจุดที่แจ้งรอบก่อนแก้ครบแล้วค่ะ Report เป็นรอบผ่านจริง มี metric attachments ที่ DB/API/UI ตรงกัน และ Prisma comparison ใช้ guarded URL โดยตรงแล้ว ลองรัน Server build กับ focused API tests 26 tests ผ่านค่ะ รอบนี้ไม่พบจุดที่ต้องแก้เพิ่มเติมใน Scope ของ PR นี้แล้วค่ะ\r\n\r\nขอบคุณที่ช่วยตรวจและให้คำแนะนำนะคะ"
+        }
+      ],
+      "reviews": [
+        {
+          "id": 5407138143,
+          "url": "https://github.com/PhraewaS/toktickit/pull/60#pullrequestreview-5407138143",
+          "author": "guluJa",
+          "date": "2026-10-04T16:22:22Z",
+          "state": "CHANGES_REQUESTED",
+          "commit": "8e35a41639ea643c2880cf34073ec5aece2d8c6f",
+          "body": "ตรวจ revision 8e35a41 แล้วนะคะ Client tests/build ผ่าน และจำนวนผลใน Playwright report ตรงกับที่แจ้งค่ะ แต่ยังมีหลักฐานที่อยากรบกวนเติม 3 จุดค่ะ  \n1. Dashboard E2E ยังตรวจชื่อ metric กับ drill-down แต่ไม่ได้เทียบตัวเลขกับฐานข้อมูลจริง รบกวนเพิ่มหลักฐาน selected metrics ของ Requester/Staff ให้ตรงกันระหว่าง query, API และ UI ค่ะ\n2. ภาพ staff-actions-editor-mobile.png ยังเห็นรายการ Action เดิม แต่ไม่เห็นฟอร์ม editor รบกวนถ่าย editor ให้เห็นช่องกรอกและปุ่มใช้งานจริง รวม Follow-Up Note ที่แต่ละ viewport ค่ะ\n3. RESP-04 ตรวจ overflow แล้ว แต่ยังไม่มี keyboard/focus verification สำหรับ Dashboard และ Actions Taken รบกวนเพิ่ม checks และบันทึก checklist ตามผลจริงค่ะ\nส่วนการ skip mutation flow บน tablet/mobile มีเหตุผลและมี responsive suite แยกแล้ว ไม่ต้องแก้เพียงเพื่อให้จำนวน skipped เป็นศูนย์ค่ะ"
+        },
+        {
+          "id": 5413091909,
+          "url": "https://github.com/PhraewaS/toktickit/pull/60#pullrequestreview-5413091909",
+          "author": "guluJa",
+          "date": "2026-10-05T10:26:39Z",
+          "state": "APPROVED",
+          "commit": "2f980e096e77a27865e25a130a05a92122573e06",
+          "body": ""
+        }
+      ],
+      "inline": []
+    },
+    {
+      "number": 61,
+      "title": "[Lab 4] Staging integration and release readiness",
+      "state": "open",
+      "merged": false,
+      "mergedAt": null,
+      "mergeCommit": null,
+      "head": "feature/lab4-staging-integration-54",
+      "headSha": "3c84fd7e1d7e943d0da3190122c1280ff10faa70",
+      "base": "lab4-staging",
+      "comments": [],
+      "reviews": [],
+      "inline": []
+    }
+  ]
+}

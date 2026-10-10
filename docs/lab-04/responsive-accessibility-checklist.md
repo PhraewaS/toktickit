@@ -16,3 +16,7 @@ The checks below ran in Chromium at desktop (1440x1000), tablet (834x1112), and 
 All six responsive browser checks passed (two flows at each of three viewports). The focused `staff-actions-editor-{desktop,tablet,mobile}.png` captures show the complete open form, including required fields, Follow-Up Note, Save Action Taken, and Discard draft. Screenshot capture is of the form itself so the complete editor remains legible at mobile width; the viewport-fit assertion runs before capture.
 
 This is targeted keyboard operability evidence for the requested dashboard and Actions Taken paths. It is not represented as a complete WCAG audit or an automated axe scan.
+
+## Integration repeat
+
+Issue #54 reruns these same checks on its recorded integration source revision. Current screenshots are under `artifacts/lab-04/screenshots/staff-dashboard/`, `requester-dashboard/` and `actions-taken/`; the editor files are in `actions-taken/`. See the separate staging-integration summary/logs for the exact run rather than attributing the regenerated captures to the historical #53 revision. Final-main verification remains pending release approval and merge.
