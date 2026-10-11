@@ -1,50 +1,49 @@
- set_config 
+ set_config
 ------------
- 
+
 (1 row)
 
- setval 
+ setval
 --------
     534
 (1 row)
 
- setval 
+ setval
 --------
       1
 (1 row)
 
- setval 
+ setval
 --------
     688
 (1 row)
 
- setval 
+ setval
 --------
    1026
 (1 row)
 
- setval 
+ setval
 --------
    1026
 (1 row)
 
- setval 
+ setval
 --------
    1032
 (1 row)
 
- setval 
+ setval
 --------
    1724
 (1 row)
 
- setval 
+ setval
 --------
     181
 (1 row)
 
- setval 
+ setval
 --------
    1026
 (1 row)
-

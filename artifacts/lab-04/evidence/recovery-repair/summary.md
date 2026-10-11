@@ -21,7 +21,7 @@
 | Syntax/diff | node --check and git diff --check passed | commands below |
 | Windows security | VerifiedAndReputablePolicyState=1 after successful runs; no policy/exclusion/executable changes | local registry read during verification |
 
-Only the two disposable recovery databases and dumps created by the runner were removed. The source E2E database remains intact; the normal application database was not seeded or dropped. Empty attachments/sessions verify empty-table recovery only. Physical attachment storage still requires a separate backup.
+Only the two disposable recovery databases and dumps created by the runner were removed. The source E2E database remains intact; the normal application database was not seeded or dropped. Empty attachments/sessions verify empty-table recovery only. Physical attachment storage still requires a separate backup. Captured logs retain their content and outcomes; trailing whitespace was normalized for Git diff hygiene.
 
 ## Supported method, not a policy exemption
 
@@ -52,4 +52,3 @@ Negative test intentionally selected a nonexistent --pg-bin, then asserted exit 
 - [ ] Approved release into main, actual final-main verification, reviewed evidence/PDF and #54 Done.
 
 These are tooling-branch results, not staging/final-main results. Original blocked staging and historical custom-format evidence are not overwritten.
-

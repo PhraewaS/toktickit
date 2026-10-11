@@ -13,7 +13,7 @@ Peer reviewer: **guluJa** (GitHub collaborator). Author: **PhraewaS**. The autho
 | [#52](https://github.com/PhraewaS/toktickit/issues/52) / [#59](https://github.com/PhraewaS/toktickit/pull/59) | `feature/lab4-actions-ui-52` -> `lab4-staging` | guluJa approved; merged 2026-10-04; Issue closed |
 | [#53](https://github.com/PhraewaS/toktickit/issues/53) / [#60](https://github.com/PhraewaS/toktickit/pull/60) | `feature/lab4-verification-evidence-53` -> `lab4-staging` | guluJa approved; merged 2026-10-05; Issue closed |
 | [#54](https://github.com/PhraewaS/toktickit/issues/54) / [#61](https://github.com/PhraewaS/toktickit/pull/61) integration preparation | `feature/lab4-staging-integration-54` -> `lab4-staging` | guluJa approved; merged 2026-10-10 as `b618547` |
-| #54 recovery repair | `codex/lab4-recovery-tools-54` -> `lab4-staging` | Recovery passed twice at `1067591`; peer approval/merge pending |
+| [#54](https://github.com/PhraewaS/toktickit/issues/54) / [#62](https://github.com/PhraewaS/toktickit/pull/62) recovery repair | `codex/lab4-recovery-tools-54` -> `lab4-staging` | Recovery passed twice at `1067591`; guluJa requested, peer approval/merge pending |
 | #54 release | `lab4-staging` -> `main` | Pending reviewed recovery repair, staging re-verification and separate release PR |
 | #54 final-main evidence | New branch from released `main` -> `main` | Pending actual final-main tests and final PDF review |
 
