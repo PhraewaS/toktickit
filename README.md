@@ -175,6 +175,8 @@ Lab 4 responsive screenshots are generated in `artifacts/lab-04/screenshots/staf
 
 ## Security
 
-The recovery phase detects the connected PostgreSQL server major version and uses matching installed tools on Windows. Supply `--pg-bin` only if they are installed elsewhere. It restores a backup into a uniquely created temporary database, compares table counts and data fingerprints, then removes only that temporary database and dump. The source E2E database remains intact.
+The recovery phase detects the connected PostgreSQL server major version and requires matching `pg_dump` and `psql` tools. Supply `--pg-bin` only if they are installed elsewhere. It creates a plain SQL backup, creates a unique temporary database from `template0`, and restores through `psql --no-psqlrc --set=ON_ERROR_STOP=1 --single-transaction`. It compares every Prisma table plus migration-history counts/fingerprints, then removes only its temporary database and dump. The source E2E database remains intact. This uses the [PostgreSQL-supported SQL dump/restore procedure](https://www.postgresql.org/docs/15/backup-dump.html); it does not require `createdb`, `pg_restore` or `dropdb` executables. Windows Application Control stays enabled; no executable is relocated or unblocked. Never restore an untrusted SQL dump.
+
+Test recovery command safety independently with `node --test scripts/postgres-recovery.test.mjs`. A recovery failure is recorded with `failedAt` and `error`, not a successful `completedAt`. Old custom-format recovery evidence remains historical; new SQL recovery must be reviewed/merged and repeated on staging and final main before closing #54.
 
 Do not commit `.env`, database credentials, tokens, or `node_modules`.
