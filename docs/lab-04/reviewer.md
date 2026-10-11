@@ -12,8 +12,9 @@ Peer reviewer: **guluJa** (GitHub collaborator). Author: **PhraewaS**. The autho
 | [#51](https://github.com/PhraewaS/toktickit/issues/51) / [#58](https://github.com/PhraewaS/toktickit/pull/58) | `feature/lab4-dashboards` -> `lab4-staging` | guluJa approved; merged 2026-10-03; Issue closed |
 | [#52](https://github.com/PhraewaS/toktickit/issues/52) / [#59](https://github.com/PhraewaS/toktickit/pull/59) | `feature/lab4-actions-ui-52` -> `lab4-staging` | guluJa approved; merged 2026-10-04; Issue closed |
 | [#53](https://github.com/PhraewaS/toktickit/issues/53) / [#60](https://github.com/PhraewaS/toktickit/pull/60) | `feature/lab4-verification-evidence-53` -> `lab4-staging` | guluJa approved; merged 2026-10-05; Issue closed |
-| [#54](https://github.com/PhraewaS/toktickit/issues/54) / [#61](https://github.com/PhraewaS/toktickit/pull/61) integration preparation | `feature/lab4-staging-integration-54` -> `lab4-staging` | Integration verification recorded; peer approval pending |
-| #54 release | `lab4-staging` -> `main` | Pending integration approval/merge and a separate reviewed release PR |
+| [#54](https://github.com/PhraewaS/toktickit/issues/54) / [#61](https://github.com/PhraewaS/toktickit/pull/61) integration preparation | `feature/lab4-staging-integration-54` -> `lab4-staging` | guluJa approved; merged 2026-10-10 as `b618547` |
+| #54 recovery repair | `codex/lab4-recovery-tools-54` -> `lab4-staging` | Recovery passed twice at `1067591`; peer approval/merge pending |
+| #54 release | `lab4-staging` -> `main` | Pending reviewed recovery repair, staging re-verification and separate release PR |
 | #54 final-main evidence | New branch from released `main` -> `main` | Pending actual final-main tests and final PDF review |
 
 Dates are UTC merge dates. Issues #48-53 are Done on the Project. #54 stays open: Started during preparation, PR Review once ready, Fixing for requested changes, and Done only after final-main evidence/submission. Keep the Issue card, not a duplicate PR card.
@@ -31,7 +32,17 @@ All links below are actual GitHub records. Approval is a human review, not a tes
 | #59 | [Review](https://github.com/PhraewaS/toktickit/pull/59#pullrequestreview-5401954695): draft retention, safe uncertain-result retry and unchanged seconds | [Response](https://github.com/PhraewaS/toktickit/pull/59#issuecomment-5973555055) | [Approval](https://github.com/PhraewaS/toktickit/pull/59#pullrequestreview-5406206920) |
 | #60 | [Review](https://github.com/PhraewaS/toktickit/pull/60#pullrequestreview-5407138143): DB/API/UI metrics, full editor, keyboard/focus, passing report and guarded Prisma URL | [Response](https://github.com/PhraewaS/toktickit/pull/60#issuecomment-5988670426) | [Approval](https://github.com/PhraewaS/toktickit/pull/60#pullrequestreview-5413091909) |
 
-No integration, release or final-evidence approval is claimed yet.
+Integration PR #61 approval is confirmed. Recovery repair, release and final-evidence approvals remain pending.
+
+### Review addendum (2026-10-12 Asia/Bangkok)
+
+The 41-event ledger/JSON below preserve the original 2026-10-08 snapshot. [review-history-recovery-addendum.json](review-history-recovery-addendum.json) preserves three subsequent PR #61 events with full original bodies:
+
+- [guluJa accepted review](https://github.com/PhraewaS/toktickit/pull/61#pullrequestreview-5469015849), 2026-10-09 10:46:48 UTC, head `201a8df`: consistent integration evidence, independently passing Client 89/focused Server 36/both builds, no further changes in that scope.
+- [PhraewaS response](https://github.com/PhraewaS/toktickit/pull/61#issuecomment-6096299454), 2026-10-10 09:52:05 UTC: acknowledged the accepted review and thanked the reviewer.
+- [guluJa APPROVED](https://github.com/PhraewaS/toktickit/pull/61#pullrequestreview-5478535660), 2026-10-10 09:56:52 UTC, head `201a8df`; [merged b618547](https://github.com/PhraewaS/toktickit/commit/b6185479a4f800d37b8251474d1ffb4c35c0b460) at 09:57:02 UTC.
+
+Recovery repair has its own review boundary: [new tooling-branch evidence](../../artifacts/lab-04/evidence/recovery-repair/summary.md), not approval/staging/main success. Add repair/release/evidence feedback and approvals as human reviews arrive.
 
 ## Verified peer approval and merge audit
 
@@ -87,7 +98,7 @@ See [integration.md](integration.md). Historical #53 evidence remains in `artifa
 
 ## Complete chronological comment and review ledger
 
-Snapshot: 2026-10-08 16:06:40 UTC. All accessible conversation comments, submitted reviews and inline review comments were fetched with pagination for PRs #55-#61. There are **29 conversation comments, 12 submitted reviews and 0 inline comments (41 events)**. PR #61 has no peer comments/reviews yet. Deleted comments and future events cannot be included. Historical test totals in comments are historical claims, not the current or final-main run.
+Snapshot: 2026-10-08 16:06:40 UTC. All accessible conversation comments, submitted reviews and inline review comments were fetched with pagination for PRs #55-#61. There are **29 conversation comments, 12 submitted reviews and 0 inline comments (41 events)**. At that snapshot PR #61 had no peer comments/reviews; its three later events are preserved in the addendum above. Deleted comments and future events cannot be included. Historical test totals in comments are historical claims, not the current or final-main run.
 
 Each entry retains the complete new text of that event inside a collapsible section. Repeated quoted replies are omitted here for readability, not lost: the full original bodies, timestamps, author, IDs, URLs and review commits are preserved in [review-history.json](review-history.json). Formal APPROVED review events are distinguished from conversational confirmations and author thank-you comments.
 
