@@ -4,7 +4,7 @@
 
 - Branch: `codex/lab4-recovery-tools-54` -> `lab4-staging`, part of [Issue #54](https://github.com/PhraewaS/toktickit/issues/54).
 - Exact tested tooling source: `10675917f46ceb58376c3db2eafe2b218cd1ec25`; base staging `b6185479a4f800d37b8251474d1ffb4c35c0b460`.
-- Verification: 2026-10-12 Asia/Bangkok (00:35–00:37), corresponding to 2026-10-11 17:35–17:37 UTC.
+- Passing prepare/recovery runs: 2026-10-12 Asia/Bangkok (00:35–00:37), corresponding to 2026-10-11 17:35–17:37 UTC. The separate negative tool check ran at 00:38 Bangkok / 17:38 UTC, as its JSON records.
 - Windows, Node 24.19.0; PostgreSQL 15, pg_dump/psql 15.19; dedicated `toktickit_lab4_e2e` on **5433**.
 - Later commits attach documentation/evidence only. No product Server/Client/E2E source changed.
 

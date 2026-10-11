@@ -62,7 +62,7 @@ Each final approval is by guluJa, predates the actual merge and references the f
 These ticks record author work supported by the integration evidence, **not peer approval or final submission**. Current tested source: [`4e532887835770b0f4ec851e34e1bb92fab7c685`](https://github.com/PhraewaS/toktickit/commit/4e532887835770b0f4ec851e34e1bb92fab7c685); later changes are documentation/evidence only.
 
 - [x] Enumerate #55-#60 individually and verify human approvals, final reviewed commits and staging merges.
-- [x] Retrieve every accessible comment/review for #55-#61, preserving all 41 events and original source links; distinguish corrective responses from thank-you replies.
+- [x] Preserve the original 41-event snapshot for #55-#61 and the three subsequent #61 events in the addendum; distinguish corrective responses from thank-you replies.
 - [x] Prepare the separate integration branch/PR #61 targeting staging; request guluJa; keep #54 as the single Project card in PR Review.
 - [x] Verify #48-#53 are closed and Done; do not mark #54 Done prematurely.
 - [x] Record Server 164/164, Client 89/89 and both builds on the exact source SHA.
@@ -76,7 +76,8 @@ Evidence: [actual integration summary](../../artifacts/lab-04/evidence/staging-i
 
 ## Release / final submission still pending
 
-- [ ] guluJa approves PR #61 and it merges into staging.
+- [x] guluJa approved PR #61 and it merged into staging as `b618547`.
+- [ ] Obtain peer approval/merge for the separate recovery repair before repeating staging verification.
 - [ ] Repeat the integration run on the actual new staging merge commit.
 - [ ] Obtain approval/merge for a separate staging -> main release PR and record both PR/merge links.
 - [ ] Rerun tests/builds/regression and all required evidence on the exact released **final main** SHA, storing separate final-main logs.
@@ -84,9 +85,9 @@ Evidence: [actual integration summary](../../artifacts/lab-04/evidence/staging-i
 - [ ] Complete readable Answer Parts 1-9 PDF, rendered reviewer record, working links and actual final evidence.
 - [ ] Approve/merge final evidence, complete submission, close #54 and capture the Project with all required Issues Done.
 
-Unchecked reviewer actions below are intentionally separate from checked author preparation.
+The original integration checklist below is retained for traceability; #61's overall approval is recorded above. It is not approval for the new recovery repair. That repair's human review remains pending.
 
-## Integration reviewer checklist
+## Original integration reviewer checklist
 
 - [ ] Review compatible production dependency patches and the remaining development-tool audit limitation.
 - [ ] Verify guarded port-5433 migration/seed and backup/restore fingerprints/cleanup.

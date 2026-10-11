@@ -60,7 +60,7 @@ Checked items below mean prepared/verified on the integration branch at source `
 - [x] Verify [README](../../README.md) setup/test/evidence instructions and [.gitignore](../../.gitignore) exclusions for local environment, dependencies, build output, attachment bytes and transient test results.
 - [x] Verify tracked repository structure: `server/` (source/tests/Prisma), `client/` (source/tests), `e2e/`, `docs/lab-04/`, `artifacts/lab-04/` and `scripts/`.
 - [ ] Extend branch/commit/PR evidence through the approved release merge into main, then the approved final-evidence merge.
-- [ ] Include release/evidence reviewer identities, comments, corrective responses and formal approvals; #61 approval is also still pending.
+- [ ] Include recovery-repair/release/evidence reviewer identities, comments, corrective responses and formal approvals; #61 approval is complete and recorded in the reviewer addendum.
 - [ ] Capture the final Project/Kanban with #48-#54 Done only after all release/submission gates complete.
 - [ ] Render the reviewer record, README/ignore/repo structure and branch-flow evidence legibly into final PDF Part 1; links must work.
 
