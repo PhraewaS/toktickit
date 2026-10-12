@@ -1,0 +1,93 @@
+{
+  "mode": "recovery",
+  "revision": "10675917f46ceb58376c3db2eafe2b218cd1ec25",
+  "startedAt": "2026-10-11T17:37:13.322Z",
+  "database": "toktickit_lab4_e2e",
+  "databasePort": 5433,
+  "steps": [
+    {
+      "label": "recovery-backup",
+      "exitCode": 0,
+      "elapsedMs": 274
+    },
+    {
+      "label": "recovery-create",
+      "exitCode": 0,
+      "elapsedMs": 424
+    },
+    {
+      "label": "recovery-restore",
+      "exitCode": 0,
+      "elapsedMs": 539
+    },
+    {
+      "label": "recovery-cleanup",
+      "exitCode": 0,
+      "elapsedMs": 270
+    }
+  ],
+  "recoveryEnvironment": {
+    "serverMajor": 15,
+    "dumpVersion": "pg_dump (PostgreSQL) 15.19",
+    "psqlVersion": "psql (PostgreSQL) 15.19",
+    "method": "plain SQL dump / psql"
+  },
+  "recovery": {
+    "matched": true,
+    "tables": [
+      {
+        "table": "requester_users",
+        "count": 10,
+        "checksum": "2fece61f27b7ce76c0dd5096e6ea0381"
+      },
+      {
+        "table": "categories",
+        "count": 4,
+        "checksum": "ffcc219c3e3ba90bd31d557f7c165dde"
+      },
+      {
+        "table": "related_systems",
+        "count": 6,
+        "checksum": "458d6e4cb9e7d5a274a59d397d864286"
+      },
+      {
+        "table": "tickets",
+        "count": 6,
+        "checksum": "303fd7b87b2cb048e25cd02cfb97b5ad"
+      },
+      {
+        "table": "attachments",
+        "count": 0,
+        "checksum": "d41d8cd98f00b204e9800998ecf8427e"
+      },
+      {
+        "table": "sessions",
+        "count": 0,
+        "checksum": "d41d8cd98f00b204e9800998ecf8427e"
+      },
+      {
+        "table": "public_comments",
+        "count": 6,
+        "checksum": "037e3eb7ca2c349c2a2238b0d4c73d0c"
+      },
+      {
+        "table": "internal_notes",
+        "count": 6,
+        "checksum": "a243ef485a573aadcf741d2bd8a5aeab"
+      },
+      {
+        "table": "actions_taken",
+        "count": 3,
+        "checksum": "55f09675f7a47449bc59fba822c79980"
+      }
+    ],
+    "migrations": {
+      "count": 5,
+      "checksum": "ab2e80dab10ce8ecee8cb42e8810d3a0"
+    },
+    "recoveryDatabase": "toktickit_lab4_recovery_36808_1791740233340",
+    "temporaryDatabaseRemoved": true,
+    "dumpRemoved": true
+  },
+  "completedAt": "2026-10-11T17:37:15.390Z"
+}

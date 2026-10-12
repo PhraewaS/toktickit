@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
 import { spawn, execFileSync } from 'node:child_process';
 import { sanitizePlaywrightReport } from './playwright-report-hygiene.mjs';
+import { requireMatchingPostgresTool, sqlRecoveryPlan } from './postgres-recovery.mjs';
 
 const repository = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const mode = process.argv[2];
@@ -86,7 +87,7 @@ try {
     const recoveredUrl = new URL(databaseUrl);
     recoveredUrl.pathname = '/' + recoveryName;
     const recovered = new PrismaClient({ datasources: { db: { url: recoveredUrl.toString() } } });
-    const dumpFile = path.join(repository, 'tmp', recoveryName + '.dump');
+    const dumpFile = path.join(repository, 'tmp', recoveryName + '.sql');
     fs.mkdirSync(path.dirname(dumpFile), { recursive: true });
     const pgEnvironment = { PGHOST: target.hostname, PGPORT: '5433', PGUSER: decodeURIComponent(target.username), PGPASSWORD: decodeURIComponent(target.password) };
     let serverVersion;
@@ -95,10 +96,13 @@ try {
     const serverMajor = Math.floor(serverVersion[0].version / 10000);
     const installedBin = process.platform === 'win32' ? path.join(process.env.ProgramFiles || 'C:/Program Files', 'PostgreSQL', String(serverMajor), 'bin') : undefined;
     const pgBin = option('--pg-bin') || (installedBin && fs.existsSync(installedBin) ? installedBin : undefined);
-    const pgCommand = name => pgBin ? path.join(pgBin, name + (process.platform === 'win32' ? '.exe' : '')) : name;
-    const dumpVersion = execFileSync(pgCommand('pg_dump'), ['--version'], { encoding: 'utf8' });
-    if (Number(dumpVersion.match(/PostgreSQL\) (\d+)/)?.[1]) !== serverMajor) throw new Error('Use pg_dump/pg_restore tools matching PostgreSQL server major ' + serverMajor);
-    console.log('RECOVERY-ENVIRONMENT ' + JSON.stringify({ serverMajor, dumpVersion: dumpVersion.trim() }));
+    const plan = sqlRecoveryPlan({ pgBin, sourceDatabase: result.database, recoveryName, dumpFile });
+    const dumpVersion = execFileSync(plan.pgDump, ['--version'], { encoding: 'utf8' });
+    const psqlVersion = execFileSync(plan.psql, ['--version'], { encoding: 'utf8' });
+    requireMatchingPostgresTool(dumpVersion, serverMajor, 'pg_dump');
+    requireMatchingPostgresTool(psqlVersion, serverMajor, 'psql');
+    result.recoveryEnvironment = { serverMajor, dumpVersion: dumpVersion.trim(), psqlVersion: psqlVersion.trim(), method: 'plain SQL dump / psql' };
+    console.log('RECOVERY-ENVIRONMENT ' + JSON.stringify(result.recoveryEnvironment));
     const snapshot = async client => {
       const rows = [];
       for (const model of Prisma.dmmf.datamodel.models) {
@@ -112,19 +116,30 @@ try {
     let created = false;
     try {
       const before = await snapshot(source);
-      await run('recovery-backup', pgCommand('pg_dump'), ['--format=custom', '--no-owner', '--no-acl', '--file', dumpFile, '--dbname', result.database], repository, pgEnvironment);
-      await run('recovery-create', pgCommand('createdb'), [recoveryName], repository, pgEnvironment);
+      const migrationSnapshot = client => client.$queryRawUnsafe(`SELECT count(*)::int AS count, md5(COALESCE(string_agg(row_to_json(t)::text, E'\\n' ORDER BY row_to_json(t)::text), '')) AS checksum FROM "_prisma_migrations" t`);
+      const migrationsBefore = await migrationSnapshot(source);
+      await run('recovery-backup', plan.pgDump, plan.backup, repository, pgEnvironment);
+      await run('recovery-create', plan.psql, plan.create, repository, pgEnvironment);
       created = true;
-      await run('recovery-restore', pgCommand('pg_restore'), ['--exit-on-error', '--no-owner', '--no-privileges', '--dbname', recoveryName, dumpFile], repository, pgEnvironment);
+      await run('recovery-restore', plan.psql, plan.restore, repository, pgEnvironment);
       const after = await snapshot(recovered);
       if (JSON.stringify(before) !== JSON.stringify(after)) throw new Error('Backup/restore data fingerprint mismatch');
-      result.recovery = { matched: true, tables: before, recoveryDatabase: recoveryName };
+      const migrationsAfter = await migrationSnapshot(recovered);
+      if (JSON.stringify(migrationsBefore) !== JSON.stringify(migrationsAfter)) throw new Error('Backup/restore migration fingerprint mismatch');
+      result.recovery = { matched: true, tables: before, migrations: migrationsBefore[0], recoveryDatabase: recoveryName };
       console.log('RECOVERY-COMPARISON ' + JSON.stringify(result.recovery));
     } finally {
       await source.$disconnect();
       await recovered.$disconnect();
-      if (created) await run('recovery-cleanup', pgCommand('dropdb'), [recoveryName], repository, pgEnvironment);
-      if (fs.existsSync(dumpFile)) fs.unlinkSync(dumpFile);
+      try {
+        if (created) {
+          await run('recovery-cleanup', plan.psql, plan.cleanup, repository, pgEnvironment);
+          if (result.recovery) result.recovery.temporaryDatabaseRemoved = true;
+        }
+      } finally {
+        if (fs.existsSync(dumpFile)) fs.unlinkSync(dumpFile);
+        if (result.recovery) result.recovery.dumpRemoved = !fs.existsSync(dumpFile);
+      }
     }
   } else if (mode === 'server') {
     // Each invocation uses a new disposable password. Seed in this process before
@@ -146,6 +161,9 @@ try {
   result.completedAt = new Date().toISOString();
   fs.writeFileSync(path.join(evidenceDirectory, mode + '-results.json'), JSON.stringify(result, null, 2));
 } catch (error) {
+  result.failedAt = new Date().toISOString();
+  result.error = sanitize(String(error.stack || error));
+  fs.writeFileSync(path.join(evidenceDirectory, mode + '-results.json'), JSON.stringify(result, null, 2));
   console.error(sanitize(String(error.stack || error)));
   process.exitCode = 1;
 }
