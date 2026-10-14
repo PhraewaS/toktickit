@@ -42,6 +42,12 @@ Approved #55-#60 -> staging -> approved #61 -> approved #62 -> approved #64 -> *
 
 Additional JSON snapshots, this integration guide and the visual checklist support the six mandatory files; they do not replace them. The handout's assignment/complete/cancel examples are explicitly interpreted as the **parent Ticket lifecycle** under the approved contract, not unapproved Action fields. Final PDF map covers every Answer Part 1-9 below.
 
+### Non-closing release references
+
+GitHub's Development / Linked pull requests association is a closing reference, not merely a neutral link: a linked PR merged into the default branch automatically closes its Issue. Even a negated phrase containing a supported closing keyword immediately before an Issue number can create that association. The previously detected #63 -> #54 closing association was removed while both remain open. Release #63 and documentation maintenance #65 use explicit **Part of Issue #54** hyperlinks/body references instead; no automatic-closing association was added to #65. The Project still has only the #54 Issue card, and its body lists the related PRs even when a non-closing reference is not a Development badge.
+
+Before release, inspect `closingIssuesReferences` as well as the description/commit messages; don't assume prose saying the Issue must stay open disables GitHub automation. Keep #54 open until the later final-main/evidence/PDF/submission gates actually pass. [GitHub's documented linking and automatic-closing behavior](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue).
+
 ## Historical integration preparation and enduring review gates
 
 Issue [#54](https://github.com/PhraewaS/toktickit/issues/54) integrates the approved contract/features/evidence; it is not a new product feature. PRs [#55](https://github.com/PhraewaS/toktickit/pull/55), [#56](https://github.com/PhraewaS/toktickit/pull/56), [#57](https://github.com/PhraewaS/toktickit/pull/57), [#58](https://github.com/PhraewaS/toktickit/pull/58), [#59](https://github.com/PhraewaS/toktickit/pull/59) and [#60](https://github.com/PhraewaS/toktickit/pull/60) each received guluJa's approval and merged to staging. Starting staging revision: `2741c4b7cb957f0b6ffda8dce902a13eb05e490b`. At preparation time `main` is still the Lab 3 release at `81cf800d02f5927bfdfd042943bf2f36539f317e`.
