@@ -2,6 +2,8 @@
 
 ## Source identity and workflow
 
+[Final-evidence PR #66](https://github.com/PhraewaS/toktickit/pull/66) is open for guluJa's review into main. Its approval/merge is pending and is not supplied by the earlier release approval.
+
 - Released and tested product: **`e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384`**, actual `main` merge of [release PR #63](https://github.com/PhraewaS/toktickit/pull/63).
 - Peer [guluJa APPROVED release head f95ba5c](https://github.com/PhraewaS/toktickit/pull/63#pullrequestreview-5519700187) at 2026-10-14 14:38:54 UTC, before release merge at 14:39:03 UTC (21:39:03 Asia/Bangkok).
 - Evidence branch: `codex/lab4-final-verification-evidence`, created from that main SHA. No application code, schema, seed, dependencies or existing tests are changed. Supplemental visual harness is separately supplied as an evidence tool, not claimed to have existed in the tested main commit.
@@ -47,6 +49,8 @@ The runner binds both connection variables to the same guarded dedicated databas
 Live seed/API captures and controlled HTTP feedback fixtures are separately labelled in visual/results.json. The latter test released UI appearance/retention, not actual server permission/concurrency failures; those are independently covered by the actual API/component suites. The live validation capture receives a real 400 for whitespace Description and creates no invalid Action. Full-page images show below-fold content; element images keep forms/feedback legible.
 
 ## Review and submission gates
+
+For a new clean checkout, the supplemental harness is a later evidence file, not in product e1fa72f: retain a copy in ignored `tmp/visual-harness.mjs` before selecting the tested product checkout, then run `node tmp/visual-harness.mjs <existing-untracked-env-file>` there after installing/building its locked dependencies. The main runner already exists at e1fa72f and is run there normally. The PDF generator runs from the evidence checkout using archived main receipts, with Python reportlab/Pillow/pypdf and Windows Tahoma fonts.
 
 - [x] Actual released-main suites/builds/regression, migration/seed/recovery, metrics/performance and targeted keyboard evidence archived with source SHA.
 - [x] Both directions of peer comments/responses/approvals refreshed without replacing historical snapshots or inventing quotations.

@@ -11,6 +11,7 @@ from pypdf import PdfReader
 
 ROOT=Path.cwd(); E=ROOT/'artifacts/lab-04/evidence/final-main'; V=E/'visual'
 OUT=ROOT/'output/pdf/toktickit-final-main-review.pdf'; OUT.parent.mkdir(parents=True,exist_ok=True)
+(ROOT/'tmp/pdfs').mkdir(parents=True,exist_ok=True)
 SHA='e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384'; REPO='https://github.com/PhraewaS/toktickit'
 S=json.loads((E/'validated-summary.json').read_text(encoding='utf-8'))
 R=json.loads((ROOT/'docs/lab-04/review-history-final-main.json').read_text(encoding='utf-8'))

@@ -2,6 +2,8 @@
 
 ## Current checkpoint: released-main evidence review - 2026-10-14
 
+Final-evidence [PR #66](https://github.com/PhraewaS/toktickit/pull/66) is open into main and requests guluJa's review. It is not yet peer-approved/merged. It references Issue #54 without automatic closure; #54 belongs in PR Review, not Done.
+
 Release [#63](https://github.com/PhraewaS/toktickit/pull/63) is **APPROVED / MERGED**: [guluJa approved head f95ba5c](https://github.com/PhraewaS/toktickit/pull/63#pullrequestreview-5519700187) before actual main merge **e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384** at 2026-10-14 14:39:03 UTC. Documentation #65 was separately [approved](https://github.com/PhraewaS/toktickit/pull/65#pullrequestreview-5519155225) and merged as f95ba5c.
 
 Separate branch **codex/lab4-final-verification-evidence** starts from released main. All six phases actually passed at that unchanged product SHA: Server 164, Client 89, both builds; Lab 4 E2E 11 passed/10 intentional skips; Lab 3 E2E 26 passed/16 intentional skips; 0 failed/flaky; recovery safety 6; 9 table + 5 migration fingerprints match; 8 selected DB/API/UI values and 6 keyboard/browser flows; 40 performance requests/0 failures, maxima 360/14/11/8 ms. [Fresh final-main evidence](../../artifacts/lab-04/evidence/final-main/summary.md). These are local main results, not CI or relabelled staging evidence.
