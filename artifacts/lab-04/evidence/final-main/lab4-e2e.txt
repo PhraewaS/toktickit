@@ -1,0 +1,175 @@
+
+> test:lab4
+> playwright test --config playwright.lab4.config.ts
+
+[WebServer] (node:13980) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:9536) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:3220) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+> [REDACTED]-server@1.0.0 prisma:deploy
+> prisma migrate deploy
+
+Prisma schema loaded from prisma\schema.prisma
+Datasource "db": PostgreSQL database "[REDACTED]_lab4_e2e", schema "public" at "localhost:5433"
+
+5 migrations found in prisma/migrations
+
+
+No pending migrations to apply.
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+
+Running 21 tests using 1 worker
+
+(node:32896) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:24976) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27692) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok  1 [desktop] › lab-04\actions-taken-flow.spec.ts:4:1 › E2E-04 Staff create/edit and Requester read-only Actions Taken (14.9s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:23440) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26496) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+DASHBOARD-METRICS {"role":"requester","database":{"openTickets":2,"waitingForRequester":0,"recentlyUpdated":2,"recentlyResolved":0},"api":{"openTickets":2,"waitingForRequester":0,"recentlyUpdated":2,"recentlyResolved":0},"ui":{"openTickets":2,"waitingForRequester":0,"recentlyUpdated":2,"recentlyResolved":0}}
+  ok  2 [desktop] › lab-04\dashboards.spec.ts:63:1 › E2E-05 Requester Dashboard metrics and active-ticket drill-down (8.2s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:32752) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30820) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+DASHBOARD-METRICS {"role":"staff","database":{"unassignedActive":2,"myActive":1,"myActionsTaken":2,"urgentTickets":2},"api":{"unassignedActive":2,"myActive":1,"myActionsTaken":2,"urgentTickets":2},"ui":{"unassignedActive":2,"myActive":1,"myActionsTaken":2,"urgentTickets":2}}
+  ok  3 [desktop] › lab-04\dashboards.spec.ts:76:1 › E2E-06 Staff Dashboard metrics and unassigned-active drill-down (8.3s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:15248) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:12928) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:7676) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:35012) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok  4 [desktop] › lab-04\migration-seed.spec.ts:30:1 › E2E-00 Lab 4 migration deploys and deterministic seed is repeatable (12.2s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:34476) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:37828) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+BROWSER-SCAN {"expectedUnauthenticatedAuthMe401":2,"unexpectedHttpFailures":0,"pageErrors":0}
+  ok  5 [desktop] › lab-04\responsive.spec.ts:71:1 › RESP-04 Requester Dashboard and Ticket Detail fit the viewport (9.1s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:20752) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27764) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+BROWSER-SCAN {"expectedUnauthenticatedAuthMe401":2,"unexpectedHttpFailures":0,"pageErrors":0}
+  ok  6 [desktop] › lab-04\responsive.spec.ts:92:1 › RESP-04 IT Staff Dashboard and Actions Taken editor fit the viewport (12.0s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:31432) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22544) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok  7 [desktop] › lab-04\ticket-resolution.spec.ts:4:1 › E2E-07 resolution requires an Action Taken, closes completed work, and cancels a separate Ticket (9.0s)
+(node:9856) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -   8 [tablet] › lab-04\actions-taken-flow.spec.ts:4:1 › E2E-04 Staff create/edit and Requester read-only Actions Taken
+  -   9 [tablet] › lab-04\dashboards.spec.ts:63:1 › E2E-05 Requester Dashboard metrics and active-ticket drill-down
+  -  10 [tablet] › lab-04\dashboards.spec.ts:76:1 › E2E-06 Staff Dashboard metrics and unassigned-active drill-down
+  -  11 [tablet] › lab-04\migration-seed.spec.ts:30:1 › E2E-00 Lab 4 migration deploys and deterministic seed is repeatable
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:4308) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:36904) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+BROWSER-SCAN {"expectedUnauthenticatedAuthMe401":2,"unexpectedHttpFailures":0,"pageErrors":0}
+  ok 12 [tablet] › lab-04\responsive.spec.ts:71:1 › RESP-04 Requester Dashboard and Ticket Detail fit the viewport (8.1s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:35532) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26912) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+BROWSER-SCAN {"expectedUnauthenticatedAuthMe401":2,"unexpectedHttpFailures":0,"pageErrors":0}
+  ok 13 [tablet] › lab-04\responsive.spec.ts:92:1 › RESP-04 IT Staff Dashboard and Actions Taken editor fit the viewport (11.1s)
+  -  14 [tablet] › lab-04\ticket-resolution.spec.ts:4:1 › E2E-07 resolution requires an Action Taken, closes completed work, and cancels a separate Ticket
+(node:5084) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -  15 [mobile] › lab-04\actions-taken-flow.spec.ts:4:1 › E2E-04 Staff create/edit and Requester read-only Actions Taken
+  -  16 [mobile] › lab-04\dashboards.spec.ts:63:1 › E2E-05 Requester Dashboard metrics and active-ticket drill-down
+  -  17 [mobile] › lab-04\dashboards.spec.ts:76:1 › E2E-06 Staff Dashboard metrics and unassigned-active drill-down
+  -  18 [mobile] › lab-04\migration-seed.spec.ts:30:1 › E2E-00 Lab 4 migration deploys and deterministic seed is repeatable
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:13900) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15476) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+BROWSER-SCAN {"expectedUnauthenticatedAuthMe401":2,"unexpectedHttpFailures":0,"pageErrors":0}
+  ok 19 [mobile] › lab-04\responsive.spec.ts:71:1 › RESP-04 Requester Dashboard and Ticket Detail fit the viewport (8.5s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:23116) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:8916) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+BROWSER-SCAN {"expectedUnauthenticatedAuthMe401":2,"unexpectedHttpFailures":0,"pageErrors":0}
+  ok 20 [mobile] › lab-04\responsive.spec.ts:92:1 › RESP-04 IT Staff Dashboard and Actions Taken editor fit the viewport (11.1s)
+  -  21 [mobile] › lab-04\ticket-resolution.spec.ts:4:1 › E2E-07 resolution requires an Action Taken, closes completed work, and cancels a separate Ticket
+
+  10 skipped
+  11 passed (2.5m)

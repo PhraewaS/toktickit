@@ -1,6 +1,22 @@
 # Lab 4 Staging Integration and Final Submission
 
-## Current release documentation checkpoint - 2026-10-14
+## Current checkpoint: released-main evidence review - 2026-10-14
+
+Release [#63](https://github.com/PhraewaS/toktickit/pull/63) is **APPROVED / MERGED**: [guluJa approved head f95ba5c](https://github.com/PhraewaS/toktickit/pull/63#pullrequestreview-5519700187) before actual main merge **e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384** at 2026-10-14 14:39:03 UTC. Documentation #65 was separately [approved](https://github.com/PhraewaS/toktickit/pull/65#pullrequestreview-5519155225) and merged as f95ba5c.
+
+Separate branch **codex/lab4-final-verification-evidence** starts from released main. All six phases actually passed at that unchanged product SHA: Server 164, Client 89, both builds; Lab 4 E2E 11 passed/10 intentional skips; Lab 3 E2E 26 passed/16 intentional skips; 0 failed/flaky; recovery safety 6; 9 table + 5 migration fingerprints match; 8 selected DB/API/UI values and 6 keyboard/browser flows; 40 performance requests/0 failures, maxima 360/14/11/8 ms. [Fresh final-main evidence](../../artifacts/lab-04/evidence/final-main/summary.md). These are local main results, not CI or relabelled staging evidence.
+
+- [x] Individually approved #55-#60 and #61/#62/#64/#65 merged into staging; actual approval/merge receipts retained.
+- [x] Current release #63 human-approved and merged staging -> main; exact source recorded.
+- [x] Six main phases and 72 supplementary full-page/error-state/editor captures completed on e1fa72f; fresh reports retain outcomes/metrics and redact credentials.
+- [x] Both-direction reviewer record refreshed to 21 PRs / 111 original events, including #63/#65 and friend's #82/#83; old snapshots and reviewer-pre-release.md retained unchanged.
+- [x] PDF review candidate prepared with Answer Parts 1-9; actual evidence and pending acceptance distinguished.
+- [ ] Peer approves/merges the final-evidence PR. Record its evidence-only merge separately from tested product e1fa72f.
+- [ ] Final accepted PDF/submission, actual Project #48-#54 Done capture and Issue #54 completion. Do not pre-fill approval or Done.
+
+Use non-closing hyperlinks/body references. Keep only the #54 Issue card; move to PR Review once final evidence is ready, without a standalone PR card or automatic-closing Development link. Re-verify affected checks after any product change. Historical checkpoint/checklists below retain their dates and are not current workflow state.
+
+## Historical documentation checkpoint - before #65/#63 approval
 
 This is the documentation/evidence maintenance branch **`codex/lab4-release-documentation-54`**, created from approved staging merge **5ab13bbf53371b1e42bacbfe22c00296b9f68d0c**. It changes no product code, schema, seed, dependencies or test runner. It resolves the documentation follow-ups before [release PR #63](https://github.com/PhraewaS/toktickit/pull/63), not by committing directly to staging/main. Peer approval of this maintenance remains a separate pending gate.
 

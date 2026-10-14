@@ -1,0 +1,875 @@
+{
+  "revision": "e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384",
+  "database": "toktickit_lab4_e2e",
+  "databasePort": 5433,
+  "startedAt": "2026-10-14T15:11:17.485Z",
+  "method": "Chromium on unchanged released product; controlled HTTP visual states are labelled separately from live seed/API states",
+  "captures": [
+    {
+      "viewport": "desktop",
+      "name": "requester-dashboard-full",
+      "file": "desktop-requester-dashboard-full.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 11,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "requester-dashboard-metrics",
+      "file": "desktop-requester-dashboard-metrics.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 11,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "requester-dashboard-lists",
+      "file": "desktop-requester-dashboard-lists.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 11,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "requester-dashboard-empty",
+      "file": "desktop-requester-dashboard-empty.png",
+      "source": "controlled HTTP empty visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 9,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "requester-dashboard-forbidden",
+      "file": "desktop-requester-dashboard-forbidden.png",
+      "source": "controlled HTTP forbidden visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 7,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "requester-dashboard-failure",
+      "file": "desktop-requester-dashboard-failure.png",
+      "source": "controlled HTTP failure visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 7,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "requester-dashboard-loading",
+      "file": "desktop-requester-dashboard-loading.png",
+      "source": "controlled HTTP loading visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 6,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "requester-actions-full",
+      "file": "desktop-requester-actions-full.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 18,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "requester-actions-panel",
+      "file": "desktop-requester-actions-panel.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 18,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "staff-dashboard-full",
+      "file": "desktop-staff-dashboard-full.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 30,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "staff-dashboard-metrics",
+      "file": "desktop-staff-dashboard-metrics.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 30,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "staff-dashboard-lists",
+      "file": "desktop-staff-dashboard-lists.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 30,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "staff-dashboard-empty",
+      "file": "desktop-staff-dashboard-empty.png",
+      "source": "controlled HTTP empty visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 20,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "staff-dashboard-forbidden",
+      "file": "desktop-staff-dashboard-forbidden.png",
+      "source": "controlled HTTP forbidden visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 6,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "staff-dashboard-failure",
+      "file": "desktop-staff-dashboard-failure.png",
+      "source": "controlled HTTP failure visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 6,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "staff-dashboard-loading",
+      "file": "desktop-staff-dashboard-loading.png",
+      "source": "controlled HTTP loading visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 5,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "staff-actions-full",
+      "file": "desktop-staff-actions-full.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 21,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "staff-actions-panel",
+      "file": "desktop-staff-actions-panel.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 21,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "actions-create-follow-up",
+      "file": "desktop-actions-create-follow-up.png",
+      "source": "live editor, unsubmitted draft",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 27,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "actions-validation",
+      "file": "desktop-actions-validation.png",
+      "source": "live server 400 for whitespace description; no invalid Action saved",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 27,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "actions-edit-follow-up",
+      "file": "desktop-actions-edit-follow-up.png",
+      "source": "live loaded Action, unsubmitted edit",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 27,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "actions-conflict",
+      "file": "desktop-actions-conflict.png",
+      "source": "controlled HTTP 409; actual version/retry behavior verified by API/component suites",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 28,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "actions-refresh-failure-draft",
+      "file": "desktop-actions-refresh-failure-draft.png",
+      "source": "controlled HTTP 500; draft retained and retry visible",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 28,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "desktop",
+      "name": "actions-forbidden",
+      "file": "desktop-actions-forbidden.png",
+      "source": "controlled HTTP 403; editor/protected list hidden",
+      "layout": {
+        "pageWidth": 1440,
+        "scrollWidth": 1440,
+        "controlCount": 18,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "requester-dashboard-full",
+      "file": "tablet-requester-dashboard-full.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 11,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "requester-dashboard-metrics",
+      "file": "tablet-requester-dashboard-metrics.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 11,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "requester-dashboard-lists",
+      "file": "tablet-requester-dashboard-lists.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 11,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "requester-dashboard-empty",
+      "file": "tablet-requester-dashboard-empty.png",
+      "source": "controlled HTTP empty visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 9,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "requester-dashboard-forbidden",
+      "file": "tablet-requester-dashboard-forbidden.png",
+      "source": "controlled HTTP forbidden visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 7,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "requester-dashboard-failure",
+      "file": "tablet-requester-dashboard-failure.png",
+      "source": "controlled HTTP failure visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 7,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "requester-dashboard-loading",
+      "file": "tablet-requester-dashboard-loading.png",
+      "source": "controlled HTTP loading visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 6,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "requester-actions-full",
+      "file": "tablet-requester-actions-full.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 18,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "requester-actions-panel",
+      "file": "tablet-requester-actions-panel.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 18,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "staff-dashboard-full",
+      "file": "tablet-staff-dashboard-full.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 30,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "staff-dashboard-metrics",
+      "file": "tablet-staff-dashboard-metrics.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 30,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "staff-dashboard-lists",
+      "file": "tablet-staff-dashboard-lists.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 30,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "staff-dashboard-empty",
+      "file": "tablet-staff-dashboard-empty.png",
+      "source": "controlled HTTP empty visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 20,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "staff-dashboard-forbidden",
+      "file": "tablet-staff-dashboard-forbidden.png",
+      "source": "controlled HTTP forbidden visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 6,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "staff-dashboard-failure",
+      "file": "tablet-staff-dashboard-failure.png",
+      "source": "controlled HTTP failure visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 6,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "staff-dashboard-loading",
+      "file": "tablet-staff-dashboard-loading.png",
+      "source": "controlled HTTP loading visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 5,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "staff-actions-full",
+      "file": "tablet-staff-actions-full.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 21,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "staff-actions-panel",
+      "file": "tablet-staff-actions-panel.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 21,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "actions-create-follow-up",
+      "file": "tablet-actions-create-follow-up.png",
+      "source": "live editor, unsubmitted draft",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 27,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "actions-validation",
+      "file": "tablet-actions-validation.png",
+      "source": "live server 400 for whitespace description; no invalid Action saved",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 27,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "actions-edit-follow-up",
+      "file": "tablet-actions-edit-follow-up.png",
+      "source": "live loaded Action, unsubmitted edit",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 27,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "actions-conflict",
+      "file": "tablet-actions-conflict.png",
+      "source": "controlled HTTP 409; actual version/retry behavior verified by API/component suites",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 28,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "actions-refresh-failure-draft",
+      "file": "tablet-actions-refresh-failure-draft.png",
+      "source": "controlled HTTP 500; draft retained and retry visible",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 28,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "tablet",
+      "name": "actions-forbidden",
+      "file": "tablet-actions-forbidden.png",
+      "source": "controlled HTTP 403; editor/protected list hidden",
+      "layout": {
+        "pageWidth": 834,
+        "scrollWidth": 834,
+        "controlCount": 18,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "requester-dashboard-full",
+      "file": "mobile-requester-dashboard-full.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 11,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "requester-dashboard-metrics",
+      "file": "mobile-requester-dashboard-metrics.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 11,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "requester-dashboard-lists",
+      "file": "mobile-requester-dashboard-lists.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 11,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "requester-dashboard-empty",
+      "file": "mobile-requester-dashboard-empty.png",
+      "source": "controlled HTTP empty visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 9,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "requester-dashboard-forbidden",
+      "file": "mobile-requester-dashboard-forbidden.png",
+      "source": "controlled HTTP forbidden visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 7,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "requester-dashboard-failure",
+      "file": "mobile-requester-dashboard-failure.png",
+      "source": "controlled HTTP failure visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 7,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "requester-dashboard-loading",
+      "file": "mobile-requester-dashboard-loading.png",
+      "source": "controlled HTTP loading visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 6,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "requester-actions-full",
+      "file": "mobile-requester-actions-full.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 18,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "requester-actions-panel",
+      "file": "mobile-requester-actions-panel.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 18,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "staff-dashboard-full",
+      "file": "mobile-staff-dashboard-full.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 30,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "staff-dashboard-metrics",
+      "file": "mobile-staff-dashboard-metrics.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 30,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "staff-dashboard-lists",
+      "file": "mobile-staff-dashboard-lists.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 30,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "staff-dashboard-empty",
+      "file": "mobile-staff-dashboard-empty.png",
+      "source": "controlled HTTP empty visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 20,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "staff-dashboard-forbidden",
+      "file": "mobile-staff-dashboard-forbidden.png",
+      "source": "controlled HTTP forbidden visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 6,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "staff-dashboard-failure",
+      "file": "mobile-staff-dashboard-failure.png",
+      "source": "controlled HTTP failure visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 6,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "staff-dashboard-loading",
+      "file": "mobile-staff-dashboard-loading.png",
+      "source": "controlled HTTP loading visual fixture; backend correctness covered by the unchanged full suites",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 5,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "staff-actions-full",
+      "file": "mobile-staff-actions-full.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 21,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "staff-actions-panel",
+      "file": "mobile-staff-actions-panel.png",
+      "source": "live seeded API",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 21,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "actions-create-follow-up",
+      "file": "mobile-actions-create-follow-up.png",
+      "source": "live editor, unsubmitted draft",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 27,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "actions-validation",
+      "file": "mobile-actions-validation.png",
+      "source": "live server 400 for whitespace description; no invalid Action saved",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 27,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "actions-edit-follow-up",
+      "file": "mobile-actions-edit-follow-up.png",
+      "source": "live loaded Action, unsubmitted edit",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 27,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "actions-conflict",
+      "file": "mobile-actions-conflict.png",
+      "source": "controlled HTTP 409; actual version/retry behavior verified by API/component suites",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 28,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "actions-refresh-failure-draft",
+      "file": "mobile-actions-refresh-failure-draft.png",
+      "source": "controlled HTTP 500; draft retained and retry visible",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 28,
+        "outside": 0
+      }
+    },
+    {
+      "viewport": "mobile",
+      "name": "actions-forbidden",
+      "file": "mobile-actions-forbidden.png",
+      "source": "controlled HTTP 403; editor/protected list hidden",
+      "layout": {
+        "pageWidth": 390,
+        "scrollWidth": 390,
+        "controlCount": 18,
+        "outside": 0
+      }
+    }
+  ],
+  "completedAt": "2026-10-14T15:11:57.424Z",
+  "failed": false
+}

@@ -158,6 +158,8 @@ This writes the Lab 3 HTML report and responsive evidence under `artifacts/lab-0
 
 ### Integrated Lab 4 verification
 
+Released-main verification is now archived at [`artifacts/lab-04/evidence/final-main/summary.md`](artifacts/lab-04/evidence/final-main/summary.md), tested product `e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384` after approved release #63. Fresh sanitized reports, full outputs, selected DB/API/UI counts and supplementary three-viewport visual states are separate from historical staging evidence. The Answer Parts 1-9 PDF in that directory is a peer-review candidate; final evidence approval/merge, accepted submission and Project Done remain human gates. Evidence-only commits are not a new tested product revision.
+
 After installing the locked server, client, and E2E dependencies and Playwright Chromium, run these phases in order from the repository root. Replace the environment-file path with your existing local file; the runner reads credentials without copying or printing them.
 
 ```powershell

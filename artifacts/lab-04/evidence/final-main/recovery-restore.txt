@@ -1,0 +1,50 @@
+ set_config 
+------------
+ 
+(1 row)
+
+ setval 
+--------
+    696
+(1 row)
+
+ setval 
+--------
+      1
+(1 row)
+
+ setval 
+--------
+    896
+(1 row)
+
+ setval 
+--------
+   1338
+(1 row)
+
+ setval 
+--------
+   1338
+(1 row)
+
+ setval 
+--------
+   1344
+(1 row)
+
+ setval 
+--------
+   2247
+(1 row)
+
+ setval 
+--------
+    238
+(1 row)
+
+ setval 
+--------
+   1338
+(1 row)
+

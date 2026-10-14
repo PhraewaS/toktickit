@@ -1,0 +1,28 @@
+{
+  "mode": "lab3",
+  "revision": "e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384",
+  "startedAt": "2026-10-14T14:52:49.784Z",
+  "database": "toktickit_lab3_e2e",
+  "databasePort": 5433,
+  "steps": [
+    {
+      "label": "lab3-e2e",
+      "exitCode": 0,
+      "elapsedMs": 276851
+    }
+  ],
+  "report": {
+    "stats": {
+      "total": 42,
+      "expected": 26,
+      "unexpected": 0,
+      "flaky": 0,
+      "skipped": 16,
+      "ok": true
+    },
+    "errors": [],
+    "metricsPresent": false,
+    "credentialRedaction": true
+  },
+  "completedAt": "2026-10-14T14:57:26.766Z"
+}

@@ -1,0 +1,341 @@
+
+> test:lab3
+> playwright test --config playwright.lab3.config.ts
+
+[WebServer] (node:1648) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:4960) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:34064) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+> [REDACTED]-server@1.0.0 prisma:deploy
+> prisma migrate deploy
+
+Prisma schema loaded from prisma\schema.prisma
+Datasource "db": PostgreSQL database "[REDACTED]_lab3_e2e", schema "public" at "localhost:5433"
+
+5 migrations found in prisma/migrations
+
+
+No pending migrations to apply.
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+
+Running 42 tests using 1 worker
+
+(node:25124) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:29940) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:20564) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok  1 [desktop] › lab-03\authentication.spec.ts:6:1 › E2E-01 login, mandatory first password change, and logout (8.8s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:10508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:11692) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok  2 [desktop] › lab-03\authentication.spec.ts:25:1 › E2E-04 authentication rejects invalid, inactive, gated, and revoked access (6.0s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:34984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:17168) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok  3 [desktop] › lab-03\evidence.spec.ts:39:1 › EVIDENCE-00 Login and Change Password screenshots (7.9s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:38120) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:12260) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok  4 [desktop] › lab-03\evidence.spec.ts:51:1 › EVIDENCE-01 Staff Queue screenshot (8.6s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:31060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:18016) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok  5 [desktop] › lab-03\evidence.spec.ts:66:1 › EVIDENCE-02 Staff Ticket Detail screenshot (8.4s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:38384) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30832) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok  6 [desktop] › lab-03\evidence.spec.ts:77:1 › EVIDENCE-03 Administrator User Management screenshot (7.9s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:34880) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:30376) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok  7 [desktop] › lab-03\requester-flow.spec.ts:5:1 › E2E-05 authenticated Requester regression: create, own detail, comment, and resolved indication (10.5s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:35220) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:29092) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok  8 [desktop] › lab-03\requester-flow.spec.ts:40:1 › E2E-08 authenticated Requester regression replaces the legacy Lab 2 selector flow (8.1s)
+  ok  9 [desktop] › lab-03\responsive.spec.ts:29:1 › RESP-01 Lab 3 login remains within the viewport (1.2s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:30900) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:21824) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:33976) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:28812) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:6132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:23992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok 10 [desktop] › lab-03\responsive.spec.ts:36:1 › RESP-02 all major role screens remain usable without clipping (22.1s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:27988) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:37616) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok 11 [desktop] › lab-03\staff-ticket-flow.spec.ts:6:1 › E2E-02 IT Staff queue and detail workflow (8.5s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:37304) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:13376) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok 12 [desktop] › lab-03\staff-ticket-flow.spec.ts:32:1 › E2E-06 IT Staff queue query and ticket operations use production API routes (6.9s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:14492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:10184) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok 13 [desktop] › lab-03\user-administration.spec.ts:6:1 › E2E-03 Administrator sees minimalist User Management (8.9s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:27048) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27940) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok 14 [desktop] › lab-03\user-administration.spec.ts:27:1 › E2E-07 Administrator user lifecycle and safety rules use production API routes (6.7s)
+(node:33380) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -  15 [tablet] › lab-03\authentication.spec.ts:6:1 › E2E-01 login, mandatory first password change, and logout
+  -  16 [tablet] › lab-03\authentication.spec.ts:25:1 › E2E-04 authentication rejects invalid, inactive, gated, and revoked access
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:1644) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:11128) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok 17 [tablet] › lab-03\evidence.spec.ts:39:1 › EVIDENCE-00 Login and Change Password screenshots (8.3s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:18424) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:20172) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok 18 [tablet] › lab-03\evidence.spec.ts:51:1 › EVIDENCE-01 Staff Queue screenshot (8.8s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:29252) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:35440) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok 19 [tablet] › lab-03\evidence.spec.ts:66:1 › EVIDENCE-02 Staff Ticket Detail screenshot (8.8s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:15220) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3312) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok 20 [tablet] › lab-03\evidence.spec.ts:77:1 › EVIDENCE-03 Administrator User Management screenshot (8.1s)
+  -  21 [tablet] › lab-03\requester-flow.spec.ts:5:1 › E2E-05 authenticated Requester regression: create, own detail, comment, and resolved indication
+  -  22 [tablet] › lab-03\requester-flow.spec.ts:40:1 › E2E-08 authenticated Requester regression replaces the legacy Lab 2 selector flow
+  ok 23 [tablet] › lab-03\responsive.spec.ts:29:1 › RESP-01 Lab 3 login remains within the viewport (1.2s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:15460) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15440) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:34768) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:15636) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:9020) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:29444) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok 24 [tablet] › lab-03\responsive.spec.ts:36:1 › RESP-02 all major role screens remain usable without clipping (21.2s)
+  -  25 [tablet] › lab-03\staff-ticket-flow.spec.ts:6:1 › E2E-02 IT Staff queue and detail workflow
+  -  26 [tablet] › lab-03\staff-ticket-flow.spec.ts:32:1 › E2E-06 IT Staff queue query and ticket operations use production API routes
+  -  27 [tablet] › lab-03\user-administration.spec.ts:6:1 › E2E-03 Administrator sees minimalist User Management
+  -  28 [tablet] › lab-03\user-administration.spec.ts:27:1 › E2E-07 Administrator user lifecycle and safety rules use production API routes
+(node:18388) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  -  29 [mobile] › lab-03\authentication.spec.ts:6:1 › E2E-01 login, mandatory first password change, and logout
+  -  30 [mobile] › lab-03\authentication.spec.ts:25:1 › E2E-04 authentication rejects invalid, inactive, gated, and revoked access
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:34484) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24472) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok 31 [mobile] › lab-03\evidence.spec.ts:39:1 › EVIDENCE-00 Login and Change Password screenshots (8.2s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:9024) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:19964) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok 32 [mobile] › lab-03\evidence.spec.ts:51:1 › EVIDENCE-01 Staff Queue screenshot (7.0s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:11876) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:4624) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok 33 [mobile] › lab-03\evidence.spec.ts:66:1 › EVIDENCE-02 Staff Ticket Detail screenshot (8.5s)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:22240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:13588) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok 34 [mobile] › lab-03\evidence.spec.ts:77:1 › EVIDENCE-03 Administrator User Management screenshot (7.5s)
+  -  35 [mobile] › lab-03\requester-flow.spec.ts:5:1 › E2E-05 authenticated Requester regression: create, own detail, comment, and resolved indication
+  -  36 [mobile] › lab-03\requester-flow.spec.ts:40:1 › E2E-08 authenticated Requester regression replaces the legacy Lab 2 selector flow
+  ok 37 [mobile] › lab-03\responsive.spec.ts:29:1 › RESP-01 Lab 3 login remains within the viewport (889ms)
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:9048) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:4056) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:34480) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24152) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+
+> [REDACTED]-server@1.0.0 prisma:seed
+> tsx prisma/seed.ts
+
+(node:21780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22384) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+  ok 38 [mobile] › lab-03\responsive.spec.ts:36:1 › RESP-02 all major role screens remain usable without clipping (24.0s)
+  -  39 [mobile] › lab-03\staff-ticket-flow.spec.ts:6:1 › E2E-02 IT Staff queue and detail workflow
+  -  40 [mobile] › lab-03\staff-ticket-flow.spec.ts:32:1 › E2E-06 IT Staff queue query and ticket operations use production API routes
+  -  41 [mobile] › lab-03\user-administration.spec.ts:6:1 › E2E-03 Administrator sees minimalist User Management
+  -  42 [mobile] › lab-03\user-administration.spec.ts:27:1 › E2E-07 Administrator user lifecycle and safety rules use production API routes
+
+  16 skipped
+  26 passed (4.5m)

@@ -1,0 +1,48 @@
+{
+  "productRevision": "e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384",
+  "phaseCount": 6,
+  "reports": {
+    "lab4": {
+      "total": 21,
+      "expected": 11,
+      "unexpected": 0,
+      "flaky": 0,
+      "skipped": 10,
+      "ok": true
+    },
+    "lab3": {
+      "total": 42,
+      "expected": 26,
+      "unexpected": 0,
+      "flaky": 0,
+      "skipped": 16,
+      "ok": true
+    }
+  },
+  "visualCaptures": 72,
+  "originalQuotationsVerified": 111,
+  "historicalReviewerUnchanged": true,
+  "localLinksVerified": 165,
+  "productTreeUnchanged": true,
+  "secretScan": "configured connection URL/credential assignments absent; public product/session/database names are not credential fields",
+  "pdf": {
+    "pages": 25,
+    "headings": [
+      "Answer Part 1",
+      "Answer Part 2",
+      "Answer Part 3",
+      "Answer Part 4",
+      "Answer Part 5",
+      "Answer Part 6",
+      "Answer Part 7",
+      "Answer Part 8",
+      "Answer Part 9"
+    ],
+    "uriCount": 88,
+    "uniqueUris": 75,
+    "productRevision": "e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384",
+    "status": "review candidate; final peer/submission/Done gates pending"
+  },
+  "verbatimWhitespace": "3 preserved raw GitHub quote lines have original trailing spaces; not product whitespace changes",
+  "completedAt": "2026-10-14T15:24:27.847Z"
+}

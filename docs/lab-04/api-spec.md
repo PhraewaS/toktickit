@@ -1,5 +1,7 @@
 # Lab 4 API Contract
 
+**2026-10-14 verification checkpoint:** unchanged contract verified on actual released main **e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384**: Server 164 passed, selected Dashboard DB/API/UI counts match and all 40 smoke requests passed. [Main evidence](../../artifacts/lab-04/evidence/final-main/summary.md). Controlled visual HTTP fixtures are not live API outcomes or new contracts; human final-evidence acceptance remains separate.
+
 All endpoints use the existing JSON envelope:
 
 ```json

@@ -2,6 +2,8 @@
 
 ## Model used
 
+Final-evidence checkpoint 2026-10-14: the same agent assisted actual released-main verification, original bidirectional review archiving and a PDF review candidate. Product source e1fa72f, actual logs and pending human acceptance are recorded in [final-main summary](../../artifacts/lab-04/evidence/final-main/summary.md). The ten selected prompts and original personal reflection below are retained, not replaced with an invented new reflection.
+
 OpenAI Codex, GPT-5-based coding agent in the Codex desktop workspace.
 
 ## Selected key prompts

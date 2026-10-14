@@ -2,6 +2,27 @@
 
 ## Evidence identity and checklist meaning
 
+### Current released-main inspection - 2026-10-14
+
+Actual tested product **e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384** (approved #63 main merge). Fresh six-phase outputs and RESP-04: [main summary](../../artifacts/lab-04/evidence/final-main/summary.md). Supplementary [72 captures and individual provenance/fit assertions](../../artifacts/lab-04/evidence/final-main/visual/results.json) cover full-page Staff/Requester dashboards, below-fold lists/breakdowns, readonly and editable Action list, create/edit with Follow-Up Note and controls, validation/forbidden/conflict/failed-refresh retention at desktop 1440x1000, tablet 834x1112, mobile 390x844.
+
+| Main acceptance check | Method and actual scope | Product evidence |
+| --- | --- | --- |
+| Shared Zen Green shell/cards/controls, required and readonly fields | Manually inspected all supplementary images and unchanged CSS/components; retained legacy login/password/queue/detail/admin captures show the same navigation/private-note styling | [x] |
+| Full-page/scrolled success surfaces and usable create/edit form | Full-page originals and complete form-element captures at three widths; screenshot harness waits for success metrics before success capture, not merely the heading | [x] |
+| Validation placement and retained data | Live API 400 for whitespace Description; linked field error/aria-invalid; no invalid Action saved. Safe controlled 409 then refresh 500 shows retained edit Result and explicit retry/discard | [x] |
+| Distinct Dashboard loading/zero/forbidden/failure; Action forbidden | Controlled HTTP fixtures at every width; provenance explicitly says these are UI fixtures, not live permission failures. Protected list/form hidden on forbidden; actual backend/role cases pass in suites | [x] |
+| Keyboard/focus and activation | Actual final-main RESP-04 six flows: Tab/Enter/Space, active element and focus-visible; Dashboard filter-matched navigation plus editor Add/follow-up/note/Save | [x] |
+| Horizontal overflow/control bounds | Every supplementary capture asserts scrollWidth <= clientWidth and all visible controls inside the viewport; RESP-04 separately passes | [x] |
+| Clipping/vertical overlap/readable feedback | Manual inspection of all full-page/element captures found no overlapping visible control/label boxes. Long single-line readonly values scroll internally; normal page scrolling is not clipping | [x] |
+| Final regression appearance / browser hygiene | Fresh legacy major-screen captures and complete Lab 3 main E2E; six browser scans have 0 unexpected HTTP/page errors, expected unauthenticated auth/me 401 probes counted separately | [x] |
+| Review PDF legibility and links | PDF renders selected readable regions; full originals linked; all nine parts/source identity/explicit pending gates retained | [x] |
+| Human final-evidence approval/merge, accepted PDF/submission and Done | Remain future human workflow events; not auto-approved | [ ] |
+
+This is targeted visual/semantic/keyboard inspection, **not** full WCAG/axe certification or a measured contrast audit. The old final-main-pending checklist below remains the dated pre-release checkpoint, not current test status. Success/real field validation and controlled HTTP visual states are not conflated.
+
+### Historical pre-release checklist and remaining gates at that time
+
 Latest executed staging run: **5ab13bbf53371b1e42bacbfe22c00296b9f68d0c**, 2026-10-14. [Phase JSON/logs and six BROWSER-SCAN results](https://github.com/PhraewaS/toktickit/pull/63#issuecomment-6168420145). The documentation maintenance inspected the 12 unmodified screenshots in [documentation-review](../../artifacts/lab-04/evidence/documentation-review/summary.md), plus the actual CSS/components/tests. It does not claim a new browser run on this documentation branch or a final-main pass.
 
 Checked means the stated evidence/method was inspected or executed; it does **not** mean all UI states or complete WCAG conformance. Unchecked final gates are intentionally retained until actual verification. Viewports: desktop 1440x1000, tablet 834x1112, mobile 390x844, Chromium. Editor screenshots capture the entire form element; other images show a viewport, not an entire page.

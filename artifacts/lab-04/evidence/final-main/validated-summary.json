@@ -1,0 +1,330 @@
+{
+  "revision": "e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384",
+  "records": [
+    {
+      "mode": "prepare",
+      "revision": "e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384",
+      "startedAt": "2026-10-14T14:46:46.411Z",
+      "database": "toktickit_lab4_e2e",
+      "databasePort": 5433,
+      "steps": [
+        {
+          "label": "prisma-generate",
+          "exitCode": 0,
+          "elapsedMs": 6790
+        },
+        {
+          "label": "migration-deploy",
+          "exitCode": 0,
+          "elapsedMs": 8909
+        },
+        {
+          "label": "seed",
+          "exitCode": 0,
+          "elapsedMs": 5922
+        }
+      ],
+      "completedAt": "2026-10-14T14:47:08.292Z"
+    },
+    {
+      "mode": "recovery",
+      "revision": "e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384",
+      "startedAt": "2026-10-14T14:47:09.708Z",
+      "database": "toktickit_lab4_e2e",
+      "databasePort": 5433,
+      "steps": [
+        {
+          "label": "recovery-backup",
+          "exitCode": 0,
+          "elapsedMs": 395
+        },
+        {
+          "label": "recovery-create",
+          "exitCode": 0,
+          "elapsedMs": 670
+        },
+        {
+          "label": "recovery-restore",
+          "exitCode": 0,
+          "elapsedMs": 546
+        },
+        {
+          "label": "recovery-cleanup",
+          "exitCode": 0,
+          "elapsedMs": 434
+        }
+      ],
+      "recoveryEnvironment": {
+        "serverMajor": 15,
+        "dumpVersion": "pg_dump (PostgreSQL) 15.19",
+        "psqlVersion": "psql (PostgreSQL) 15.19",
+        "method": "plain SQL dump / psql"
+      },
+      "recovery": {
+        "matched": true,
+        "tables": [
+          {
+            "table": "requester_users",
+            "count": 10,
+            "checksum": "568831f76c0520deaeacb7b5065cc2c7"
+          },
+          {
+            "table": "categories",
+            "count": 4,
+            "checksum": "6b5825a867780f66147c1ede862fc7e9"
+          },
+          {
+            "table": "related_systems",
+            "count": 6,
+            "checksum": "91e97ec1370bc319db59b7551fc712cb"
+          },
+          {
+            "table": "tickets",
+            "count": 6,
+            "checksum": "516c96b6fb9bc38ba877711b1ade52cc"
+          },
+          {
+            "table": "attachments",
+            "count": 0,
+            "checksum": "d41d8cd98f00b204e9800998ecf8427e"
+          },
+          {
+            "table": "sessions",
+            "count": 0,
+            "checksum": "d41d8cd98f00b204e9800998ecf8427e"
+          },
+          {
+            "table": "public_comments",
+            "count": 6,
+            "checksum": "b5eac2338cf3bbc4559626e8dd465a42"
+          },
+          {
+            "table": "internal_notes",
+            "count": 6,
+            "checksum": "827efce1b9e397f8f51237b68a0778ac"
+          },
+          {
+            "table": "actions_taken",
+            "count": 3,
+            "checksum": "f3d997b4bab8217e6de35f0c5cc37ae6"
+          }
+        ],
+        "migrations": {
+          "count": 5,
+          "checksum": "ab2e80dab10ce8ecee8cb42e8810d3a0"
+        },
+        "recoveryDatabase": "toktickit_lab4_recovery_30264_1791989229740",
+        "temporaryDatabaseRemoved": true,
+        "dumpRemoved": true
+      },
+      "completedAt": "2026-10-14T14:47:12.511Z"
+    },
+    {
+      "mode": "server",
+      "revision": "e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384",
+      "startedAt": "2026-10-14T14:47:13.863Z",
+      "database": "toktickit_lab4_e2e",
+      "databasePort": 5433,
+      "steps": [
+        {
+          "label": "server-seed",
+          "exitCode": 0,
+          "elapsedMs": 5689
+        },
+        {
+          "label": "server-tests",
+          "exitCode": 0,
+          "elapsedMs": 62199
+        },
+        {
+          "label": "server-build",
+          "exitCode": 0,
+          "elapsedMs": 7817
+        }
+      ],
+      "completedAt": "2026-10-14T14:48:29.574Z"
+    },
+    {
+      "mode": "client",
+      "revision": "e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384",
+      "startedAt": "2026-10-14T14:48:31.169Z",
+      "database": "toktickit_lab4_e2e",
+      "databasePort": 5433,
+      "steps": [
+        {
+          "label": "client-tests",
+          "exitCode": 0,
+          "elapsedMs": 88745
+        },
+        {
+          "label": "client-build",
+          "exitCode": 0,
+          "elapsedMs": 12522
+        }
+      ],
+      "completedAt": "2026-10-14T14:50:12.441Z"
+    },
+    {
+      "mode": "lab4",
+      "revision": "e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384",
+      "startedAt": "2026-10-14T14:50:13.792Z",
+      "database": "toktickit_lab4_e2e",
+      "databasePort": 5433,
+      "steps": [
+        {
+          "label": "lab4-e2e",
+          "exitCode": 0,
+          "elapsedMs": 154501
+        }
+      ],
+      "report": {
+        "stats": {
+          "total": 21,
+          "expected": 11,
+          "unexpected": 0,
+          "flaky": 0,
+          "skipped": 10,
+          "ok": true
+        },
+        "errors": [],
+        "metricsPresent": true,
+        "credentialRedaction": true
+      },
+      "completedAt": "2026-10-14T14:52:48.390Z"
+    },
+    {
+      "mode": "lab3",
+      "revision": "e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384",
+      "startedAt": "2026-10-14T14:52:49.784Z",
+      "database": "toktickit_lab3_e2e",
+      "databasePort": 5433,
+      "steps": [
+        {
+          "label": "lab3-e2e",
+          "exitCode": 0,
+          "elapsedMs": 276851
+        }
+      ],
+      "report": {
+        "stats": {
+          "total": 42,
+          "expected": 26,
+          "unexpected": 0,
+          "flaky": 0,
+          "skipped": 16,
+          "ok": true
+        },
+        "errors": [],
+        "metricsPresent": false,
+        "credentialRedaction": true
+      },
+      "completedAt": "2026-10-14T14:57:26.766Z"
+    }
+  ],
+  "performance": {
+    "requestCount": 40,
+    "results": [
+      {
+        "endpoint": "staff-dashboard",
+        "requests": 10,
+        "maxDurationMs": 360,
+        "failures": 0
+      },
+      {
+        "endpoint": "requester-dashboard",
+        "requests": 10,
+        "maxDurationMs": 14,
+        "failures": 0
+      },
+      {
+        "endpoint": "staff-actions-list",
+        "requests": 10,
+        "maxDurationMs": 11,
+        "failures": 0
+      },
+      {
+        "endpoint": "requester-actions-list",
+        "requests": 10,
+        "maxDurationMs": 8,
+        "failures": 0
+      }
+    ]
+  },
+  "metrics": [
+    {
+      "role": "requester",
+      "database": {
+        "openTickets": 2,
+        "waitingForRequester": 0,
+        "recentlyUpdated": 2,
+        "recentlyResolved": 0
+      },
+      "api": {
+        "openTickets": 2,
+        "waitingForRequester": 0,
+        "recentlyUpdated": 2,
+        "recentlyResolved": 0
+      },
+      "ui": {
+        "openTickets": 2,
+        "waitingForRequester": 0,
+        "recentlyUpdated": 2,
+        "recentlyResolved": 0
+      }
+    },
+    {
+      "role": "staff",
+      "database": {
+        "unassignedActive": 2,
+        "myActive": 1,
+        "myActionsTaken": 2,
+        "urgentTickets": 2
+      },
+      "api": {
+        "unassignedActive": 2,
+        "myActive": 1,
+        "myActionsTaken": 2,
+        "urgentTickets": 2
+      },
+      "ui": {
+        "unassignedActive": 2,
+        "myActive": 1,
+        "myActionsTaken": 2,
+        "urgentTickets": 2
+      }
+    }
+  ],
+  "browserScans": [
+    {
+      "expectedUnauthenticatedAuthMe401": 2,
+      "unexpectedHttpFailures": 0,
+      "pageErrors": 0
+    },
+    {
+      "expectedUnauthenticatedAuthMe401": 2,
+      "unexpectedHttpFailures": 0,
+      "pageErrors": 0
+    },
+    {
+      "expectedUnauthenticatedAuthMe401": 2,
+      "unexpectedHttpFailures": 0,
+      "pageErrors": 0
+    },
+    {
+      "expectedUnauthenticatedAuthMe401": 2,
+      "unexpectedHttpFailures": 0,
+      "pageErrors": 0
+    },
+    {
+      "expectedUnauthenticatedAuthMe401": 2,
+      "unexpectedHttpFailures": 0,
+      "pageErrors": 0
+    },
+    {
+      "expectedUnauthenticatedAuthMe401": 2,
+      "unexpectedHttpFailures": 0,
+      "pageErrors": 0
+    }
+  ],
+  "validation": "All six phases actually executed on released main and verified"
+}
