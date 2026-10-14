@@ -1,6 +1,54 @@
 # Lab 4 Staging Integration and Final Submission
 
-## Scope and review gates
+## Current release documentation checkpoint - 2026-10-14
+
+This is the documentation/evidence maintenance branch **`codex/lab4-release-documentation-54`**, created from approved staging merge **5ab13bbf53371b1e42bacbfe22c00296b9f68d0c**. It changes no product code, schema, seed, dependencies or test runner. It resolves the documentation follow-ups before [release PR #63](https://github.com/PhraewaS/toktickit/pull/63), not by committing directly to staging/main. Peer approval of this maintenance remains a separate pending gate.
+
+| PR / gate | Actual status at this checkpoint | Evidence |
+| --- | --- | --- |
+| #55-#60 contract/features/verification | Each human-approved and merged into staging | Individual approval/merge links in [reviewer.md](reviewer.md) |
+| #61 integration preparation | Approved / merged as b618547 | [approval](https://github.com/PhraewaS/toktickit/pull/61#pullrequestreview-5478535660) |
+| #62 recovery repair | Approved / merged as c239461; no longer awaiting merge | [approval](https://github.com/PhraewaS/toktickit/pull/62#pullrequestreview-5489697574) |
+| #64 bidirectional reviewer record | Approved d4479bb before merge as 5ab13bb, 2026-10-14 | [approval](https://github.com/PhraewaS/toktickit/pull/64#pullrequestreview-5517046805), [merge](https://github.com/PhraewaS/toktickit/commit/5ab13bbf53371b1e42bacbfe22c00296b9f68d0c) |
+| Staging verification after #64 | All six phases passed at **5ab13bb**, not this later evidence-only commit | [commands, phase JSON and complete sanitized logs](https://github.com/PhraewaS/toktickit/pull/63#issuecomment-6168420145) |
+| Documentation maintenance | Prepared on separate branch for peer review | This document, specification/API/UI/test/checklist updates and review addendum |
+| #63 release | OPEN; earlier COMMENTED review at c239461 is not formal approval of the latest head | [review](https://github.com/PhraewaS/toktickit/pull/63#pullrequestreview-5492867653) |
+| Final main / final evidence / PDF / #54 Done | Pending release and actual final-source verification | Unchecked gates below; staging does not substitute for main |
+
+The 5ab13bb run (2026-10-14, 19:23-19:31 Asia/Bangkok) recorded Server 164/164, Client 89/89, both builds, Lab 4 E2E 11 passed/10 intentional skips, Lab 3 E2E 26 passed/16 intentional skips and 0 failed/flaky. Recovery safety 6/6, migration/seed/isolated recovery, eight selected DB/API/UI counts and six responsive/keyboard checks passed. PERF-04: 40 requests, 0 failures, maxima 311/7/7/7 ms, all <1,000 ms. These are **local staging results**, not CI; no GitHub check run was reported for that head. [Review screenshots](../../artifacts/lab-04/evidence/documentation-review/summary.md) are unchanged copies from that run, not screenshots generated on this documentation revision or final main.
+
+### Current branch flow and next gates
+
+Approved #55-#60 -> staging -> approved #61 -> approved #62 -> approved #64 -> **separate documentation-maintenance PR -> staging** -> actual new staging-head verification -> current-head peer approval/merge of **#63 -> main** -> separate final-evidence branch/PR -> main -> final submission and #54 Done.
+
+- [x] Check required six documents, actual schema/API/UI behavior, exact test paths and all eight AC mappings against the handout.
+- [x] Document full Data Changes, metric counts versus bounded arrays, current review/merge receipts, explicit expected results and visual/keyboard checklist methods.
+- [x] Preserve dated old evidence and the original 17-PR/89-event review snapshot; append later review events separately.
+- [ ] Peer approves/merges this documentation-maintenance PR into staging.
+- [ ] Repeat six phases on the resulting actual staging merge SHA and update #63's evidence; do not reuse 5ab13bb as if it were the new source.
+- [ ] Peer approves the latest release head and merges #63 into main.
+- [ ] Execute final-main, reviewed evidence/PDF and submission gates below; only then close #54/Done.
+
+## Required document completeness map
+
+| Required file | Required contents / inspection result | Final dependency |
+| --- | --- | --- |
+| [specification.md](specification.md) | Goal, request interpretation, included/excluded scope, FR/BR IDs, roles/status matrix, calculations, UI summary, schema/migration/seed, at least two justified DB decisions, ACs and DoD | Peer approval of maintenance; final-main DoD outcome |
+| [tests.md](tests.md) | Plan, explicit expected results, AC-01-08 traceability, real file paths, unit/API/integration/UI/style/roles/workflow/migration/recovery/responsive/performance/E2E/regression evidence | Pending final-main status for every AC/test |
+| [api-spec.md](api-spec.md) | Methods/paths, full draft fields, response shapes, first-create/replay statuses, ID/body errors, Origin/session/role/ownership, conflicts, formulas/time bounds, drill-down and empty behavior | Same contract; no new endpoints/permissions |
+| [ui-spec.md](ui-spec.md) | Screen modes/controls/role behavior, all feedback states, exact field semantics, Zen Green layout/tokens, responsive/keyboard rules | Final major-screen/full-page/error-state visual evidence |
+| [reviewer.md](reviewer.md) | Identities/student IDs, both repositories, Issue/branch/PR links, original feedback/responses/approvals, actual merge commits; later #63/#64 receipts appended | Future documentation/release/final-evidence reviews and Part 1 rendering |
+| [ai-use.md](ai-use.md) | LLM identity, ten selected key prompts and My Reflection on specification/coding agent work; retained, not an invented new personal reflection | Render in final Part 4 |
+
+Additional JSON snapshots, this integration guide and the visual checklist support the six mandatory files; they do not replace them. The handout's assignment/complete/cancel examples are explicitly interpreted as the **parent Ticket lifecycle** under the approved contract, not unapproved Action fields. Final PDF map covers every Answer Part 1-9 below.
+
+### Non-closing release references
+
+GitHub's Development / Linked pull requests association is a closing reference, not merely a neutral link: a linked PR merged into the default branch automatically closes its Issue. Even a negated phrase containing a supported closing keyword immediately before an Issue number can create that association. The previously detected #63 -> #54 closing association was removed while both remain open. Release #63 and documentation maintenance #65 use explicit **Part of Issue #54** hyperlinks/body references instead; no automatic-closing association was added to #65. The Project still has only the #54 Issue card, and its body lists the related PRs even when a non-closing reference is not a Development badge.
+
+Before release, inspect `closingIssuesReferences` as well as the description/commit messages; don't assume prose saying the Issue must stay open disables GitHub automation. Keep #54 open until the later final-main/evidence/PDF/submission gates actually pass. [GitHub's documented linking and automatic-closing behavior](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue).
+
+## Historical integration preparation and enduring review gates
 
 Issue [#54](https://github.com/PhraewaS/toktickit/issues/54) integrates the approved contract/features/evidence; it is not a new product feature. PRs [#55](https://github.com/PhraewaS/toktickit/pull/55), [#56](https://github.com/PhraewaS/toktickit/pull/56), [#57](https://github.com/PhraewaS/toktickit/pull/57), [#58](https://github.com/PhraewaS/toktickit/pull/58), [#59](https://github.com/PhraewaS/toktickit/pull/59) and [#60](https://github.com/PhraewaS/toktickit/pull/60) each received guluJa's approval and merged to staging. Starting staging revision: `2741c4b7cb957f0b6ffda8dce902a13eb05e490b`. At preparation time `main` is still the Lab 3 release at `81cf800d02f5927bfdfd042943bf2f36539f317e`.
 
@@ -22,13 +70,13 @@ Run the README phases in order: `prepare`, `recovery`, `server`, `client`, `lab4
 
 Recovery detects PostgreSQL major version (15 here), chooses matching `pg_dump`/`psql`, backs up the dedicated Lab 4 seed as plain SQL and restores it atomically into a uniquely created temporary database from `template0`. `psql --no-psqlrc --set=ON_ERROR_STOP=1 --single-transaction` prevents startup-file overrides and continuing after restore errors. It compares counts and sorted-row MD5 fingerprints for every Prisma table and `_prisma_migrations`, then removes only that temporary database and dump. This is **backup/restore recovery**, not destructive rollback on user data. An initial PostgreSQL-17 client failed against version 15; matching the actual server major prevents that tooling mismatch.
 
-On 2026-10-12 Windows Smart App Control still blocked unsigned `createdb.exe` and `pg_restore.exe`; `pg_dump`/`psql` 15.19 executed normally. The recovery-tools branch switches to the [official plain SQL procedure](https://www.postgresql.org/docs/15/backup-dump.html), not a security-policy exemption. Windows security stays enabled and blocked executables remain untouched. Earlier custom-format successes and the blocked staging attempt remain historical; new tool-branch results are not staging/final-main passes. Review/merge this repair into staging, repeat the six release gates on the resulting staging revision, then follow the separate main/final-evidence workflow. No manual seed password or database-port change is needed.
+On 2026-10-12 Windows Smart App Control blocked unsigned `createdb.exe` and `pg_restore.exe`; `pg_dump`/`psql` 15.19 executed normally. Approved repair #62 uses the supported plain SQL procedure, not a security-policy exemption; it merged as c239461. Recovery was subsequently repeated successfully at c239461 and 5ab13bb. Earlier custom-format successes and the blocked b618547 attempt stay historical. This documentation does not claim a fresh OS-policy audit or disable protection. Follow the separate maintenance/staging/main/final-evidence gates above; no manual seed password or port change is needed.
 
 Nine-table comparison covers users, categories, related systems, Tickets, attachments, sessions, Public Comments, Internal Notes and Actions Taken. Zero-row tables verify schema/empty-data recovery only; the seeded attachment table is empty. Physical attachment bytes are outside the database dump: back up `server/storage/attachments` together with the database for application recovery. Legacy E2E separately verifies attachment upload/download/soft-removal; it does not prove populated attachment-byte restore.
 
 ## Acceptance scenario map
 
-Fresh outputs, command exits and tested SHAs: [`../../artifacts/lab-04/evidence/staging-integration/`](../../artifacts/lab-04/evidence/staging-integration/). Historical #53 evidence does not replace integration or final-main results.
+Historical integration outputs at source 4e532887: [`../../artifacts/lab-04/evidence/staging-integration/`](../../artifacts/lab-04/evidence/staging-integration/). Latest executed staging output at 5ab13bb is linked in the current checkpoint above. Neither historical #53/integration nor staging evidence replaces final-main results.
 
 The runner reopens the embedded Playwright report ZIP, rejects zero-test/failed reports, checks Dashboard metric evidence, redacts disposable credentials from password-input step titles, and verifies that result totals are unchanged. Lab 3's fresh sanitized regression report is copied into staging-integration rather than replacing its historical committed report. Credential redaction is evidence hygiene, not alteration of outcomes; actual passes/skips/errors remain intact.
 
@@ -60,7 +108,8 @@ Checked items below mean prepared/verified on the integration branch at source `
 - [x] Verify [README](../../README.md) setup/test/evidence instructions and [.gitignore](../../.gitignore) exclusions for local environment, dependencies, build output, attachment bytes and transient test results.
 - [x] Verify tracked repository structure: `server/` (source/tests/Prisma), `client/` (source/tests), `e2e/`, `docs/lab-04/`, `artifacts/lab-04/` and `scripts/`.
 - [ ] Extend branch/commit/PR evidence through the approved release merge into main, then the approved final-evidence merge.
-- [ ] Include recovery-repair/release/evidence reviewer identities, comments, corrective responses and formal approvals; #61 approval is complete and recorded in the reviewer addendum.
+- [x] Include actual #61/#62 approvals and merge receipts in the snapshot; append #64 accepted review/response/approval/merge and #63's earlier COMMENTED review separately.
+- [ ] Add this documentation PR, future release/final-evidence reviews, corrective responses, current-head approvals and actual merges when they happen; do not pre-fill them.
 - [ ] Capture the final Project/Kanban with #48-#54 Done only after all release/submission gates complete.
 - [ ] Render the reviewer record, README/ignore/repo structure and branch-flow evidence legibly into final PDF Part 1; links must work.
 

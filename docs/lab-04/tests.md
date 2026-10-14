@@ -1,5 +1,37 @@
 # Lab 4 Test DD and Traceability
 
+## Evidence status and reading guide
+
+The first table preserves historical feature/Issue #53 results; its numbers are not results of this documentation-maintenance branch. The latest executed pre-release run is exact staging **`5ab13bbf53371b1e42bacbfe22c00296b9f68d0c`**, 2026-10-14, with [six phase JSON/raw logs, metrics and performance](https://github.com/PhraewaS/toktickit/pull/63#issuecomment-6168420145). Server 164/164, Client 89/89 and both builds passed; Lab 4 E2E 11 passed/10 intentional skips; Lab 3 E2E 26 passed/16 intentional skips; both reports have 0 failed/flaky. Recovery safety 6/6, seed/migration/recovery, eight selected DB/API/UI values and six responsive/keyboard browser flows passed. Performance: 40 requests, 0 failures, maxima 311/7/7/7 ms (Staff Dashboard / Requester Dashboard / Staff Actions / Requester Actions).
+
+**Final status for every test/AC remains Pending released-main repeat.** This is deliberate, not a false passing claim or missing test plan. Old skipped counts and timings stay attached to their old revision. This documentation PR introduces no test/code/dependency changes and does not rerun the full six-phase gate. It additionally ran the existing focused Client component/style/accessibility checks: **26/26 in seven files passed** during documentation preparation with product code unchanged from 5ab13bb; [exact command/output](../../artifacts/lab-04/evidence/documentation-review/focused-client-checks.txt). This is not a new full-suite/main result.
+
+## Expected results and complete AC traceability
+
+Test identifiers below retain the original contract IDs. The AC table makes expected outcomes explicit and maps every AC, including data preservation, to real test files. API-04 includes both the required `actions-taken.api.test.ts` wrapper and its [actions.api.test.ts](../../server/tests/lab-04/actions.api.test.ts) implementation; mock handler checks are not misrepresented as real-DB persistence tests.
+
+| AC | Requirement / business rule | Test IDs | Expected result | Actual pre-release evidence | Final |
+| --- | --- | --- | --- | --- | --- |
+| AC-01 | FR-01-04; BR-01-03/14 | UNIT-04, API-04, UI-04, E2E-04 | 201 saves the correct Ticket/actor/fields; Requester reads only; public performer is id/name | API/component + desktop create/edit E2E passed | Pending main |
+| AC-02 | FR-03/05/11; BR-04-06/13/16 | API-04, API-05, API-06, UI-04/05, REG-04 | Invalid IDs/body/resources and denied role/ownership return exact safe errors; inactive assignee rejected; no unauthorized write | Full suites and legacy Staff/Admin regression passed | Pending main |
+| AC-03 | FR-06 | API-04, UI-04 | Current Action version saves; missing/invalid version 400; stale conditional update 409 without overwrite | Missing/current/stale version API checks and client token check passed | Pending main |
+| AC-04 | FR-07; BR-11-13 | API-06, UI-06, E2E-07, REG-04 | Allowed transitions only; resolution requires Action; resolve/close and separate cancel work; stale-page/read-write race conflict; advisory does not set status | Workflow suites, resolution E2E and Staff assignment regression passed | Pending main |
+| AC-05 | FR-08-10; BR-09/10 | API-05, UI-05, E2E-05/06, PERF-04 | Own-role query counts equal DB/API/UI; capped arrays do not cap counts; first drill-down request carries matching filters; zero states safe | 8 selected values match; dashboard/filter assertions and 40-request smoke passed | Pending main |
+| AC-06 | FR-08/09; UI contract | UI-04/05, RESP-04, STYLE-04 | All three widths fit horizontally; semantic labels/readonly state, keyboard focus/activation and consistent styling; no visible control overlap in inspected captures | Responsive assertions + screenshot/source audit, with scope limits in checklist | Pending main |
+| AC-07 | FR-12; BR-07/08 | E2E-00, RECOVERY-04, REG-04, PERF-04 | Additive data/migration preserved; idempotent fixture seed; isolated fingerprints match; legacy auth/Tickets/attachments/communications/users preserved; both builds succeed | Six phases at 5ab13bb passed; ordering/append-only route inspection is separately labelled | Pending main |
+| AC-08 | BR-14-16 | API-04, UI-04 | Refresh failure keeps draft; exact create retry/race returns same ID, changed reuse conflicts; uncertain discard reconciles; other-field edit preserves seconds | API replay/race cases + 9 ActionsTaken component cases passed | Pending main |
+
+| Test ID | Type | Expected result | Automated test file / inspection source | Actual status | Final |
+| --- | --- | --- | --- | --- | --- |
+| STYLE-04 | UI style / visual inspection | Zen Green shell/cards/buttons consistent; readable labels and distinct readonly/editable fields; form controls do not overlap in inspected captures | **Manual**, no pixel-diff test claimed; [visual checklist](responsive-accessibility-checklist.md), [review images](../../artifacts/lab-04/evidence/documentation-review/summary.md); source `client/src/styles.css`, `StaffDashboard.tsx`, `RequesterDashboard.tsx`, `ActionsTaken.tsx` | Inspected 12 staging images and source; validation placement checked by UI-04; full-page/all-error-state visual review remains a final gate | Pending main |
+| RESP-04 | Browser responsive / keyboard | Tab reaches dashboard/Add/follow-up/Save; Enter/Space activates; focus-visible; document/control horizontal fit | `e2e/lab-04/responsive.spec.ts` | Six flows at 1440x1000, 834x1112, 390x844 passed | Pending main |
+| STYLE-REG | Automated UI style / semantics regression | Preserve labelled shell selection, shared role/private-note stylesheet tokens and accessible validation/navigation | `client/tests/lab-02/ZenGreenStyles.test.tsx`, `client/tests/lab-03/ZenGreenStyle.test.tsx`, `client/tests/lab-02/Accessibility.test.tsx` | Included in full Client 89/89 pass; not a Lab 4 pixel-diff test | Pending main |
+| RECOVERY-04 | Migration/recovery / safety | 9 table and 5 migration-history fingerprints equal, temporary DB/dump removed; safety tests reject unsafe targets/tool mismatch | `scripts/verify-lab4.mjs`, `scripts/postgres-recovery.test.mjs` | Isolated recovery and 6 safety checks passed | Pending main |
+
+For REG-04 the concrete automated locations are `server/tests/lab-01/`, `server/tests/lab-02/`, `server/tests/lab-03/`, `client/tests/lab-01/`, `client/tests/lab-02/`, `client/tests/lab-03/` and `e2e/lab-03/`; see the required files and historical feature mapping below. Stable Action query ordering and append-only communication routes are source inspections unless a named automated assertion is cited; they are not extra executed test cases. UI style inspection supplements component assertions and is not an axe/contrast/WCAG certification.
+
+## Historical feature evidence (retained, not current or final-main)
+
 | Test ID | Type | Requirement | Planned/actual coverage | Automated file | Recorded feature evidence (not final-main) |
 | --- | --- | --- | --- | --- | --- |
 | UNIT-04 | unit/API | BR-04-07 | Action validation, conditional follow-up, deterministic ordering, transition gate | `server/tests/lab-04/actions-taken.api.test.ts` | Covered by focused Actions Taken API suite: 20 passed, 0 failed |

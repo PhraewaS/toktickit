@@ -69,9 +69,27 @@ Authenticated IT Staff or Administrator. Body:
 
 `performedBy` is derived from the session. The client must send an `Idempotency-Key` header containing a UUID that is stable for retries of the same draft. The server stores the key under a unique constraint with a SHA-256 fingerprint of the normalized request. Repeating the same request with the same key, performer, and Ticket returns the original Action Taken with `200`, including when the original response was lost; the server does not create a duplicate. Reusing the key for a different request, performer, or Ticket returns `409 IDEMPOTENCY_KEY_REUSED` so edits are never silently discarded. Invalid/missing keys or invalid/unknown body fields return `400 VALIDATION_ERROR`; missing Ticket returns `404 TICKET_NOT_FOUND`. Keys are retained with Action Taken records; requests with a different key create a distinct action.
 
+First creation returns **201**, exact replay (including a unique-key insert race) returns **200**; both use `{data:{item:ActionTaken}}`. `ActionTaken` has exactly the public fields shown in the GET example; keys/fingerprints, email and role are not serialized. Replay returns the same stored record ID, not an immutable snapshot of its original values after subsequent edits.
+
+| Input | Accepted behavior / validation |
+| --- | --- |
+| Path IDs | Positive base-10 safe integers; zero, signs, fractions and non-numeric strings are invalid |
+| `actionDateTime` | Required parseable date string; clients send ISO-8601 with UTC/offset, response is UTC; handler has no past/future limit |
+| `description`, `result` | Required string; trim; 1-5,000 characters |
+| `followUpRequired` | Boolean, defaults to false when omitted |
+| `followUpNote` | When true: trimmed non-empty string up to 5,000; when false: omit/null/empty, non-empty text is rejected; stored as null |
+| `attachmentNotes` | Optional trimmed string up to 2,000; omitted/null/empty becomes null |
+| Extra fields | Rejected, including client-supplied performer/Ticket/key fields in the body |
+
+The API uses JavaScript date parsing; this document does not claim a stricter server-side ISO-only validator. `Idempotency-Key` is a header, not a body field. Ordinary session and Origin checks apply to retries too.
+
+Implementation detail: optional note values that are not strings are treated as empty by this existing parser. When follow-up is true a non-string/empty note therefore fails required-note validation; otherwise it becomes null. Attachment Notes also normalize non-string input to null. This is documented current behavior, not a claim that a strict optional-string type validator exists.
+
 ### `PATCH /api/staff/tickets/:ticketId/actions/:actionId`
 
 Authenticated IT Staff or Administrator. Accepts the editable fields above and requires `updatedAt` set to the timestamp from the latest Action Taken response. A missing or invalid timestamp returns `400 VALIDATION_ERROR`; a timestamp that no longer matches the current row returns `409 ACTION_UPDATE_CONFLICT` without changing the row. Every update uses a conditional write, so stale-write protection cannot be bypassed. The performer is immutable. If the Action Date/Time field is not changed in the UI, the exact stored timestamp (including seconds) is retained. Success returns `200` with `{data:{item: ActionTaken}}`.
+
+Despite the PATCH method, this existing handler validates the **full editable draft**, not a sparse JSON Patch: `actionDateTime`, `description`, `result` and the intended follow-up state/notes accompany `updatedAt`. Do not send only `result` and assume missing fields are preserved. A missing Action or an Action belonging to a different Ticket returns `404 ACTION_NOT_FOUND`. There is no Action DELETE route.
 
 ## Dashboards
 
@@ -162,4 +180,18 @@ The existing `PATCH /api/staff/tickets/:ticketId/status` matrix remains authorit
 
 ## Safe failures and authorization
 
-Missing/invalid sessions return `401 AUTHENTICATION_REQUIRED` or `SESSION_INVALID`; first-login-gated sessions return `403 PASSWORD_CHANGE_REQUIRED`; role violations return `403 ROLE_FORBIDDEN`; invalid IDs or bodies return `400 VALIDATION_ERROR`; missing resources return `404 TICKET_NOT_FOUND` or `404 ACTION_NOT_FOUND`; disallowed transitions return `409 STATUS_TRANSITION_NOT_ALLOWED`; a concurrent status change returns `409 STATUS_UPDATE_CONFLICT`; resolution without an action returns `409 RESOLUTION_ACTION_REQUIRED`; stale Action Taken edits return `409 ACTION_UPDATE_CONFLICT`; and unexpected failures return `500 INTERNAL_ERROR` without SQL, paths, credentials, or stack traces. Every error uses `{error:{code,message,fields?}}`.
+Missing/invalid sessions return `401 AUTHENTICATION_REQUIRED` or `SESSION_INVALID`; first-login-gated sessions return `403 PASSWORD_CHANGE_REQUIRED`; role violations return `403 ROLE_FORBIDDEN`; invalid Action GET/POST Ticket IDs return `400 INVALID_TICKET_ID`, while invalid Ticket/Action IDs on Action PATCH return `400 INVALID_ACTION_ID`; invalid body/key/version data returns `400 VALIDATION_ERROR`. Missing resources return `404 TICKET_NOT_FOUND` or `404 ACTION_NOT_FOUND`; disallowed transitions return `409 STATUS_TRANSITION_NOT_ALLOWED`; a concurrent status change returns `409 STATUS_UPDATE_CONFLICT`; resolution without an action returns `409 RESOLUTION_ACTION_REQUIRED`; stale Action edits return `409 ACTION_UPDATE_CONFLICT`; key reuse with a changed request returns `409 IDEMPOTENCY_KEY_REUSED`; and unexpected failures return `500 INTERNAL_ERROR`. Every error uses `{error:{code,message,fields?}}` without SQL, paths, credentials, or stack traces. Existing Origin/session error codes from Lab 3 remain unchanged.
+
+## Route / role matrix and preservation
+
+| Route | Requester | IT Staff | Administrator | Success |
+| --- | --- | --- | --- | --- |
+| GET /api/tickets/:ticketId/actions | Owned Ticket only | 403 | 403 | 200, data.items |
+| GET /api/staff/tickets/:ticketId/actions | 403 | Existing Ticket | Existing Ticket | 200, data.items |
+| POST /api/staff/tickets/:ticketId/actions | 403 | Allowed | Allowed | 201 create / 200 replay, data.item |
+| PATCH /api/staff/tickets/:ticketId/actions/:actionId | 403 | Allowed with version | Allowed with version | 200, data.item |
+| GET /api/dashboard/requester | Owned metrics | 403 | 403 | 200, Requester envelope |
+| GET /api/dashboard/staff | 403 | Allowed | Allowed | 200, Staff envelope |
+| PATCH /api/staff/tickets/:ticketId/status | 403 | Expected-status guard + matrix | 403 | Existing Lab 3 Ticket response |
+
+Unauthenticated callers are rejected before these role checks. Authentication, My Tickets/Create/Detail, attachment upload/download/removal, Public Comments, Internal Notes, assignment/IT Priority and Admin user management continue under [Lab 3 API contract](../lab-03/api-spec.md). Assignment/complete/cancel refer to the parent Ticket; this documentation introduces no Action assignee/status fields or new administrative permissions.
