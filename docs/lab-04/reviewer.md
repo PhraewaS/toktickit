@@ -2852,3 +2852,58 @@ Revision ที่ตรวจ: [`48694b8`](https://github.com/guluJa/toktickit/
 **ข้อจำกัด:** snapshot เก็บข้อมูลที่เข้าถึงได้ ณ เวลาดึง ไม่อ้างว่ารวมความคิดเห็นที่ถูกลบหรือเหตุการณ์ที่จะเกิดภายหลัง PR เอกสารที่สร้างหลัง snapshot ต้องเพิ่มรีวิวเมื่อมีเหตุการณ์จริง ห้ามคัดลอกสถานะ Done หรือผล final-main ของเพื่อนมาเป็นผลของผู้จัดทำ
 
 **หลักฐานการทดสอบแยกจากรีวิว:** [integration เดิม](../../artifacts/lab-04/evidence/staging-integration/summary.md), [recovery repair](../../artifacts/lab-04/evidence/recovery-repair/summary.md) และ [ผล staging c239461 ของ release #63](https://github.com/PhraewaS/toktickit/pull/63#issuecomment-6123577441) คง revision/วันที่ของตนเอง เอกสารฉบับนี้เป็นการปรับบันทึกรีวิว ไม่ใช่การรันทดสอบผลิตภัณฑ์ใหม่
+
+
+## Addendum - รีวิว release #63 และ approval/merge ของ #64 (2026-10-14)
+
+ส่วนนี้เพิ่มเหตุการณ์จริงหลัง snapshot เดิม 17 PR / 89 เหตุการณ์ ไม่แก้ต้นฉบับหรือเปลี่ยนจำนวนเก่าให้เหมือนข้อมูลใหม่ JSON ต้นฉบับ: [review-history-release-addendum.json](review-history-release-addendum.json)
+
+| PR | สถานะ ณรอบนี้ | หลักฐาน |
+| --- | --- | --- |
+| #64 | guluJa APPROVED head `d4479bb` ก่อน merge `5ab13bb` เมื่อ 2026-10-14 11:17:02 UTC | [approval](https://github.com/PhraewaS/toktickit/pull/64#pullrequestreview-5517046805), [merge](https://github.com/PhraewaS/toktickit/commit/5ab13bbf53371b1e42bacbfe22c00296b9f68d0c) |
+| #63 | ยัง OPEN; COMMENTED ที่ `c239461` ไม่ใช่ formal approval ของ head ใหม่ `5ab13bb` | [review](https://github.com/PhraewaS/toktickit/pull/63#pullrequestreview-5492867653) |
+| PR เอกสารเตรียม release / final evidence | ต้องขอ peer review บน branch แยกและเพิ่มเหตุการณ์เมื่อเกิดจริง | ไม่ติ๊ก approval/merge หรือ final-main/PDF ล่วงหน้า |
+
+### PR #63 - guluJa, COMMENTED
+
+เวลา: 2026-10-12T15:30:40Z (UTC); revision: `c239461cbb7e22d8cb7c42e40c1c7238fdedb9a5`
+
+<!-- release-addendum-event 5492867653 -->
+> ตรวจ release revision c239461 แล้วนะคะ ผลทั้งหก phases ระบุ source ตรงกัน และจำนวน tests/skips ตรงกับ console output ค่ะ ลองรัน Client 89 tests, focused Server 36 tests, recovery safety 6 tests และทั้งสอง build แล้วผ่าน รอบนี้ไม่พบจุดที่ต้องแก้โค้ดเพิ่มเติมค่ะ 
+<!-- end-release-addendum-event -->
+
+แหล่งที่มา: [ข้อความต้นฉบับบน GitHub](https://github.com/PhraewaS/toktickit/pull/63#pullrequestreview-5492867653)
+
+### PR #64 - guluJa, COMMENTED
+
+เวลา: 2026-10-13T14:33:26Z (UTC); revision: `d4479bb52ab13fc8ccfe63fa01e0be4c66f504a5`
+
+<!-- release-addendum-event 5505186004 -->
+> ตรวจ revision d4479bb แล้วนะคะ บันทึกทั้งสองฝั่งแยกชัดเจน เทียบข้อความทั้ง 89 เหตุการณ์กับ GitHub แล้วตรงกัน รวมถึง Approval ของ 16 PR ที่ตรงกับ head และเกิดก่อน Merge ค่ะ ประวัติเดิมยังครบ และแยก snapshot กับผล Final-main ถูกต้อง รอบนี้ไม่พบจุดที่ต้องแก้เพิ่มเติมในขอบเขตเอกสารนี้ค่ะ
+<!-- end-release-addendum-event -->
+
+แหล่งที่มา: [ข้อความต้นฉบับบน GitHub](https://github.com/PhraewaS/toktickit/pull/64#pullrequestreview-5505186004)
+
+### PR #64 - PhraewaS, author response
+
+เวลา: 2026-10-14T09:56:29Z (UTC)
+
+<!-- release-addendum-event 6165720545 -->
+> > ตรวจ revision [d4479bb](https://github.com/PhraewaS/toktickit/commit/d4479bb52ab13fc8ccfe63fa01e0be4c66f504a5) แล้วนะคะ บันทึกทั้งสองฝั่งแยกชัดเจน เทียบข้อความทั้ง 89 เหตุการณ์กับ GitHub แล้วตรงกัน รวมถึง Approval ของ 16 PR ที่ตรงกับ head และเกิดก่อน Merge ค่ะ ประวัติเดิมยังครบ และแยก snapshot กับผล Final-main ถูกต้อง รอบนี้ไม่พบจุดที่ต้องแก้เพิ่มเติมในขอบเขตเอกสารนี้ค่ะ
+>
+> ขอบคุณมากนะคะ
+<!-- end-release-addendum-event -->
+
+แหล่งที่มา: [ข้อความต้นฉบับบน GitHub](https://github.com/PhraewaS/toktickit/pull/64#issuecomment-6165720545)
+
+### PR #64 - guluJa, APPROVED
+
+เวลา: 2026-10-14T11:16:53Z (UTC); revision: `d4479bb52ab13fc8ccfe63fa01e0be4c66f504a5`
+
+<!-- release-addendum-event 5517046805 -->
+ไม่มีข้อความ body แนบกับ formal APPROVED นี้ จึงไม่แต่งคำอนุมัติขึ้นเอง
+<!-- end-release-addendum-event -->
+
+แหล่งที่มา: [ข้อความต้นฉบับบน GitHub](https://github.com/PhraewaS/toktickit/pull/64#pullrequestreview-5517046805)
+
+**หลักฐานแยกจาก review:** [ผลจริงหกขั้นบน staging 5ab13bb](https://github.com/PhraewaS/toktickit/pull/63#issuecomment-6168420145) และ [ภาพตรวจเอกสาร](../../artifacts/lab-04/evidence/documentation-review/summary.md) ไม่ใช่ผล final-main การอนุมัติ #64 ไม่แทนการอนุมัติ release และ snapshot เดิมยังระบุสถานะ ณวันที่ดึง ไม่ใช่สถานะปัจจุบัน ดู [integration.md](integration.md) สำหรับขั้นตอนที่ยังรอ
