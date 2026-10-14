@@ -234,6 +234,7 @@ export const listTickets: RequestHandler = async (
   if (query.relatedSystemId !== undefined) filters.push({ relatedSystemId: query.relatedSystemId });
   if (query.requestedPriority) filters.push({ requestedPriority: query.requestedPriority });
   if (query.currentStatus) filters.push({ currentStatus: query.currentStatus });
+  if (query.activeOnly) filters.push({ currentStatus: { in: [TicketStatus.NEW, TicketStatus.OPEN, TicketStatus.IN_PROGRESS, TicketStatus.WAITING_FOR_REQUESTER, TicketStatus.REOPENED] } });
 
   const where: Prisma.TicketWhereInput = { AND: filters };
   const prisma = getPrisma();

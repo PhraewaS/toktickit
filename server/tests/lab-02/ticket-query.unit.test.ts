@@ -20,7 +20,7 @@ describe("My Tickets query parsing", () => {
       categoryId: "2",
       relatedSystemId: "7",
       requestedPriority: "HIGH",
-      currentStatus: "NEW",
+      currentStatus: "WAITING_FOR_REQUESTER",
       sortBy: "summary",
       sortOrder: "asc",
       page: "2",
@@ -32,7 +32,7 @@ describe("My Tickets query parsing", () => {
         categoryId: 2,
         relatedSystemId: 7,
         requestedPriority: "HIGH",
-        currentStatus: "NEW",
+        currentStatus: "WAITING_FOR_REQUESTER",
         sortBy: "summary",
         sortOrder: "asc",
         page: 2,
@@ -41,11 +41,19 @@ describe("My Tickets query parsing", () => {
     });
   });
 
+  it("accepts the dashboard active-only filter", () => {
+    expect(parseTicketListQuery({ activeOnly: "true" })).toEqual({
+      success: true,
+      data: { activeOnly: true, sortBy: "createdAt", sortOrder: "desc", page: 1, pageSize: 10 },
+    });
+  });
+
   it("rejects unsupported and malformed values without silent fallback", () => {
     const result = parseTicketListQuery({
       categoryId: "0",
       requestedPriority: "URGENT",
-      currentStatus: "OPEN",
+      currentStatus: "NOT_A_STATUS",
+      activeOnly: "sometimes",
       sortBy: "id",
       sortOrder: "sideways",
       page: "0",
@@ -58,7 +66,8 @@ describe("My Tickets query parsing", () => {
         search: "Search must be 100 characters or fewer.",
         categoryId: "Category ID must be a positive integer.",
         requestedPriority: "Requested Priority must be LOW, MEDIUM, or HIGH.",
-        currentStatus: "Current Status must be NEW.",
+        currentStatus: "Current Status is invalid.",
+        activeOnly: "Active-only filter must be true or false.",
         sortBy: "Sort field is not supported.",
         sortOrder: "Sort order must be asc or desc.",
         page: "Page must be a positive integer.",

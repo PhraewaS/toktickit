@@ -5,6 +5,10 @@ import { PrismaClient } from "@prisma/client";
 // free of database side effects.
 let client: PrismaClient | null = null;
 
+export function createPrismaClient(databaseUrl: string): PrismaClient {
+  return new PrismaClient({ datasources: { db: { url: databaseUrl } } });
+}
+
 export function getPrisma(): PrismaClient {
   if (!client) client = new PrismaClient();
   return client;

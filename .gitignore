@@ -1,5 +1,7 @@
 # dependencies
 node_modules/
+tmp/
+artifacts/lab-04/test-results/
 # env & secrets
 .env
 *.env

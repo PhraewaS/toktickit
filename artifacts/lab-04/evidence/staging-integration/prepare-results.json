@@ -1,0 +1,25 @@
+{
+  "mode": "prepare",
+  "revision": "4e532887835770b0f4ec851e34e1bb92fab7c685",
+  "startedAt": "2026-10-08T15:16:53.786Z",
+  "database": "toktickit_lab4_e2e",
+  "databasePort": 5433,
+  "steps": [
+    {
+      "label": "prisma-generate",
+      "exitCode": 0,
+      "elapsedMs": 1933
+    },
+    {
+      "label": "migration-deploy",
+      "exitCode": 0,
+      "elapsedMs": 2212
+    },
+    {
+      "label": "seed",
+      "exitCode": 0,
+      "elapsedMs": 2805
+    }
+  ],
+  "completedAt": "2026-10-08T15:17:01.008Z"
+}

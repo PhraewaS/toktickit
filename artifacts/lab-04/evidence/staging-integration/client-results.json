@@ -1,0 +1,20 @@
+{
+  "mode": "client",
+  "revision": "4e532887835770b0f4ec851e34e1bb92fab7c685",
+  "startedAt": "2026-10-08T15:17:37.915Z",
+  "database": "toktickit_lab4_e2e",
+  "databasePort": 5433,
+  "steps": [
+    {
+      "label": "client-tests",
+      "exitCode": 0,
+      "elapsedMs": 51279
+    },
+    {
+      "label": "client-build",
+      "exitCode": 0,
+      "elapsedMs": 7640
+    }
+  ],
+  "completedAt": "2026-10-08T15:18:36.837Z"
+}

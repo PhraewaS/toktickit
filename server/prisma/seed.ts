@@ -26,16 +26,20 @@ export async function runSeed() {
   const passwordError = validatePassword(seedPassword);
   if (passwordError) throw new Error(`LAB3_SEED_PASSWORD is required and invalid: ${passwordError}`);
   const prisma = getPrisma();
-  const resetE2eFixture = process.env.LAB3_E2E_RESET_PASSWORDS === "true";
+  const resetLab3Fixture = process.env.LAB3_E2E_RESET_PASSWORDS === "true";
+  const resetLab4Fixture = process.env.LAB4_E2E_RESET_PASSWORDS === "true";
+  const resetE2eFixture = resetLab3Fixture || resetLab4Fixture;
   if (resetE2eFixture) {
     const databaseUrl = process.env.DATABASE_URL;
-    if (!databaseUrl || process.env.LAB3_E2E_DATABASE !== "true") {
-      throw new Error("LAB3_E2E_RESET_PASSWORDS requires LAB3_E2E_DATABASE=true and a dedicated local E2E database.");
+    if (!databaseUrl || resetLab3Fixture === resetLab4Fixture || (resetLab3Fixture && process.env.LAB3_E2E_DATABASE !== "true") || (resetLab4Fixture && process.env.LAB4_E2E_DATABASE !== "true")) {
+      throw new Error("Exactly one Lab E2E reset flag must be paired with its matching database flag and a dedicated local E2E database.");
     }
     const database = new URL(databaseUrl);
     const databaseName = decodeURIComponent(database.pathname.replace(/^\//, "").split("?")[0]);
-    if (!['localhost', '127.0.0.1'].includes(database.hostname) || !/^toktickit_(lab3_)?e2e$/.test(databaseName)) {
-      throw new Error("Refusing E2E fixture reset: DATABASE_URL must point to localhost database toktickit_lab3_e2e or toktickit_e2e.");
+    const allowedDatabaseName = resetLab4Fixture ? /^toktickit_lab4_e2e$/ : /^toktickit_(lab3_)?e2e$/;
+    if (!['localhost', '127.0.0.1'].includes(database.hostname) || !allowedDatabaseName.test(databaseName)) {
+      const allowedNames = resetLab4Fixture ? "toktickit_lab4_e2e" : "toktickit_lab3_e2e or toktickit_e2e";
+      throw new Error(`Refusing E2E fixture reset: DATABASE_URL must point to localhost database ${allowedNames}.`);
     }
   }
   for (const name of categories) await prisma.category.upsert({ where: { name }, update: { isActive: true }, create: { name, isActive: true } });
@@ -47,6 +51,7 @@ export async function runSeed() {
       prisma.publicComment.deleteMany(),
       prisma.internalNote.deleteMany(),
       prisma.attachment.deleteMany(),
+      prisma.actionTaken.deleteMany(),
       prisma.session.deleteMany(),
       prisma.ticket.deleteMany(),
       prisma.requesterUser.deleteMany({ where: { email: { notIn: seedEmails } } }),
@@ -67,6 +72,20 @@ export async function runSeed() {
     const ticket = await prisma.ticket.upsert({ where: { requesterId_submissionKey: { requesterId: requester.id, submissionKey } }, update: { summary, currentStatus: status, requestedPriority: priority, itPriority: priority, ownerId }, create: { ticketNumber: `TKT-20260908-${String(10000000 + i).slice(-8)}`, requesterId: requester.id, categoryId: categoryRows[i % categoryRows.length].id, relatedSystemId: systemRows[i % systemRows.length].id, summary, description: `Seeded local development ticket for ${summary.toLowerCase()}.`, requestedPriority: priority, itPriority: priority, currentStatus: status, ownerId, submissionKey } });
     if (!await prisma.publicComment.findFirst({ where: { ticketId: ticket.id, content: { startsWith: "Seeded public update" } } })) await prisma.publicComment.create({ data: { ticketId: ticket.id, authorId: requester.id, content: "Seeded public update for local development." } });
     if (staffRows[0] && !await prisma.internalNote.findFirst({ where: { ticketId: ticket.id, content: { startsWith: "Seeded internal note" } } })) await prisma.internalNote.create({ data: { ticketId: ticket.id, authorId: staffRows[0].id, content: "Seeded internal note for local development." } });
+    const actionTemplates = i === 0
+      ? [
+          { description: "Reviewed VPN connectivity logs and confirmed the affected account.", result: "The failure was reproduced and the access policy was identified for correction.", followUpRequired: true, followUpNote: "Confirm connectivity with the Requester after the policy refresh.", attachmentNotes: "See the seeded VPN log attachment when available." },
+          { description: "Refreshed the VPN access policy and tested a new connection.", result: "Connection succeeded from the service-desk test device.", followUpRequired: false, followUpNote: null, attachmentNotes: null },
+        ]
+      : i === 1
+        ? [{ description: "Checked the Employee Portal browser console and service health.", result: "The blank page was caused by a stale client bundle; a hard refresh restored the page.", followUpRequired: false, followUpNote: null, attachmentNotes: null }]
+        : [];
+    for (const [actionIndex, action] of actionTemplates.entries()) {
+      const exists = await prisma.actionTaken.findFirst({ where: { ticketId: ticket.id, description: action.description }, select: { id: true } });
+      if (!exists && staffRows[actionIndex % Math.max(staffRows.length, 1)]) {
+        await prisma.actionTaken.create({ data: { ticketId: ticket.id, actionDateTime: new Date(ticket.createdAt.getTime() + (actionIndex + 1) * 60 * 60 * 1000), description: action.description, result: action.result, performedById: staffRows[actionIndex % staffRows.length].id, followUpRequired: action.followUpRequired, followUpNote: action.followUpNote, attachmentNotes: action.attachmentNotes } });
+      }
+    }
   }
   console.log(`Seeded ${categories.length} categories, ${systemRows.length} related systems, ${requesterRows.length} requesters, ${staffRows.length} active IT Staff, and one Administrator.`);
 }

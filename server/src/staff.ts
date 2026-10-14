@@ -30,7 +30,7 @@ function serializeTicket(ticket: Prisma.TicketGetPayload<{ include: typeof staff
 
 export const listStaffTickets: RequestHandler = async (req, res) => {
   const q = req.query;
-  const allowedQueryKeys = new Set(["search", "status", "requestedPriority", "itPriority", "ownerId", "sortBy", "sortOrder", "page", "pageSize"]);
+  const allowedQueryKeys = new Set(["search", "status", "requestedPriority", "itPriority", "ownerId", "activeOnly", "sortBy", "sortOrder", "page", "pageSize"]);
   if (Object.keys(q).some((key) => !allowedQueryKeys.has(key))) { error(res, 400, "INVALID_QUERY", "Review the Ticket queue filters and try again."); return; }
   if (Object.values(q).some((value) => typeof value !== "string")) { error(res, 400, "INVALID_QUERY", "Review the Ticket queue filters and try again."); return; }
   const search = q.search === undefined ? "" : typeof q.search === "string" ? q.search.trim() : null;
@@ -43,6 +43,10 @@ export const listStaffTickets: RequestHandler = async (req, res) => {
   const filters: Prisma.TicketWhereInput[] = [];
   if (search) filters.push({ OR: [{ ticketNumber: { contains: search, mode: "insensitive" } }, { summary: { contains: search, mode: "insensitive" } }] });
   if (typeof q.status === "string") { if (!statuses.has(q.status)) { error(res, 400, "INVALID_QUERY", "Status filter is invalid."); return; } filters.push({ currentStatus: q.status as TicketStatus }); }
+  if (q.activeOnly !== undefined) {
+    if (q.activeOnly !== "true" && q.activeOnly !== "false") { error(res, 400, "INVALID_QUERY", "Active-only filter is invalid."); return; }
+    if (q.activeOnly === "true") filters.push({ currentStatus: { in: [TicketStatus.NEW, TicketStatus.OPEN, TicketStatus.IN_PROGRESS, TicketStatus.WAITING_FOR_REQUESTER, TicketStatus.REOPENED] } });
+  }
   if (typeof q.requestedPriority === "string") { if (!priorities.has(q.requestedPriority)) { error(res, 400, "INVALID_QUERY", "Requested Priority filter is invalid."); return; } filters.push({ requestedPriority: q.requestedPriority as RequestedPriority }); }
   if (typeof q.itPriority === "string") { if (!priorities.has(q.itPriority)) { error(res, 400, "INVALID_QUERY", "IT Priority filter is invalid."); return; } filters.push({ itPriority: q.itPriority as RequestedPriority }); }
   if (q.ownerId !== undefined) { if (q.ownerId !== "unassigned" && parseId(String(q.ownerId)) === null) { error(res, 400, "INVALID_QUERY", "Owner filter is invalid."); return; } filters.push(q.ownerId === "unassigned" ? { ownerId: null } : { ownerId: Number(q.ownerId) }); }
@@ -91,10 +95,29 @@ export function isAllowedStaffStatusTransition(current: TicketStatus, next: Tick
 }
 
 export const updateStaffStatus: RequestHandler = async (req, res) => {
-  const ticketId = parseId(req.params.ticketId); const nextStatus = req.body?.status as TicketStatus;
+  const ticketId = parseId(req.params.ticketId); const nextStatus = req.body?.status as TicketStatus; const expectedCurrentStatus = req.body?.expectedCurrentStatus as TicketStatus;
   if (ticketId === null) { error(res, 400, "INVALID_TICKET_ID", "Ticket ID must be a positive integer."); return; }
   if (!statuses.has(nextStatus)) { error(res, 400, "VALIDATION_ERROR", "Choose a permitted Ticket status.", { status: "Status is invalid." }); return; }
-  try { const current = await getPrisma().ticket.findUnique({ where: { id: ticketId }, select: { currentStatus: true } }); if (!current) { ticketNotFound(res); return; } if (!isAllowedStaffStatusTransition(current.currentStatus, nextStatus)) { error(res, 409, "STATUS_TRANSITION_NOT_ALLOWED", `A Ticket cannot move from ${current.currentStatus} to ${nextStatus}.`); return; } const updated = await getPrisma().ticket.update({ where: { id: ticketId }, data: { currentStatus: nextStatus }, include: staffInclude }); res.status(200).json({ data: serializeTicket(updated) }); }
+  if (!statuses.has(expectedCurrentStatus)) { error(res, 400, "VALIDATION_ERROR", "Refresh the Ticket and submit the status currently shown.", { expectedCurrentStatus: "A valid current Ticket status is required." }); return; }
+  try {
+    const prisma = getPrisma();
+    const current = await prisma.ticket.findUnique({ where: { id: ticketId }, select: { currentStatus: true } });
+    if (!current) { ticketNotFound(res); return; }
+    if (current.currentStatus !== expectedCurrentStatus) { error(res, 409, "STATUS_UPDATE_CONFLICT", "Ticket status changed after it was loaded. Refresh the Ticket and try again."); return; }
+    if (!isAllowedStaffStatusTransition(current.currentStatus, nextStatus)) { error(res, 409, "STATUS_TRANSITION_NOT_ALLOWED", `A Ticket cannot move from ${current.currentStatus} to ${nextStatus}.`); return; }
+    if (nextStatus === TicketStatus.RESOLVED) {
+      const actionCount = await prisma.actionTaken.count({ where: { ticketId } });
+      if (actionCount === 0) { error(res, 409, "RESOLUTION_ACTION_REQUIRED", "Record at least one Action Taken before resolving a Ticket."); return; }
+    }
+
+    // Compare-and-set prevents a request based on an old status from overwriting a newer transition.
+    const result = await prisma.ticket.updateMany({ where: { id: ticketId, currentStatus: current.currentStatus }, data: { currentStatus: nextStatus } });
+    if (result.count !== 1) { error(res, 409, "STATUS_UPDATE_CONFLICT", "Ticket status changed after it was loaded. Refresh the Ticket and try again."); return; }
+
+    const updated = await prisma.ticket.findUnique({ where: { id: ticketId }, include: staffInclude });
+    if (!updated) { ticketNotFound(res); return; }
+    res.status(200).json({ data: serializeTicket(updated) });
+  }
   catch (e) { console.error("Unable to update Ticket status:", e); error(res, 500, "INTERNAL_ERROR", "TokTickIT could not update Ticket status. Please try again."); }
 };
 

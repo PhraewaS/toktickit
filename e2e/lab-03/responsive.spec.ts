@@ -23,6 +23,7 @@ async function signInAndChangePassword(page: Page, email: string, changedPasswor
   await page.getByLabel("New password", { exact: true }).fill(changedPassword);
   await page.getByLabel("Confirm new password", { exact: true }).fill(changedPassword);
   await page.getByRole("button", { name: "Save password" }).click();
+  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
 }
 
 test("RESP-01 Lab 3 login remains within the viewport", async ({ page }, testInfo) => {
@@ -35,6 +36,9 @@ test("RESP-01 Lab 3 login remains within the viewport", async ({ page }, testInf
 test("RESP-02 all major role screens remain usable without clipping", async ({ page }) => {
   resetLocalSeed();
   await signInAndChangePassword(page, "jennifer@example.test", "Responsive-Requester2!");
+  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
+  await assertResponsive(page);
+  await page.getByRole("link", { name: "Create Ticket" }).click();
   await expect(page.getByRole("heading", { name: "Create Ticket" })).toBeVisible();
   await assertResponsive(page);
   await page.getByRole("link", { name: "My Tickets" }).click();
@@ -44,6 +48,9 @@ test("RESP-02 all major role screens remain usable without clipping", async ({ p
   await page.context().clearCookies();
   resetLocalSeed();
   await signInAndChangePassword(page, "somchai.staff@example.test", "Responsive-Staff2!");
+  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
+  await assertResponsive(page);
+  await page.getByRole("link", { name: "Ticket Queue" }).click();
   await expect(page.getByRole("heading", { name: "Ticket Queue" })).toBeVisible();
   await assertResponsive(page);
   await page.getByRole("button", { name: "Open detail" }).first().click();
@@ -53,6 +60,9 @@ test("RESP-02 all major role screens remain usable without clipping", async ({ p
   await page.context().clearCookies();
   resetLocalSeed();
   await signInAndChangePassword(page, "admin@example.test", "Responsive-Admin2!");
+  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
+  await assertResponsive(page);
+  await page.getByRole("link", { name: "User Management" }).click();
   await expect(page.getByRole("heading", { name: "User Management" })).toBeVisible();
   await assertResponsive(page);
   await page.getByRole("link", { name: "Ticket Queue" }).click();

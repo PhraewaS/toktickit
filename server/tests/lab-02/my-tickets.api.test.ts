@@ -107,6 +107,15 @@ describe("GET /api/tickets", () => {
     expect(prismaMocks.ticketCount).toHaveBeenCalledTimes(2);
   });
 
+  it("supports the dashboard active and Waiting for Requester drill-down filters", async () => {
+    await request(app).get("/api/tickets?activeOnly=true").set("X-Development-Requester-Id", "1");
+    expect(prismaMocks.ticketFindMany.mock.calls[0][0].where.AND).toContainEqual({ currentStatus: { in: ["NEW", "OPEN", "IN_PROGRESS", "WAITING_FOR_REQUESTER", "REOPENED"] } });
+
+    prismaMocks.ticketCount.mockReset().mockResolvedValueOnce(12).mockResolvedValueOnce(1);
+    await request(app).get("/api/tickets?currentStatus=WAITING_FOR_REQUESTER").set("X-Development-Requester-Id", "1");
+    expect(prismaMocks.ticketFindMany.mock.calls[1][0].where.AND).toContainEqual({ currentStatus: "WAITING_FOR_REQUESTER" });
+  });
+
   it("rejects a page beyond totalPages without loading an empty page", async () => {
     prismaMocks.ticketCount.mockReset().mockResolvedValueOnce(11).mockResolvedValueOnce(11);
 

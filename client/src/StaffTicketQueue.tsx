@@ -8,19 +8,20 @@ function label(value: string) {
   return value.replaceAll("_", " ");
 }
 
-export default function StaffTicketQueue({ onOpen }: { onOpen: (id: number) => void }) {
+export default function StaffTicketQueue({ onOpen, initialFilters, currentUserId }: { onOpen: (id: number) => void; initialFilters?: StaffTicketQuery; currentUserId: number }) {
   const [data, setData] = useState<StaffTicket[]>([]);
   const [pagination, setPagination] = useState({ page: 1, pageSize: 10 as 10 | 20 | 50, totalItems: 0, totalPages: 0 });
   const [state, setState] = useState<"loading" | "ready" | "forbidden" | "error">("loading");
   const [failure, setFailure] = useState("");
   const [search, setSearch] = useState("");
-  const [status, setStatus] = useState<"" | TicketStatus>("");
+  const [status, setStatus] = useState<"" | TicketStatus>(initialFilters?.status ?? "");
   const [requestedPriority, setRequestedPriority] = useState<"" | RequestedPriority>("");
-  const [itPriority, setItPriority] = useState<"" | RequestedPriority>("");
-  const [owner, setOwner] = useState<"" | "unassigned">("");
+  const [itPriority, setItPriority] = useState<"" | RequestedPriority>(initialFilters?.itPriority ?? "");
+  const [owner, setOwner] = useState(initialFilters?.ownerId === undefined ? "" : String(initialFilters.ownerId));
+  const [activeOnly, setActiveOnly] = useState(Boolean(initialFilters?.activeOnly));
   const [sortBy, setSortBy] = useState<StaffTicketQuery["sortBy"]>("updatedAt");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-  const [applied, setApplied] = useState<StaffTicketQuery>({ sortBy: "updatedAt", sortOrder: "desc", page: 1, pageSize: 10 });
+  const [applied, setApplied] = useState<StaffTicketQuery>({ ...initialFilters, sortBy: initialFilters?.sortBy ?? "updatedAt", sortOrder: initialFilters?.sortOrder ?? "desc", page: 1, pageSize: 10 });
 
   async function load(query: StaffTicketQuery) {
     setState("loading");
@@ -49,7 +50,8 @@ export default function StaffTicketQueue({ onOpen }: { onOpen: (id: number) => v
       status: status || undefined,
       requestedPriority: requestedPriority || undefined,
       itPriority: itPriority || undefined,
-      ownerId: owner || undefined,
+      ownerId: owner === "unassigned" ? "unassigned" : owner ? Number(owner) : undefined,
+      activeOnly: activeOnly || undefined,
       sortBy,
       sortOrder,
       page: 1,
@@ -57,7 +59,7 @@ export default function StaffTicketQueue({ onOpen }: { onOpen: (id: number) => v
     });
   }
 
-  const hasFilters = Boolean(applied.search || applied.status || applied.requestedPriority || applied.itPriority || applied.ownerId);
+  const hasFilters = Boolean(applied.search || applied.status || applied.requestedPriority || applied.itPriority || applied.ownerId || applied.activeOnly);
 
   return <section className="ticket-page" aria-labelledby="staff-queue-heading">
     <div className="page-heading"><div><span className="eyebrow">IT Staff workspace</span><h1 id="staff-queue-heading">Ticket Queue</h1><p className="lead-copy">Find, prioritize, and open operational work.</p></div><span className="status-badge">{pagination.totalItems} tickets</span></div>
@@ -66,7 +68,8 @@ export default function StaffTicketQueue({ onOpen }: { onOpen: (id: number) => v
       <div className="field-group"><label htmlFor="staff-status">Status</label><select id="staff-status" value={status} onChange={(e) => setStatus(e.target.value as "" | TicketStatus)}><option value="">All statuses</option>{statuses.map((item) => <option key={item} value={item}>{label(item)}</option>)}</select></div>
       <div className="field-group"><label htmlFor="staff-requested-priority">Requested Priority</label><select id="staff-requested-priority" value={requestedPriority} onChange={(e) => setRequestedPriority(e.target.value as "" | RequestedPriority)}><option value="">All requested priorities</option>{priorities.map((item) => <option key={item} value={item}>{item}</option>)}</select></div>
       <div className="field-group"><label htmlFor="staff-it-priority">IT Priority</label><select id="staff-it-priority" value={itPriority} onChange={(e) => setItPriority(e.target.value as "" | RequestedPriority)}><option value="">All IT priorities</option>{priorities.map((item) => <option key={item} value={item}>{item}</option>)}</select></div>
-      <div className="field-group"><label htmlFor="staff-owner">Owner</label><select id="staff-owner" value={owner} onChange={(e) => setOwner(e.target.value as "" | "unassigned")}><option value="">All ownership</option><option value="unassigned">Unassigned</option></select></div>
+      <div className="field-group"><label htmlFor="staff-owner">Owner</label><select id="staff-owner" value={owner} onChange={(e) => setOwner(e.target.value)}><option value="">All ownership</option><option value="unassigned">Unassigned</option><option value={currentUserId}>Owned by me</option></select></div>
+      <div className="field-group"><label htmlFor="staff-active-only">Activity</label><select id="staff-active-only" value={activeOnly ? "true" : ""} onChange={(e) => setActiveOnly(e.target.value === "true")}><option value="">All statuses</option><option value="true">Active only</option></select></div>
       <div className="field-group"><label htmlFor="staff-sort">Sort by</label><select id="staff-sort" value={sortBy} onChange={(e) => setSortBy(e.target.value as StaffTicketQuery["sortBy"])}><option value="updatedAt">Last Updated</option><option value="createdAt">Created Date</option><option value="itPriority">IT Priority</option><option value="currentStatus">Status</option><option value="summary">Summary</option></select></div>
       <div className="field-group"><label htmlFor="staff-direction">Direction</label><select id="staff-direction" value={sortOrder} onChange={(e) => setSortOrder(e.target.value as "asc" | "desc")}><option value="desc">Descending</option><option value="asc">Ascending</option></select></div>
       <button className="button button--primary" type="submit">Apply filters</button>

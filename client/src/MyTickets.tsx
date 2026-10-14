@@ -10,6 +10,7 @@ import {
   TicketListItem,
   TicketListQuery,
   TicketListResult,
+  TicketStatus,
 } from "./api.js";
 
 type LoadState = "loading" | "ready" | "error";
@@ -20,9 +21,11 @@ function formatDate(value: string) {
   );
 }
 
+const statuses: TicketStatus[] = ["NEW", "OPEN", "IN_PROGRESS", "WAITING_FOR_REQUESTER", "RESOLVED", "CLOSED", "REOPENED", "CANCELLED"];
+
 function hasFilters(query: TicketListQuery) {
   return Boolean(
-    query.search || query.categoryId || query.relatedSystemId || query.requestedPriority || query.currentStatus,
+    query.search || query.categoryId || query.relatedSystemId || query.requestedPriority || query.currentStatus || query.activeOnly,
   );
 }
 
@@ -30,10 +33,12 @@ export default function MyTickets({
   requester,
   onCreateTicket,
   onOpenTicket,
+  initialFilters,
 }: {
   requester: DevelopmentRequester;
   onCreateTicket: () => void;
   onOpenTicket?: (ticketId: number) => void;
+  initialFilters?: Pick<TicketListQuery, "currentStatus" | "activeOnly">;
 }) {
   const [state, setState] = useState<LoadState>("loading");
   const [result, setResult] = useState<TicketListResult | null>(null);
@@ -43,12 +48,13 @@ export default function MyTickets({
   const [categoryId, setCategoryId] = useState("");
   const [relatedSystemId, setRelatedSystemId] = useState("");
   const [requestedPriority, setRequestedPriority] = useState<"" | RequestedPriority>("");
-  const [currentStatus, setCurrentStatus] = useState<"" | "NEW">("");
+  const [currentStatus, setCurrentStatus] = useState<"" | TicketStatus | "ACTIVE">(initialFilters?.activeOnly ? "ACTIVE" : initialFilters?.currentStatus ?? "");
   const [sortBy, setSortBy] = useState<TicketListQuery["sortBy"]>("createdAt");
   const [sortOrder, setSortOrder] = useState<TicketListQuery["sortOrder"]>("desc");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState<10 | 20 | 50>(10);
   const [appliedQuery, setAppliedQuery] = useState<TicketListQuery>({
+    ...initialFilters,
     sortBy: "createdAt",
     sortOrder: "desc",
     page: 1,
@@ -85,7 +91,7 @@ export default function MyTickets({
       ...(categoryId ? { categoryId: Number(categoryId) } : {}),
       ...(relatedSystemId ? { relatedSystemId: Number(relatedSystemId) } : {}),
       ...(requestedPriority ? { requestedPriority } : {}),
-      ...(currentStatus ? { currentStatus } : {}),
+      ...(currentStatus === "ACTIVE" ? { activeOnly: true } : currentStatus ? { currentStatus } : {}),
       sortBy,
       sortOrder,
       page: 1,
@@ -145,7 +151,7 @@ export default function MyTickets({
         <div className="field-group"><label htmlFor="ticket-category">Category</label><select id="ticket-category" value={categoryId} onChange={(event) => setCategoryId(event.target.value)}><option value="">All categories</option>{categories.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</select></div>
         <div className="field-group"><label htmlFor="ticket-related-system">Related System</label><select id="ticket-related-system" value={relatedSystemId} onChange={(event) => setRelatedSystemId(event.target.value)}><option value="">All systems</option>{relatedSystems.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}</select></div>
         <div className="field-group"><label htmlFor="ticket-priority">Requested Priority</label><select id="ticket-priority" value={requestedPriority} onChange={(event) => setRequestedPriority(event.target.value as "" | RequestedPriority)}><option value="">All priorities</option><option value="LOW">LOW</option><option value="MEDIUM">MEDIUM</option><option value="HIGH">HIGH</option></select></div>
-        <div className="field-group"><label htmlFor="ticket-status">Current Status</label><select id="ticket-status" value={currentStatus} onChange={(event) => setCurrentStatus(event.target.value as "" | "NEW")}><option value="">All statuses</option><option value="NEW">NEW</option></select></div>
+        <div className="field-group"><label htmlFor="ticket-status">Current Status</label><select id="ticket-status" value={currentStatus} onChange={(event) => setCurrentStatus(event.target.value as "" | TicketStatus | "ACTIVE")}><option value="">All statuses</option><option value="ACTIVE">Active tickets</option>{statuses.map((item) => <option key={item} value={item}>{item.replaceAll("_", " ")}</option>)}</select></div>
         <div className="field-group"><label htmlFor="ticket-sort">Sort by</label><select id="ticket-sort" value={sortBy} onChange={(event) => setSortBy(event.target.value as TicketListQuery["sortBy"])}><option value="createdAt">Created Date</option><option value="updatedAt">Last Updated</option><option value="ticketNumber">Ticket Number</option><option value="summary">Summary</option></select></div>
         <div className="field-group"><label htmlFor="ticket-sort-order">Direction</label><select id="ticket-sort-order" value={sortOrder} onChange={(event) => setSortOrder(event.target.value as TicketListQuery["sortOrder"])}><option value="desc">Descending</option><option value="asc">Ascending</option></select></div>
         <div className="filter-actions"><button className="button button--primary" type="submit">Apply filters</button><button className="button button--tertiary" type="button" onClick={clearFilters}>Clear filters</button></div>

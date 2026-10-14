@@ -1,0 +1,10 @@
+{
+  "mode": "recovery",
+  "revision": "10675917f46ceb58376c3db2eafe2b218cd1ec25",
+  "startedAt": "2026-10-11T17:38:14.925Z",
+  "database": "toktickit_lab4_e2e",
+  "databasePort": 5433,
+  "steps": [],
+  "failedAt": "2026-10-11T17:38:15.086Z",
+  "error": "Error: spawnSync tmp\\nonexistent-recovery-tools\\pg_dump.exe ENOENT\n    at Object.spawnSync (node:internal/child_process:1160:20)\n    at spawnSync (node:child_process:928:24)\n    at execFileSync (node:child_process:971:15)\n    at file:///C:/Users/User/OneDrive/Documents/ChatGPT/Lab%20TokTik%20(SE)/lab4-integration-54/scripts/verify-lab4.mjs:100:25"
+}

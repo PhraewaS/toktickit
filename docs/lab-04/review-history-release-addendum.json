@@ -1,0 +1,174 @@
+{
+  "snapshotDate": "2026-10-14",
+  "repository": "PhraewaS/toktickit",
+  "scope": "Selected actual PR #63/#64 reviews and author response after the preserved 2026-10-12 snapshot; not a replacement full-repository snapshot.",
+  "events": [
+    {
+      "id": 5492867653,
+      "node_id": "PRR_kwDOT3o08M8AAAABR2aCRQ",
+      "user": {
+        "login": "guluJa",
+        "id": 282222277,
+        "node_id": "U_kgDOENJexQ",
+        "avatar_url": "https://avatars.githubusercontent.com/u/282222277?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/guluJa",
+        "html_url": "https://github.com/guluJa",
+        "followers_url": "https://api.github.com/users/guluJa/followers",
+        "following_url": "https://api.github.com/users/guluJa/following{/other_user}",
+        "gists_url": "https://api.github.com/users/guluJa/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/guluJa/starred{/owner},{/repo}",
+        "subscriptions_url": "https://api.github.com/users/guluJa/subscriptions",
+        "organizations_url": "https://api.github.com/users/guluJa/orgs",
+        "repos_url": "https://api.github.com/users/guluJa/repos",
+        "events_url": "https://api.github.com/users/guluJa/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/guluJa/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "body": "ตรวจ release revision c239461 แล้วนะคะ ผลทั้งหก phases ระบุ source ตรงกัน และจำนวน tests/skips ตรงกับ console output ค่ะ ลองรัน Client 89 tests, focused Server 36 tests, recovery safety 6 tests และทั้งสอง build แล้วผ่าน รอบนี้ไม่พบจุดที่ต้องแก้โค้ดเพิ่มเติมค่ะ ",
+      "state": "COMMENTED",
+      "html_url": "https://github.com/PhraewaS/toktickit/pull/63#pullrequestreview-5492867653",
+      "pull_request_url": "https://api.github.com/repos/PhraewaS/toktickit/pulls/63",
+      "author_association": "COLLABORATOR",
+      "_links": {
+        "html": {
+          "href": "https://github.com/PhraewaS/toktickit/pull/63#pullrequestreview-5492867653"
+        },
+        "pull_request": {
+          "href": "https://api.github.com/repos/PhraewaS/toktickit/pulls/63"
+        }
+      },
+      "submitted_at": "2026-10-12T15:30:40Z",
+      "commit_id": "c239461cbb7e22d8cb7c42e40c1c7238fdedb9a5"
+    },
+    {
+      "id": 5505186004,
+      "node_id": "PRR_kwDOT3o08M8AAAABSCJ41A",
+      "user": {
+        "login": "guluJa",
+        "id": 282222277,
+        "node_id": "U_kgDOENJexQ",
+        "avatar_url": "https://avatars.githubusercontent.com/u/282222277?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/guluJa",
+        "html_url": "https://github.com/guluJa",
+        "followers_url": "https://api.github.com/users/guluJa/followers",
+        "following_url": "https://api.github.com/users/guluJa/following{/other_user}",
+        "gists_url": "https://api.github.com/users/guluJa/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/guluJa/starred{/owner},{/repo}",
+        "subscriptions_url": "https://api.github.com/users/guluJa/subscriptions",
+        "organizations_url": "https://api.github.com/users/guluJa/orgs",
+        "repos_url": "https://api.github.com/users/guluJa/repos",
+        "events_url": "https://api.github.com/users/guluJa/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/guluJa/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "body": "ตรวจ revision d4479bb แล้วนะคะ บันทึกทั้งสองฝั่งแยกชัดเจน เทียบข้อความทั้ง 89 เหตุการณ์กับ GitHub แล้วตรงกัน รวมถึง Approval ของ 16 PR ที่ตรงกับ head และเกิดก่อน Merge ค่ะ ประวัติเดิมยังครบ และแยก snapshot กับผล Final-main ถูกต้อง รอบนี้ไม่พบจุดที่ต้องแก้เพิ่มเติมในขอบเขตเอกสารนี้ค่ะ",
+      "state": "COMMENTED",
+      "html_url": "https://github.com/PhraewaS/toktickit/pull/64#pullrequestreview-5505186004",
+      "pull_request_url": "https://api.github.com/repos/PhraewaS/toktickit/pulls/64",
+      "author_association": "COLLABORATOR",
+      "_links": {
+        "html": {
+          "href": "https://github.com/PhraewaS/toktickit/pull/64#pullrequestreview-5505186004"
+        },
+        "pull_request": {
+          "href": "https://api.github.com/repos/PhraewaS/toktickit/pulls/64"
+        }
+      },
+      "submitted_at": "2026-10-13T14:33:26Z",
+      "commit_id": "d4479bb52ab13fc8ccfe63fa01e0be4c66f504a5"
+    },
+    {
+      "id": 5517046805,
+      "node_id": "PRR_kwDOT3o08M8AAAABSNd0FQ",
+      "user": {
+        "login": "guluJa",
+        "id": 282222277,
+        "node_id": "U_kgDOENJexQ",
+        "avatar_url": "https://avatars.githubusercontent.com/u/282222277?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/guluJa",
+        "html_url": "https://github.com/guluJa",
+        "followers_url": "https://api.github.com/users/guluJa/followers",
+        "following_url": "https://api.github.com/users/guluJa/following{/other_user}",
+        "gists_url": "https://api.github.com/users/guluJa/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/guluJa/starred{/owner},{/repo}",
+        "subscriptions_url": "https://api.github.com/users/guluJa/subscriptions",
+        "organizations_url": "https://api.github.com/users/guluJa/orgs",
+        "repos_url": "https://api.github.com/users/guluJa/repos",
+        "events_url": "https://api.github.com/users/guluJa/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/guluJa/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "body": "",
+      "state": "APPROVED",
+      "html_url": "https://github.com/PhraewaS/toktickit/pull/64#pullrequestreview-5517046805",
+      "pull_request_url": "https://api.github.com/repos/PhraewaS/toktickit/pulls/64",
+      "author_association": "COLLABORATOR",
+      "_links": {
+        "html": {
+          "href": "https://github.com/PhraewaS/toktickit/pull/64#pullrequestreview-5517046805"
+        },
+        "pull_request": {
+          "href": "https://api.github.com/repos/PhraewaS/toktickit/pulls/64"
+        }
+      },
+      "submitted_at": "2026-10-14T11:16:53Z",
+      "commit_id": "d4479bb52ab13fc8ccfe63fa01e0be4c66f504a5"
+    },
+    {
+      "url": "https://api.github.com/repos/PhraewaS/toktickit/issues/comments/6165720545",
+      "html_url": "https://github.com/PhraewaS/toktickit/pull/64#issuecomment-6165720545",
+      "issue_url": "https://api.github.com/repos/PhraewaS/toktickit/issues/64",
+      "id": 6165720545,
+      "node_id": "IC_kwDOT3o08M8AAAABb4Ft4Q",
+      "user": {
+        "login": "PhraewaS",
+        "id": 265047184,
+        "node_id": "U_kgDOD8xMkA",
+        "avatar_url": "https://avatars.githubusercontent.com/u/265047184?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/PhraewaS",
+        "html_url": "https://github.com/PhraewaS",
+        "followers_url": "https://api.github.com/users/PhraewaS/followers",
+        "following_url": "https://api.github.com/users/PhraewaS/following{/other_user}",
+        "gists_url": "https://api.github.com/users/PhraewaS/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/PhraewaS/starred{/owner},{/repo}",
+        "subscriptions_url": "https://api.github.com/users/PhraewaS/subscriptions",
+        "organizations_url": "https://api.github.com/users/PhraewaS/orgs",
+        "repos_url": "https://api.github.com/users/PhraewaS/repos",
+        "events_url": "https://api.github.com/users/PhraewaS/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/PhraewaS/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "created_at": "2026-10-14T09:56:29Z",
+      "updated_at": "2026-10-14T09:56:29Z",
+      "author_association": "OWNER",
+      "body": "> ตรวจ revision [d4479bb](https://github.com/PhraewaS/toktickit/commit/d4479bb52ab13fc8ccfe63fa01e0be4c66f504a5) แล้วนะคะ บันทึกทั้งสองฝั่งแยกชัดเจน เทียบข้อความทั้ง 89 เหตุการณ์กับ GitHub แล้วตรงกัน รวมถึง Approval ของ 16 PR ที่ตรงกับ head และเกิดก่อน Merge ค่ะ ประวัติเดิมยังครบ และแยก snapshot กับผล Final-main ถูกต้อง รอบนี้ไม่พบจุดที่ต้องแก้เพิ่มเติมในขอบเขตเอกสารนี้ค่ะ\r\n\r\nขอบคุณมากนะคะ",
+      "reactions": {
+        "url": "https://api.github.com/repos/PhraewaS/toktickit/issues/comments/6165720545/reactions",
+        "total_count": 0,
+        "+1": 0,
+        "-1": 0,
+        "laugh": 0,
+        "hooray": 0,
+        "confused": 0,
+        "heart": 0,
+        "rocket": 0,
+        "eyes": 0
+      },
+      "performed_via_github_app": null,
+      "minimized": null,
+      "pin": null
+    }
+  ]
+}

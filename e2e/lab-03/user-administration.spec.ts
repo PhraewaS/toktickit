@@ -15,6 +15,8 @@ test("E2E-03 Administrator sees minimalist User Management", async ({ page }, te
   await page.getByLabel("Confirm new password", { exact: true }).fill("Admin-Changed2!");
   await page.getByRole("button", { name: "Save password" }).click();
   await page.reload();
+  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
+  await page.getByRole("link", { name: "User Management" }).click();
   await expect(page.getByRole("heading", { name: "User Management" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Create user" }).first()).toBeVisible();
   await page.getByRole("button", { name: "Create user" }).first().click();

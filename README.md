@@ -38,9 +38,11 @@ npm --prefix server run prisma:seed
 npm --prefix server run dev
 ```
 
+The local PostgreSQL instance used for this project listens on port `5433`. Use that port in development and isolated test URLs; keep credentials in the untracked environment file.
+
 The Prisma commands will:
 
-- `npm --prefix server run prisma:deploy` — apply the committed Lab 1, Lab 2, and Lab 3 migrations without creating a new migration.
+- `npm --prefix server run prisma:deploy` — apply the committed Lab 1-4 migrations without creating a new migration.
 - `npm --prefix server run prisma:migrate` — create/apply a migration during intentional local schema development only.
 - `npm --prefix server run prisma:seed` — idempotently seed reference data, 4 active Requesters plus 1 inactive Requester, 3 active IT Staff plus 1 inactive IT Staff, 1 active Administrator, realistic Tickets, Public Comments, and Internal Notes.
 
@@ -112,6 +114,17 @@ Uploads accept JPG/JPEG, PNG, WEBP, and PDF files up to 5 MiB each, with at most
 
 The IT Staff Ticket Queue supports search, status/priority/ownership filters, sorting, pagination, assignment, IT Priority, permitted status transitions, Public Comments, and Internal Notes. Administrator User Management supports list/search/role filter, create, basic edit, activation/deactivation, and setting a new initial password. See [`docs/lab-03/specification.md`](docs/lab-03/specification.md), [`docs/lab-03/api-spec.md`](docs/lab-03/api-spec.md), and [`docs/lab-03/ui-spec.md`](docs/lab-03/ui-spec.md).
 
+## Lab 4 actions and dashboards
+
+Lab 4 adds the additive `ActionTaken` record under each Ticket, authenticated performer attribution, Requester read-only visibility, IT Staff/Administrator create and update controls, and a resolution guard requiring at least one Action Taken. Requester and Staff/Administrator dashboards are backed by server-side metrics and drill-down lists. Apply the committed migration and deterministic seed before exercising the new flows:
+
+```bash
+npm --prefix server run prisma:deploy
+npm --prefix server run prisma:seed
+```
+
+The Lab 4 contracts and traceability records are in [`docs/lab-04/specification.md`](docs/lab-04/specification.md), [`docs/lab-04/api-spec.md`](docs/lab-04/api-spec.md), [`docs/lab-04/ui-spec.md`](docs/lab-04/ui-spec.md), [`docs/lab-04/tests.md`](docs/lab-04/tests.md), [`docs/lab-04/reviewer.md`](docs/lab-04/reviewer.md), and [`docs/lab-04/ai-use.md`](docs/lab-04/ai-use.md).
+
 ## Testing
 
 Run tests and builds from the repository root:
@@ -143,6 +156,27 @@ npm --prefix e2e exec playwright test -- --config e2e/playwright.lab3.config.ts
 
 This writes the Lab 3 HTML report and responsive evidence under `artifacts/lab-03/`.
 
+### Integrated Lab 4 verification
+
+After installing the locked server, client, and E2E dependencies and Playwright Chromium, run these phases in order from the repository root. Replace the environment-file path with your existing local file; the runner reads credentials without copying or printing them.
+
+```powershell
+node scripts/verify-lab4.mjs prepare --env-file server/.env
+node scripts/verify-lab4.mjs recovery --env-file server/.env
+node scripts/verify-lab4.mjs server --env-file server/.env
+node scripts/verify-lab4.mjs client --env-file server/.env
+node scripts/verify-lab4.mjs lab4 --env-file server/.env
+node scripts/verify-lab4.mjs lab3 --env-file server/.env
+```
+
+The runner validates localhost port `5433`, uses only the dedicated `toktickit_lab4_e2e` / `toktickit_lab3_e2e` databases, and generates disposable seed passwords in memory. It never seeds the application database named in the supplied URL. It records the tested Git revision and sanitized outputs in `artifacts/lab-04/evidence/staging-integration/`. Pass `--output-dir artifacts/lab-04/evidence/final-main` when repeating the phases on released `main`; staging results do not replace final-main verification.
+
+Lab 4 responsive screenshots are generated in `artifacts/lab-04/screenshots/staff-dashboard/`, `requester-dashboard/`, and `actions-taken/`. Playwright reports distinguish intentional viewport skips from passing tests. See `docs/lab-04/integration.md` for review/release gates and the Answer Parts 1-9 submission map.
+
 ## Security
+
+The recovery phase detects the connected PostgreSQL server major version and requires matching `pg_dump` and `psql` tools. Supply `--pg-bin` only if they are installed elsewhere. It creates a plain SQL backup, creates a unique temporary database from `template0`, and restores through `psql --no-psqlrc --set=ON_ERROR_STOP=1 --single-transaction`. It compares every Prisma table plus migration-history counts/fingerprints, then removes only its temporary database and dump. The source E2E database remains intact. This uses the [PostgreSQL-supported SQL dump/restore procedure](https://www.postgresql.org/docs/15/backup-dump.html); it does not require `createdb`, `pg_restore` or `dropdb` executables. Windows Application Control stays enabled; no executable is relocated or unblocked. Never restore an untrusted SQL dump.
+
+Test recovery command safety independently with `node --test scripts/postgres-recovery.test.mjs`. A recovery failure is recorded with `failedAt` and `error`, not a successful `completedAt`. Old custom-format recovery evidence remains historical; new SQL recovery must be reviewed/merged and repeated on staging and final main before closing #54.
 
 Do not commit `.env`, database credentials, tokens, or `node_modules`.

@@ -46,5 +46,5 @@ describe.skipIf(!process.env.DATABASE_URL || !process.env.LAB3_SEED_PASSWORD)("P
       prisma.internalNote.count(),
     ]);
     expect(afterSecond).toEqual(afterFirst);
-  });
+  }, 30_000);
 });

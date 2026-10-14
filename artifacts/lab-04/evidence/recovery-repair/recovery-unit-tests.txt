@@ -1,0 +1,14 @@
+✔ uses supported plain SQL dump and psql, without blocked helper executables (0.9753ms)
+✔ restores atomically and stops on SQL errors, ignoring user psql startup files (0.1495ms)
+✔ only creates and drops the unique validated temporary database, using template0 (0.696ms)
+✔ rejects application databases and unsafe recovery targets (0.3091ms)
+✔ uses the selected installed Windows tools with no shell string (0.2143ms)
+✔ requires both SQL backup/restore tools to match the actual server major (0.2367ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 807.1052

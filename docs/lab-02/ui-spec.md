@@ -115,7 +115,7 @@ Required Elements/States:
 ### Controls
 
 - Search ด้วย Ticket Number หรือ Summary
-- Filters: Category, Related System, Requested Priority และ Current Status
+- Filters: Category, Related System, Requested Priority และ Current Status (Lab 2 แสดง `NEW`; Lab 4 เพิ่มทุกสถานะและตัวเลือก Active tickets สำหรับ Dashboard drill-down)
 - Sort Field และ Direction
 - Clear Filters เป็น Tertiary Action
 - Create Ticket เป็น Primary Action

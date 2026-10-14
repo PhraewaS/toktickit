@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { createRequesterComment, DevelopmentRequester, fetchRequesterComments, fetchTicketDetail, markRequesterResolved, Ticket, CommentEntry } from "./api.js";
 import AttachmentSection from "./AttachmentSection.js";
+import ActionsTaken from "./ActionsTaken.js";
 
 function formatDate(value: string) {
   return new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(
@@ -104,6 +105,7 @@ export default function RequesterTicketDetail({
         attachments={ticket.attachments ?? []}
         onChanged={(attachments) => setTicket((current) => current ? { ...current, attachments } : current)}
       />
+      <ActionsTaken ticketId={ticket.id} readOnly />
       <section className="form-section comment-panel" aria-labelledby="requester-comments-heading">
         <h2 id="requester-comments-heading">Public Comments</h2>
         <p>Shared with the Requester and IT Staff.</p>

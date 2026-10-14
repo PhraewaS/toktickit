@@ -10,6 +10,8 @@ vi.mock("../../src/api.js", async () => ({
   logoutUser: vi.fn(),
   fetchUsers: vi.fn(),
   fetchStaffTickets: vi.fn(),
+  fetchRequesterDashboard: vi.fn(),
+  fetchStaffDashboard: vi.fn(),
   fetchCategories: vi.fn(),
   fetchRelatedSystems: vi.fn(),
 }));
@@ -23,6 +25,8 @@ describe("Lab 3 role navigation and safe session failures", () => {
     vi.clearAllMocks();
     vi.mocked(api.fetchUsers).mockResolvedValue([admin]);
     vi.mocked(api.fetchStaffTickets).mockResolvedValue({ items: [], pagination: { page: 1, pageSize: 10, totalItems: 0, totalPages: 0 } });
+    vi.mocked(api.fetchRequesterDashboard).mockResolvedValue({ metrics: { openTickets: 0, waitingForRequester: 0, recentlyUpdated: 0, recentlyResolved: 0 }, recentlyUpdated: [], recentlyResolved: [] });
+    vi.mocked(api.fetchStaffDashboard).mockResolvedValue({ metrics: { unassignedActive: 0, myActive: 0, myActionsTaken: 0, urgentTickets: 0 }, byStatus: { NEW: 0, OPEN: 0, IN_PROGRESS: 0, WAITING_FOR_REQUESTER: 0, REOPENED: 0, RESOLVED: 0, CLOSED: 0, CANCELLED: 0 }, byPriority: { LOW: 0, MEDIUM: 0, HIGH: 0 }, recentlyUpdated: [], urgentTickets: [], recentActions: [] });
     vi.mocked(api.fetchCategories).mockResolvedValue([]);
     vi.mocked(api.fetchRelatedSystems).mockResolvedValue([]);
   });
@@ -31,11 +35,11 @@ describe("Lab 3 role navigation and safe session failures", () => {
     [requester, "Create Ticket"],
     [staff, "Ticket Queue"],
     [admin, "User Management"],
-  ])("lands %s users on the role-appropriate workspace", async (user, landing) => {
+  ])("lands %s users on the Dashboard with role-appropriate navigation", async (user, landing) => {
     vi.mocked(api.fetchCurrentUser).mockResolvedValue(user);
     render(<App />);
     expect(await screen.findByRole("link", { name: landing })).toBeInTheDocument();
-    expect(await screen.findByRole("heading", { name: landing })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Dashboard" })).toBeInTheDocument();
   });
 
   it("shows a safe retry state when session loading fails", async () => {

@@ -1,0 +1,35 @@
+Focused documentation-related Client regression, 2026-10-14 Asia/Bangkok
+Branch: codex/lab4-release-documentation-54
+Product/HEAD baseline at execution: 5ab13bbf53371b1e42bacbfe22c00296b9f68d0c
+Working changes: documents and review evidence only; no source/test/dependency edits.
+Not a full suite, CI or final-main verification.
+Working directory: client/
+Command:
+npm.cmd test -- --run --no-file-parallelism tests/lab-04/ActionsTaken.test.tsx tests/lab-04/StaffDashboard.test.tsx tests/lab-04/RequesterDashboard.test.tsx tests/lab-04/TicketWorkflow.test.tsx tests/lab-02/ZenGreenStyles.test.tsx tests/lab-03/ZenGreenStyle.test.tsx tests/lab-02/Accessibility.test.tsx
+Exit: 0
+
+Captured test output:
+> toktickit-client@1.0.0 test
+> vitest run --run --no-file-parallelism tests/lab-04/ActionsTaken.test.tsx tests/lab-04/StaffDashboard.test.tsx tests/lab-04/RequesterDashboard.test.tsx tests/lab-04/TicketWorkflow.test.tsx tests/lab-02/ZenGreenStyles.test.tsx tests/lab-03/ZenGreenStyle.test.tsx tests/lab-02/Accessibility.test.tsx
+
+ RUN  v2.1.9 C:/Users/User/OneDrive/Documents/ChatGPT/Lab TokTik (SE)/lab4-integration-54/client
+
+ ✓ tests/lab-04/ActionsTaken.test.tsx (9 tests) 5402ms
+   ✓ Lab 4 Actions Taken UI > loads an empty state and allows IT Staff to create an action with follow-up 1221ms
+   ✓ Lab 4 Actions Taken UI > sends the loaded updatedAt token when editing 559ms
+   ✓ Lab 4 Actions Taken UI > maps server validation errors to the matching field 1198ms
+   ✓ Lab 4 Actions Taken UI > shows a stale-update conflict and refreshes the Action list 669ms
+   ✓ Lab 4 Actions Taken UI > reuses the same idempotency key when retrying a create after an uncertain response 824ms
+   ✓ Lab 4 Actions Taken UI > reconciles the action list before allowing another create after discarding an uncertain draft 784ms
+ ✓ tests/lab-04/StaffDashboard.test.tsx (5 tests) 682ms
+   ✓ Lab 4 Staff Dashboard > drills each metric and breakdown into the matching queue filters 307ms
+ ✓ tests/lab-04/RequesterDashboard.test.tsx (5 tests) 458ms
+ ✓ tests/lab-04/TicketWorkflow.test.tsx (2 tests) 308ms
+ ✓ tests/lab-02/Accessibility.test.tsx (3 tests) 509ms
+ ✓ tests/lab-02/ZenGreenStyles.test.tsx (1 test) 67ms
+ ✓ tests/lab-03/ZenGreenStyle.test.tsx (1 test) 3ms
+
+ Test Files  7 passed (7)
+      Tests  26 passed (26)
+   Start at  19:53:09
+   Duration  20.64s (transform 552ms, setup 553ms, collect 1.53s, tests 7.43s, environment 3.60s, prepare 527ms)

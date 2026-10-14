@@ -9,6 +9,7 @@ const prismaMocks = vi.hoisted(() => ({
   ticketFindUnique: vi.fn(),
   ticketFindFirst: vi.fn(),
   ticketUpdate: vi.fn(),
+  ticketUpdateMany: vi.fn(),
   requesterFindFirst: vi.fn(),
   publicCommentFindMany: vi.fn(),
   publicCommentCreate: vi.fn(),
@@ -25,6 +26,7 @@ vi.mock("../../src/prisma.js", () => ({
       findUnique: prismaMocks.ticketFindUnique,
       findFirst: prismaMocks.ticketFindFirst,
       update: prismaMocks.ticketUpdate,
+      updateMany: prismaMocks.ticketUpdateMany,
     },
     requesterUser: { findFirst: prismaMocks.requesterFindFirst },
     publicComment: {
@@ -125,6 +127,24 @@ describe("Lab 3 staff operations production routes", () => {
     ] });
   });
 
+  it("applies active-only together with dashboard owner and urgency drill-down filters", async () => {
+    const cookie = authenticate(UserRole.IT_STAFF);
+    prismaMocks.ticketCount.mockResolvedValue(2);
+    prismaMocks.ticketFindMany.mockResolvedValue([staffTicket]);
+
+    const response = await request(app)
+      .get("/api/staff/tickets?ownerId=unassigned&activeOnly=true&itPriority=HIGH&page=1&pageSize=10")
+      .set("Cookie", cookie);
+
+    expect(response.status).toBe(200);
+    const query = prismaMocks.ticketFindMany.mock.calls[0][0];
+    expect(query.where.AND).toEqual(expect.arrayContaining([
+      { ownerId: null },
+      { itPriority: "HIGH" },
+      { currentStatus: { in: ["NEW", "OPEN", "IN_PROGRESS", "WAITING_FOR_REQUESTER", "REOPENED"] } },
+    ]));
+  });
+
   it("rejects invalid sortOrder and unknown queue query parameters", async () => {
     const cookie = authenticate(UserRole.IT_STAFF);
 
@@ -137,6 +157,9 @@ describe("Lab 3 staff operations production routes", () => {
     const repeatedQuery = await request(app)
       .get("/api/staff/tickets?sortOrder=asc&sortOrder=desc")
       .set("Cookie", cookie);
+    const invalidActiveOnly = await request(app)
+      .get("/api/staff/tickets?activeOnly=yes")
+      .set("Cookie", cookie);
 
     expect(invalidSort.status).toBe(400);
     expect(invalidSort.body.error.code).toBe("INVALID_QUERY");
@@ -144,6 +167,8 @@ describe("Lab 3 staff operations production routes", () => {
     expect(unknownQuery.body.error.code).toBe("INVALID_QUERY");
     expect(repeatedQuery.status).toBe(400);
     expect(repeatedQuery.body.error.code).toBe("INVALID_QUERY");
+    expect(invalidActiveOnly.status).toBe(400);
+    expect(invalidActiveOnly.body.error.code).toBe("INVALID_QUERY");
     expect(prismaMocks.ticketCount).not.toHaveBeenCalled();
   });
 
@@ -295,17 +320,20 @@ describe("Lab 3 staff operations production routes", () => {
     const cookie = authenticate(UserRole.IT_STAFF);
     prismaMocks.ticketFindUnique
       .mockResolvedValueOnce({ id: 42 })
-      .mockResolvedValueOnce({ currentStatus: "NEW" });
+      .mockResolvedValueOnce({ currentStatus: "NEW" })
+      .mockResolvedValueOnce({ ...staffTicket, currentStatus: "OPEN" });
     prismaMocks.requesterFindFirst.mockResolvedValue({ id: 9 });
     prismaMocks.ticketUpdate.mockResolvedValue(staffTicket);
+    prismaMocks.ticketUpdateMany.mockResolvedValue({ count: 1 });
 
     const assignment = await request(app).post("/api/staff/tickets/42/assignment").set("Cookie", cookie).send({ ownerId: 9 });
-    const status = await request(app).patch("/api/staff/tickets/42/status").set("Cookie", cookie).send({ status: "OPEN" });
+    const status = await request(app).patch("/api/staff/tickets/42/status").set("Cookie", cookie).send({ status: "OPEN", expectedCurrentStatus: "NEW" });
 
     expect(assignment.status).toBe(200);
     expect(status.status).toBe(200);
     expect(prismaMocks.requesterFindFirst).toHaveBeenCalled();
-    expect(prismaMocks.ticketUpdate).toHaveBeenCalledTimes(2);
+    expect(prismaMocks.ticketUpdate).toHaveBeenCalledTimes(1);
+    expect(prismaMocks.ticketUpdateMany).toHaveBeenCalledWith({ where: { id: 42, currentStatus: "NEW" }, data: { currentStatus: "OPEN" } });
   });
 
   it("rejects inactive or invalid assignment owners", async () => {
