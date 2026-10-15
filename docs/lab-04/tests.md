@@ -2,6 +2,22 @@
 
 ## Evidence status and reading guide
 
+### Current final-main product status - 2026-10-14
+
+Released/tested main **e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384**, approved release #63: all six phases passed; Server 164, Client 89, both builds; safety 6, 9 table + 5 migration fingerprints; Lab 4 E2E 11 passed/10 intentional skips, Lab 3 E2E 26 passed/16 intentional skips, 0 failed/flaky. Eight selected DB/API/UI values match, six responsive keyboard/browser flows pass; performance 40 requests/0 failures, maxima 360/14/11/8 ms. [Actual outputs/phase JSON](../../artifacts/lab-04/evidence/final-main/summary.md), [visual provenance](../../artifacts/lab-04/evidence/final-main/visual/results.json).
+
+| Current AC / test group | Actual released-main outcome | Remaining gate |
+| --- | --- | --- |
+| AC-01/02/03/08; UNIT/API/UI-04 | Actions API/component suites and create/edit/read-only E2E passed, including field/role/version/retry/draft behavior | Human final-evidence acceptance |
+| AC-04; API/UI-06, E2E-07 | Status/resolution/stale/concurrent/close/cancel and legacy assignment/inactive-assignee checks passed | Human final-evidence acceptance |
+| AC-05; API/UI-05, E2E-05/06, PERF-04 | Dashboard/filter/ownership, independent selected counts and all 40 smoke requests passed | Human final-evidence acceptance |
+| AC-06; RESP/STYLE-04, STYLE-REG | Six keyboard/browser flows; 72 supplementary captures and manual source/image review at all widths, with HTTP fixtures labelled | Human visual/PDF acceptance; not WCAG certification |
+| AC-07; REG-04, E2E-00, RECOVERY-04 | Suites/builds, migration/seed/isolated restore and full current/legacy E2E passed; intentional skips labelled | Final evidence merge/submission and Done |
+
+This evidence branch changes no product/existing test code. Supplementary capture harness is a later evidence tool, not attributed to the tested main tree. Source ordering/append-only inspection remains separate from named assertions. **Pending main** cells below are historical pre-release statuses; current actual outcomes are above.
+
+### Historical documentation / pre-release checkpoint (not current status)
+
 The first table preserves historical feature/Issue #53 results; its numbers are not results of this documentation-maintenance branch. The latest executed pre-release run is exact staging **`5ab13bbf53371b1e42bacbfe22c00296b9f68d0c`**, 2026-10-14, with [six phase JSON/raw logs, metrics and performance](https://github.com/PhraewaS/toktickit/pull/63#issuecomment-6168420145). Server 164/164, Client 89/89 and both builds passed; Lab 4 E2E 11 passed/10 intentional skips; Lab 3 E2E 26 passed/16 intentional skips; both reports have 0 failed/flaky. Recovery safety 6/6, seed/migration/recovery, eight selected DB/API/UI values and six responsive/keyboard browser flows passed. Performance: 40 requests, 0 failures, maxima 311/7/7/7 ms (Staff Dashboard / Requester Dashboard / Staff Actions / Requester Actions).
 
 **Final status for every test/AC remains Pending released-main repeat.** This is deliberate, not a false passing claim or missing test plan. Old skipped counts and timings stay attached to their old revision. This documentation PR introduces no test/code/dependency changes and does not rerun the full six-phase gate. It additionally ran the existing focused Client component/style/accessibility checks: **26/26 in seven files passed** during documentation preparation with product code unchanged from 5ab13bb; [exact command/output](../../artifacts/lab-04/evidence/documentation-review/focused-client-checks.txt). This is not a new full-suite/main result.

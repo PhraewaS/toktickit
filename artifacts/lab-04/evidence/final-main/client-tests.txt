@@ -1,0 +1,56 @@
+
+> [REDACTED]-client@1.0.0 test
+> vitest run --run --no-file-parallelism
+
+
+ RUN  v2.1.9 C:/Users/User/OneDrive/Documents/ChatGPT/Lab TokTik (SE)/lab4-integration-54/client
+
+ ✓ tests/lab-04/ActionsTaken.test.tsx (9 tests) 5742ms
+   ✓ Lab 4 Actions Taken UI > loads an empty state and allows IT Staff to create an action with follow-up 1428ms
+   ✓ Lab 4 Actions Taken UI > sends the loaded updatedAt token when editing 543ms
+   ✓ Lab 4 Actions Taken UI > maps server validation errors to the matching field 1275ms
+   ✓ Lab 4 Actions Taken UI > shows a stale-update conflict and refreshes the Action list 747ms
+   ✓ Lab 4 Actions Taken UI > reuses the same idempotency key when retrying a create after an uncertain response 818ms
+   ✓ Lab 4 Actions Taken UI > reconciles the action list before allowing another create after discarding an uncertain draft 699ms
+ ✓ tests/lab-02/CreateTicket.test.tsx (7 tests) 1872ms
+   ✓ Create Ticket > prevents duplicate submission and displays the official Ticket Number 609ms
+   ✓ Create Ticket > renders backend field errors beside the related fields 330ms
+ ✓ tests/lab-02/MyTickets.test.tsx (9 tests) 2719ms
+   ✓ My Tickets screen > loads owned tickets and applies search/filter controls 483ms
+   ✓ My Tickets screen > clears search and filters while keeping the visible sort controls in sync 707ms
+   ✓ My Tickets screen > covers all list controls and previous/next pagination requests 872ms
+ ✓ tests/lab-03/StaffTicketDetail.test.tsx (5 tests) 1128ms
+   ✓ Staff ticket operations and evidence > posts Public Comments and Internal Notes through the staff controls 620ms
+ ✓ tests/lab-03/StaffTicketQueue.test.tsx (7 tests) 1506ms
+   ✓ Lab 3 IT Staff queue > sends independent requested and IT priority filters with search, sort and pagination 738ms
+   ✓ Lab 3 IT Staff queue > shows no-results feedback after a filter returns no Tickets 310ms
+ ✓ tests/lab-03/UserManagement.test.tsx (6 tests) 2733ms
+   ✓ submits the administrator create-user action 1026ms
+   ✓ requires confirmation before deactivation and explains session revocation 357ms
+   ✓ submits edit and reset-password actions 978ms
+ ✓ tests/lab-04/StaffDashboard.test.tsx (5 tests) 673ms
+ ✓ tests/lab-02/RequesterTicketDetail.test.tsx (4 tests) 798ms
+   ✓ Requester Ticket Detail and attachments > uploads a valid file and soft-removes it with a reason 469ms
+ ✓ tests/lab-04/RequesterDashboard.test.tsx (5 tests) 574ms
+   ✓ Lab 4 Requester Dashboard > renders authoritative metrics, recent summaries, and routes each action to the right screen 325ms
+ ✓ tests/lab-02/AttachmentSection.test.tsx (4 tests) 299ms
+ ✓ tests/lab-02/RequesterSelection.test.tsx (6 tests) 292ms
+ ✓ tests/lab-03/AppRoleNavigation.test.tsx (6 tests) 373ms
+ ✓ tests/lab-04/TicketWorkflow.test.tsx (2 tests) 488ms
+ ✓ tests/lab-02/Accessibility.test.tsx (3 tests) 508ms
+ ✓ tests/lab-03/ChangePassword.test.tsx (2 tests) 1621ms
+   ✓ Lab 3 first-login password change > requires matching passwords and continues after saving 996ms
+   ✓ Lab 3 first-login password change > shows a safe password-change failure 623ms
+ ✓ tests/lab-03/Login.test.tsx (2 tests) 1549ms
+   ✓ Lab 3 Login > validates credentials and returns the authenticated user 862ms
+   ✓ Lab 3 Login > shows a safe login failure without exposing API details 684ms
+ ✓ tests/lab-03/ApiContract.test.tsx (2 tests) 12ms
+ ✓ tests/lab-01/App.test.tsx (3 tests) 132ms
+ ✓ tests/lab-02/ZenGreenStyles.test.tsx (1 test) 101ms
+ ✓ tests/lab-03/ZenGreenStyle.test.tsx (1 test) 6ms
+
+ Test Files  20 passed (20)
+      Tests  89 passed (89)
+   Start at  21:48:38
+   Duration  81.50s (transform 1.06s, setup 3.68s, collect 7.16s, tests 23.13s, environment 21.19s, prepare 3.24s)
+

@@ -1,0 +1,15 @@
+{
+  "prs": 21,
+  "incoming": 11,
+  "outgoing": 10,
+  "events": 111,
+  "counts": {
+    "conversation": 61,
+    "reviews": 50,
+    "inline": 0
+  },
+  "quotationFidelityVerified": 111,
+  "approvedCurrentHeads": 21,
+  "generatedCharacters": 340496,
+  "generatedLines": 5359
+}

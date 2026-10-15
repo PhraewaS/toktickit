@@ -200,6 +200,14 @@ See [api-spec.md](api-spec.md). Primary additions are `GET /api/tickets/:ticketI
 
 ## 11. Final Implementation Definition of Done
 
+**Current 2026-10-14:** approved release #63 merged into main as **e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384**. Six phases, builds/regression, selected metric comparisons and keyboard checks passed there; 72 supplementary full-page/feedback/editor captures completed at three widths. [Fresh main results](../../artifacts/lab-04/evidence/final-main/summary.md). Final-evidence approval/merge, accepted submission and Kanban Done remain separate human gates.
+
+- [x] Repeat verification on actual released main with product SHA, phase outputs, reports and source-scoped limitations recorded separately.
+- [x] Prepare Answer Parts 1-9 PDF review candidate with readable screenshot regions and linked full originals; no false approval/Done.
+- [ ] Peer accepts/merges final evidence and completes PDF/submission acceptance; then record real Done and complete #54.
+
+The following is the preserved **pre-release checklist**, not a claim that the main repeat is still pending:
+
 PR #55 established the contract before the feature PRs; this maintenance does not rewrite that history or add product scope. Feature/integration evidence at `4e532887835770b0f4ec851e34e1bb92fab7c685` and actual staging evidence at `5ab13bbf53371b1e42bacbfe22c00296b9f68d0c` remain separately dated. The ticks below describe verified pre-release work, not final-main completion. See [integration.md](integration.md) and [reviewer.md](reviewer.md) for human approvals and pending release/submission gates.
 
 - [x] Specification, API, UI, test plan, reviewer, and AI-use documents are committed before the final integration record.

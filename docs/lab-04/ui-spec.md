@@ -68,4 +68,8 @@ Desktop metric grid uses four columns, tablet at <=991px two, and mobile at <=76
 
 ## Review and final demonstration evidence
 
+**Current main:** product **e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384** has fresh RESP-04 and 72 supplementary full-page/element captures at three widths. [Results/gallery](../../artifacts/lab-04/evidence/final-main/summary.md), [capture provenance](../../artifacts/lab-04/evidence/final-main/visual/results.json). Live seed/API success and real 400 validation are distinct from controlled empty/loading/403/409/500 UI fixtures; actual backend cases pass separately. PDF uses readable labelled regions with unchanged full originals linked. Human final evidence/PDF approval remains pending.
+
+Historical pre-release evidence:
+
 [Responsive, visual and accessibility checklist](responsive-accessibility-checklist.md) records actual staging assertions, screenshot/source inspection and remaining full-page/error-state final checks separately. [Documentation-review images](../../artifacts/lab-04/evidence/documentation-review/summary.md) preserve the 12 unmodified captures from tested staging 5ab13bb. Final Part 9 needs fresh released-main captures and the completed checklist; these images do not replace that gate.

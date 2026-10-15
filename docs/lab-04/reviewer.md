@@ -1,5 +1,11 @@
 # Lab 4 - บันทึกการตรวจงานโดยเพื่อนและการตรวจงานให้เพื่อน
 
+## PR หลักฐานฉบับสุดท้ายที่กำลังรอตรวจ
+
+[PhraewaS/toktickit#66 - Final Main Test Results and Submission Evidence](https://github.com/PhraewaS/toktickit/pull/66) เปิดจาก `codex/lab4-final-verification-evidence` เข้า `main` หลัง release #63 merge แล้ว และขอรีวิวจาก `@guluJa` ยังไม่มี peer approval/merge ของ PR นี้ จึงไม่เติมคำพูดหรือสถานะอนุมัติขึ้นเอง ผลทดสอบผลิตภัณฑ์อ้าง main e1fa72f ไม่ใช่ commit เอกสารของ #66
+
+Snapshot 21 PR / 111 เหตุการณ์ด้านล่างดึงก่อนเปิด #66 และเก็บทุกรายการที่มีจริง ณ เวลานั้น เมื่อตรวจ/ตอบกลับ/อนุมัติ #66 แล้วจึงเพิ่มเหตุการณ์จริงโดยแยกเวลาและ head ที่ตรวจ ไม่ใช้ approval ของ #63 แทน approval ของ #66
+
 เอกสารนี้รวบรวม Pull Request ของ Lab 4 ทั้งสองฝั่ง ได้แก่ งานที่ผู้จัดทำส่งให้เพื่อนตรวจ และงานของเพื่อนที่ผู้จัดทำเป็นผู้ตรวจ พร้อมข้อเสนอแนะ การตอบกลับ การตรวจซ้ำ ผลอนุมัติ และ commit ที่ merge ซึ่งเกิดขึ้นจริงใน GitHub
 
 ข้อความในกรอบอ้างอิงคัดลอกจาก GitHub ตามต้นฉบับ ไม่แปล ไม่สรุปแทน และไม่ตัดข้อความที่อ้างตอบกันออก ปรับเฉพาะรูปแบบ blockquote และการขึ้นบรรทัดเพื่อแสดงใน Markdown; JSON เก็บ body เดิมรวมถึงรูปแบบบรรทัด ข้อความยาวมากพับไว้เพื่อให้อ่านภาพรวมได้สะดวก
@@ -8,9 +14,9 @@
 
 **เพื่อนผู้ตรวจ / เจ้าของงานที่ผู้จัดทำตรวจให้:** นางสาวณัฐวดี ภูเขม่า - 67070507201 - GitHub: [@guluJa](https://github.com/guluJa)
 
-**ข้อมูล ณ:** 2026-10-12 12:21:24 UTC / 12 Oct 2026, 19:21:24 (Asia/Bangkok)
+**ข้อมูล ณ:** 2026-10-14 14:49:18 UTC / 14 Oct 2026, 21:49:18 (Asia/Bangkok)
 
-**ขอบเขต snapshot:** 9 PR ของผู้จัดทำ + 8 PR ของเพื่อน = 17 PR; 51 conversation comments + 38 submitted reviews + 0 inline comments = 89 เหตุการณ์ ทุก endpoint ตรวจครบแบบแบ่งหน้า
+**ขอบเขต snapshot:** 11 PR ของผู้จัดทำ + 10 PR ของเพื่อน = 21 PR; 61 conversation comments + 50 submitted reviews + 0 inline comments = 111 เหตุการณ์ ทุก endpoint ตรวจครบแบบแบ่งหน้า
 
 ชื่อ Issue, ชื่อ PR และชื่อ branch ในตารางใช้ชื่อจาก GitHub โดยแยกชื่อ repository ทุกครั้งเพื่อไม่สับสนหมายเลข PR ของสองคน การมีคอมเมนต์ว่า “ตรวจแล้ว” หรือคำขอบคุณไม่เท่ากับ formal `APPROVED` และ `Closed` ไม่ได้แปลว่า merge เสมอไป
 
@@ -30,7 +36,9 @@ Repository: [PhraewaS/toktickit](https://github.com/PhraewaS/toktickit/pulls) �
 | [#53 [Lab 4] Automated verification, responsive evidence, and E2E flows](https://github.com/PhraewaS/toktickit/issues/53) | `feature/lab4-verification-evidence-53` → `lab4-staging` | [PhraewaS/toktickit#60](https://github.com/PhraewaS/toktickit/pull/60)<br>Lab 4 verification and E2E evidence (#53) | [@guluJa](https://github.com/guluJa) | [อนุมัติ (`APPROVED`)](https://github.com/PhraewaS/toktickit/pull/60#pullrequestreview-5413091909) / merge แล้ว | [`2741c4b`](https://github.com/PhraewaS/toktickit/commit/2741c4b7cb957f0b6ffda8dce902a13eb05e490b) |
 | [#54 [Lab 4] Staging integration, peer review, and final submission](https://github.com/PhraewaS/toktickit/issues/54) | `feature/lab4-staging-integration-54` → `lab4-staging` | [PhraewaS/toktickit#61](https://github.com/PhraewaS/toktickit/pull/61)<br>[Lab 4] Staging integration and release readiness | [@guluJa](https://github.com/guluJa) | [อนุมัติ (`APPROVED`)](https://github.com/PhraewaS/toktickit/pull/61#pullrequestreview-5478535660) / merge แล้ว | [`b618547`](https://github.com/PhraewaS/toktickit/commit/b6185479a4f800d37b8251474d1ffb4c35c0b460) |
 | [#54 [Lab 4] Staging integration, peer review, and final submission](https://github.com/PhraewaS/toktickit/issues/54) | `codex/lab4-recovery-tools-54` → `lab4-staging` | [PhraewaS/toktickit#62](https://github.com/PhraewaS/toktickit/pull/62)<br>[Lab 4] Restore recovery verification with PostgreSQL SQL tools | [@guluJa](https://github.com/guluJa) | [อนุมัติ (`APPROVED`)](https://github.com/PhraewaS/toktickit/pull/62#pullrequestreview-5489697574) / merge แล้ว | [`c239461`](https://github.com/PhraewaS/toktickit/commit/c239461cbb7e22d8cb7c42e40c1c7238fdedb9a5) |
-| [#54 [Lab 4] Staging integration, peer review, and final submission](https://github.com/PhraewaS/toktickit/issues/54) | `lab4-staging` → `main` | [PhraewaS/toktickit#63](https://github.com/PhraewaS/toktickit/pull/63)<br>[Lab 4] Release approved integration from lab4-staging to main | [@guluJa](https://github.com/guluJa) | รอ [@guluJa](https://github.com/guluJa) ตรวจ; ยังไม่มีรีวิว / Open | ยังไม่ merge |
+| [#54 [Lab 4] Staging integration, peer review, and final submission](https://github.com/PhraewaS/toktickit/issues/54) | `lab4-staging` → `main` | [PhraewaS/toktickit#63](https://github.com/PhraewaS/toktickit/pull/63)<br>[Lab 4] Release approved integration from lab4-staging to main | [@guluJa](https://github.com/guluJa) | [อนุมัติ (`APPROVED`)](https://github.com/PhraewaS/toktickit/pull/63#pullrequestreview-5519700187) / merge แล้ว | [`e1fa72f`](https://github.com/PhraewaS/toktickit/commit/e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384) |
+| [#54 [Lab 4] Staging integration, peer review, and final submission](https://github.com/PhraewaS/toktickit/issues/54) | `codex/lab4-bidirectional-review-record` → `lab4-staging` | [PhraewaS/toktickit#64](https://github.com/PhraewaS/toktickit/pull/64)<br>[Lab 4] Update Peer Review Records for Both Repositories | [@guluJa](https://github.com/guluJa) | [อนุมัติ (`APPROVED`)](https://github.com/PhraewaS/toktickit/pull/64#pullrequestreview-5517046805) / merge แล้ว | [`5ab13bb`](https://github.com/PhraewaS/toktickit/commit/5ab13bbf53371b1e42bacbfe22c00296b9f68d0c) |
+| [#54 [Lab 4] Staging integration, peer review, and final submission](https://github.com/PhraewaS/toktickit/issues/54) | `codex/lab4-release-documentation-54` → `lab4-staging` | [PhraewaS/toktickit#65](https://github.com/PhraewaS/toktickit/pull/65)<br>[Lab 4] Complete Release Documentation and Review Checklist | [@guluJa](https://github.com/guluJa) | [อนุมัติ (`APPROVED`)](https://github.com/PhraewaS/toktickit/pull/65#pullrequestreview-5519155225) / merge แล้ว | [`f95ba5c`](https://github.com/PhraewaS/toktickit/commit/f95ba5c11068a353619b8050d1dafe6e94f1f81c) |
 
 ## Pull Request ของเพื่อนที่ผู้จัดทำเป็นผู้ตรวจ - เราตรวจงานให้เพื่อน
 
@@ -46,6 +54,8 @@ Repository: [guluJa/toktickit](https://github.com/guluJa/toktickit/pulls) เจ
 | [#73 [Lab 4] Final Hardening, Regression, E2E and Visual Verification](https://github.com/guluJa/toktickit/issues/73) | `feature/06-lab4-final-hardening` → `lab4-staging` | [guluJa/toktickit#79](https://github.com/guluJa/toktickit/pull/79)<br>[Lab 4] Final Hardening, Regression, E2E and Visual Verification | [@PhraewaS](https://github.com/PhraewaS) | [อนุมัติ (`APPROVED`)](https://github.com/guluJa/toktickit/pull/79#pullrequestreview-5412952624) / merge แล้ว | [`3b7291e`](https://github.com/guluJa/toktickit/commit/3b7291e47b6c53eb21202f2402cd480f72f883e6) |
 | [#74 [Lab 4] Release Integration and Final-main Verification](https://github.com/guluJa/toktickit/issues/74) | `codex/lab4-pre-release-audit` → `lab4-staging` | [guluJa/toktickit#80](https://github.com/guluJa/toktickit/pull/80)<br>[Lab 4] Pre-release Audit and Staging Verification | [@PhraewaS](https://github.com/PhraewaS) | [อนุมัติ (`APPROVED`)](https://github.com/guluJa/toktickit/pull/80#pullrequestreview-5478514522) / merge แล้ว | [`48694b8`](https://github.com/guluJa/toktickit/commit/48694b8799534f2d696dd694b106e0a98cde6c8a) |
 | [#74 [Lab 4] Release Integration and Final-main Verification](https://github.com/guluJa/toktickit/issues/74) | `lab4-staging` → `main` | [guluJa/toktickit#81](https://github.com/guluJa/toktickit/pull/81)<br>[Lab 4] Release integration into main | [@PhraewaS](https://github.com/PhraewaS) | [อนุมัติ (`APPROVED`)](https://github.com/guluJa/toktickit/pull/81#pullrequestreview-5489672078) / merge แล้ว | [`08328cd`](https://github.com/guluJa/toktickit/commit/08328cd293c11316da8496857007d781f2dafaa8) |
+| [#74 [Lab 4] Release Integration and Final-main Verification](https://github.com/guluJa/toktickit/issues/74) | `feature/08-lab4-final-main-verification` → `lab4-staging` | [guluJa/toktickit#82](https://github.com/guluJa/toktickit/pull/82)<br>[Lab 4] Final-main Verification and Final Documentation | [@PhraewaS](https://github.com/PhraewaS) | [อนุมัติ (`APPROVED`)](https://github.com/guluJa/toktickit/pull/82#pullrequestreview-5517728139) / merge แล้ว | [`fc67534`](https://github.com/guluJa/toktickit/commit/fc67534baf248c0e275524dfae96c66dac148c77) |
+| [#74 [Lab 4] Release Integration and Final-main Verification](https://github.com/guluJa/toktickit/issues/74) | `lab4-staging` → `main` | [guluJa/toktickit#83](https://github.com/guluJa/toktickit/pull/83)<br>[Lab 4] Integrate Final Documentation and Verification Evidence | [@PhraewaS](https://github.com/PhraewaS) | [อนุมัติ (`APPROVED`)](https://github.com/guluJa/toktickit/pull/83#pullrequestreview-5519139245) / merge แล้ว | [`99f9eb3`](https://github.com/guluJa/toktickit/commit/99f9eb31fda072bc4def5a3f627b5cdfd12bc10b) |
 
 ---
 
@@ -1112,9 +1122,7 @@ Revision ที่ตรวจ: [`53e1375`](https://github.com/PhraewaS/tokticki
 
 Pull Request: [#63](https://github.com/PhraewaS/toktickit/pull/63) | สาขา: `lab4-staging` → `main`
 
-**สถานะจริง:** ยังไม่ merge; OPEN
-
-**ยังไม่มีข้อความรีวิวหรือ formal approval จาก [@guluJa](https://github.com/guluJa) ณ snapshot นี้** ข้อความจากผู้จัดทำด้านล่างเป็นบันทึกหลักฐาน ไม่ใช่ peer review
+**สถานะจริง:** Merge แล้วเมื่อ 2026-10-14 14:39:03 UTC; commit [`e1fa72f`](https://github.com/PhraewaS/toktickit/commit/e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384)
 
 #### เหตุการณ์ที่ 1 - ข้อความ/การตอบกลับของผู้จัดทำ `@PhraewaS`
 
@@ -2083,7 +2091,2391 @@ Pull Request: [#63](https://github.com/PhraewaS/toktickit/pull/63) | สาข�
 
 แหล่งที่มา: [Conversation comment โดย @PhraewaS](https://github.com/PhraewaS/toktickit/pull/63#issuecomment-6123577441)
 
-**ผลการอนุมัติสุดท้าย:** ยังไม่มี formal `APPROVED` ที่ยืนยันได้สำหรับ head ปัจจุบัน
+#### เหตุการณ์ที่ 2 - ข้อความรีวิวจากเพื่อน `@guluJa`
+
+เวลา: 2026-10-12 15:30:40 UTC | ประเภท: `Submitted review` | สถานะ: `COMMENTED`
+
+Revision ที่ตรวจ: [`c239461`](https://github.com/PhraewaS/toktickit/commit/c239461cbb7e22d8cb7c42e40c1c7238fdedb9a5)
+
+<!-- review-event PhraewaS/toktickit#63:review:5492867653 -->
+> ตรวจ release revision c239461 แล้วนะคะ ผลทั้งหก phases ระบุ source ตรงกัน และจำนวน tests/skips ตรงกับ console output ค่ะ ลองรัน Client 89 tests, focused Server 36 tests, recovery safety 6 tests และทั้งสอง build แล้วผ่าน รอบนี้ไม่พบจุดที่ต้องแก้โค้ดเพิ่มเติมค่ะ 
+<!-- end-review-event -->
+
+แหล่งที่มา: [Submitted review โดย @guluJa](https://github.com/PhraewaS/toktickit/pull/63#pullrequestreview-5492867653)
+
+#### เหตุการณ์ที่ 3 - ข้อความ/การตอบกลับของผู้จัดทำ `@PhraewaS`
+
+เวลา: 2026-10-14 12:32:35 UTC | ประเภท: `Conversation comment`
+
+<details>
+<summary>เปิดอ่านข้อความต้นฉบับฉบับเต็ม (ยาว 53665 ตัวอักษร)</summary>
+
+<!-- review-event PhraewaS/toktickit#63:conversation:6168420145 -->
+> <!-- staging-verification-after-pr64-5ab13bb -->
+> ## Actual staging verification after approved PR #64 merge
+>
+> Exact tested staging/release head: [5ab13bbf53371b1e42bacbfe22c00296b9f68d0c](https://github.com/PhraewaS/toktickit/commit/5ab13bbf53371b1e42bacbfe22c00296b9f68d0c). All six phases executed on this same source after #64 merged. Completed between 2026-10-14T12:23:05.438Z and 2026-10-14T12:31:59.322Z (UTC; Asia/Bangkok is UTC+7).
+>
+> Human review remains separate: [#64 APPROVED](https://github.com/PhraewaS/toktickit/pull/64#pullrequestreview-5517046805) approved its documentation head d4479bb before merge. [Earlier #63 COMMENTED review](https://github.com/PhraewaS/toktickit/pull/63#pullrequestreview-5492867653) examined c239461; it is not formal approval of 5ab13bb. Request guluJa review/approval of the current release head before merge.
+>
+> | Phase | Actual observed result |
+> | --- | --- |
+> | Recovery safety | 6 passed, 0 failed |
+> | Prepare | Generation, migration deploy, seed and actual dedicated DB/port check passed; five migrations |
+> | Recovery | Nine Prisma-table fingerprints and five migration-history rows match; generated temporary database and SQL dump removed |
+> | Server | 164/164 passed, 28 files; production build passed |
+> | Client | 89/89 passed, 20 files; production build passed |
+> | Lab 4 E2E | 11 passed, 10 intentional viewport skips, 0 failed/flaky; passing sanitized report retains metric evidence |
+> | Lab 3 regression E2E | 26 passed, 16 intentional viewport skips, 0 failed/flaky; nonempty passing sanitized report |
+> | Metrics / browser / responsive | Eight selected DB/API/UI values match; six browser-scan/keyboard-responsive flows, 0 unexpected HTTP/page errors |
+> | Performance-smoke | 40 requests, 0 failures, all endpoint maxima below 1000 ms; staff-dashboard: 311 ms; requester-dashboard: 7 ms; staff-actions-list: 7 ms; requester-actions-list: 7 ms |
+>
+> Reproduction (existing untracked environment file, not committed): run sequentially `node scripts/verify-lab4.mjs <phase> --env-file <existing-env-file> --output-dir tmp/issue54-release-staging-verification-5ab13bb` for prepare, recovery, server, client, lab4, lab3. Safety: `node --test scripts/postgres-recovery.test.mjs`. Only dedicated toktickit_lab4_e2e/toktickit_lab3_e2e databases on port 5433 were seeded; normal application DB was not seeded.
+>
+> These are **actual local staging results, not CI or final-main evidence**. Earlier c239461 results remain historical and are not relabelled. Fresh sanitized reports/screenshots are retained locally in `tmp/issue54-release-staging-verification-5ab13bb` for the later reviewed evidence archive, not claimed as newly committed files. Intentional skips are not passed executions. The seeded attachment table is empty: database recovery does not demonstrate physical attachment-file restore. Keyboard/responsive checks are targeted, not a complete WCAG audit. Dependency audit results remain dated 2026-10-08, not freshly rerun here.
+>
+> Documentation follow-ups (specification Data Changes/formulas, integration current state, visual/style checklist) remain separate pending work under #54. This workflow update did not implement them; if another documentation PR merges before release, repeat/update the latest source verification. Release approval/merge, final-main repeat, reviewed final evidence/PDF and submission are still pending; do not close #54/Done.
+>
+> <details>
+> <summary>Actual six-phase JSON, metrics and browser/performance results</summary>
+>
+> ```json
+> {
+>   "revision": "5ab13bbf53371b1e42bacbfe22c00296b9f68d0c",
+>   "records": [
+>     {
+>       "mode": "prepare",
+>       "revision": "5ab13bbf53371b1e42bacbfe22c00296b9f68d0c",
+>       "startedAt": "2026-10-14T12:23:05.438Z",
+>       "database": "toktickit_lab4_e2e",
+>       "databasePort": 5433,
+>       "steps": [
+>         {
+>           "label": "prisma-generate",
+>           "exitCode": 0,
+>           "elapsedMs": 5192
+>         },
+>         {
+>           "label": "migration-deploy",
+>           "exitCode": 0,
+>           "elapsedMs": 6476
+>         },
+>         {
+>           "label": "seed",
+>           "exitCode": 0,
+>           "elapsedMs": 5034
+>         }
+>       ],
+>       "completedAt": "2026-10-14T12:23:22.327Z"
+>     },
+>     {
+>       "mode": "recovery",
+>       "revision": "5ab13bbf53371b1e42bacbfe22c00296b9f68d0c",
+>       "startedAt": "2026-10-14T12:23:23.462Z",
+>       "database": "toktickit_lab4_e2e",
+>       "databasePort": 5433,
+>       "steps": [
+>         {
+>           "label": "recovery-backup",
+>           "exitCode": 0,
+>           "elapsedMs": 321
+>         },
+>         {
+>           "label": "recovery-create",
+>           "exitCode": 0,
+>           "elapsedMs": 476
+>         },
+>         {
+>           "label": "recovery-restore",
+>           "exitCode": 0,
+>           "elapsedMs": 381
+>         },
+>         {
+>           "label": "recovery-cleanup",
+>           "exitCode": 0,
+>           "elapsedMs": 377
+>         }
+>       ],
+>       "recoveryEnvironment": {
+>         "serverMajor": 15,
+>         "dumpVersion": "pg_dump (PostgreSQL) 15.19",
+>         "psqlVersion": "psql (PostgreSQL) 15.19",
+>         "method": "plain SQL dump / psql"
+>       },
+>       "recovery": {
+>         "matched": true,
+>         "tables": [
+>           {
+>             "table": "requester_users",
+>             "count": 10,
+>             "checksum": "2d3da59ab97bad917c94faee5bd828cc"
+>           },
+>           {
+>             "table": "categories",
+>             "count": 4,
+>             "checksum": "1fc0eb8be465543f7b0628ec62e9264b"
+>           },
+>           {
+>             "table": "related_systems",
+>             "count": 6,
+>             "checksum": "830114d30861825b2036ee7755430033"
+>           },
+>           {
+>             "table": "tickets",
+>             "count": 6,
+>             "checksum": "78ab5b91ac93a989ba3292918dce4008"
+>           },
+>           {
+>             "table": "attachments",
+>             "count": 0,
+>             "checksum": "d41d8cd98f00b204e9800998ecf8427e"
+>           },
+>           {
+>             "table": "sessions",
+>             "count": 0,
+>             "checksum": "d41d8cd98f00b204e9800998ecf8427e"
+>           },
+>           {
+>             "table": "public_comments",
+>             "count": 6,
+>             "checksum": "c343c78dbfa0816440557d72df85c634"
+>           },
+>           {
+>             "table": "internal_notes",
+>             "count": 6,
+>             "checksum": "9af6e5e51dbfd15ff77c160886e7ff99"
+>           },
+>           {
+>             "table": "actions_taken",
+>             "count": 3,
+>             "checksum": "fb807a1afd8e9a192778609fc00ba6b8"
+>           }
+>         ],
+>         "migrations": {
+>           "count": 5,
+>           "checksum": "ab2e80dab10ce8ecee8cb42e8810d3a0"
+>         },
+>         "recoveryDatabase": "toktickit_lab4_recovery_21628_1791980603480",
+>         "temporaryDatabaseRemoved": true,
+>         "dumpRemoved": true
+>       },
+>       "completedAt": "2026-10-14T12:23:26.357Z"
+>     },
+>     {
+>       "mode": "server",
+>       "revision": "5ab13bbf53371b1e42bacbfe22c00296b9f68d0c",
+>       "startedAt": "2026-10-14T12:23:27.468Z",
+>       "database": "toktickit_lab4_e2e",
+>       "databasePort": 5433,
+>       "steps": [
+>         {
+>           "label": "server-seed",
+>           "exitCode": 0,
+>           "elapsedMs": 4711
+>         },
+>         {
+>           "label": "server-tests",
+>           "exitCode": 0,
+>           "elapsedMs": 46415
+>         },
+>         {
+>           "label": "server-build",
+>           "exitCode": 0,
+>           "elapsedMs": 5307
+>         }
+>       ],
+>       "completedAt": "2026-10-14T12:24:23.905Z"
+>     },
+>     {
+>       "mode": "client",
+>       "revision": "5ab13bbf53371b1e42bacbfe22c00296b9f68d0c",
+>       "startedAt": "2026-10-14T12:24:25.139Z",
+>       "database": "toktickit_lab4_e2e",
+>       "databasePort": 5433,
+>       "steps": [
+>         {
+>           "label": "client-tests",
+>           "exitCode": 0,
+>           "elapsedMs": 63225
+>         },
+>         {
+>           "label": "client-build",
+>           "exitCode": 0,
+>           "elapsedMs": 9751
+>         }
+>       ],
+>       "completedAt": "2026-10-14T12:25:38.117Z"
+>     },
+>     {
+>       "mode": "lab4",
+>       "revision": "5ab13bbf53371b1e42bacbfe22c00296b9f68d0c",
+>       "startedAt": "2026-10-14T12:25:39.250Z",
+>       "database": "toktickit_lab4_e2e",
+>       "databasePort": 5433,
+>       "steps": [
+>         {
+>           "label": "lab4-e2e",
+>           "exitCode": 0,
+>           "elapsedMs": 132516
+>         }
+>       ],
+>       "report": {
+>         "stats": {
+>           "total": 21,
+>           "expected": 11,
+>           "unexpected": 0,
+>           "flaky": 0,
+>           "skipped": 10,
+>           "ok": true
+>         },
+>         "errors": [],
+>         "metricsPresent": true,
+>         "credentialRedaction": true
+>       },
+>       "completedAt": "2026-10-14T12:27:51.849Z"
+>     },
+>     {
+>       "mode": "lab3",
+>       "revision": "5ab13bbf53371b1e42bacbfe22c00296b9f68d0c",
+>       "startedAt": "2026-10-14T12:27:53.064Z",
+>       "database": "toktickit_lab3_e2e",
+>       "databasePort": 5433,
+>       "steps": [
+>         {
+>           "label": "lab3-e2e",
+>           "exitCode": 0,
+>           "elapsedMs": 246143
+>         }
+>       ],
+>       "report": {
+>         "stats": {
+>           "total": 42,
+>           "expected": 26,
+>           "unexpected": 0,
+>           "flaky": 0,
+>           "skipped": 16,
+>           "ok": true
+>         },
+>         "errors": [],
+>         "metricsPresent": false,
+>         "credentialRedaction": true
+>       },
+>       "completedAt": "2026-10-14T12:31:59.322Z"
+>     }
+>   ],
+>   "performance": {
+>     "requestCount": 40,
+>     "results": [
+>       {
+>         "endpoint": "staff-dashboard",
+>         "requests": 10,
+>         "maxDurationMs": 311,
+>         "failures": 0
+>       },
+>       {
+>         "endpoint": "requester-dashboard",
+>         "requests": 10,
+>         "maxDurationMs": 7,
+>         "failures": 0
+>       },
+>       {
+>         "endpoint": "staff-actions-list",
+>         "requests": 10,
+>         "maxDurationMs": 7,
+>         "failures": 0
+>       },
+>       {
+>         "endpoint": "requester-actions-list",
+>         "requests": 10,
+>         "maxDurationMs": 7,
+>         "failures": 0
+>       }
+>     ]
+>   },
+>   "metrics": [
+>     {
+>       "role": "requester",
+>       "database": {
+>         "openTickets": 2,
+>         "waitingForRequester": 0,
+>         "recentlyUpdated": 2,
+>         "recentlyResolved": 0
+>       },
+>       "api": {
+>         "openTickets": 2,
+>         "waitingForRequester": 0,
+>         "recentlyUpdated": 2,
+>         "recentlyResolved": 0
+>       },
+>       "ui": {
+>         "openTickets": 2,
+>         "waitingForRequester": 0,
+>         "recentlyUpdated": 2,
+>         "recentlyResolved": 0
+>       }
+>     },
+>     {
+>       "role": "staff",
+>       "database": {
+>         "unassignedActive": 2,
+>         "myActive": 1,
+>         "myActionsTaken": 2,
+>         "urgentTickets": 2
+>       },
+>       "api": {
+>         "unassignedActive": 2,
+>         "myActive": 1,
+>         "myActionsTaken": 2,
+>         "urgentTickets": 2
+>       },
+>       "ui": {
+>         "unassignedActive": 2,
+>         "myActive": 1,
+>         "myActionsTaken": 2,
+>         "urgentTickets": 2
+>       }
+>     }
+>   ],
+>   "browserScans": [
+>     {
+>       "expectedUnauthenticatedAuthMe401": 2,
+>       "unexpectedHttpFailures": 0,
+>       "pageErrors": 0
+>     },
+>     {
+>       "expectedUnauthenticatedAuthMe401": 2,
+>       "unexpectedHttpFailures": 0,
+>       "pageErrors": 0
+>     },
+>     {
+>       "expectedUnauthenticatedAuthMe401": 2,
+>       "unexpectedHttpFailures": 0,
+>       "pageErrors": 0
+>     },
+>     {
+>       "expectedUnauthenticatedAuthMe401": 2,
+>       "unexpectedHttpFailures": 0,
+>       "pageErrors": 0
+>     },
+>     {
+>       "expectedUnauthenticatedAuthMe401": 2,
+>       "unexpectedHttpFailures": 0,
+>       "pageErrors": 0
+>     },
+>     {
+>       "expectedUnauthenticatedAuthMe401": 2,
+>       "unexpectedHttpFailures": 0,
+>       "pageErrors": 0
+>     }
+>   ],
+>   "validation": "all six staging phases verified"
+> }
+> ```
+>
+> </details>
+>
+> <details>
+> <summary>Recovery safety raw output</summary>
+>
+> ```text
+> ✔ uses supported plain SQL dump and psql, without blocked helper executables (1.2722ms)
+> ✔ restores atomically and stops on SQL errors, ignoring user psql startup files (0.3431ms)
+> ✔ only creates and drops the unique validated temporary database, using template0 (1.1014ms)
+> ✔ rejects application databases and unsafe recovery targets (0.3634ms)
+> ✔ uses the selected installed Windows tools with no shell string (0.2396ms)
+> ✔ requires both SQL backup/restore tools to match the actual server major (0.2439ms)
+> ℹ tests 6
+> ℹ suites 0
+> ℹ pass 6
+> ℹ fail 0
+> ℹ cancelled 0
+> ℹ skipped 0
+> ℹ todo 0
+> ℹ duration_ms 920.8758
+>
+> ```
+>
+> </details>
+>
+> <details>
+> <summary>Sanitized raw output: server-tests</summary>
+>
+> ```text
+>
+> > [REDACTED]-server@1.0.0 test
+> > vitest run --no-file-parallelism
+>
+>
+>  RUN  v2.1.9 C:/Users/User/OneDrive/Documents/ChatGPT/Lab TokTik (SE)/lab4-integration-54/server
+>
+>  ✓ tests/lab-03/staff-operations.integration.api.test.ts (14 tests) 186ms
+>  ✓ tests/lab-04/actions.api.test.ts (20 tests) 100ms
+>  ✓ tests/lab-02/attachments.api.test.ts (12 tests) 88ms
+>  ✓ tests/lab-04/ticket-workflow.api.test.ts (10 tests) 59ms
+>  ✓ tests/lab-02/create-ticket.api.test.ts (7 tests) 55ms
+>  ✓ tests/lab-03/users-admin.api.test.ts (10 tests) 152ms
+>  ✓ tests/lab-04/staff-dashboard.api.test.ts (3 tests) 43ms
+> stderr | tests/lab-02/my-tickets.api.test.ts > GET /api/tickets > returns a safe internal error when the database fails unexpectedly
+> Unable to list Tickets: Error: SQL password and filesystem path must never be exposed
+>     at C:\Users\User\OneDrive\Documents\ChatGPT\Lab TokTik (SE)\lab4-integration-54\server\tests\lab-02\my-tickets.api.test.ts:149:59
+>     at file:///C:/Users/User/OneDrive/Documents/ChatGPT/Lab%20TokTik%20(SE)/lab4-integration-54/server/node_modules/@vitest/runner/dist/index.js:146:14
+>     at file:///C:/Users/User/OneDrive/Documents/ChatGPT/Lab%20TokTik%20(SE)/lab4-integration-54/server/node_modules/@vitest/runner/dist/index.js:533:11
+>     at runWithTimeout (file:///C:/Users/User/OneDrive/Documents/ChatGPT/Lab%20TokTik%20(SE)/lab4-integration-54/server/node_modules/@vitest/runner/dist/index.js:39:7)
+>     at runTest (file:///C:/Users/User/OneDrive/Documents/ChatGPT/Lab%20TokTik%20(SE)/lab4-integration-54/server/node_modules/@vitest/runner/dist/index.js:1056:17)
+>     at processTicksAndRejections (node:internal/process/task_queues:104:5)
+>     at runSuite (file:///C:/Users/User/OneDrive/Documents/ChatGPT/Lab%20TokTik%20(SE)/lab4-integration-54/server/node_modules/@vitest/runner/dist/index.js:1205:15)
+>     at runSuite (file:///C:/Users/User/OneDrive/Documents/ChatGPT/Lab%20TokTik%20(SE)/lab4-integration-54/server/node_modules/@vitest/runner/dist/index.js:1205:15)
+>     at runFiles (file:///C:/Users/User/OneDrive/Documents/ChatGPT/Lab%20TokTik%20(SE)/lab4-integration-54/server/node_modules/@vitest/runner/dist/index.js:1262:5)
+>     at startTests (file:///C:/Users/User/OneDrive/Documents/ChatGPT/Lab%20TokTik%20(SE)/lab4-integration-54/server/node_modules/@vitest/runner/dist/index.js:1271:3)
+>  ✓ tests/lab-02/my-tickets.api.test.ts (6 tests) 42ms
+>
+>  ✓ tests/lab-02/requester-context.api.test.ts (6 tests) 35ms
+>  ✓ tests/lab-03/authorization.api.test.ts (8 tests) 42ms
+>  ✓ tests/lab-04/requester-dashboard.api.test.ts (3 tests) 28ms
+> stdout | tests/lab-04/performance-smoke.test.ts > Lab 4 performance smoke (dedicated local PostgreSQL only) > keeps dashboard summaries and Action Taken reads bounded under 10 sequential requests each
+> PERF-04 {"requestCount":40,"results":[{"endpoint":"staff-dashboard","requests":10,"maxDurationMs":311,"failures":0},{"endpoint":"requester-dashboard","requests":10,"maxDurationMs":7,"failures":0},{"endpoint":"staff-actions-list","requests":10,"maxDurationMs":7,"failures":0},{"endpoint":"requester-actions-list","requests":10,"maxDurationMs":7,"failures":0}]}
+>
+>  ✓ tests/lab-04/performance-smoke.test.ts (1 test) 1453ms
+>    ✓ Lab 4 performance smoke (dedicated local PostgreSQL only) > keeps dashboard summaries and Action Taken reads bounded under 10 sequential requests each 1453ms
+>  ✓ tests/lab-03/auth.integration.test.ts (4 tests) 379ms
+>  ✓ tests/lab-02/ticket-detail.api.test.ts (3 tests) 29ms
+>  ✓ tests/lab-02/reference-data.api.test.ts (4 tests) 27ms
+>  ✓ tests/lab-03/auth.api.test.ts (6 tests) 63ms
+>  ✓ tests/lab-02/ticket-validation.unit.test.ts (4 tests) 3ms
+>  ✓ tests/lab-02/ticket-query.unit.test.ts (4 tests) 3ms
+> stdout | tests/lab-03/migration-regression.api.test.ts > PostgreSQL migration and seed regression > keeps the deterministic seed idempotent on PostgreSQL
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+> stdout | tests/lab-03/migration-regression.api.test.ts > PostgreSQL migration and seed regression > keeps the deterministic seed idempotent on PostgreSQL
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+>  ✓ tests/lab-03/migration-regression.api.test.ts (3 tests) 2224ms
+>    ✓ PostgreSQL migration and seed regression > keeps the deterministic seed idempotent on PostgreSQL 2041ms
+>  ✓ tests/lab-03/staff-ticket-detail.api.test.ts (3 tests) 27ms
+>  ✓ tests/lab-03/auth.unit.test.ts (3 tests) 160ms
+>  ✓ tests/lab-02/attachment-policy.unit.test.ts (3 tests) 7ms
+>  ✓ tests/lab-02/ticket-number.unit.test.ts (3 tests) 3ms
+>  ✓ tests/lab-01/health.test.ts (1 test) 15ms
+>  ✓ tests/lab-01/categories.test.ts (1 test) 162ms
+>  ✓ tests/lab-03/comments-notes.api.test.ts (1 test) 16ms
+>  ✓ tests/lab-03/staff-queue.api.test.ts (1 test) 22ms
+>  ✓ tests/lab-04/actions-taken.api.test.ts (20 tests) 105ms
+>
+>  Test Files  28 passed (28)
+>       Tests  164 passed (164)
+>    Start at  19:23:38
+>    Duration  39.94s (transform 684ms, setup 134ms, collect 6.32s, tests 5.53s, environment 4ms, prepare 2.09s)
+>
+>
+> ```
+>
+> </details>
+>
+> <details>
+> <summary>Sanitized raw output: server-build</summary>
+>
+> ```text
+>
+> > [REDACTED]-server@1.0.0 build
+> > tsc
+>
+>
+> ```
+>
+> </details>
+>
+> <details>
+> <summary>Sanitized raw output: client-tests</summary>
+>
+> ```text
+>
+> > [REDACTED]-client@1.0.0 test
+> > vitest run --run --no-file-parallelism
+>
+>
+>  RUN  v2.1.9 C:/Users/User/OneDrive/Documents/ChatGPT/Lab TokTik (SE)/lab4-integration-54/client
+>
+>  ✓ tests/lab-04/ActionsTaken.test.tsx (9 tests) 5516ms
+>    ✓ Lab 4 Actions Taken UI > loads an empty state and allows IT Staff to create an action with follow-up 1172ms
+>    ✓ Lab 4 Actions Taken UI > sends the loaded updatedAt token when editing 572ms
+>    ✓ Lab 4 Actions Taken UI > maps server validation errors to the matching field 1208ms
+>    ✓ Lab 4 Actions Taken UI > shows a stale-update conflict and refreshes the Action list 759ms
+>    ✓ Lab 4 Actions Taken UI > reuses the same idempotency key when retrying a create after an uncertain response 755ms
+>    ✓ Lab 4 Actions Taken UI > reconciles the action list before allowing another create after discarding an uncertain draft 819ms
+>  ✓ tests/lab-02/CreateTicket.test.tsx (7 tests) 596ms
+>  ✓ tests/lab-02/MyTickets.test.tsx (9 tests) 1898ms
+>    ✓ My Tickets screen > loads owned tickets and applies search/filter controls 315ms
+>    ✓ My Tickets screen > clears search and filters while keeping the visible sort controls in sync 518ms
+>    ✓ My Tickets screen > covers all list controls and previous/next pagination requests 742ms
+>  ✓ tests/lab-03/StaffTicketDetail.test.tsx (5 tests) 1001ms
+>    ✓ Staff ticket operations and evidence > posts Public Comments and Internal Notes through the staff controls 665ms
+>  ✓ tests/lab-03/StaffTicketQueue.test.tsx (7 tests) 1205ms
+>    ✓ Lab 3 IT Staff queue > sends independent requested and IT priority filters with search, sort and pagination 675ms
+>  ✓ tests/lab-03/UserManagement.test.tsx (6 tests) 2586ms
+>    ✓ submits the administrator create-user action 1038ms
+>    ✓ requires confirmation before deactivation and explains session revocation 306ms
+>    ✓ submits edit and reset-password actions 925ms
+>  ✓ tests/lab-04/StaffDashboard.test.tsx (5 tests) 701ms
+>    ✓ Lab 4 Staff Dashboard > drills each metric and breakdown into the matching queue filters 307ms
+>  ✓ tests/lab-02/RequesterTicketDetail.test.tsx (4 tests) 736ms
+>    ✓ Requester Ticket Detail and attachments > uploads a valid file and soft-removes it with a reason 479ms
+>  ✓ tests/lab-04/RequesterDashboard.test.tsx (5 tests) 520ms
+>  ✓ tests/lab-02/AttachmentSection.test.tsx (4 tests) 231ms
+>  ✓ tests/lab-02/RequesterSelection.test.tsx (6 tests) 198ms
+>  ✓ tests/lab-03/AppRoleNavigation.test.tsx (6 tests) 264ms
+>  ✓ tests/lab-04/TicketWorkflow.test.tsx (2 tests) 317ms
+>  ✓ tests/lab-02/Accessibility.test.tsx (3 tests) 462ms
+>  ✓ tests/lab-03/ChangePassword.test.tsx (2 tests) 1567ms
+>    ✓ Lab 3 first-login password change > requires matching passwords and continues after saving 944ms
+>    ✓ Lab 3 first-login password change > shows a safe password-change failure 622ms
+>  ✓ tests/lab-03/Login.test.tsx (2 tests) 1602ms
+>    ✓ Lab 3 Login > validates credentials and returns the authenticated user 886ms
+>    ✓ Lab 3 Login > shows a safe login failure without exposing API details 715ms
+>  ✓ tests/lab-03/ApiContract.test.tsx (2 tests) 8ms
+>  ✓ tests/lab-01/App.test.tsx (3 tests) 99ms
+>  ✓ tests/lab-02/ZenGreenStyles.test.tsx (1 test) 73ms
+>  ✓ tests/lab-03/ZenGreenStyle.test.tsx (1 test) 3ms
+>
+>  Test Files  20 passed (20)
+>       Tests  89 passed (89)
+>    Start at  19:24:30
+>    Duration  57.93s (transform 817ms, setup 1.83s, collect 3.87s, tests 19.58s, environment 10.63s, prepare 2.19s)
+>
+>
+> ```
+>
+> </details>
+>
+> <details>
+> <summary>Sanitized raw output: client-build</summary>
+>
+> ```text
+>
+> > [REDACTED]-client@1.0.0 build
+> > tsc && vite build
+>
+> vite v6.4.3 building for production...
+> transforming...
+> ✓ 41 modules transformed.
+> rendering chunks...
+> computing gzip size...
+> dist/index.html                   0.41 kB │ gzip:  0.28 kB
+> dist/assets/index-CKMYiuCZ.css  252.12 kB │ gzip: 35.59 kB
+> dist/assets/index-DFyPXNkn.js   236.30 kB │ gzip: 64.34 kB
+> ✓ built in 963ms
+>
+> ```
+>
+> </details>
+>
+> <details>
+> <summary>Sanitized raw output: lab4-e2e</summary>
+>
+> ```text
+>
+> > test:lab4
+> > playwright test --config playwright.lab4.config.ts
+>
+> [WebServer] (node:25220) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+> [WebServer] (node:34668) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+> [WebServer] (node:17992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+>
+> > [REDACTED]-server@1.0.0 prisma:deploy
+> > prisma migrate deploy
+>
+> Prisma schema loaded from prisma\schema.prisma
+> Datasource "db": PostgreSQL database "[REDACTED]_lab4_e2e", schema "public" at "localhost:5433"
+>
+> 5 migrations found in prisma/migrations
+>
+>
+> No pending migrations to apply.
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+> Running 21 tests using 1 worker
+>
+> (node:34448) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:21592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:25764) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  1 [desktop] › lab-04\actions-taken-flow.spec.ts:4:1 › E2E-04 Staff create/edit and Requester read-only Actions Taken (10.2s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:36308) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:13572) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+> DASHBOARD-METRICS {"role":"requester","database":{"openTickets":2,"waitingForRequester":0,"recentlyUpdated":2,"recentlyResolved":0},"api":{"openTickets":2,"waitingForRequester":0,"recentlyUpdated":2,"recentlyResolved":0},"ui":{"openTickets":2,"waitingForRequester":0,"recentlyUpdated":2,"recentlyResolved":0}}
+>   ok  2 [desktop] › lab-04\dashboards.spec.ts:63:1 › E2E-05 Requester Dashboard metrics and active-ticket drill-down (6.7s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:5632) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:20236) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+> DASHBOARD-METRICS {"role":"staff","database":{"unassignedActive":2,"myActive":1,"myActionsTaken":2,"urgentTickets":2},"api":{"unassignedActive":2,"myActive":1,"myActionsTaken":2,"urgentTickets":2},"ui":{"unassignedActive":2,"myActive":1,"myActionsTaken":2,"urgentTickets":2}}
+>   ok  3 [desktop] › lab-04\dashboards.spec.ts:76:1 › E2E-06 Staff Dashboard metrics and unassigned-active drill-down (7.3s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:32624) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:18788) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:3988) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:10144) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  4 [desktop] › lab-04\migration-seed.spec.ts:30:1 › E2E-00 Lab 4 migration deploys and deterministic seed is repeatable (9.8s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:34264) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:3500) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+> BROWSER-SCAN {"expectedUnauthenticatedAuthMe401":2,"unexpectedHttpFailures":0,"pageErrors":0}
+>   ok  5 [desktop] › lab-04\responsive.spec.ts:71:1 › RESP-04 Requester Dashboard and Ticket Detail fit the viewport (7.0s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:35148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:2084) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+> BROWSER-SCAN {"expectedUnauthenticatedAuthMe401":2,"unexpectedHttpFailures":0,"pageErrors":0}
+>   ok  6 [desktop] › lab-04\responsive.spec.ts:92:1 › RESP-04 IT Staff Dashboard and Actions Taken editor fit the viewport (9.0s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:35296) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:23532) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  7 [desktop] › lab-04\ticket-resolution.spec.ts:4:1 › E2E-07 resolution requires an Action Taken, closes completed work, and cancels a separate Ticket (8.4s)
+> (node:11676) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+>   -   8 [tablet] › lab-04\actions-taken-flow.spec.ts:4:1 › E2E-04 Staff create/edit and Requester read-only Actions Taken
+>   -   9 [tablet] › lab-04\dashboards.spec.ts:63:1 › E2E-05 Requester Dashboard metrics and active-ticket drill-down
+>   -  10 [tablet] › lab-04\dashboards.spec.ts:76:1 › E2E-06 Staff Dashboard metrics and unassigned-active drill-down
+>   -  11 [tablet] › lab-04\migration-seed.spec.ts:30:1 › E2E-00 Lab 4 migration deploys and deterministic seed is repeatable
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:15728) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:8440) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+> BROWSER-SCAN {"expectedUnauthenticatedAuthMe401":2,"unexpectedHttpFailures":0,"pageErrors":0}
+>   ok 12 [tablet] › lab-04\responsive.spec.ts:71:1 › RESP-04 Requester Dashboard and Ticket Detail fit the viewport (7.4s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:30268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:27032) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+> BROWSER-SCAN {"expectedUnauthenticatedAuthMe401":2,"unexpectedHttpFailures":0,"pageErrors":0}
+>   ok 13 [tablet] › lab-04\responsive.spec.ts:92:1 › RESP-04 IT Staff Dashboard and Actions Taken editor fit the viewport (10.7s)
+>   -  14 [tablet] › lab-04\ticket-resolution.spec.ts:4:1 › E2E-07 resolution requires an Action Taken, closes completed work, and cancels a separate Ticket
+> (node:30004) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+>   -  15 [mobile] › lab-04\actions-taken-flow.spec.ts:4:1 › E2E-04 Staff create/edit and Requester read-only Actions Taken
+>   -  16 [mobile] › lab-04\dashboards.spec.ts:63:1 › E2E-05 Requester Dashboard metrics and active-ticket drill-down
+>   -  17 [mobile] › lab-04\dashboards.spec.ts:76:1 › E2E-06 Staff Dashboard metrics and unassigned-active drill-down
+>   -  18 [mobile] › lab-04\migration-seed.spec.ts:30:1 › E2E-00 Lab 4 migration deploys and deterministic seed is repeatable
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:22724) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:11180) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+> BROWSER-SCAN {"expectedUnauthenticatedAuthMe401":2,"unexpectedHttpFailures":0,"pageErrors":0}
+>   ok 19 [mobile] › lab-04\responsive.spec.ts:71:1 › RESP-04 Requester Dashboard and Ticket Detail fit the viewport (6.9s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:14388) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:28804) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+> BROWSER-SCAN {"expectedUnauthenticatedAuthMe401":2,"unexpectedHttpFailures":0,"pageErrors":0}
+>   ok 20 [mobile] › lab-04\responsive.spec.ts:92:1 › RESP-04 IT Staff Dashboard and Actions Taken editor fit the viewport (9.7s)
+>   -  21 [mobile] › lab-04\ticket-resolution.spec.ts:4:1 › E2E-07 resolution requires an Action Taken, closes completed work, and cancels a separate Ticket
+>
+>   10 skipped
+>   11 passed (2.1m)
+>
+> ```
+>
+> </details>
+>
+> <details>
+> <summary>Sanitized raw output: lab3-e2e</summary>
+>
+> ```text
+>
+> > test:lab3
+> > playwright test --config playwright.lab3.config.ts
+>
+> [WebServer] (node:31284) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+> [WebServer] (node:15796) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+> [WebServer] (node:13240) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+>
+> > [REDACTED]-server@1.0.0 prisma:deploy
+> > prisma migrate deploy
+>
+> Prisma schema loaded from prisma\schema.prisma
+> Datasource "db": PostgreSQL database "[REDACTED]_lab3_e2e", schema "public" at "localhost:5433"
+>
+> 5 migrations found in prisma/migrations
+>
+>
+> No pending migrations to apply.
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+> Running 42 tests using 1 worker
+>
+> (node:16480) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:17328) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:28432) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  1 [desktop] › lab-03\authentication.spec.ts:6:1 › E2E-01 login, mandatory first password change, and logout (8.8s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:34116) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:6360) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  2 [desktop] › lab-03\authentication.spec.ts:25:1 › E2E-04 authentication rejects invalid, inactive, gated, and revoked access (5.6s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:25764) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:24472) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  3 [desktop] › lab-03\evidence.spec.ts:39:1 › EVIDENCE-00 Login and Change Password screenshots (7.2s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:5652) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:30212) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  4 [desktop] › lab-03\evidence.spec.ts:51:1 › EVIDENCE-01 Staff Queue screenshot (7.9s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:34228) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:8164) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  5 [desktop] › lab-03\evidence.spec.ts:66:1 › EVIDENCE-02 Staff Ticket Detail screenshot (8.9s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:18280) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:35152) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  6 [desktop] › lab-03\evidence.spec.ts:77:1 › EVIDENCE-03 Administrator User Management screenshot (7.4s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:19316) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:34996) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  7 [desktop] › lab-03\requester-flow.spec.ts:5:1 › E2E-05 authenticated Requester regression: create, own detail, comment, and resolved indication (12.5s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:23460) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:20076) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  8 [desktop] › lab-03\requester-flow.spec.ts:40:1 › E2E-08 authenticated Requester regression replaces the legacy Lab 2 selector flow (9.0s)
+>   ok  9 [desktop] › lab-03\responsive.spec.ts:29:1 › RESP-01 Lab 3 login remains within the viewport (1.1s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:10536) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:35780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:34128) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:26368) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:27988) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:16404) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 10 [desktop] › lab-03\responsive.spec.ts:36:1 › RESP-02 all major role screens remain usable without clipping (19.0s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:23124) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:35880) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 11 [desktop] › lab-03\staff-ticket-flow.spec.ts:6:1 › E2E-02 IT Staff queue and detail workflow (7.0s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:5104) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:27048) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 12 [desktop] › lab-03\staff-ticket-flow.spec.ts:32:1 › E2E-06 IT Staff queue query and ticket operations use production API routes (6.0s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:15220) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:28276) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 13 [desktop] › lab-03\user-administration.spec.ts:6:1 › E2E-03 Administrator sees minimalist User Management (7.3s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:21876) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:14356) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 14 [desktop] › lab-03\user-administration.spec.ts:27:1 › E2E-07 Administrator user lifecycle and safety rules use production API routes (5.8s)
+> (node:21340) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+>   -  15 [tablet] › lab-03\authentication.spec.ts:6:1 › E2E-01 login, mandatory first password change, and logout
+>   -  16 [tablet] › lab-03\authentication.spec.ts:25:1 › E2E-04 authentication rejects invalid, inactive, gated, and revoked access
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:14556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:36728) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 17 [tablet] › lab-03\evidence.spec.ts:39:1 › EVIDENCE-00 Login and Change Password screenshots (7.0s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:14940) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:28568) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 18 [tablet] › lab-03\evidence.spec.ts:51:1 › EVIDENCE-01 Staff Queue screenshot (7.3s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:3500) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:32984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 19 [tablet] › lab-03\evidence.spec.ts:66:1 › EVIDENCE-02 Staff Ticket Detail screenshot (7.7s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:22888) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:33304) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 20 [tablet] › lab-03\evidence.spec.ts:77:1 › EVIDENCE-03 Administrator User Management screenshot (7.2s)
+>   -  21 [tablet] › lab-03\requester-flow.spec.ts:5:1 › E2E-05 authenticated Requester regression: create, own detail, comment, and resolved indication
+>   -  22 [tablet] › lab-03\requester-flow.spec.ts:40:1 › E2E-08 authenticated Requester regression replaces the legacy Lab 2 selector flow
+>   ok 23 [tablet] › lab-03\responsive.spec.ts:29:1 › RESP-01 Lab 3 login remains within the viewport (967ms)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:25488) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:12256) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:12280) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:5940) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:7676) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:17040) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 24 [tablet] › lab-03\responsive.spec.ts:36:1 › RESP-02 all major role screens remain usable without clipping (19.5s)
+>   -  25 [tablet] › lab-03\staff-ticket-flow.spec.ts:6:1 › E2E-02 IT Staff queue and detail workflow
+>   -  26 [tablet] › lab-03\staff-ticket-flow.spec.ts:32:1 › E2E-06 IT Staff queue query and ticket operations use production API routes
+>   -  27 [tablet] › lab-03\user-administration.spec.ts:6:1 › E2E-03 Administrator sees minimalist User Management
+>   -  28 [tablet] › lab-03\user-administration.spec.ts:27:1 › E2E-07 Administrator user lifecycle and safety rules use production API routes
+> (node:34896) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+>   -  29 [mobile] › lab-03\authentication.spec.ts:6:1 › E2E-01 login, mandatory first password change, and logout
+>   -  30 [mobile] › lab-03\authentication.spec.ts:25:1 › E2E-04 authentication rejects invalid, inactive, gated, and revoked access
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:23616) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:28804) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 31 [mobile] › lab-03\evidence.spec.ts:39:1 › EVIDENCE-00 Login and Change Password screenshots (6.2s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:37360) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:21252) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 32 [mobile] › lab-03\evidence.spec.ts:51:1 › EVIDENCE-01 Staff Queue screenshot (6.9s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:29664) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:17532) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 33 [mobile] › lab-03\evidence.spec.ts:66:1 › EVIDENCE-02 Staff Ticket Detail screenshot (7.1s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:27260) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:21508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 34 [mobile] › lab-03\evidence.spec.ts:77:1 › EVIDENCE-03 Administrator User Management screenshot (6.9s)
+>   -  35 [mobile] › lab-03\requester-flow.spec.ts:5:1 › E2E-05 authenticated Requester regression: create, own detail, comment, and resolved indication
+>   -  36 [mobile] › lab-03\requester-flow.spec.ts:40:1 › E2E-08 authenticated Requester regression replaces the legacy Lab 2 selector flow
+>   ok 37 [mobile] › lab-03\responsive.spec.ts:29:1 › RESP-01 Lab 3 login remains within the viewport (839ms)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:33248) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:8992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:16892) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:19192) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:4612) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:15660) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 38 [mobile] › lab-03\responsive.spec.ts:36:1 › RESP-02 all major role screens remain usable without clipping (18.1s)
+>   -  39 [mobile] › lab-03\staff-ticket-flow.spec.ts:6:1 › E2E-02 IT Staff queue and detail workflow
+>   -  40 [mobile] › lab-03\staff-ticket-flow.spec.ts:32:1 › E2E-06 IT Staff queue query and ticket operations use production API routes
+>   -  41 [mobile] › lab-03\user-administration.spec.ts:6:1 › E2E-03 Administrator sees minimalist User Management
+>   -  42 [mobile] › lab-03\user-administration.spec.ts:27:1 › E2E-07 Administrator user lifecycle and safety rules use production API routes
+>
+>   16 skipped
+>   26 passed (4.0m)
+>
+> ```
+>
+> </details>
+>
+<!-- end-review-event -->
+
+</details>
+
+แหล่งที่มา: [Conversation comment โดย @PhraewaS](https://github.com/PhraewaS/toktickit/pull/63#issuecomment-6168420145)
+
+#### เหตุการณ์ที่ 4 - ข้อความ/การตอบกลับของผู้จัดทำ `@PhraewaS`
+
+เวลา: 2026-10-14 14:16:31 UTC | ประเภท: `Conversation comment`
+
+<details>
+<summary>เปิดอ่านข้อความต้นฉบับฉบับเต็ม (ยาว 53837 ตัวอักษร)</summary>
+
+<!-- review-event PhraewaS/toktickit#63:conversation:6170468021 -->
+> <!-- staging-verification-f95ba5c11068a353619b8050d1dafe6e94f1f81c -->
+> ## Actual staging verification after approved PR #65 merge
+>
+> Exact tested staging/release head: [f95ba5c11068a353619b8050d1dafe6e94f1f81c](https://github.com/PhraewaS/toktickit/commit/f95ba5c11068a353619b8050d1dafe6e94f1f81c). All six phases executed on this same source after #65 merged. Completed between 2026-10-14T14:06:51.766Z and 2026-10-14T14:15:26.748Z (UTC; Asia/Bangkok is UTC+7).
+>
+> Human review remains separate: [#64 APPROVED](https://github.com/PhraewaS/toktickit/pull/64#pullrequestreview-5517046805) approved its documentation head d4479bb before merge. [#65 APPROVED](https://github.com/PhraewaS/toktickit/pull/65#pullrequestreview-5519155225) approved head 512f37c before actual staging merge f95ba5c. [Earlier #63 COMMENTED review](https://github.com/PhraewaS/toktickit/pull/63#pullrequestreview-5492867653) examined c239461; it is not formal approval of f95ba5c. Request guluJa review/approval of the current release head before merge.
+>
+> | Phase | Actual observed result |
+> | --- | --- |
+> | Recovery safety | 6 passed, 0 failed |
+> | Prepare | Generation, migration deploy, seed and actual dedicated DB/port check passed; five migrations |
+> | Recovery | Nine Prisma-table fingerprints and five migration-history rows match; generated temporary database and SQL dump removed |
+> | Server | 164/164 passed, 28 files; production build passed |
+> | Client | 89/89 passed, 20 files; production build passed |
+> | Lab 4 E2E | 11 passed, 10 intentional viewport skips, 0 failed/flaky; passing sanitized report retains metric evidence |
+> | Lab 3 regression E2E | 26 passed, 16 intentional viewport skips, 0 failed/flaky; nonempty passing sanitized report |
+> | Metrics / browser / responsive | Eight selected DB/API/UI values match; six browser-scan/keyboard-responsive flows, 0 unexpected HTTP/page errors |
+> | Performance-smoke | 40 requests, 0 failures, all endpoint maxima below 1000 ms; staff-dashboard: 288 ms; requester-dashboard: 8 ms; staff-actions-list: 7 ms; requester-actions-list: 8 ms |
+>
+> Reproduction (existing untracked environment file, not committed): run sequentially `node scripts/verify-lab4.mjs <phase> --env-file <existing-env-file> --output-dir tmp/issue54-release-staging-verification-f95ba5c` for prepare, recovery, server, client, lab4, lab3. Safety: `node --test scripts/postgres-recovery.test.mjs`. Only dedicated toktickit_lab4_e2e/toktickit_lab3_e2e databases on port 5433 were seeded; normal application DB was not seeded.
+>
+> These are **actual local staging results, not CI or final-main evidence**. Earlier c239461 results remain historical and are not relabelled. Fresh sanitized reports/screenshots are retained locally in `tmp/issue54-release-staging-verification-f95ba5c` for the later reviewed evidence archive, not claimed as newly committed files. Intentional skips are not passed executions. The seeded attachment table is empty: database recovery does not demonstrate physical attachment-file restore. Keyboard/responsive checks are targeted, not a complete WCAG audit. Dependency audit results remain dated 2026-10-08, not freshly rerun here.
+>
+> Documentation follow-ups (specification Data Changes/formulas/Owner roles, integration state, visual/style checklist) are implemented, peer-approved and merged in #65. Their historical snapshots and explicit final visual/main limitations are preserved; they are no longer awaiting that documentation merge. If another change merges before release, repeat/update the latest source verification. Release approval/merge, final-main repeat, reviewed final evidence/PDF and submission are still pending; Issue #54 must stay open.
+>
+> <details>
+> <summary>Actual six-phase JSON, metrics and browser/performance results</summary>
+>
+> ```json
+> {
+>   "revision": "f95ba5c11068a353619b8050d1dafe6e94f1f81c",
+>   "records": [
+>     {
+>       "mode": "prepare",
+>       "revision": "f95ba5c11068a353619b8050d1dafe6e94f1f81c",
+>       "startedAt": "2026-10-14T14:06:51.766Z",
+>       "database": "toktickit_lab4_e2e",
+>       "databasePort": 5433,
+>       "steps": [
+>         {
+>           "label": "prisma-generate",
+>           "exitCode": 0,
+>           "elapsedMs": 5813
+>         },
+>         {
+>           "label": "migration-deploy",
+>           "exitCode": 0,
+>           "elapsedMs": 6700
+>         },
+>         {
+>           "label": "seed",
+>           "exitCode": 0,
+>           "elapsedMs": 4941
+>         }
+>       ],
+>       "completedAt": "2026-10-14T14:07:09.422Z"
+>     },
+>     {
+>       "mode": "recovery",
+>       "revision": "f95ba5c11068a353619b8050d1dafe6e94f1f81c",
+>       "startedAt": "2026-10-14T14:07:10.502Z",
+>       "database": "toktickit_lab4_e2e",
+>       "databasePort": 5433,
+>       "steps": [
+>         {
+>           "label": "recovery-backup",
+>           "exitCode": 0,
+>           "elapsedMs": 296
+>         },
+>         {
+>           "label": "recovery-create",
+>           "exitCode": 0,
+>           "elapsedMs": 425
+>         },
+>         {
+>           "label": "recovery-restore",
+>           "exitCode": 0,
+>           "elapsedMs": 360
+>         },
+>         {
+>           "label": "recovery-cleanup",
+>           "exitCode": 0,
+>           "elapsedMs": 314
+>         }
+>       ],
+>       "recoveryEnvironment": {
+>         "serverMajor": 15,
+>         "dumpVersion": "pg_dump (PostgreSQL) 15.19",
+>         "psqlVersion": "psql (PostgreSQL) 15.19",
+>         "method": "plain SQL dump / psql"
+>       },
+>       "recovery": {
+>         "matched": true,
+>         "tables": [
+>           {
+>             "table": "requester_users",
+>             "count": 10,
+>             "checksum": "5c517ec761f4e5627be13aecd7dc09fa"
+>           },
+>           {
+>             "table": "categories",
+>             "count": 4,
+>             "checksum": "318ce236b0952b9d2ccd70771ccf836d"
+>           },
+>           {
+>             "table": "related_systems",
+>             "count": 6,
+>             "checksum": "d75462a668d9a9495641e0d7f7902f7d"
+>           },
+>           {
+>             "table": "tickets",
+>             "count": 6,
+>             "checksum": "0c37c02e8227bd65fb2cba4d85889475"
+>           },
+>           {
+>             "table": "attachments",
+>             "count": 0,
+>             "checksum": "d41d8cd98f00b204e9800998ecf8427e"
+>           },
+>           {
+>             "table": "sessions",
+>             "count": 0,
+>             "checksum": "d41d8cd98f00b204e9800998ecf8427e"
+>           },
+>           {
+>             "table": "public_comments",
+>             "count": 6,
+>             "checksum": "80aa8cb01adcc7ee92c8f47f8ae60293"
+>           },
+>           {
+>             "table": "internal_notes",
+>             "count": 6,
+>             "checksum": "a75342009045c2a64d49a0f9b8731e57"
+>           },
+>           {
+>             "table": "actions_taken",
+>             "count": 3,
+>             "checksum": "14d6fa6972be90a155690440c69a9b24"
+>           }
+>         ],
+>         "migrations": {
+>           "count": 5,
+>           "checksum": "ab2e80dab10ce8ecee8cb42e8810d3a0"
+>         },
+>         "recoveryDatabase": "toktickit_lab4_recovery_35892_1791986830526",
+>         "temporaryDatabaseRemoved": true,
+>         "dumpRemoved": true
+>       },
+>       "completedAt": "2026-10-14T14:07:12.509Z"
+>     },
+>     {
+>       "mode": "server",
+>       "revision": "f95ba5c11068a353619b8050d1dafe6e94f1f81c",
+>       "startedAt": "2026-10-14T14:07:13.609Z",
+>       "database": "toktickit_lab4_e2e",
+>       "databasePort": 5433,
+>       "steps": [
+>         {
+>           "label": "server-seed",
+>           "exitCode": 0,
+>           "elapsedMs": 4468
+>         },
+>         {
+>           "label": "server-tests",
+>           "exitCode": 0,
+>           "elapsedMs": 44213
+>         },
+>         {
+>           "label": "server-build",
+>           "exitCode": 0,
+>           "elapsedMs": 5082
+>         }
+>       ],
+>       "completedAt": "2026-10-14T14:08:07.375Z"
+>     },
+>     {
+>       "mode": "client",
+>       "revision": "f95ba5c11068a353619b8050d1dafe6e94f1f81c",
+>       "startedAt": "2026-10-14T14:08:08.519Z",
+>       "database": "toktickit_lab4_e2e",
+>       "databasePort": 5433,
+>       "steps": [
+>         {
+>           "label": "client-tests",
+>           "exitCode": 0,
+>           "elapsedMs": 63256
+>         },
+>         {
+>           "label": "client-build",
+>           "exitCode": 0,
+>           "elapsedMs": 9090
+>         }
+>       ],
+>       "completedAt": "2026-10-14T14:09:20.868Z"
+>     },
+>     {
+>       "mode": "lab4",
+>       "revision": "f95ba5c11068a353619b8050d1dafe6e94f1f81c",
+>       "startedAt": "2026-10-14T14:09:21.932Z",
+>       "database": "toktickit_lab4_e2e",
+>       "databasePort": 5433,
+>       "steps": [
+>         {
+>           "label": "lab4-e2e",
+>           "exitCode": 0,
+>           "elapsedMs": 137376
+>         }
+>       ],
+>       "report": {
+>         "stats": {
+>           "total": 21,
+>           "expected": 11,
+>           "unexpected": 0,
+>           "flaky": 0,
+>           "skipped": 10,
+>           "ok": true
+>         },
+>         "errors": [],
+>         "metricsPresent": true,
+>         "credentialRedaction": true
+>       },
+>       "completedAt": "2026-10-14T14:11:39.379Z"
+>     },
+>     {
+>       "mode": "lab3",
+>       "revision": "f95ba5c11068a353619b8050d1dafe6e94f1f81c",
+>       "startedAt": "2026-10-14T14:11:40.535Z",
+>       "database": "toktickit_lab3_e2e",
+>       "databasePort": 5433,
+>       "steps": [
+>         {
+>           "label": "lab3-e2e",
+>           "exitCode": 0,
+>           "elapsedMs": 226109
+>         }
+>       ],
+>       "report": {
+>         "stats": {
+>           "total": 42,
+>           "expected": 26,
+>           "unexpected": 0,
+>           "flaky": 0,
+>           "skipped": 16,
+>           "ok": true
+>         },
+>         "errors": [],
+>         "metricsPresent": false,
+>         "credentialRedaction": true
+>       },
+>       "completedAt": "2026-10-14T14:15:26.748Z"
+>     }
+>   ],
+>   "performance": {
+>     "requestCount": 40,
+>     "results": [
+>       {
+>         "endpoint": "staff-dashboard",
+>         "requests": 10,
+>         "maxDurationMs": 288,
+>         "failures": 0
+>       },
+>       {
+>         "endpoint": "requester-dashboard",
+>         "requests": 10,
+>         "maxDurationMs": 8,
+>         "failures": 0
+>       },
+>       {
+>         "endpoint": "staff-actions-list",
+>         "requests": 10,
+>         "maxDurationMs": 7,
+>         "failures": 0
+>       },
+>       {
+>         "endpoint": "requester-actions-list",
+>         "requests": 10,
+>         "maxDurationMs": 8,
+>         "failures": 0
+>       }
+>     ]
+>   },
+>   "metrics": [
+>     {
+>       "role": "requester",
+>       "database": {
+>         "openTickets": 2,
+>         "waitingForRequester": 0,
+>         "recentlyUpdated": 2,
+>         "recentlyResolved": 0
+>       },
+>       "api": {
+>         "openTickets": 2,
+>         "waitingForRequester": 0,
+>         "recentlyUpdated": 2,
+>         "recentlyResolved": 0
+>       },
+>       "ui": {
+>         "openTickets": 2,
+>         "waitingForRequester": 0,
+>         "recentlyUpdated": 2,
+>         "recentlyResolved": 0
+>       }
+>     },
+>     {
+>       "role": "staff",
+>       "database": {
+>         "unassignedActive": 2,
+>         "myActive": 1,
+>         "myActionsTaken": 2,
+>         "urgentTickets": 2
+>       },
+>       "api": {
+>         "unassignedActive": 2,
+>         "myActive": 1,
+>         "myActionsTaken": 2,
+>         "urgentTickets": 2
+>       },
+>       "ui": {
+>         "unassignedActive": 2,
+>         "myActive": 1,
+>         "myActionsTaken": 2,
+>         "urgentTickets": 2
+>       }
+>     }
+>   ],
+>   "browserScans": [
+>     {
+>       "expectedUnauthenticatedAuthMe401": 2,
+>       "unexpectedHttpFailures": 0,
+>       "pageErrors": 0
+>     },
+>     {
+>       "expectedUnauthenticatedAuthMe401": 2,
+>       "unexpectedHttpFailures": 0,
+>       "pageErrors": 0
+>     },
+>     {
+>       "expectedUnauthenticatedAuthMe401": 2,
+>       "unexpectedHttpFailures": 0,
+>       "pageErrors": 0
+>     },
+>     {
+>       "expectedUnauthenticatedAuthMe401": 2,
+>       "unexpectedHttpFailures": 0,
+>       "pageErrors": 0
+>     },
+>     {
+>       "expectedUnauthenticatedAuthMe401": 2,
+>       "unexpectedHttpFailures": 0,
+>       "pageErrors": 0
+>     },
+>     {
+>       "expectedUnauthenticatedAuthMe401": 2,
+>       "unexpectedHttpFailures": 0,
+>       "pageErrors": 0
+>     }
+>   ],
+>   "validation": "all six staging phases verified"
+> }
+> ```
+>
+> </details>
+>
+> <details>
+> <summary>Recovery safety raw output</summary>
+>
+> ```text
+> ✔ uses supported plain SQL dump and psql, without blocked helper executables (0.8878ms)
+> ✔ restores atomically and stops on SQL errors, ignoring user psql startup files (0.1498ms)
+> ✔ only creates and drops the unique validated temporary database, using template0 (0.9037ms)
+> ✔ rejects application databases and unsafe recovery targets (0.3553ms)
+> ✔ uses the selected installed Windows tools with no shell string (0.2381ms)
+> ✔ requires both SQL backup/restore tools to match the actual server major (0.2284ms)
+> ℹ tests 6
+> ℹ suites 0
+> ℹ pass 6
+> ℹ fail 0
+> ℹ cancelled 0
+> ℹ skipped 0
+> ℹ todo 0
+> ℹ duration_ms 813.174
+>
+> ```
+>
+> </details>
+>
+> <details>
+> <summary>Sanitized raw output: server-tests</summary>
+>
+> ```text
+>
+> > [REDACTED]-server@1.0.0 test
+> > vitest run --no-file-parallelism
+>
+>
+>  RUN  v2.1.9 C:/Users/User/OneDrive/Documents/ChatGPT/Lab TokTik (SE)/lab4-integration-54/server
+>
+>  ✓ tests/lab-03/staff-operations.integration.api.test.ts (14 tests) 155ms
+>  ✓ tests/lab-04/actions.api.test.ts (20 tests) 104ms
+>  ✓ tests/lab-02/attachments.api.test.ts (12 tests) 77ms
+>  ✓ tests/lab-04/ticket-workflow.api.test.ts (10 tests) 47ms
+>  ✓ tests/lab-02/create-ticket.api.test.ts (7 tests) 46ms
+>  ✓ tests/lab-03/users-admin.api.test.ts (10 tests) 142ms
+>  ✓ tests/lab-04/staff-dashboard.api.test.ts (3 tests) 30ms
+> stderr | tests/lab-02/my-tickets.api.test.ts > GET /api/tickets > returns a safe internal error when the database fails unexpectedly
+> Unable to list Tickets: Error: SQL password and filesystem path must never be exposed
+>     at C:\Users\User\OneDrive\Documents\ChatGPT\Lab TokTik (SE)\lab4-integration-54\server\tests\lab-02\my-tickets.api.test.ts:149:59
+>     at file:///C:/Users/User/OneDrive/Documents/ChatGPT/Lab%20TokTik%20(SE)/lab4-integration-54/server/node_modules/@vitest/runner/dist/index.js:146:14
+>     at file:///C:/Users/User/OneDrive/Documents/ChatGPT/Lab%20TokTik%20(SE)/lab4-integration-54/server/node_modules/@vitest/runner/dist/index.js:533:11
+>     at runWithTimeout (file:///C:/Users/User/OneDrive/Documents/ChatGPT/Lab%20TokTik%20(SE)/lab4-integration-54/server/node_modules/@vitest/runner/dist/index.js:39:7)
+>     at runTest (file:///C:/Users/User/OneDrive/Documents/ChatGPT/Lab%20TokTik%20(SE)/lab4-integration-54/server/node_modules/@vitest/runner/dist/index.js:1056:17)
+>     at processTicksAndRejections (node:internal/process/task_queues:104:5)
+>     at runSuite (file:///C:/Users/User/OneDrive/Documents/ChatGPT/Lab%20TokTik%20(SE)/lab4-integration-54/server/node_modules/@vitest/runner/dist/index.js:1205:15)
+>     at runSuite (file:///C:/Users/User/OneDrive/Documents/ChatGPT/Lab%20TokTik%20(SE)/lab4-integration-54/server/node_modules/@vitest/runner/dist/index.js:1205:15)
+>     at runFiles (file:///C:/Users/User/OneDrive/Documents/ChatGPT/Lab%20TokTik%20(SE)/lab4-integration-54/server/node_modules/@vitest/runner/dist/index.js:1262:5)
+>     at startTests (file:///C:/Users/User/OneDrive/Documents/ChatGPT/Lab%20TokTik%20(SE)/lab4-integration-54/server/node_modules/@vitest/runner/dist/index.js:1271:3)
+>
+>  ✓ tests/lab-02/my-tickets.api.test.ts (6 tests) 42ms
+>  ✓ tests/lab-02/requester-context.api.test.ts (6 tests) 31ms
+>  ✓ tests/lab-03/authorization.api.test.ts (8 tests) 37ms
+>  ✓ tests/lab-04/requester-dashboard.api.test.ts (3 tests) 25ms
+> stdout | tests/lab-04/performance-smoke.test.ts > Lab 4 performance smoke (dedicated local PostgreSQL only) > keeps dashboard summaries and Action Taken reads bounded under 10 sequential requests each
+> PERF-04 {"requestCount":40,"results":[{"endpoint":"staff-dashboard","requests":10,"maxDurationMs":288,"failures":0},{"endpoint":"requester-dashboard","requests":10,"maxDurationMs":8,"failures":0},{"endpoint":"staff-actions-list","requests":10,"maxDurationMs":7,"failures":0},{"endpoint":"requester-actions-list","requests":10,"maxDurationMs":8,"failures":0}]}
+>
+>  ✓ tests/lab-04/performance-smoke.test.ts (1 test) 1321ms
+>    ✓ Lab 4 performance smoke (dedicated local PostgreSQL only) > keeps dashboard summaries and Action Taken reads bounded under 10 sequential requests each 1320ms
+>  ✓ tests/lab-03/auth.integration.test.ts (4 tests) 370ms
+>  ✓ tests/lab-02/ticket-detail.api.test.ts (3 tests) 26ms
+>  ✓ tests/lab-02/reference-data.api.test.ts (4 tests) 26ms
+>  ✓ tests/lab-03/auth.api.test.ts (6 tests) 40ms
+>  ✓ tests/lab-02/ticket-validation.unit.test.ts (4 tests) 3ms
+>  ✓ tests/lab-02/ticket-query.unit.test.ts (4 tests) 3ms
+> stdout | tests/lab-03/migration-regression.api.test.ts > PostgreSQL migration and seed regression > keeps the deterministic seed idempotent on PostgreSQL
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+> stdout | tests/lab-03/migration-regression.api.test.ts > PostgreSQL migration and seed regression > keeps the deterministic seed idempotent on PostgreSQL
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+>  ✓ tests/lab-03/migration-regression.api.test.ts (3 tests) 2018ms
+>    ✓ PostgreSQL migration and seed regression > keeps the deterministic seed idempotent on PostgreSQL 1844ms
+>  ✓ tests/lab-03/staff-ticket-detail.api.test.ts (3 tests) 25ms
+>  ✓ tests/lab-03/auth.unit.test.ts (3 tests) 115ms
+>  ✓ tests/lab-02/attachment-policy.unit.test.ts (3 tests) 3ms
+>  ✓ tests/lab-02/ticket-number.unit.test.ts (3 tests) 3ms
+>  ✓ tests/lab-01/health.test.ts (1 test) 17ms
+>  ✓ tests/lab-01/categories.test.ts (1 test) 152ms
+>  ✓ tests/lab-03/comments-notes.api.test.ts (1 test) 17ms
+>  ✓ tests/lab-03/staff-queue.api.test.ts (1 test) 17ms
+>  ✓ tests/lab-04/actions-taken.api.test.ts (20 tests) 91ms
+>
+>  Test Files  28 passed (28)
+>       Tests  164 passed (164)
+>    Start at  21:07:22
+>    Duration  39.22s (transform 715ms, setup 123ms, collect 6.77s, tests 4.98s, environment 4ms, prepare 2.23s)
+>
+>
+> ```
+>
+> </details>
+>
+> <details>
+> <summary>Sanitized raw output: server-build</summary>
+>
+> ```text
+>
+> > [REDACTED]-server@1.0.0 build
+> > tsc
+>
+>
+> ```
+>
+> </details>
+>
+> <details>
+> <summary>Sanitized raw output: client-tests</summary>
+>
+> ```text
+>
+> > [REDACTED]-client@1.0.0 test
+> > vitest run --run --no-file-parallelism
+>
+>
+>  RUN  v2.1.9 C:/Users/User/OneDrive/Documents/ChatGPT/Lab TokTik (SE)/lab4-integration-54/client
+>
+>  ✓ tests/lab-04/ActionsTaken.test.tsx (9 tests) 5500ms
+>    ✓ Lab 4 Actions Taken UI > loads an empty state and allows IT Staff to create an action with follow-up 1266ms
+>    ✓ Lab 4 Actions Taken UI > sends the loaded updatedAt token when editing 546ms
+>    ✓ Lab 4 Actions Taken UI > maps server validation errors to the matching field 1218ms
+>    ✓ Lab 4 Actions Taken UI > shows a stale-update conflict and refreshes the Action list 765ms
+>    ✓ Lab 4 Actions Taken UI > reuses the same idempotency key when retrying a create after an uncertain response 777ms
+>    ✓ Lab 4 Actions Taken UI > reconciles the action list before allowing another create after discarding an uncertain draft 810ms
+>  ✓ tests/lab-02/CreateTicket.test.tsx (7 tests) 531ms
+>  ✓ tests/lab-02/MyTickets.test.tsx (9 tests) 2097ms
+>    ✓ My Tickets screen > loads owned tickets and applies search/filter controls 344ms
+>    ✓ My Tickets screen > clears search and filters while keeping the visible sort controls in sync 580ms
+>    ✓ My Tickets screen > covers all list controls and previous/next pagination requests 752ms
+>  ✓ tests/lab-03/StaffTicketDetail.test.tsx (5 tests) 981ms
+>    ✓ Staff ticket operations and evidence > posts Public Comments and Internal Notes through the staff controls 659ms
+>  ✓ tests/lab-03/StaffTicketQueue.test.tsx (7 tests) 1162ms
+>    ✓ Lab 3 IT Staff queue > sends independent requested and IT priority filters with search, sort and pagination 642ms
+>  ✓ tests/lab-03/UserManagement.test.tsx (6 tests) 2612ms
+>    ✓ submits the administrator create-user action 1047ms
+>    ✓ requires confirmation before deactivation and explains session revocation 315ms
+>    ✓ submits edit and reset-password actions 952ms
+>  ✓ tests/lab-04/StaffDashboard.test.tsx (5 tests) 632ms
+>  ✓ tests/lab-02/RequesterTicketDetail.test.tsx (4 tests) 632ms
+>    ✓ Requester Ticket Detail and attachments > uploads a valid file and soft-removes it with a reason 418ms
+>  ✓ tests/lab-04/RequesterDashboard.test.tsx (5 tests) 504ms
+>  ✓ tests/lab-02/AttachmentSection.test.tsx (4 tests) 241ms
+>  ✓ tests/lab-02/RequesterSelection.test.tsx (6 tests) 193ms
+>  ✓ tests/lab-03/AppRoleNavigation.test.tsx (6 tests) 225ms
+>  ✓ tests/lab-04/TicketWorkflow.test.tsx (2 tests) 290ms
+>  ✓ tests/lab-02/Accessibility.test.tsx (3 tests) 458ms
+>  ✓ tests/lab-03/ChangePassword.test.tsx (2 tests) 1565ms
+>    ✓ Lab 3 first-login password change > requires matching passwords and continues after saving 954ms
+>    ✓ Lab 3 first-login password change > shows a safe password-change failure 609ms
+>  ✓ tests/lab-03/Login.test.tsx (2 tests) 1483ms
+>    ✓ Lab 3 Login > validates credentials and returns the authenticated user 888ms
+>    ✓ Lab 3 Login > shows a safe login failure without exposing API details 593ms
+>  ✓ tests/lab-03/ApiContract.test.tsx (2 tests) 7ms
+>  ✓ tests/lab-01/App.test.tsx (3 tests) 94ms
+>  ✓ tests/lab-02/ZenGreenStyles.test.tsx (1 test) 69ms
+>  ✓ tests/lab-03/ZenGreenStyle.test.tsx (1 test) 3ms
+>
+>  Test Files  20 passed (20)
+>       Tests  89 passed (89)
+>    Start at  21:08:13
+>    Duration  58.02s (transform 824ms, setup 1.99s, collect 4.05s, tests 19.28s, environment 12.23s, prepare 1.83s)
+>
+>
+> ```
+>
+> </details>
+>
+> <details>
+> <summary>Sanitized raw output: client-build</summary>
+>
+> ```text
+>
+> > [REDACTED]-client@1.0.0 build
+> > tsc && vite build
+>
+> vite v6.4.3 building for production...
+> transforming...
+> ✓ 41 modules transformed.
+> rendering chunks...
+> computing gzip size...
+> dist/index.html                   0.41 kB │ gzip:  0.28 kB
+> dist/assets/index-CKMYiuCZ.css  252.12 kB │ gzip: 35.59 kB
+> dist/assets/index-DFyPXNkn.js   236.30 kB │ gzip: 64.34 kB
+> ✓ built in 998ms
+>
+> ```
+>
+> </details>
+>
+> <details>
+> <summary>Sanitized raw output: lab4-e2e</summary>
+>
+> ```text
+>
+> > test:lab4
+> > playwright test --config playwright.lab4.config.ts
+>
+> [WebServer] (node:2828) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+> [WebServer] (node:8280) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+> [WebServer] (node:10896) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+>
+> > [REDACTED]-server@1.0.0 prisma:deploy
+> > prisma migrate deploy
+>
+> Prisma schema loaded from prisma\schema.prisma
+> Datasource "db": PostgreSQL database "[REDACTED]_lab4_e2e", schema "public" at "localhost:5433"
+>
+> 5 migrations found in prisma/migrations
+>
+>
+> No pending migrations to apply.
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+> Running 21 tests using 1 worker
+>
+> (node:22244) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:24336) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:21044) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  1 [desktop] › lab-04\actions-taken-flow.spec.ts:4:1 › E2E-04 Staff create/edit and Requester read-only Actions Taken (16.1s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:24820) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:29564) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+> DASHBOARD-METRICS {"role":"requester","database":{"openTickets":2,"waitingForRequester":0,"recentlyUpdated":2,"recentlyResolved":0},"api":{"openTickets":2,"waitingForRequester":0,"recentlyUpdated":2,"recentlyResolved":0},"ui":{"openTickets":2,"waitingForRequester":0,"recentlyUpdated":2,"recentlyResolved":0}}
+>   ok  2 [desktop] › lab-04\dashboards.spec.ts:63:1 › E2E-05 Requester Dashboard metrics and active-ticket drill-down (7.4s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:26912) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:15372) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+> DASHBOARD-METRICS {"role":"staff","database":{"unassignedActive":2,"myActive":1,"myActionsTaken":2,"urgentTickets":2},"api":{"unassignedActive":2,"myActive":1,"myActionsTaken":2,"urgentTickets":2},"ui":{"unassignedActive":2,"myActive":1,"myActionsTaken":2,"urgentTickets":2}}
+>   ok  3 [desktop] › lab-04\dashboards.spec.ts:76:1 › E2E-06 Staff Dashboard metrics and unassigned-active drill-down (7.4s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:18536) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:31584) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:22336) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:32744) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  4 [desktop] › lab-04\migration-seed.spec.ts:30:1 › E2E-00 Lab 4 migration deploys and deterministic seed is repeatable (10.9s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:38248) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:17768) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+> BROWSER-SCAN {"expectedUnauthenticatedAuthMe401":2,"unexpectedHttpFailures":0,"pageErrors":0}
+>   ok  5 [desktop] › lab-04\responsive.spec.ts:71:1 › RESP-04 Requester Dashboard and Ticket Detail fit the viewport (8.3s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:11532) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:34432) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+> BROWSER-SCAN {"expectedUnauthenticatedAuthMe401":2,"unexpectedHttpFailures":0,"pageErrors":0}
+>   ok  6 [desktop] › lab-04\responsive.spec.ts:92:1 › RESP-04 IT Staff Dashboard and Actions Taken editor fit the viewport (10.9s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:6956) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:37480) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  7 [desktop] › lab-04\ticket-resolution.spec.ts:4:1 › E2E-07 resolution requires an Action Taken, closes completed work, and cancels a separate Ticket (8.3s)
+> (node:23592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+>   -   8 [tablet] › lab-04\actions-taken-flow.spec.ts:4:1 › E2E-04 Staff create/edit and Requester read-only Actions Taken
+>   -   9 [tablet] › lab-04\dashboards.spec.ts:63:1 › E2E-05 Requester Dashboard metrics and active-ticket drill-down
+>   -  10 [tablet] › lab-04\dashboards.spec.ts:76:1 › E2E-06 Staff Dashboard metrics and unassigned-active drill-down
+>   -  11 [tablet] › lab-04\migration-seed.spec.ts:30:1 › E2E-00 Lab 4 migration deploys and deterministic seed is repeatable
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:22004) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:13624) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+> BROWSER-SCAN {"expectedUnauthenticatedAuthMe401":2,"unexpectedHttpFailures":0,"pageErrors":0}
+>   ok 12 [tablet] › lab-04\responsive.spec.ts:71:1 › RESP-04 Requester Dashboard and Ticket Detail fit the viewport (7.2s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:3844) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:6592) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+> BROWSER-SCAN {"expectedUnauthenticatedAuthMe401":2,"unexpectedHttpFailures":0,"pageErrors":0}
+>   ok 13 [tablet] › lab-04\responsive.spec.ts:92:1 › RESP-04 IT Staff Dashboard and Actions Taken editor fit the viewport (10.8s)
+>   -  14 [tablet] › lab-04\ticket-resolution.spec.ts:4:1 › E2E-07 resolution requires an Action Taken, closes completed work, and cancels a separate Ticket
+> (node:12780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+>   -  15 [mobile] › lab-04\actions-taken-flow.spec.ts:4:1 › E2E-04 Staff create/edit and Requester read-only Actions Taken
+>   -  16 [mobile] › lab-04\dashboards.spec.ts:63:1 › E2E-05 Requester Dashboard metrics and active-ticket drill-down
+>   -  17 [mobile] › lab-04\dashboards.spec.ts:76:1 › E2E-06 Staff Dashboard metrics and unassigned-active drill-down
+>   -  18 [mobile] › lab-04\migration-seed.spec.ts:30:1 › E2E-00 Lab 4 migration deploys and deterministic seed is repeatable
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:29388) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:33604) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+> BROWSER-SCAN {"expectedUnauthenticatedAuthMe401":2,"unexpectedHttpFailures":0,"pageErrors":0}
+>   ok 19 [mobile] › lab-04\responsive.spec.ts:71:1 › RESP-04 Requester Dashboard and Ticket Detail fit the viewport (6.8s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:1992) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:31108) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+> BROWSER-SCAN {"expectedUnauthenticatedAuthMe401":2,"unexpectedHttpFailures":0,"pageErrors":0}
+>   ok 20 [mobile] › lab-04\responsive.spec.ts:92:1 › RESP-04 IT Staff Dashboard and Actions Taken editor fit the viewport (9.4s)
+>   -  21 [mobile] › lab-04\ticket-resolution.spec.ts:4:1 › E2E-07 resolution requires an Action Taken, closes completed work, and cancels a separate Ticket
+>
+>   10 skipped
+>   11 passed (2.2m)
+>
+> ```
+>
+> </details>
+>
+> <details>
+> <summary>Sanitized raw output: lab3-e2e</summary>
+>
+> ```text
+>
+> > test:lab3
+> > playwright test --config playwright.lab3.config.ts
+>
+> [WebServer] (node:9640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+> [WebServer] (node:31284) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+> [WebServer] (node:20564) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> [WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+>
+> > [REDACTED]-server@1.0.0 prisma:deploy
+> > prisma migrate deploy
+>
+> Prisma schema loaded from prisma\schema.prisma
+> Datasource "db": PostgreSQL database "[REDACTED]_lab3_e2e", schema "public" at "localhost:5433"
+>
+> 5 migrations found in prisma/migrations
+>
+>
+> No pending migrations to apply.
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+> Running 42 tests using 1 worker
+>
+> (node:29092) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:27412) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:7676) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  1 [desktop] › lab-03\authentication.spec.ts:6:1 › E2E-01 login, mandatory first password change, and logout (7.4s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:34404) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:34480) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  2 [desktop] › lab-03\authentication.spec.ts:25:1 › E2E-04 authentication rejects invalid, inactive, gated, and revoked access (5.0s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:13004) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:13492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  3 [desktop] › lab-03\evidence.spec.ts:39:1 › EVIDENCE-00 Login and Change Password screenshots (6.4s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:18728) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:27848) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  4 [desktop] › lab-03\evidence.spec.ts:51:1 › EVIDENCE-01 Staff Queue screenshot (6.8s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:27908) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:33556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  5 [desktop] › lab-03\evidence.spec.ts:66:1 › EVIDENCE-02 Staff Ticket Detail screenshot (6.8s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:35556) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:38204) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  6 [desktop] › lab-03\evidence.spec.ts:77:1 › EVIDENCE-03 Administrator User Management screenshot (6.7s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:10276) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:28876) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  7 [desktop] › lab-03\requester-flow.spec.ts:5:1 › E2E-05 authenticated Requester regression: create, own detail, comment, and resolved indication (9.5s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:36068) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:25716) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok  8 [desktop] › lab-03\requester-flow.spec.ts:40:1 › E2E-08 authenticated Requester regression replaces the legacy Lab 2 selector flow (6.8s)
+>   ok  9 [desktop] › lab-03\responsive.spec.ts:29:1 › RESP-01 Lab 3 login remains within the viewport (1.2s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:38400) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:27820) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:22392) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:12840) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:18388) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:25988) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 10 [desktop] › lab-03\responsive.spec.ts:36:1 › RESP-02 all major role screens remain usable without clipping (19.0s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:26704) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:21368) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 11 [desktop] › lab-03\staff-ticket-flow.spec.ts:6:1 › E2E-02 IT Staff queue and detail workflow (7.1s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:38384) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:32896) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 12 [desktop] › lab-03\staff-ticket-flow.spec.ts:32:1 › E2E-06 IT Staff queue query and ticket operations use production API routes (5.6s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:18576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:23092) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 13 [desktop] › lab-03\user-administration.spec.ts:6:1 › E2E-03 Administrator sees minimalist User Management (6.7s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:35760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:5880) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 14 [desktop] › lab-03\user-administration.spec.ts:27:1 › E2E-07 Administrator user lifecycle and safety rules use production API routes (5.5s)
+> (node:25768) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+>   -  15 [tablet] › lab-03\authentication.spec.ts:6:1 › E2E-01 login, mandatory first password change, and logout
+>   -  16 [tablet] › lab-03\authentication.spec.ts:25:1 › E2E-04 authentication rejects invalid, inactive, gated, and revoked access
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:36876) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:12840) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 17 [tablet] › lab-03\evidence.spec.ts:39:1 › EVIDENCE-00 Login and Change Password screenshots (6.1s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:33964) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:37064) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 18 [tablet] › lab-03\evidence.spec.ts:51:1 › EVIDENCE-01 Staff Queue screenshot (6.7s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:16320) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:15400) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 19 [tablet] › lab-03\evidence.spec.ts:66:1 › EVIDENCE-02 Staff Ticket Detail screenshot (6.9s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:7332) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:12108) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 20 [tablet] › lab-03\evidence.spec.ts:77:1 › EVIDENCE-03 Administrator User Management screenshot (6.7s)
+>   -  21 [tablet] › lab-03\requester-flow.spec.ts:5:1 › E2E-05 authenticated Requester regression: create, own detail, comment, and resolved indication
+>   -  22 [tablet] › lab-03\requester-flow.spec.ts:40:1 › E2E-08 authenticated Requester regression replaces the legacy Lab 2 selector flow
+>   ok 23 [tablet] › lab-03\responsive.spec.ts:29:1 › RESP-01 Lab 3 login remains within the viewport (927ms)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:34808) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:38232) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:1980) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:22500) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:26684) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:37492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 24 [tablet] › lab-03\responsive.spec.ts:36:1 › RESP-02 all major role screens remain usable without clipping (18.1s)
+>   -  25 [tablet] › lab-03\staff-ticket-flow.spec.ts:6:1 › E2E-02 IT Staff queue and detail workflow
+>   -  26 [tablet] › lab-03\staff-ticket-flow.spec.ts:32:1 › E2E-06 IT Staff queue query and ticket operations use production API routes
+>   -  27 [tablet] › lab-03\user-administration.spec.ts:6:1 › E2E-03 Administrator sees minimalist User Management
+>   -  28 [tablet] › lab-03\user-administration.spec.ts:27:1 › E2E-07 Administrator user lifecycle and safety rules use production API routes
+> (node:17596) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+>   -  29 [mobile] › lab-03\authentication.spec.ts:6:1 › E2E-01 login, mandatory first password change, and logout
+>   -  30 [mobile] › lab-03\authentication.spec.ts:25:1 › E2E-04 authentication rejects invalid, inactive, gated, and revoked access
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:35744) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:22988) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 31 [mobile] › lab-03\evidence.spec.ts:39:1 › EVIDENCE-00 Login and Change Password screenshots (6.0s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:13396) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:15224) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 32 [mobile] › lab-03\evidence.spec.ts:51:1 › EVIDENCE-01 Staff Queue screenshot (6.7s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:22924) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:24408) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 33 [mobile] › lab-03\evidence.spec.ts:66:1 › EVIDENCE-02 Staff Ticket Detail screenshot (6.7s)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:20492) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:2696) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 34 [mobile] › lab-03\evidence.spec.ts:77:1 › EVIDENCE-03 Administrator User Management screenshot (6.5s)
+>   -  35 [mobile] › lab-03\requester-flow.spec.ts:5:1 › E2E-05 authenticated Requester regression: create, own detail, comment, and resolved indication
+>   -  36 [mobile] › lab-03\requester-flow.spec.ts:40:1 › E2E-08 authenticated Requester regression replaces the legacy Lab 2 selector flow
+>   ok 37 [mobile] › lab-03\responsive.spec.ts:29:1 › RESP-01 Lab 3 login remains within the viewport (844ms)
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:24728) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:29380) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:7244) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:15532) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>
+> > [REDACTED]-server@1.0.0 prisma:seed
+> > tsx prisma/seed.ts
+>
+> (node:32384) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> (node:19896) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+> (Use `node --trace-warnings ...` to show where the warning was created)
+> Seeded 4 categories, 6 related systems, 5 requesters, 3 active IT Staff, and one Administrator.
+>   ok 38 [mobile] › lab-03\responsive.spec.ts:36:1 › RESP-02 all major role screens remain usable without clipping (17.7s)
+>   -  39 [mobile] › lab-03\staff-ticket-flow.spec.ts:6:1 › E2E-02 IT Staff queue and detail workflow
+>   -  40 [mobile] › lab-03\staff-ticket-flow.spec.ts:32:1 › E2E-06 IT Staff queue query and ticket operations use production API routes
+>   -  41 [mobile] › lab-03\user-administration.spec.ts:6:1 › E2E-03 Administrator sees minimalist User Management
+>   -  42 [mobile] › lab-03\user-administration.spec.ts:27:1 › E2E-07 Administrator user lifecycle and safety rules use production API routes
+>
+>   16 skipped
+>   26 passed (3.7m)
+>
+> ```
+>
+> </details>
+>
+<!-- end-review-event -->
+
+</details>
+
+แหล่งที่มา: [Conversation comment โดย @PhraewaS](https://github.com/PhraewaS/toktickit/pull/63#issuecomment-6170468021)
+
+#### เหตุการณ์ที่ 5 - ข้อความรีวิวจากเพื่อน `@guluJa`
+
+เวลา: 2026-10-14 14:31:50 UTC | ประเภท: `Submitted review` | สถานะ: `COMMENTED`
+
+Revision ที่ตรวจ: [`f95ba5c`](https://github.com/PhraewaS/toktickit/commit/f95ba5c11068a353619b8050d1dafe6e94f1f81c)
+
+<!-- review-event PhraewaS/toktickit#63:review:5519590608 -->
+> ตรวจ release head f95ba5c แล้วนะคะ งานเอกสาร #65 รวมเข้ามาครบ และผล verification รอบใหม่ระบุ source ตรงกันทั้งหกขั้นค่ะ ตรวจ JSON เทียบกับ console output แล้วจำนวน tests/skips, recovery, metrics และ performance สอดคล้องกัน ไม่มี Product changes เพิ่มจากงานที่ตรวจไว้ รอบนี้ไม่พบจุดที่ต้องแก้เพิ่มเติมก่อนอนุมัติ Release PR นี้ค่ะ
+<!-- end-review-event -->
+
+แหล่งที่มา: [Submitted review โดย @guluJa](https://github.com/PhraewaS/toktickit/pull/63#pullrequestreview-5519590608)
+
+#### เหตุการณ์ที่ 6 - ข้อความ/การตอบกลับของผู้จัดทำ `@PhraewaS`
+
+เวลา: 2026-10-14 14:36:51 UTC | ประเภท: `Conversation comment`
+
+<!-- review-event PhraewaS/toktickit#63:conversation:6170887146 -->
+> > ตรวจ release head [f95ba5c](https://github.com/PhraewaS/toktickit/commit/f95ba5c11068a353619b8050d1dafe6e94f1f81c) แล้วนะคะ งานเอกสาร #65 รวมเข้ามาครบ และผล verification รอบใหม่ระบุ source ตรงกันทั้งหกขั้นค่ะ ตรวจ JSON เทียบกับ console output แล้วจำนวน tests/skips, recovery, metrics และ performance สอดคล้องกัน ไม่มี Product changes เพิ่มจากงานที่ตรวจไว้ รอบนี้ไม่พบจุดที่ต้องแก้เพิ่มเติมก่อนอนุมัติ Release PR นี้ค่ะ
+>
+> ขอบคุณนะคะที่ช่วยตรวจสอบให้กันมาตลอดเลยนะคะ
+<!-- end-review-event -->
+
+แหล่งที่มา: [Conversation comment โดย @PhraewaS](https://github.com/PhraewaS/toktickit/pull/63#issuecomment-6170887146)
+
+#### เหตุการณ์ที่ 7 - ข้อความรีวิวจากเพื่อน `@guluJa`
+
+เวลา: 2026-10-14 14:38:54 UTC | ประเภท: `Submitted review` | สถานะ: `APPROVED`
+
+Revision ที่ตรวจ: [`f95ba5c`](https://github.com/PhraewaS/toktickit/commit/f95ba5c11068a353619b8050d1dafe6e94f1f81c)
+
+<!-- review-event PhraewaS/toktickit#63:review:5519700187 -->
+ไม่มีข้อความ body แนบกับเหตุการณ์นี้ใน GitHub จึงไม่เติมคำพูดขึ้นเอง สถานะ `APPROVED` เป็นหลักฐานการอนุมัติจริงแม้ไม่มีข้อความ
+<!-- end-review-event -->
+
+แหล่งที่มา: [Submitted review โดย @guluJa](https://github.com/PhraewaS/toktickit/pull/63#pullrequestreview-5519700187)
+
+**ผลการอนุมัติสุดท้าย:** [`APPROVED` โดย @guluJa](https://github.com/PhraewaS/toktickit/pull/63#pullrequestreview-5519700187) เมื่อ 2026-10-14 14:38:54 UTC; ตรงกับ head ที่บันทึกใน PR
+
+---
+
+### PhraewaS/toktickit#64 - [Lab 4] Update Peer Review Records for Both Repositories
+
+Pull Request: [#64](https://github.com/PhraewaS/toktickit/pull/64) | สาขา: `codex/lab4-bidirectional-review-record` → `lab4-staging`
+
+**สถานะจริง:** Merge แล้วเมื่อ 2026-10-14 11:17:02 UTC; commit [`5ab13bb`](https://github.com/PhraewaS/toktickit/commit/5ab13bbf53371b1e42bacbfe22c00296b9f68d0c)
+
+#### เหตุการณ์ที่ 1 - ข้อความรีวิวจากเพื่อน `@guluJa`
+
+เวลา: 2026-10-13 14:33:26 UTC | ประเภท: `Submitted review` | สถานะ: `COMMENTED`
+
+Revision ที่ตรวจ: [`d4479bb`](https://github.com/PhraewaS/toktickit/commit/d4479bb52ab13fc8ccfe63fa01e0be4c66f504a5)
+
+<!-- review-event PhraewaS/toktickit#64:review:5505186004 -->
+> ตรวจ revision d4479bb แล้วนะคะ บันทึกทั้งสองฝั่งแยกชัดเจน เทียบข้อความทั้ง 89 เหตุการณ์กับ GitHub แล้วตรงกัน รวมถึง Approval ของ 16 PR ที่ตรงกับ head และเกิดก่อน Merge ค่ะ ประวัติเดิมยังครบ และแยก snapshot กับผล Final-main ถูกต้อง รอบนี้ไม่พบจุดที่ต้องแก้เพิ่มเติมในขอบเขตเอกสารนี้ค่ะ
+<!-- end-review-event -->
+
+แหล่งที่มา: [Submitted review โดย @guluJa](https://github.com/PhraewaS/toktickit/pull/64#pullrequestreview-5505186004)
+
+#### เหตุการณ์ที่ 2 - ข้อความ/การตอบกลับของผู้จัดทำ `@PhraewaS`
+
+เวลา: 2026-10-14 09:56:29 UTC | ประเภท: `Conversation comment`
+
+<!-- review-event PhraewaS/toktickit#64:conversation:6165720545 -->
+> > ตรวจ revision [d4479bb](https://github.com/PhraewaS/toktickit/commit/d4479bb52ab13fc8ccfe63fa01e0be4c66f504a5) แล้วนะคะ บันทึกทั้งสองฝั่งแยกชัดเจน เทียบข้อความทั้ง 89 เหตุการณ์กับ GitHub แล้วตรงกัน รวมถึง Approval ของ 16 PR ที่ตรงกับ head และเกิดก่อน Merge ค่ะ ประวัติเดิมยังครบ และแยก snapshot กับผล Final-main ถูกต้อง รอบนี้ไม่พบจุดที่ต้องแก้เพิ่มเติมในขอบเขตเอกสารนี้ค่ะ
+>
+> ขอบคุณมากนะคะ
+<!-- end-review-event -->
+
+แหล่งที่มา: [Conversation comment โดย @PhraewaS](https://github.com/PhraewaS/toktickit/pull/64#issuecomment-6165720545)
+
+#### เหตุการณ์ที่ 3 - ข้อความรีวิวจากเพื่อน `@guluJa`
+
+เวลา: 2026-10-14 11:16:53 UTC | ประเภท: `Submitted review` | สถานะ: `APPROVED`
+
+Revision ที่ตรวจ: [`d4479bb`](https://github.com/PhraewaS/toktickit/commit/d4479bb52ab13fc8ccfe63fa01e0be4c66f504a5)
+
+<!-- review-event PhraewaS/toktickit#64:review:5517046805 -->
+ไม่มีข้อความ body แนบกับเหตุการณ์นี้ใน GitHub จึงไม่เติมคำพูดขึ้นเอง สถานะ `APPROVED` เป็นหลักฐานการอนุมัติจริงแม้ไม่มีข้อความ
+<!-- end-review-event -->
+
+แหล่งที่มา: [Submitted review โดย @guluJa](https://github.com/PhraewaS/toktickit/pull/64#pullrequestreview-5517046805)
+
+**ผลการอนุมัติสุดท้าย:** [`APPROVED` โดย @guluJa](https://github.com/PhraewaS/toktickit/pull/64#pullrequestreview-5517046805) เมื่อ 2026-10-14 11:16:53 UTC; ตรงกับ head ที่บันทึกใน PR
+
+---
+
+### PhraewaS/toktickit#65 - [Lab 4] Complete Release Documentation and Review Checklist
+
+Pull Request: [#65](https://github.com/PhraewaS/toktickit/pull/65) | สาขา: `codex/lab4-release-documentation-54` → `lab4-staging`
+
+**สถานะจริง:** Merge แล้วเมื่อ 2026-10-14 14:01:19 UTC; commit [`f95ba5c`](https://github.com/PhraewaS/toktickit/commit/f95ba5c11068a353619b8050d1dafe6e94f1f81c)
+
+#### เหตุการณ์ที่ 1 - ข้อความรีวิวจากเพื่อน `@guluJa`
+
+เวลา: 2026-10-14 13:31:27 UTC | ประเภท: `Submitted review` | สถานะ: `CHANGES_REQUESTED`
+
+Revision ที่ตรวจ: [`d35a6ec`](https://github.com/PhraewaS/toktickit/commit/d35a6ec946f43bcdbb3fb3fd83bb2b895b1eec68)
+
+<!-- review-event PhraewaS/toktickit#65:review:5518700763 -->
+> ตรวจ revision d35a6ec แล้วนะคะ เอกสารเรื่อง schema, API, Dashboard และขอบเขตหลักฐานชัดเจนขึ้นค่ะ ลองรัน focused Client checks แล้วผ่าน 26 tests
+> ขอปรับหนึ่งจุดใน specification.md ตรง BR-13 ค่ะ ตอนนี้ระบุว่า assignee ต้องเป็น active IT Staff แต่ Backend อนุญาต active IT Staff หรือ Administrator เป็น Owner ได้ รบกวนแก้คำอธิบายให้ตรง โดยคงว่าเฉพาะ IT Staff เป็นผู้ทำ Assignment นะคะ ไม่ต้องเปลี่ยนโค้ดหรือเพิ่มสิทธิ์ Administrator ค่ะ ส่วนอื่นรอบนี้ไม่พบจุดที่ต้องแก้เพิ่มเติมในขอบเขต PR นี้ค่ะ
+<!-- end-review-event -->
+
+แหล่งที่มา: [Submitted review โดย @guluJa](https://github.com/PhraewaS/toktickit/pull/65#pullrequestreview-5518700763)
+
+#### เหตุการณ์ที่ 2 - ข้อความ/การตอบกลับของผู้จัดทำ `@PhraewaS`
+
+เวลา: 2026-10-14 13:35:35 UTC | ประเภท: `Conversation comment`
+
+<!-- review-event PhraewaS/toktickit#65:conversation:6169621465 -->
+> <!-- br13-response-512f37c -->
+> ขอบคุณที่ช่วยตรวจและชี้จุดนี้นะคะ ตรวจ backend แล้วและแก้ BR-13 ใน revision [512f37c](https://github.com/PhraewaS/toktickit/commit/512f37c0aa8e669cfbdc795d95ef4da9cae1ef14) เรียบร้อยค่ะ โดยระบุว่า Owner ที่เลือกได้ต้องเป็น active IT Staff หรือ Administrator แต่ผู้ทำ Assignment ยังคงเป็น IT Staff เท่านั้น การเป็น Owner ไม่ได้เพิ่มสิทธิ์ Assignment หรือเปลี่ยนสถานะให้ Administrator ค่ะ
+>
+> แก้เฉพาะหนึ่งบรรทัดใน specification.md ไม่เปลี่ยนโค้ดหรือสิทธิ์ ตรวจเอกสารและ diff ซ้ำแล้วผ่าน ส่วนผล focused 26 tests เดิมยังคงระบุรอบเดิม ไม่อ้างว่ารันใหม่ในครั้งนี้ รบกวนช่วยตรวจ revision ล่าสุดอีกครั้งนะคะ ขอบคุณค่ะ
+<!-- end-review-event -->
+
+แหล่งที่มา: [Conversation comment โดย @PhraewaS](https://github.com/PhraewaS/toktickit/pull/65#issuecomment-6169621465)
+
+#### เหตุการณ์ที่ 3 - ข้อความรีวิวจากเพื่อน `@guluJa`
+
+เวลา: 2026-10-14 13:55:41 UTC | ประเภท: `Conversation comment`
+
+<!-- review-event PhraewaS/toktickit#65:conversation:6170039524 -->
+> > ขอบคุณที่ช่วยตรวจและชี้จุดนี้นะคะ ตรวจ backend แล้วและแก้ BR-13 ใน revision [512f37c](https://github.com/PhraewaS/toktickit/commit/512f37c0aa8e669cfbdc795d95ef4da9cae1ef14) เรียบร้อยค่ะ โดยระบุว่า Owner ที่เลือกได้ต้องเป็น active IT Staff หรือ Administrator แต่ผู้ทำ Assignment ยังคงเป็น IT Staff เท่านั้น การเป็น Owner ไม่ได้เพิ่มสิทธิ์ Assignment หรือเปลี่ยนสถานะให้ Administrator ค่ะ
+> > 
+> > แก้เฉพาะหนึ่งบรรทัดใน specification.md ไม่เปลี่ยนโค้ดหรือสิทธิ์ ตรวจเอกสารและ diff ซ้ำแล้วผ่าน ส่วนผล focused 26 tests เดิมยังคงระบุรอบเดิม ไม่อ้างว่ารันใหม่ในครั้งนี้ รบกวนช่วยตรวจ revision ล่าสุดอีกครั้งนะคะ ขอบคุณค่ะ
+>
+> ตรวจ revision 512f37c แล้วนะคะ BR-13 ตรงกับ Backend และ middleware แล้วค่ะ แยกสิทธิ์ผู้ทำ Assignment กับผู้ที่เลือกเป็น Owner ได้ชัดเจน โดยไม่เพิ่มสิทธิ์ให้ Administrator ตรวจ diff แล้วเปลี่ยนเฉพาะข้อความตาม feedback รอบนี้ไม่พบจุดที่ต้องแก้เพิ่มเติมในขอบเขต PR นี้ค่ะ
+<!-- end-review-event -->
+
+แหล่งที่มา: [Conversation comment โดย @guluJa](https://github.com/PhraewaS/toktickit/pull/65#issuecomment-6170039524)
+
+#### เหตุการณ์ที่ 4 - ข้อความ/การตอบกลับของผู้จัดทำ `@PhraewaS`
+
+เวลา: 2026-10-14 13:59:32 UTC | ประเภท: `Conversation comment`
+
+<!-- review-event PhraewaS/toktickit#65:conversation:6170122947 -->
+> > ขอบคุณที่ช่วยตรวจและชี้จุดนี้นะคะ
+>
+>
+>
+> > > ขอบคุณที่ช่วยตรวจและชี้จุดนี้นะคะ ตรวจ backend แล้วและแก้ BR-13 ใน revision [512f37c](https://github.com/PhraewaS/toktickit/commit/512f37c0aa8e669cfbdc795d95ef4da9cae1ef14) เรียบร้อยค่ะ โดยระบุว่า Owner ที่เลือกได้ต้องเป็น active IT Staff หรือ Administrator แต่ผู้ทำ Assignment ยังคงเป็น IT Staff เท่านั้น การเป็น Owner ไม่ได้เพิ่มสิทธิ์ Assignment หรือเปลี่ยนสถานะให้ Administrator ค่ะ
+> > > แก้เฉพาะหนึ่งบรรทัดใน specification.md ไม่เปลี่ยนโค้ดหรือสิทธิ์ ตรวจเอกสารและ diff ซ้ำแล้วผ่าน ส่วนผล focused 26 tests เดิมยังคงระบุรอบเดิม ไม่อ้างว่ารันใหม่ในครั้งนี้ รบกวนช่วยตรวจ revision ล่าสุดอีกครั้งนะคะ ขอบคุณค่ะ
+> > 
+> > ตรวจ revision [512f37c](https://github.com/PhraewaS/toktickit/commit/512f37c0aa8e669cfbdc795d95ef4da9cae1ef14) แล้วนะคะ BR-13 ตรงกับ Backend และ middleware แล้วค่ะ แยกสิทธิ์ผู้ทำ Assignment กับผู้ที่เลือกเป็น Owner ได้ชัดเจน โดยไม่เพิ่มสิทธิ์ให้ Administrator ตรวจ diff แล้วเปลี่ยนเฉพาะข้อความตาม feedback รอบนี้ไม่พบจุดที่ต้องแก้เพิ่มเติมในขอบเขต PR นี้ค่ะ
+>
+> ขอบคุณที่ช่วยตรวจและชี้จุดนี้นะคะ
+<!-- end-review-event -->
+
+แหล่งที่มา: [Conversation comment โดย @PhraewaS](https://github.com/PhraewaS/toktickit/pull/65#issuecomment-6170122947)
+
+#### เหตุการณ์ที่ 5 - ข้อความรีวิวจากเพื่อน `@guluJa`
+
+เวลา: 2026-10-14 14:01:11 UTC | ประเภท: `Submitted review` | สถานะ: `APPROVED`
+
+Revision ที่ตรวจ: [`512f37c`](https://github.com/PhraewaS/toktickit/commit/512f37c0aa8e669cfbdc795d95ef4da9cae1ef14)
+
+<!-- review-event PhraewaS/toktickit#65:review:5519155225 -->
+ไม่มีข้อความ body แนบกับเหตุการณ์นี้ใน GitHub จึงไม่เติมคำพูดขึ้นเอง สถานะ `APPROVED` เป็นหลักฐานการอนุมัติจริงแม้ไม่มีข้อความ
+<!-- end-review-event -->
+
+แหล่งที่มา: [Submitted review โดย @guluJa](https://github.com/PhraewaS/toktickit/pull/65#pullrequestreview-5519155225)
+
+**ผลการอนุมัติสุดท้าย:** [`APPROVED` โดย @guluJa](https://github.com/PhraewaS/toktickit/pull/65#pullrequestreview-5519155225) เมื่อ 2026-10-14 14:01:11 UTC; ตรงกับ head ที่บันทึกใน PR
 
 ---
 
@@ -2839,71 +5231,134 @@ Revision ที่ตรวจ: [`48694b8`](https://github.com/guluJa/toktickit/
 
 ---
 
+### guluJa/toktickit#82 - [Lab 4] Final-main Verification and Final Documentation
+
+Pull Request: [#82](https://github.com/guluJa/toktickit/pull/82) | สาขา: `feature/08-lab4-final-main-verification` → `lab4-staging`
+
+**สถานะจริง:** Merge แล้วเมื่อ 2026-10-14 12:17:52 UTC; commit [`fc67534`](https://github.com/guluJa/toktickit/commit/fc67534baf248c0e275524dfae96c66dac148c77)
+
+#### เหตุการณ์ที่ 1 - ข้อความที่ผู้จัดทำตรวจให้เพื่อน `@PhraewaS`
+
+เวลา: 2026-10-13 10:01:17 UTC | ประเภท: `Submitted review` | สถานะ: `CHANGES_REQUESTED`
+
+Revision ที่ตรวจ: [`df19d13`](https://github.com/guluJa/toktickit/commit/df19d13bb566c99dba24b27aecae261d8fc29e14)
+
+<!-- review-event guluJa/toktickit#82:review:5501863449 -->
+> ตรวจ revision df19d13 เทียบกับแลปชีท Lab 4 แล้วค่ะ หลักฐาน Final-main อ้างอิง commit 08328cd ที่ merge จริง ผล CI ผ่าน Server 272 tests และ Client 131 tests พร้อม builds ส่วน logs ที่แนบแสดง E2E/responsive ผ่านรอบละ 15 cases และ backup/restore ข้อมูลตรงกัน เอกสารเชื่อมโยงไฟล์ทดสอบครบและแยกภาพเสริมจากผล original-main suite ชัดเจนแล้วค่ะ เหลือขอเพิ่มเติม ai-use.md อีก 1 จุดก่อน Approve: ตารางปัจจุบันเป็นสรุปใจความคำสั่ง แต่ Answer Part 4 ขอแสดง selected key prompts 6–10 รายการ รบกวนเพิ่มข้อความ prompt ที่ใช้จริงหรือข้อความตัดตอนที่คงถ้อยคำเดิม โดยใช้ตารางเดิมอธิบายงานและผลลัพธ์ประกอบได้ค่ะ จุดนี้แก้เฉพาะเอกสาร ไม่ต้องแก้ Source Code หรือรันทดสอบใหม่ แล้วส่ง revision มาให้ตรวจอีกครั้งค่ะ
+<!-- end-review-event -->
+
+แหล่งที่มา: [Submitted review โดย @PhraewaS](https://github.com/guluJa/toktickit/pull/82#pullrequestreview-5501863449)
+
+#### เหตุการณ์ที่ 2 - ข้อความ/การตอบกลับของเจ้าของงาน `@guluJa`
+
+เวลา: 2026-10-13 14:35:19 UTC | ประเภท: `Conversation comment`
+
+<!-- review-event guluJa/toktickit#82:conversation:6148002395 -->
+> > ตรวจ revision [df19d13](https://github.com/guluJa/toktickit/commit/df19d13bb566c99dba24b27aecae261d8fc29e14) เทียบกับแลปชีท Lab 4 แล้วค่ะ หลักฐาน Final-main อ้างอิง commit [08328cd](https://github.com/guluJa/toktickit/commit/08328cd293c11316da8496857007d781f2dafaa8) ที่ merge จริง ผล CI ผ่าน Server 272 tests และ Client 131 tests พร้อม builds ส่วน logs ที่แนบแสดง E2E/responsive ผ่านรอบละ 15 cases และ backup/restore ข้อมูลตรงกัน เอกสารเชื่อมโยงไฟล์ทดสอบครบและแยกภาพเสริมจากผล original-main suite ชัดเจนแล้วค่ะ เหลือขอเพิ่มเติม ai-use.md อีก 1 จุดก่อน Approve: ตารางปัจจุบันเป็นสรุปใจความคำสั่ง แต่ Answer Part 4 ขอแสดง selected key prompts 6–10 รายการ รบกวนเพิ่มข้อความ prompt ที่ใช้จริงหรือข้อความตัดตอนที่คงถ้อยคำเดิม โดยใช้ตารางเดิมอธิบายงานและผลลัพธ์ประกอบได้ค่ะ จุดนี้แก้เฉพาะเอกสาร ไม่ต้องแก้ Source Code หรือรันทดสอบใหม่ แล้วส่ง revision มาให้ตรวจอีกครั้งค่ะ
+>
+> ปรับ ai-use.md เป็นข้อความตัดตอนจาก Prompt ที่ใช้จริงครบ 8 รายการแล้วค่ะ โดยคงถ้อยคำต้นฉบับและใช้ […] ระบุส่วนที่ละไว้ พร้อมคงคำอธิบายงานและผลลัพธ์ประกอบ ไม่แก้ Source Code หรือผลทดสอบค่ะ รบกวนตรวจ revision ล่าสุดอีกครั้งนะคะ
+<!-- end-review-event -->
+
+แหล่งที่มา: [Conversation comment โดย @guluJa](https://github.com/guluJa/toktickit/pull/82#issuecomment-6148002395)
+
+#### เหตุการณ์ที่ 3 - ข้อความที่ผู้จัดทำตรวจให้เพื่อน `@PhraewaS`
+
+เวลา: 2026-10-14 09:55:47 UTC | ประเภท: `Submitted review` | สถานะ: `COMMENTED`
+
+Revision ที่ตรวจ: [`a5538c0`](https://github.com/guluJa/toktickit/commit/a5538c0489d5bb8a6c50701f02747ec186351536)
+
+<!-- review-event guluJa/toktickit#82:review:5516146641 -->
+> ตรวจ revision a5538c0 แล้วค่ะ จุดที่ขอให้เพิ่มเติมใน ai-use.md แก้ครบแล้ว โดยมีข้อความตัดตอนจาก Prompt 8 รายการ ระบุส่วนที่ละด้วย […] และแยกคำอธิบายงานกับผลลัพธ์ไว้ชัดเจน พร้อมชื่อ LLM และ My Reflection ตามที่แลปชีทกำหนด ตรวจแล้วรอบนี้แก้เฉพาะเอกสาร AI-use ไม่เปลี่ยน Source Code หรือหลักฐานทดสอบ และ CI ล่าสุดผ่าน จึงไม่พบประเด็นที่ต้องแก้เพิ่มเติมใน PR นี้แล้วค่ะ
+<!-- end-review-event -->
+
+แหล่งที่มา: [Submitted review โดย @PhraewaS](https://github.com/guluJa/toktickit/pull/82#pullrequestreview-5516146641)
+
+#### เหตุการณ์ที่ 4 - ข้อความ/การตอบกลับของเจ้าของงาน `@guluJa`
+
+เวลา: 2026-10-14 11:16:39 UTC | ประเภท: `Conversation comment`
+
+<!-- review-event guluJa/toktickit#82:conversation:6167102902 -->
+> > ตรวจ revision [a5538c0](https://github.com/guluJa/toktickit/commit/a5538c0489d5bb8a6c50701f02747ec186351536) แล้วค่ะ จุดที่ขอให้เพิ่มเติมใน ai-use.md แก้ครบแล้ว โดยมีข้อความตัดตอนจาก Prompt 8 รายการ ระบุส่วนที่ละด้วย […] และแยกคำอธิบายงานกับผลลัพธ์ไว้ชัดเจน พร้อมชื่อ LLM และ My Reflection ตามที่แลปชีทกำหนด ตรวจแล้วรอบนี้แก้เฉพาะเอกสาร AI-use ไม่เปลี่ยน Source Code หรือหลักฐานทดสอบ และ CI ล่าสุดผ่าน จึงไม่พบประเด็นที่ต้องแก้เพิ่มเติมใน PR นี้แล้วค่ะ
+>
+> ขอบตุณมากค่ะ
+<!-- end-review-event -->
+
+แหล่งที่มา: [Conversation comment โดย @guluJa](https://github.com/guluJa/toktickit/pull/82#issuecomment-6167102902)
+
+#### เหตุการณ์ที่ 5 - ข้อความที่ผู้จัดทำตรวจให้เพื่อน `@PhraewaS`
+
+เวลา: 2026-10-14 12:17:45 UTC | ประเภท: `Submitted review` | สถานะ: `APPROVED`
+
+Revision ที่ตรวจ: [`a5538c0`](https://github.com/guluJa/toktickit/commit/a5538c0489d5bb8a6c50701f02747ec186351536)
+
+<!-- review-event guluJa/toktickit#82:review:5517728139 -->
+ไม่มีข้อความ body แนบกับเหตุการณ์นี้ใน GitHub จึงไม่เติมคำพูดขึ้นเอง สถานะ `APPROVED` เป็นหลักฐานการอนุมัติจริงแม้ไม่มีข้อความ
+<!-- end-review-event -->
+
+แหล่งที่มา: [Submitted review โดย @PhraewaS](https://github.com/guluJa/toktickit/pull/82#pullrequestreview-5517728139)
+
+**ผลการอนุมัติสุดท้าย:** [`APPROVED` โดย @PhraewaS](https://github.com/guluJa/toktickit/pull/82#pullrequestreview-5517728139) เมื่อ 2026-10-14 12:17:45 UTC; ตรงกับ head ที่บันทึกใน PR
+
+---
+
+### guluJa/toktickit#83 - [Lab 4] Integrate Final Documentation and Verification Evidence
+
+Pull Request: [#83](https://github.com/guluJa/toktickit/pull/83) | สาขา: `lab4-staging` → `main`
+
+**สถานะจริง:** Merge แล้วเมื่อ 2026-10-14 14:00:14 UTC; commit [`99f9eb3`](https://github.com/guluJa/toktickit/commit/99f9eb31fda072bc4def5a3f627b5cdfd12bc10b)
+
+#### เหตุการณ์ที่ 1 - ข้อความที่ผู้จัดทำตรวจให้เพื่อน `@PhraewaS`
+
+เวลา: 2026-10-14 13:29:45 UTC | ประเภท: `Submitted review` | สถานะ: `COMMENTED`
+
+Revision ที่ตรวจ: [`fc67534`](https://github.com/guluJa/toktickit/commit/fc67534baf248c0e275524dfae96c66dac148c77)
+
+<!-- review-event guluJa/toktickit#83:review:5518678242 -->
+> ตรวจ revision fc67534 เทียบกับแลปชีทและ PR #82 ที่ผ่าน review แล้วค่ะ เอกสารและหลักฐานตรงกับ revision ที่ได้รับ Approval ไม่มีการแก้เนื้อหาเพิ่มเติม ส่วน AI-use มีข้อความตัดตอนจาก Prompt ครบ 8 รายการ พร้อมชื่อ LLM คำอธิบายผลลัพธ์ และ My Reflection แล้ว หลักฐาน Final-main ยังคงอ้างอิง Product SHA 08328cd ชัดเจน และ CI ของ PR นี้ผ่านทั้ง Server และ Client jobs จึงไม่พบประเด็นที่ต้องแก้เพิ่มเติมในขอบเขตการรวมเอกสาร Final เข้า main และ Approve ค่ะ หลัง merge รบกวนตรวจลิงก์เอกสารบน main อัปเดต reviewer record ของ PR นี้ และตรวจ Kanban กับ PDF Answer Part 1–9 ให้ครบก่อนปิด Issue #74 ค่ะ
+<!-- end-review-event -->
+
+แหล่งที่มา: [Submitted review โดย @PhraewaS](https://github.com/guluJa/toktickit/pull/83#pullrequestreview-5518678242)
+
+#### เหตุการณ์ที่ 2 - ข้อความ/การตอบกลับของเจ้าของงาน `@guluJa`
+
+เวลา: 2026-10-14 13:35:29 UTC | ประเภท: `Conversation comment`
+
+<!-- review-event guluJa/toktickit#83:conversation:6169619704 -->
+> > ตรวจ revision [fc67534](https://github.com/guluJa/toktickit/commit/fc67534baf248c0e275524dfae96c66dac148c77) เทียบกับแลปชีทและ PR #82 ที่ผ่าน review แล้วค่ะ เอกสารและหลักฐานตรงกับ revision ที่ได้รับ Approval ไม่มีการแก้เนื้อหาเพิ่มเติม ส่วน AI-use มีข้อความตัดตอนจาก Prompt ครบ 8 รายการ พร้อมชื่อ LLM คำอธิบายผลลัพธ์ และ My Reflection แล้ว หลักฐาน Final-main ยังคงอ้างอิง Product SHA [08328cd](https://github.com/guluJa/toktickit/commit/08328cd293c11316da8496857007d781f2dafaa8) ชัดเจน และ CI ของ PR นี้ผ่านทั้ง Server และ Client jobs จึงไม่พบประเด็นที่ต้องแก้เพิ่มเติมในขอบเขตการรวมเอกสาร Final เข้า main และ Approve ค่ะ หลัง merge รบกวนตรวจลิงก์เอกสารบน main อัปเดต reviewer record ของ PR นี้ และตรวจ Kanban กับ PDF Answer Part 1–9 ให้ครบก่อนปิด Issue #74 ค่ะ
+>
+> ขอบคุณที่ช่วยตรวจสอบและให้คำชี้แนะนะคะ
+<!-- end-review-event -->
+
+แหล่งที่มา: [Conversation comment โดย @guluJa](https://github.com/guluJa/toktickit/pull/83#issuecomment-6169619704)
+
+#### เหตุการณ์ที่ 3 - ข้อความที่ผู้จัดทำตรวจให้เพื่อน `@PhraewaS`
+
+เวลา: 2026-10-14 14:00:06 UTC | ประเภท: `Submitted review` | สถานะ: `APPROVED`
+
+Revision ที่ตรวจ: [`fc67534`](https://github.com/guluJa/toktickit/commit/fc67534baf248c0e275524dfae96c66dac148c77)
+
+<!-- review-event guluJa/toktickit#83:review:5519139245 -->
+ไม่มีข้อความ body แนบกับเหตุการณ์นี้ใน GitHub จึงไม่เติมคำพูดขึ้นเอง สถานะ `APPROVED` เป็นหลักฐานการอนุมัติจริงแม้ไม่มีข้อความ
+<!-- end-review-event -->
+
+แหล่งที่มา: [Submitted review โดย @PhraewaS](https://github.com/guluJa/toktickit/pull/83#pullrequestreview-5519139245)
+
+**ผลการอนุมัติสุดท้าย:** [`APPROVED` โดย @PhraewaS](https://github.com/guluJa/toktickit/pull/83#pullrequestreview-5519139245) เมื่อ 2026-10-14 14:00:06 UTC; ตรงกับ head ที่บันทึกใน PR
+
+---
+
 ## การตรวจความครบถ้วนและขอบเขตหลักฐาน
 
 - [x] แยกสอง repository, ผู้เขียน, ผู้ตรวจ และ Issue/PR links ชัดเจน
-- [x] ตรวจ conversation/review/inline endpoints ครบ 17 PR; เก็บต้นฉบับ 89 เหตุการณ์พร้อมเวลาจริงและลิงก์แต่ละรายการ
+- [x] ตรวจ conversation/review/inline endpoints ครบ 21 PR; เก็บต้นฉบับ 111 เหตุการณ์พร้อมเวลาจริงและลิงก์แต่ละรายการ
 - [x] ระบุ formal approval จริงและ commit ที่ merge; ไม่ใช้คำขอบคุณแทนการอนุมัติ
-- [x] เก็บ JSON ต้นฉบับฉบับเต็มใน [review-history-bidirectional.json](review-history-bidirectional.json) พร้อมข้อมูลการดึงและ endpoint counts
+- [x] เก็บ JSON ต้นฉบับฉบับเต็มใน [review-history-final-main.json](review-history-final-main.json) พร้อมข้อมูลการดึงและ endpoint counts
 - [x] คงไฟล์ snapshot เก่า [review-history.json](review-history.json) และ [review-history-recovery-addendum.json](review-history-recovery-addendum.json) ไว้เป็นหลักฐานย้อนหลัง ไม่แก้ให้เหมือนข้อมูลเพิ่งเกิด
-- [ ] เพิ่มรีวิว/approval ของ release PR ฝั่งผู้จัดทำเมื่อเกิดขึ้นจริง และ merge ผ่าน workflow ที่อนุมัติ
-- [ ] บันทึกผล final-main verification และ final evidence/PDF approval ก่อนปิด Issue #54/Done
+- [x] Release #63 ได้รับ APPROVED ที่ head f95ba5c ก่อน merge เข้า main เป็น e1fa72f ตามเหตุการณ์จริงด้านบน
+- [ ] รับ peer approval/merge ของ final-evidence PR และตรวจรับ PDF/การส่งงานก่อนปิด Issue #54/Done
+
+บันทึก snapshot เก่าทุกไฟล์และ [reviewer-pre-release.md](reviewer-pre-release.md) ไว้โดยไม่แก้ต้นฉบับ ผล final-main แยกอยู่ใน [summary.md](../../artifacts/lab-04/evidence/final-main/summary.md) ไม่ใช้สถานะรีวิวแทนผลทดสอบ
 
 **ข้อจำกัด:** snapshot เก็บข้อมูลที่เข้าถึงได้ ณ เวลาดึง ไม่อ้างว่ารวมความคิดเห็นที่ถูกลบหรือเหตุการณ์ที่จะเกิดภายหลัง PR เอกสารที่สร้างหลัง snapshot ต้องเพิ่มรีวิวเมื่อมีเหตุการณ์จริง ห้ามคัดลอกสถานะ Done หรือผล final-main ของเพื่อนมาเป็นผลของผู้จัดทำ
 
 **หลักฐานการทดสอบแยกจากรีวิว:** [integration เดิม](../../artifacts/lab-04/evidence/staging-integration/summary.md), [recovery repair](../../artifacts/lab-04/evidence/recovery-repair/summary.md) และ [ผล staging c239461 ของ release #63](https://github.com/PhraewaS/toktickit/pull/63#issuecomment-6123577441) คง revision/วันที่ของตนเอง เอกสารฉบับนี้เป็นการปรับบันทึกรีวิว ไม่ใช่การรันทดสอบผลิตภัณฑ์ใหม่
-
-
-## Addendum - รีวิว release #63 และ approval/merge ของ #64 (2026-10-14)
-
-ส่วนนี้เพิ่มเหตุการณ์จริงหลัง snapshot เดิม 17 PR / 89 เหตุการณ์ ไม่แก้ต้นฉบับหรือเปลี่ยนจำนวนเก่าให้เหมือนข้อมูลใหม่ JSON ต้นฉบับ: [review-history-release-addendum.json](review-history-release-addendum.json)
-
-| PR | สถานะ ณรอบนี้ | หลักฐาน |
-| --- | --- | --- |
-| #64 | guluJa APPROVED head `d4479bb` ก่อน merge `5ab13bb` เมื่อ 2026-10-14 11:17:02 UTC | [approval](https://github.com/PhraewaS/toktickit/pull/64#pullrequestreview-5517046805), [merge](https://github.com/PhraewaS/toktickit/commit/5ab13bbf53371b1e42bacbfe22c00296b9f68d0c) |
-| #63 | ยัง OPEN; COMMENTED ที่ `c239461` ไม่ใช่ formal approval ของ head ใหม่ `5ab13bb` | [review](https://github.com/PhraewaS/toktickit/pull/63#pullrequestreview-5492867653) |
-| PR เอกสารเตรียม release / final evidence | ต้องขอ peer review บน branch แยกและเพิ่มเหตุการณ์เมื่อเกิดจริง | ไม่ติ๊ก approval/merge หรือ final-main/PDF ล่วงหน้า |
-
-### PR #63 - guluJa, COMMENTED
-
-เวลา: 2026-10-12T15:30:40Z (UTC); revision: `c239461cbb7e22d8cb7c42e40c1c7238fdedb9a5`
-
-<!-- release-addendum-event 5492867653 -->
-> ตรวจ release revision c239461 แล้วนะคะ ผลทั้งหก phases ระบุ source ตรงกัน และจำนวน tests/skips ตรงกับ console output ค่ะ ลองรัน Client 89 tests, focused Server 36 tests, recovery safety 6 tests และทั้งสอง build แล้วผ่าน รอบนี้ไม่พบจุดที่ต้องแก้โค้ดเพิ่มเติมค่ะ 
-<!-- end-release-addendum-event -->
-
-แหล่งที่มา: [ข้อความต้นฉบับบน GitHub](https://github.com/PhraewaS/toktickit/pull/63#pullrequestreview-5492867653)
-
-### PR #64 - guluJa, COMMENTED
-
-เวลา: 2026-10-13T14:33:26Z (UTC); revision: `d4479bb52ab13fc8ccfe63fa01e0be4c66f504a5`
-
-<!-- release-addendum-event 5505186004 -->
-> ตรวจ revision d4479bb แล้วนะคะ บันทึกทั้งสองฝั่งแยกชัดเจน เทียบข้อความทั้ง 89 เหตุการณ์กับ GitHub แล้วตรงกัน รวมถึง Approval ของ 16 PR ที่ตรงกับ head และเกิดก่อน Merge ค่ะ ประวัติเดิมยังครบ และแยก snapshot กับผล Final-main ถูกต้อง รอบนี้ไม่พบจุดที่ต้องแก้เพิ่มเติมในขอบเขตเอกสารนี้ค่ะ
-<!-- end-release-addendum-event -->
-
-แหล่งที่มา: [ข้อความต้นฉบับบน GitHub](https://github.com/PhraewaS/toktickit/pull/64#pullrequestreview-5505186004)
-
-### PR #64 - PhraewaS, author response
-
-เวลา: 2026-10-14T09:56:29Z (UTC)
-
-<!-- release-addendum-event 6165720545 -->
-> > ตรวจ revision [d4479bb](https://github.com/PhraewaS/toktickit/commit/d4479bb52ab13fc8ccfe63fa01e0be4c66f504a5) แล้วนะคะ บันทึกทั้งสองฝั่งแยกชัดเจน เทียบข้อความทั้ง 89 เหตุการณ์กับ GitHub แล้วตรงกัน รวมถึง Approval ของ 16 PR ที่ตรงกับ head และเกิดก่อน Merge ค่ะ ประวัติเดิมยังครบ และแยก snapshot กับผล Final-main ถูกต้อง รอบนี้ไม่พบจุดที่ต้องแก้เพิ่มเติมในขอบเขตเอกสารนี้ค่ะ
->
-> ขอบคุณมากนะคะ
-<!-- end-release-addendum-event -->
-
-แหล่งที่มา: [ข้อความต้นฉบับบน GitHub](https://github.com/PhraewaS/toktickit/pull/64#issuecomment-6165720545)
-
-### PR #64 - guluJa, APPROVED
-
-เวลา: 2026-10-14T11:16:53Z (UTC); revision: `d4479bb52ab13fc8ccfe63fa01e0be4c66f504a5`
-
-<!-- release-addendum-event 5517046805 -->
-ไม่มีข้อความ body แนบกับ formal APPROVED นี้ จึงไม่แต่งคำอนุมัติขึ้นเอง
-<!-- end-release-addendum-event -->
-
-แหล่งที่มา: [ข้อความต้นฉบับบน GitHub](https://github.com/PhraewaS/toktickit/pull/64#pullrequestreview-5517046805)
-
-**หลักฐานแยกจาก review:** [ผลจริงหกขั้นบน staging 5ab13bb](https://github.com/PhraewaS/toktickit/pull/63#issuecomment-6168420145) และ [ภาพตรวจเอกสาร](../../artifacts/lab-04/evidence/documentation-review/summary.md) ไม่ใช่ผล final-main การอนุมัติ #64 ไม่แทนการอนุมัติ release และ snapshot เดิมยังระบุสถานะ ณวันที่ดึง ไม่ใช่สถานะปัจจุบัน ดู [integration.md](integration.md) สำหรับขั้นตอนที่ยังรอ

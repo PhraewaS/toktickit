@@ -1,0 +1,25 @@
+{
+  "mode": "server",
+  "revision": "e1fa72f9fa1ad26ead74f82cf1de6bbf09de6384",
+  "startedAt": "2026-10-14T14:47:13.863Z",
+  "database": "toktickit_lab4_e2e",
+  "databasePort": 5433,
+  "steps": [
+    {
+      "label": "server-seed",
+      "exitCode": 0,
+      "elapsedMs": 5689
+    },
+    {
+      "label": "server-tests",
+      "exitCode": 0,
+      "elapsedMs": 62199
+    },
+    {
+      "label": "server-build",
+      "exitCode": 0,
+      "elapsedMs": 7817
+    }
+  ],
+  "completedAt": "2026-10-14T14:48:29.574Z"
+}
